@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOCTYPE та мета-теги</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .doctype-showcase {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .doctype-version {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: monospace;
+            text-align: left;
+        }
+
+        .version-label {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-example::before {
+            content: "HTML5";
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .code-example pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .meta-tag-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .meta-tag-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meta-tag {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .seo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .seo-card {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #38b2ac;
+            transition: transform 0.3s ease;
+        }
+
+        .seo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .seo-card .emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .seo-card h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.danger {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            min-height: 100px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .seo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls {
+                justify-content: center;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+        .doctype { color: #c678dd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 DOCTYPE та мета-теги</h1>
+            <p>Розуміння декларації типу документа та мета-інформації - основа для створення правильних HTML документів</p>
+        </div>
+
+        <div class="content-section">
+            <h2>📄 Що таке DOCTYPE?</h2>
+            <p><strong>DOCTYPE</strong> (Document Type Definition) - це декларація, яка повідомляє браузеру, який тип документа очікувати. Вона завжди йде першим рядком у HTML документі.</p>
+            
+            <div class="doctype-showcase">
+                <div class="version-label">HTML5 (Сучасний)</div>
+                <div class="doctype-version">
+                    &lt;!DOCTYPE html&gt;
+                </div>
+                <p style="color: #48bb78; font-weight: bold;">✅ Рекомендовано</p>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎯 Чому DOCTYPE важливий?</h3>
+                <ul style="padding-left: 1.5rem;">
+                    <li style="margin: 0.5rem 0;">Вмикає стандартний режим браузера</li>
+                    <li style="margin: 0.5rem 0;">Забезпечує правильне відображення сторінки</li>
+                    <li style="margin: 0.5rem 0;">Запобігає quirks mode (режиму сумісності)</li>
+                    <li style="margin: 0.5rem 0;">Необхідний для валідного HTML</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📊 Еволюція DOCTYPE</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Версія HTML</th>
+                        <th>DOCTYPE декларація</th>
+                        <th>Статус</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HTML5</strong></td>
+                        <td><code>&lt;!DOCTYPE html&gt;</code></td>
+                        <td style="color: #48bb78;">✅ Актуально</td>
+                    </tr>
+                    <tr>
+                        <td><strong>XHTML 1.0</strong></td>
+                        <td><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"...</code></td>
+                        <td style="color: #ed8936;">⚠️ Застаріло</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTML 4.01</strong></td>
+                        <td><code>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"...</code></td>
+                        <td style="color: #f56565;">❌ Застаріло</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="two-column">
+            <div class="content-section">
+                <h2>🔧 Основні мета-теги</h2>
+                
+                <div class="meta-tag-card">
+                    <h3>
+                        <span class="meta-tag">charset</span>
+                        🌐 Кодування
+                    </h3>
+                    <div class="code-example">
+                        <pre><code><span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span><span class="tag">&gt;</span></code></pre>
+                    </div>
+                    <p><strong>Призначення:</strong> Встановлює кодування символів для підтримки української мови та емодзі.</p>
+                </div>
+
+                <div class="meta-tag-card">
+                    <h3>
+                        <span class="meta-tag">viewport</span>
+                        📱 Адаптивність
+                    </h3>
+                    <div class="code-example">
+                        <pre><code><span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> 
+      <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span></code></pre>
+                    </div>
+                    <p><strong>Призначення:</strong> Контролює відображення на мобільних пристроях.</p>
+                </div>
+
+                <div class="meta-tag-card">
+                    <h3>
+                        <span class="meta-tag">description</span>
+                        📝 SEO опис
+                    </h3>
+                    <div class="code-example">
+                        <pre><code><span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"description"</span> 
+      <span class="attr">content</span>=<span class="string">"Опис сторінки для пошукових систем"</span><span class="tag">&gt;</span></code></pre>
+                    </div>
+                    <p><strong>Призначення:</strong> Короткий опис сторінки для пошукових систем (150-160 символів).</p>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎯 Інтерактивна демонстрація</h2>
+                <div class="interactive-demo">
+                    <div class="demo-controls">
+                        <button class="demo-button active" onclick="showMetaExample('basic')">Базові</button>
+                        <button class="demo-button" onclick="showMetaExample('seo')">SEO</button>
+                        <button class="demo-button" onclick="showMetaExample('social')">Соціальні</button>
+                        <button class="demo-button" onclick="showMetaExample('mobile')">Мобільні</button>
+                    </div>
+                    <div class="demo-output" id="metaDemo">
+                        <div class="doctype">&lt;!DOCTYPE html&gt;</div>
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Назва сторінки&lt;/title&gt;
+&lt;/head&gt;
+                    </div>
+                </div>
+
+                <div style="background: #e6fffa; border-left: 4px solid #38b2ac; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                    <strong>💡 Порада:</strong> Натисніть на кнопки вище, щоб побачити різні категорії мета-тегів.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 SEO та соціальні мережі</h2>
+            <div class="seo-grid">
+                <div class="seo-card">
+                    <span class="emoji">🔍</span>
+                    <h4>Пошукова оптимізація</h4>
+                    <p>Title, description, keywords для кращої індексації в Google, Bing та інших пошукових системах.</p>
+                </div>
+                <div class="seo-card">
+                    <span class="emoji">📘</span>
+                    <h4>Open Graph (Facebook)</h4>
+                    <p>og:title, og:description, og:image для красивого відображення посилань у Facebook.</p>
+                </div>
+                <div class="seo-card">
+                    <span class="emoji">🐦</span>
+                    <h4>Twitter Cards</h4>
+                    <p>twitter:card, twitter:title, twitter:description для оптимізації у Twitter.</p>
+                </div>
+                <div class="seo-card">
+                    <span class="emoji">📱</span>
+                    <h4>Мобільні теги</h4>
+                    <p>viewport, apple-mobile-web-app для кращого досвіду на мобільних пристроях.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="best-practices">
+                <div class="practice-card success">
+                    <h3>✅ Обов'язкові мета-теги:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;"><code>&lt;!DOCTYPE html&gt;</code> - завжди першим рядком</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;meta charset="UTF-8"&gt;</code> - для підтримки Unicode</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;meta name="viewport"...&gt;</code> - для адаптивності</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;title&gt;</code> - унікальний для кожної сторінки</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card warning">
+                    <h3>⚠️ Рекомендовані мета-теги:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;"><code>description</code> - для SEO (150-160 символів)</li>
+                        <li style="margin: 0.25rem 0;"><code>author</code> - автор сторінки</li>
+                        <li style="margin: 0.25rem 0;"><code>robots</code> - інструкції для пошукових ботів</li>
+                        <li style="margin: 0.25rem 0;">Open Graph теги для соціальних мереж</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card danger">
+                    <h3>❌ Уникайте:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Застарілі DOCTYPE декларації</li>
+                        <li style="margin: 0.25rem 0;">Мета-тег keywords (більше не використовується)</li>
+                        <li style="margin: 0.25rem 0;">Дублювання мета-тегів</li>
+                        <li style="margin: 0.25rem 0;">Надто довгі описи (понад 160 символів)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Повний приклад</h2>
+            <div class="code-example">
+                <pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="string">"uk"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="comment">&lt;!-- Обов'язкові мета-теги --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- SEO мета-теги --&gt;</span>
+    <span class="tag">&lt;title&gt;</span>HTML5 Шпаргалка - Повний посібник українською<span class="tag">&lt;/title&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"description"</span> <span class="attr">content</span>=<span class="string">"Повний посібник з HTML5 українською мовою. Вивчіть основи веб-розробки з практичними прикладами."</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"author"</span> <span class="attr">content</span>=<span class="string">"Ваше ім'я"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- Open Graph для Facebook --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="string">"og:title"</span> <span class="attr">content</span>=<span class="string">"HTML5 Шпаргалка"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="string">"og:description"</span> <span class="attr">content</span>=<span class="string">"Повний посібник з HTML5 українською"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">property</span>=<span class="string">"og:image"</span> <span class="attr">content</span>=<span class="string">"https://example.com/image.jpg"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- Twitter Cards --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"twitter:card"</span> <span class="attr">content</span>=<span class="string">"summary_large_image"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"twitter:title"</span> <span class="attr">content</span>=<span class="string">"HTML5 Шпаргалка"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="comment">&lt;!-- Контент сторінки --&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('structure')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 3 з 42</strong><br>
+                <small>DOCTYPE та мета-теги</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('comments')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const metaExamples = {
+            basic: `<div class="doctype">&lt;!DOCTYPE html&gt;</div>
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;title&gt;Назва сторінки&lt;/title&gt;
+&lt;/head&gt;`,
+            
+            seo: `<div class="doctype">&lt;!DOCTYPE html&gt;</div>
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;SEO оптимізована сторінка&lt;/title&gt;
+    &lt;meta name="description" content="Опис для пошукових систем"&gt;
+    &lt;meta name="keywords" content="HTML5, веб-розробка"&gt;
+    &lt;meta name="author" content="Ваше ім'я"&gt;
+    &lt;meta name="robots" content="index, follow"&gt;
+&lt;/head&gt;`,
+            
+            social: `<div class="doctype">&lt;!DOCTYPE html&gt;</div>
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;!-- Open Graph --&gt;
+    &lt;meta property="og:title" content="Заголовок для Facebook"&gt;
+    &lt;meta property="og:description" content="Опис для соціальних мереж"&gt;
+    &lt;meta property="og:image" content="image.jpg"&gt;
+    &lt;!-- Twitter --&gt;
+    &lt;meta name="twitter:card" content="summary"&gt;
+    &lt;meta name="twitter:title" content="Заголовок для Twitter"&gt;
+&lt;/head&gt;`,
+            
+            mobile: `<div class="doctype">&lt;!DOCTYPE html&gt;</div>
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;meta name="mobile-web-app-capable" content="yes"&gt;
+    &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+    &lt;meta name="apple-mobile-web-app-status-bar-style" content="black"&gt;
+    &lt;meta name="theme-color" content="#667eea"&gt;
+&lt;/head&gt;`
+        };
+
+        function showMetaExample(type) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            document.querySelector(`[onclick="showMetaExample('${type}')"]`).classList.add('active');
+            
+            // Update demo content
+            document.getElementById('metaDemo').innerHTML = metaExamples[type];
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.seo-card, .practice-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

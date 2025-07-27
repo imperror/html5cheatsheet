@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Структура HTML документа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .structure-diagram {
+            display: flex;
+            flex-direction: column;
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Consolas', monospace;
+        }
+
+        .diagram-level {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .diagram-level:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .level-indent {
+            width: 20px;
+            height: 2px;
+            background: #cbd5e0;
+            margin-right: 10px;
+        }
+
+        .level-indent.level-1 { width: 20px; }
+        .level-indent.level-2 { width: 40px; }
+        .level-indent.level-3 { width: 60px; }
+        .level-indent.level-4 { width: 80px; }
+
+        .tag-name {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .tag-description {
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-example::before {
+            content: "HTML5";
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .code-example pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .element-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .element-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .element-tag {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .visualization {
+            background: white;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .browser-mockup {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .browser-header {
+            background: #f7fafc;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .browser-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .dot-red { background: #fc8181; }
+        .dot-yellow { background: #f6e05e; }
+        .dot-green { background: #68d391; }
+
+        .browser-content {
+            padding: 1rem;
+            min-height: 200px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+        .doctype { color: #c678dd; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 Структура HTML документа</h1>
+            <p>Розуміння базової структури HTML документа - фундамент для створення якісних веб-сторінок</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🏗️ Анатомія HTML документа</h2>
+            <p>Кожен HTML документ має чітко визначену структуру, яка складається з обов'язкових та опціональних елементів. Розглянемо кожен компонент детально:</p>
+            
+            <div class="structure-diagram">
+                <div class="diagram-level">
+                    <div class="level-indent level-1"></div>
+                    <span class="tag-name">&lt;!DOCTYPE html&gt;</span>
+                    <span class="tag-description">Оголошення типу документа</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-1"></div>
+                    <span class="tag-name">&lt;html&gt;</span>
+                    <span class="tag-description">Кореневий елемент</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-2"></div>
+                    <span class="tag-name">&lt;head&gt;</span>
+                    <span class="tag-description">Мета-інформація</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-3"></div>
+                    <span class="tag-name">&lt;meta&gt;</span>
+                    <span class="tag-description">Кодування та мета-дані</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-3"></div>
+                    <span class="tag-name">&lt;title&gt;</span>
+                    <span class="tag-description">Заголовок документа</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-2"></div>
+                    <span class="tag-name">&lt;body&gt;</span>
+                    <span class="tag-description">Видимий контент</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-3"></div>
+                    <span class="tag-name">&lt;header&gt;</span>
+                    <span class="tag-description">Заголовок сторінки</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-3"></div>
+                    <span class="tag-name">&lt;main&gt;</span>
+                    <span class="tag-description">Основний контент</span>
+                </div>
+                <div class="diagram-level">
+                    <div class="level-indent level-3"></div>
+                    <span class="tag-name">&lt;footer&gt;</span>
+                    <span class="tag-description">Нижній колонтитул</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="content-section">
+                <h2>📋 Повна структура</h2>
+                <div class="code-example">
+                    <pre><code><span class="doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="tag">&lt;html</span> <span class="attr">lang</span>=<span class="string">"uk"</span><span class="tag">&gt;</span>
+<span class="tag">&lt;head&gt;</span>
+    <span class="comment">&lt;!-- Кодування символів --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- Адаптивність --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> 
+          <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- SEO мета-теги --&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"description"</span> 
+          <span class="attr">content</span>=<span class="string">"Опис сторінки"</span><span class="tag">&gt;</span>
+    <span class="tag">&lt;meta</span> <span class="attr">name</span>=<span class="string">"keywords"</span> 
+          <span class="attr">content</span>=<span class="string">"HTML, веб-розробка"</span><span class="tag">&gt;</span>
+    
+    <span class="comment">&lt;!-- Заголовок --&gt;</span>
+    <span class="tag">&lt;title&gt;</span>Моя веб-сторінка<span class="tag">&lt;/title&gt;</span>
+<span class="tag">&lt;/head&gt;</span>
+<span class="tag">&lt;body&gt;</span>
+    <span class="tag">&lt;header&gt;</span>
+        <span class="tag">&lt;h1&gt;</span>Заголовок сайту<span class="tag">&lt;/h1&gt;</span>
+        <span class="tag">&lt;nav&gt;</span>
+            <span class="comment">&lt;!-- Навігація --&gt;</span>
+        <span class="tag">&lt;/nav&gt;</span>
+    <span class="tag">&lt;/header&gt;</span>
+    
+    <span class="tag">&lt;main&gt;</span>
+        <span class="tag">&lt;article&gt;</span>
+            <span class="comment">&lt;!-- Основний контент --&gt;</span>
+        <span class="tag">&lt;/article&gt;</span>
+    <span class="tag">&lt;/main&gt;</span>
+    
+    <span class="tag">&lt;footer&gt;</span>
+        <span class="comment">&lt;!-- Нижній колонтитул --&gt;</span>
+    <span class="tag">&lt;/footer&gt;</span>
+<span class="tag">&lt;/body&gt;</span>
+<span class="tag">&lt;/html&gt;</span></code></pre>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎨 Результат</h2>
+                <div class="visualization">
+                    <div class="browser-mockup">
+                        <div class="browser-header">
+                            <div class="browser-dot dot-red"></div>
+                            <div class="browser-dot dot-yellow"></div>
+                            <div class="browser-dot dot-green"></div>
+                            <span style="color: #666; font-size: 0.9rem; margin-left: 1rem;">Моя веб-сторінка</span>
+                        </div>
+                        <div class="browser-content">
+                            <header style="background: #667eea; color: white; padding: 1rem; margin-bottom: 1rem; border-radius: 5px;">
+                                <h2 style="margin: 0;">Заголовок сайту</h2>
+                                <div style="margin-top: 0.5rem; font-size: 0.9rem;">Навігація: Головна | Про нас | Контакти</div>
+                            </header>
+                            <main style="padding: 1rem; background: #f7fafc; border-radius: 5px; margin-bottom: 1rem;">
+                                <h3 style="color: #2d3748; margin-bottom: 0.5rem;">Основний контент</h3>
+                                <p style="color: #4a5568; margin: 0;">Тут розміщується основна інформація сторінки...</p>
+                            </main>
+                            <footer style="background: #4a5568; color: white; padding: 0.5rem; text-align: center; border-radius: 5px; font-size: 0.9rem;">
+                                © 2024 Мій сайт
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Детальний розбір елементів</h2>
+            
+            <div class="element-card">
+                <h3><span class="element-tag">&lt;!DOCTYPE html&gt;</span> - Оголошення типу документа</h3>
+                <p><strong>Призначення:</strong> Вказує браузеру, що це HTML5 документ</p>
+                <p><strong>Особливості:</strong></p>
+                <ul>
+                    <li>Завжди перший рядок документа</li>
+                    <li>Не є HTML тегом</li>
+                    <li>Регістр не важливий</li>
+                    <li>Обов'язковий для валідного HTML5</li>
+                </ul>
+            </div>
+
+            <div class="element-card">
+                <h3><span class="element-tag">&lt;html&gt;</span> - Кореневий елемент</h3>
+                <p><strong>Призначення:</strong> Контейнер для всього HTML контенту</p>
+                <p><strong>Важливі атрибути:</strong></p>
+                <ul>
+                    <li><code>lang="uk"</code> - мова документа (для SEO та доступності)</li>
+                    <li><code>dir="ltr"</code> - напрямок тексту (зліва направо)</li>
+                </ul>
+            </div>
+
+            <div class="element-card">
+                <h3><span class="element-tag">&lt;head&gt;</span> - Мета-інформація</h3>
+                <p><strong>Призначення:</strong> Містить інформацію про документ (не відображається)</p>
+                <p><strong>Може містити:</strong></p>
+                <ul>
+                    <li><code>&lt;title&gt;</code> - заголовок документа</li>
+                    <li><code>&lt;meta&gt;</code> - мета-дані</li>
+                    <li><code>&lt;link&gt;</code> - зовнішні ресурси (CSS)</li>
+                    <li><code>&lt;script&gt;</code> - JavaScript код</li>
+                    <li><code>&lt;style&gt;</code> - CSS стилі</li>
+                </ul>
+            </div>
+
+            <div class="element-card">
+                <h3><span class="element-tag">&lt;body&gt;</span> - Тіло документа</h3>
+                <p><strong>Призначення:</strong> Містить весь видимий контент сторінки</p>
+                <p><strong>Семантичні елементи в body:</strong></p>
+                <ul>
+                    <li><code>&lt;header&gt;</code> - заголовок сторінки/розділу</li>
+                    <li><code>&lt;nav&gt;</code> - навігаційні елементи</li>
+                    <li><code>&lt;main&gt;</code> - основний контент</li>
+                    <li><code>&lt;article&gt;</code> - самостійний контент</li>
+                    <li><code>&lt;section&gt;</code> - розділи контенту</li>
+                    <li><code>&lt;aside&gt;</code> - бічна панель</li>
+                    <li><code>&lt;footer&gt;</code> - нижній колонтитул</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div style="display: grid; gap: 1rem;">
+                <div style="background: #e6fffa; border-left: 4px solid #38b2ac; padding: 1rem; border-radius: 5px;">
+                    <strong>🎯 SEO оптимізація:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Завжди вказуйте мову документа в атрибуті <code>lang</code></li>
+                        <li style="margin: 0.25rem 0;">Використовуйте описові <code>&lt;title&gt;</code> (50-60 символів)</li>
+                        <li style="margin: 0.25rem 0;">Додавайте мета-опис для кращої індексації</li>
+                    </ul>
+                </div>
+                <div style="background: #fef5e7; border-left: 4px solid #ed8936; padding: 1rem; border-radius: 5px;">
+                    <strong>📱 Адаптивність:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Обов'язково додавайте viewport мета-тег</li>
+                        <li style="margin: 0.25rem 0;">Використовуйте семантичні HTML5 елементи</li>
+                        <li style="margin: 0.25rem 0;">Дотримуйтесь правильної вкладеності тегів</li>
+                    </ul>
+                </div>
+                <div style="background: #f0fff4; border-left: 4px solid #48bb78; padding: 1rem; border-radius: 5px;">
+                    <strong>♿ Доступність:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Використовуйте правильну ієрархію заголовків</li>
+                        <li style="margin: 0.25rem 0;">Додавайте alt атрибути до зображень</li>
+                        <li style="margin: 0.25rem 0;">Забезпечуйте логічну структуру документа</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('intro')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 2 з 42</strong><br>
+                <small>Структура HTML документа</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('doctype')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+</body>
+</html> 

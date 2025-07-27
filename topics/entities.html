@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Спеціальні символи та HTML Entities</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .entity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .entity-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .entity-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .entity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .entity-symbol {
+            font-size: 2rem;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .entity-code {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .entity-description {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .category-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .entity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .entity-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .entity-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .entity-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .entity-table tr:hover {
+            background: #e6fffa;
+        }
+
+        .symbol-showcase {
+            font-size: 1.5rem;
+            text-align: center;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .code-cell {
+            font-family: monospace;
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            background: white;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            min-height: 80px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .warning-box {
+            background: #fef5e7;
+            border-left: 4px solid #ed8936;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .warning-box h4 {
+            color: #c05621;
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .info-box h4 {
+            color: #2c7a7b;
+            margin-bottom: 0.5rem;
+        }
+
+        .success-box {
+            background: #f0fff4;
+            border-left: 4px solid #48bb78;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .success-box h4 {
+            color: #2f855a;
+            margin-bottom: 0.5rem;
+        }
+
+        .practical-examples {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .example-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .example-title {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .example-code {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+        }
+
+        .example-result {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .unicode-demo {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .unicode-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .unicode-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 0.5rem;
+            text-align: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .unicode-item:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .unicode-info {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-top: 1rem;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a5568;
+        }
+
+        .search-box {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            width: 100%;
+            font-size: 1rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .entity-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls {
+                justify-content: center;
+            }
+
+            .unicode-grid {
+                grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+        .entity { color: #56b6c2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔣 Спеціальні символи та HTML Entities</h1>
+            <p>Вивчіть як правильно використовувати спеціальні символи в HTML документах</p>
+        </div>
+
+        <div class="content-section">
+            <h2>❓ Що таке HTML Entities?</h2>
+            <p><strong>HTML Entities</strong> - це спеціальні коди для відображення символів, які мають особливе значення в HTML або не можуть бути безпосередньо введені на клавіатурі.</p>
+            
+            <div class="highlight-box">
+                <h3>💡 Чому потрібні Entities?</h3>
+                <p><strong>1. Зарезервовані символи:</strong> &lt;, &gt;, &amp; мають спеціальне значення в HTML</p>
+                <p><strong>2. Спеціальні символи:</strong> математичні, валютні, стрілки</p>
+                <p><strong>3. Неломні пробіли:</strong> для точного контролю відстаней</p>
+                <p><strong>4. Юнікод символи:</strong> емоджі, іноземні алфавіти</p>
+            </div>
+
+            <div class="info-box">
+                <h4>📝 Формати написання:</h4>
+                <p><strong>Іменовані:</strong> &amp;lt; &amp;gt; &amp;amp;</p>
+                <p><strong>Числові (десятичні):</strong> &amp;#60; &amp;#62; &amp;#38;</p>
+                <p><strong>Числові (шістнадцяткові):</strong> &amp;#x3C; &amp;#x3E; &amp;#x26;</p>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>⚠️ Зарезервовані символи</h3>
+                <p>Обов'язкові для екранування в HTML контенті</p>
+            </div>
+            
+            <table class="entity-table">
+                <thead>
+                    <tr>
+                        <th>Символ</th>
+                        <th>HTML Entity</th>
+                        <th>Числовий код</th>
+                        <th>Опис</th>
+                        <th>Приклад використання</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="symbol-showcase">&lt;</td>
+                        <td class="code-cell">&amp;lt;</td>
+                        <td class="code-cell">&amp;#60;</td>
+                        <td>Менше ніж (відкриваючий тег)</td>
+                        <td>Показати HTML код: <code>&amp;lt;div&amp;gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">&gt;</td>
+                        <td class="code-cell">&amp;gt;</td>
+                        <td class="code-cell">&amp;#62;</td>
+                        <td>Більше ніж (закриваючий тег)</td>
+                        <td>Показати HTML код: <code>&amp;lt;/div&amp;gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">&amp;</td>
+                        <td class="code-cell">&amp;amp;</td>
+                        <td class="code-cell">&amp;#38;</td>
+                        <td>Амперсанд (початок entity)</td>
+                        <td>Компанія <code>Smith &amp;amp; Co</code></td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">"</td>
+                        <td class="code-cell">&amp;quot;</td>
+                        <td class="code-cell">&amp;#34;</td>
+                        <td>Подвійні лапки</td>
+                        <td>В атрибутах: <code>title=&amp;quot;Текст&amp;quot;</code></td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">'</td>
+                        <td class="code-cell">&amp;apos;</td>
+                        <td class="code-cell">&amp;#39;</td>
+                        <td>Одинарні лапки</td>
+                        <td>В тексті: <code>It&amp;apos;s working</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box">
+                <h4>⚠️ Важливо:</h4>
+                <p>Завжди екрануйте <code>&lt;</code>, <code>&gt;</code>, <code>&amp;</code> у текстовому контенті, щоб уникнути проблем з парсингом HTML.</p>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>📏 Спеціальні пробіли</h3>
+                <p>Для точного контролю відстаней та типографії</p>
+            </div>
+            
+            <table class="entity-table">
+                <thead>
+                    <tr>
+                        <th>Тип пробілу</th>
+                        <th>HTML Entity</th>
+                        <th>Ширина</th>
+                        <th>Опис та використання</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Неломний пробіл</strong></td>
+                        <td class="code-cell">&amp;nbsp;</td>
+                        <td>Стандартний пробіл</td>
+                        <td>Запобігає переносу рядка між словами</td>
+                    </tr>
+                    <tr>
+                        <td><strong>En пробіл</strong></td>
+                        <td class="code-cell">&amp;ensp;</td>
+                        <td>Половина em (ширина літери N)</td>
+                        <td>Середній пробіл для типографії</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Em пробіл</strong></td>
+                        <td class="code-cell">&amp;emsp;</td>
+                        <td>Ширина літери M</td>
+                        <td>Широкий пробіл для відступів</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Тонкий пробіл</strong></td>
+                        <td class="code-cell">&amp;thinsp;</td>
+                        <td>1/6 від em</td>
+                        <td>Вузький пробіл для точної типографії</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Пробіл нульової ширини</strong></td>
+                        <td class="code-cell">&amp;#8203;</td>
+                        <td>0</td>
+                        <td>Невидимий символ для контролю переносів</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="interactive-demo">
+                <h4>🎮 Інтерактивна демонстрація пробілів:</h4>
+                <div class="demo-controls">
+                    <button class="demo-button" onclick="showSpaceExample('normal')">Звичайні пробіли</button>
+                    <button class="demo-button" onclick="showSpaceExample('nbsp')">Неломні пробіли</button>
+                    <button class="demo-button" onclick="showSpaceExample('various')">Різні типи</button>
+                </div>
+                <div class="demo-output" id="spaceDemo">
+                    <p>Це звичайний текст з декількома     пробілами     між словами.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🔢 Математичні символи</h3>
+                <p>Символи для математичних виразів та формул</p>
+            </div>
+            
+            <div class="entity-grid">
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">±</span>
+                        <span class="entity-code">&amp;plusmn;</span>
+                    </div>
+                    <div class="entity-description">Плюс-мінус</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">×</span>
+                        <span class="entity-code">&amp;times;</span>
+                    </div>
+                    <div class="entity-description">Множення</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">÷</span>
+                        <span class="entity-code">&amp;divide;</span>
+                    </div>
+                    <div class="entity-description">Ділення</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">≠</span>
+                        <span class="entity-code">&amp;ne;</span>
+                    </div>
+                    <div class="entity-description">Не дорівнює</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">≤</span>
+                        <span class="entity-code">&amp;le;</span>
+                    </div>
+                    <div class="entity-description">Менше або дорівнює</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">≥</span>
+                        <span class="entity-code">&amp;ge;</span>
+                    </div>
+                    <div class="entity-description">Більше або дорівнює</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">∞</span>
+                        <span class="entity-code">&amp;infin;</span>
+                    </div>
+                    <div class="entity-description">Нескінченність</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">√</span>
+                        <span class="entity-code">&amp;radic;</span>
+                    </div>
+                    <div class="entity-description">Квадратний корінь</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">∑</span>
+                        <span class="entity-code">&amp;sum;</span>
+                    </div>
+                    <div class="entity-description">Сума</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">∏</span>
+                        <span class="entity-code">&amp;prod;</span>
+                    </div>
+                    <div class="entity-description">Добуток</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">∂</span>
+                        <span class="entity-code">&amp;part;</span>
+                    </div>
+                    <div class="entity-description">Частинна похідна</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">∫</span>
+                        <span class="entity-code">&amp;int;</span>
+                    </div>
+                    <div class="entity-description">Інтеграл</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>💰 Валютні символи</h3>
+                <p>Символи різних валют світу</p>
+            </div>
+            
+            <table class="entity-table">
+                <thead>
+                    <tr>
+                        <th>Символ</th>
+                        <th>HTML Entity</th>
+                        <th>Числовий код</th>
+                        <th>Валюта</th>
+                        <th>Приклад</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="symbol-showcase">€</td>
+                        <td class="code-cell">&amp;euro;</td>
+                        <td class="code-cell">&amp;#8364;</td>
+                        <td>Євро</td>
+                        <td>Ціна: 50€</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">$</td>
+                        <td class="code-cell">&amp;#36;</td>
+                        <td class="code-cell">&amp;#36;</td>
+                        <td>Долар США</td>
+                        <td>Ціна: $100</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">₴</td>
+                        <td class="code-cell">&amp;#8372;</td>
+                        <td class="code-cell">&amp;#8372;</td>
+                        <td>Гривня</td>
+                        <td>Ціна: 1000₴</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">£</td>
+                        <td class="code-cell">&amp;pound;</td>
+                        <td class="code-cell">&amp;#163;</td>
+                        <td>Фунт стерлінгів</td>
+                        <td>Ціна: £75</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">¥</td>
+                        <td class="code-cell">&amp;yen;</td>
+                        <td class="code-cell">&amp;#165;</td>
+                        <td>Японська єна</td>
+                        <td>Ціна: ¥5000</td>
+                    </tr>
+                    <tr>
+                        <td class="symbol-showcase">¢</td>
+                        <td class="code-cell">&amp;cent;</td>
+                        <td class="code-cell">&amp;#162;</td>
+                        <td>Цент</td>
+                        <td>Ціна: 99¢</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>➡️ Стрілки та символи</h3>
+                <p>Стрілки, символи та спеціальні знаки</p>
+            </div>
+            
+            <div class="entity-grid">
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">←</span>
+                        <span class="entity-code">&amp;larr;</span>
+                    </div>
+                    <div class="entity-description">Стрілка вліво</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">→</span>
+                        <span class="entity-code">&amp;rarr;</span>
+                    </div>
+                    <div class="entity-description">Стрілка вправо</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">↑</span>
+                        <span class="entity-code">&amp;uarr;</span>
+                    </div>
+                    <div class="entity-description">Стрілка вгору</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">↓</span>
+                        <span class="entity-code">&amp;darr;</span>
+                    </div>
+                    <div class="entity-description">Стрілка вниз</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">↔</span>
+                        <span class="entity-code">&amp;harr;</span>
+                    </div>
+                    <div class="entity-description">Двостороння стрілка</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">⇒</span>
+                        <span class="entity-code">&amp;rArr;</span>
+                    </div>
+                    <div class="entity-description">Подвійна стрілка</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">©</span>
+                        <span class="entity-code">&amp;copy;</span>
+                    </div>
+                    <div class="entity-description">Авторське право</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">®</span>
+                        <span class="entity-code">&amp;reg;</span>
+                    </div>
+                    <div class="entity-description">Зареєстрована торгова марка</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">™</span>
+                        <span class="entity-code">&amp;trade;</span>
+                    </div>
+                    <div class="entity-description">Торгова марка</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">§</span>
+                        <span class="entity-code">&amp;sect;</span>
+                    </div>
+                    <div class="entity-description">Знак параграфа</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">¶</span>
+                        <span class="entity-code">&amp;para;</span>
+                    </div>
+                    <div class="entity-description">Знак абзацу</div>
+                </div>
+                
+                <div class="entity-card">
+                    <div class="entity-header">
+                        <span class="entity-symbol">•</span>
+                        <span class="entity-code">&amp;bull;</span>
+                    </div>
+                    <div class="entity-description">Маркер списку</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🌐 Юнікод та емоджі</h2>
+            <p>HTML підтримує всі символи Юнікод через числові коди. Можна використовувати як десятичні, так і шістнадцяткові коди.</p>
+            
+            <div class="unicode-demo">
+                <h4>🎯 Експлорер символів Юнікод:</h4>
+                <input type="text" class="search-box" placeholder="Введіть символ для отримання інформації..." id="unicodeInput" oninput="analyzeCharacter()">
+                
+                <div class="unicode-grid">
+                    <div class="unicode-item" onclick="selectSymbol('😀')">😀</div>
+                    <div class="unicode-item" onclick="selectSymbol('😎')">😎</div>
+                    <div class="unicode-item" onclick="selectSymbol('🎉')">🎉</div>
+                    <div class="unicode-item" onclick="selectSymbol('💡')">💡</div>
+                    <div class="unicode-item" onclick="selectSymbol('🔥')">🔥</div>
+                    <div class="unicode-item" onclick="selectSymbol('⭐')">⭐</div>
+                    <div class="unicode-item" onclick="selectSymbol('💻')">💻</div>
+                    <div class="unicode-item" onclick="selectSymbol('📱')">📱</div>
+                    <div class="unicode-item" onclick="selectSymbol('🌟')">🌟</div>
+                    <div class="unicode-item" onclick="selectSymbol('🚀')">🚀</div>
+                    <div class="unicode-item" onclick="selectSymbol('❤️')">❤️</div>
+                    <div class="unicode-item" onclick="selectSymbol('✅')">✅</div>
+                </div>
+                
+                <div class="unicode-info" id="unicodeInfo">
+                    Клікніть на символ або введіть текст для аналізу
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>📋 Формати Юнікод:</h4>
+                <p><strong>Десятковий:</strong> &amp;#128512; → 😀</p>
+                <p><strong>Шістнадцятковий:</strong> &amp;#x1F600; → 😀</p>
+                <p><strong>Прямий UTF-8:</strong> 😀 (найпростіший спосіб)</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>💼 Практичні приклади</h2>
+            <div class="practical-examples">
+                <div class="example-card">
+                    <div class="example-title">📰 Новинна стаття з символами</div>
+                    <div class="example-code">
+&lt;article&gt;
+  &lt;h2&gt;Новий курс долара: 1$ = 37.50₴&lt;/h2&gt;
+  &lt;p&gt;Курс валют &lt;em&gt;значно&lt;/em&gt; змінився:&lt;/p&gt;
+  &lt;ul&gt;
+    &lt;li&gt;€ &amp;rarr; 41.20₴ (&amp;uarr; +2.5%)&lt;/li&gt;
+    &lt;li&gt;$ &amp;rarr; 37.50₴ (&amp;darr; -1.2%)&lt;/li&gt;
+    &lt;li&gt;£ &amp;rarr; 47.80₴ (&amp;rarr; 0%)&lt;/li&gt;
+  &lt;/ul&gt;
+  &lt;p&gt;&lt;small&gt;&amp;copy; 2024 Новини України&lt;/small&gt;&lt;/p&gt;
+&lt;/article&gt;</div>
+                    <div class="example-result">
+                        <h3>Новий курс долара: 1$ = 37.50₴</h3>
+                        <p>Курс валют <em>значно</em> змінився:</p>
+                        <ul>
+                            <li>€ → 41.20₴ (↑ +2.5%)</li>
+                            <li>$ → 37.50₴ (↓ -1.2%)</li>
+                            <li>£ → 47.80₴ (→ 0%)</li>
+                        </ul>
+                        <p><small>© 2024 Новини України</small></p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">📐 Математична формула</div>
+                    <div class="example-code">
+&lt;div class="math-formula"&gt;
+  &lt;h3&gt;Квадратне рівняння&lt;/h3&gt;
+  &lt;p&gt;
+    x = &lt;span style="font-size: 1.2em;"&gt;
+      &amp;minus;b &amp;plusmn; &amp;radic;(b&lt;sup&gt;2&lt;/sup&gt; &amp;minus; 4ac)
+      &lt;hr style="margin: 0; border: 1px solid black;"&gt;
+      2a
+    &lt;/span&gt;
+  &lt;/p&gt;
+  &lt;p&gt;&lt;strong&gt;Де:&lt;/strong&gt; a &amp;ne; 0, D = b&lt;sup&gt;2&lt;/sup&gt; - 4ac&lt;/p&gt;
+&lt;/div&gt;</div>
+                    <div class="example-result">
+                        <h4>Квадратне рівняння</h4>
+                        <p style="font-size: 1.2em; text-align: center;">
+                            x = −b ± √(b² − 4ac) / 2a
+                        </p>
+                        <p><strong>Де:</strong> a ≠ 0, D = b² - 4ac</p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🛒 Інтернет-магазин</div>
+                    <div class="example-code">
+&lt;div class="product-card"&gt;
+  &lt;h3&gt;Смартфон iPhone 15 Pro&trade;&lt;/h3&gt;
+  &lt;div class="price"&gt;
+    &lt;span class="old-price"&gt;45000₴&lt;/span&gt;
+    &lt;span class="new-price"&gt;42000₴&lt;/span&gt;
+    &lt;span class="discount"&gt;(&amp;minus;7%)&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class="features"&gt;
+    &lt;p&gt;&amp;bull; 256GB пам&amp;apos;яті&lt;/p&gt;
+    &lt;p&gt;&amp;bull; 5G підтримка&lt;/p&gt;
+    &lt;p&gt;&amp;bull; Face ID&amp;reg;&lt;/p&gt;
+  &lt;/div&gt;
+  &lt;p&gt;&lt;small&gt;&amp;copy; Apple Inc. Всі права захищені.&lt;/small&gt;&lt;/p&gt;
+&lt;/div&gt;</div>
+                    <div class="example-result">
+                        <h4>Смартфон iPhone 15 Pro™</h4>
+                        <div style="margin: 1rem 0;">
+                            <span style="text-decoration: line-through; color: #999;">45000₴</span>
+                            <span style="font-size: 1.3em; color: #e53e3e; font-weight: bold;">42000₴</span>
+                            <span style="color: #48bb78;">(−7%)</span>
+                        </div>
+                        <div>
+                            <p>• 256GB пам'яті</p>
+                            <p>• 5G підтримка</p>
+                            <p>• Face ID®</p>
+                        </div>
+                        <p><small>© Apple Inc. Всі права захищені.</small></p>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">📝 Показ HTML коду</div>
+                    <div class="example-code">
+&lt;div class="code-example"&gt;
+  &lt;h4&gt;Приклад HTML коду:&lt;/h4&gt;
+  &lt;pre&gt;
+&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;uk&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+    &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+    &amp;lt;title&amp;gt;Моя сторінка&amp;lt;/title&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+    &amp;lt;h1&amp;gt;Привіт, світ!&amp;lt;/h1&amp;gt;
+    &amp;lt;p&amp;gt;Це &amp;lt;strong&amp;gt;жирний&amp;lt;/strong&amp;gt; текст.&amp;lt;/p&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+  &lt;/pre&gt;
+&lt;/div&gt;</div>
+                    <div class="example-result">
+                        <h4>Приклад HTML коду:</h4>
+                        <pre style="background: #f7fafc; padding: 1rem; border-radius: 5px; font-family: monospace; overflow-x: auto;">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Моя сторінка&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Привіт, світ!&lt;/h1&gt;
+    &lt;p&gt;Це &lt;strong&gt;жирний&lt;/strong&gt; текст.&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="success-box">
+                <h4>✅ Рекомендації:</h4>
+                <ul style="padding-left: 1.5rem;">
+                    <li style="margin: 0.25rem 0;">Завжди екрануйте &lt;, &gt;, &amp; у текстовому контенті</li>
+                    <li style="margin: 0.25rem 0;">Використовуйте &amp;nbsp; для неломних пробілів</li>
+                    <li style="margin: 0.25rem 0;">Віддавайте перевагу іменованим entities (&amp;copy; замість &amp;#169;)</li>
+                    <li style="margin: 0.25rem 0;">Для емоджі використовуйте пряме введення в UTF-8</li>
+                    <li style="margin: 0.25rem 0;">Перевіряйте підтримку символів у різних браузерах</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Обережно:</h4>
+                <ul style="padding-left: 1.5rem;">
+                    <li style="margin: 0.25rem 0;">Не зловживайте неломними пробілами для форматування</li>
+                    <li style="margin: 0.25rem 0;">Перевіряйте коректність відображення на мобільних пристроях</li>
+                    <li style="margin: 0.25rem 0;">Деякі старі браузери можуть не підтримувати нові символи</li>
+                    <li style="margin: 0.25rem 0;">Використовуйте fallback для критично важливих символів</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('formatting')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 8 з 42</strong><br>
+                <small>Спеціальні символи та HTML Entities</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('lists')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const spaceExamples = {
+            normal: `<p>Це звичайний текст з декількома     пробілами     між словами.</p>
+<p>HTML ігнорує додаткові пробіли та переноси
+рядків.</p>`,
+            
+            nbsp: `<p>Це&nbsp;текст&nbsp;з&nbsp;неломними&nbsp;пробілами.</p>
+<p>Телефон:&nbsp;+38&nbsp;(067)&nbsp;123-45-67</p>
+<p>Сума:&nbsp;1&nbsp;000&nbsp;000&nbsp;₴</p>`,
+            
+            various: `<p>Звичайний пробіл: | |</p>
+<p>En пробіл: |&ensp;|</p>
+<p>Em пробіл: |&emsp;|</p>
+<p>Тонкий пробіл: |&thinsp;|</p>
+<p>Неломний пробіл: |&nbsp;|</p>`
+        };
+
+        function showSpaceExample(type) {
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            document.getElementById('spaceDemo').innerHTML = spaceExamples[type];
+        }
+
+        function selectSymbol(symbol) {
+            document.getElementById('unicodeInput').value = symbol;
+            analyzeCharacter();
+        }
+
+        function analyzeCharacter() {
+            const input = document.getElementById('unicodeInput').value;
+            const infoDiv = document.getElementById('unicodeInfo');
+            
+            if (!input) {
+                infoDiv.innerHTML = 'Клікніть на символ або введіть текст для аналізу';
+                return;
+            }
+            
+            const char = input.charAt(0);
+            const code = char.charCodeAt(0);
+            const hex = code.toString(16).toUpperCase();
+            
+            infoDiv.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">${char}</div>
+                    <div><strong>Символ:</strong> ${char}</div>
+                    <div><strong>Десятковий код:</strong> &amp;#${code};</div>
+                    <div><strong>Шістнадцятковий:</strong> &amp;#x${hex};</div>
+                    <div><strong>UTF-16:</strong> ${code}</div>
+                </div>
+            `;
+        }
+
+        // Initialize first demo
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('.demo-button').classList.add('active');
+            
+            // Add scroll animation
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.entity-card, .example-card, .category-section').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

@@ -1,0 +1,1460 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Зображення та мультимедіа</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: hidden;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .image-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .image-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .image-header {
+            background: #667eea;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .image-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .image-content {
+            padding: 1.5rem;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .result-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            text-align: center;
+        }
+
+        .category-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: hidden;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .attribute-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .attribute-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .attribute-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .attribute-name {
+            font-weight: bold;
+            color: #2d3748;
+            font-family: monospace;
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+        }
+
+        .attribute-description {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .demo-output .code-example {
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .formats-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .format-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .format-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .format-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .format-pros {
+            color: #48bb78;
+            margin: 0.5rem 0;
+        }
+
+        .format-cons {
+            color: #f56565;
+            margin: 0.5rem 0;
+        }
+
+        .format-usage {
+            background: #e6fffa;
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .responsive-demo {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .responsive-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .responsive-example img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .size-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .size-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .size-example img {
+            border-radius: 5px;
+        }
+
+        .optimization-tips {
+            background: #fef5e7;
+            border-left: 4px solid #ed8936;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .optimization-tips h4 {
+            color: #c05621;
+            margin-bottom: 0.5rem;
+        }
+
+        .accessibility-tips {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .accessibility-tips h4 {
+            color: #2c7a7b;
+            margin-bottom: 0.5rem;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.danger {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .practice-card ul {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .practice-card li {
+            margin: 0.25rem 0;
+        }
+
+        .practical-examples {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: hidden;
+        }
+
+        .example-title {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .example-code-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .example-result-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .figure-example {
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .figure-example figure {
+            margin: 0;
+            display: inline-block;
+        }
+
+        .figure-example img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .figure-example figcaption {
+            margin-top: 0.5rem;
+            color: #4a5568;
+            font-style: italic;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .attribute-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .attribute-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .attribute-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .attribute-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .attribute-table tr:hover {
+            background: #e6fffa;
+        }
+
+        .code-cell {
+            font-family: 'Courier New', Consolas, monospace;
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        /* Image placeholder styles */
+        .image-placeholder {
+            background: linear-gradient(45deg, #f7fafc 25%, transparent 25%, transparent 75%, #f7fafc 75%, #f7fafc),
+                        linear-gradient(45deg, #f7fafc 25%, transparent 25%, transparent 75%, #f7fafc 75%, #f7fafc);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            border: 2px solid #e2e8f0;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4a5568;
+            font-weight: bold;
+            text-align: center;
+            min-height: 150px;
+        }
+
+        .small-placeholder {
+            width: 100px;
+            height: 100px;
+            min-height: 100px;
+        }
+
+        .medium-placeholder {
+            width: 200px;
+            height: 150px;
+            min-height: 150px;
+        }
+
+        .large-placeholder {
+            width: 300px;
+            height: 200px;
+            min-height: 200px;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .image-types-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-split {
+                grid-template-columns: 1fr;
+            }
+            
+            .attributes-grid, .formats-comparison, .size-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls {
+                justify-content: center;
+            }
+
+            .large-placeholder {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .medium-placeholder {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🖼️ Зображення та мультимедіа</h1>
+            <p>Навчіться працювати з зображеннями, оптимізувати їх та створювати адаптивний візуальний контент</p>
+        </div>
+
+        <div class="content-section">
+            <h2>📸 Основи зображень в HTML</h2>
+            <p>Тег <code>&lt;img&gt;</code> використовується для вставки зображень у веб-сторінки. Це самозакриваючий тег, який не потребує закриваючого тегу.</p>
+            
+            <div class="highlight-box">
+                <h3>💡 Анатомія зображення</h3>
+                <p><code>&lt;img src="шлях_до_зображення" alt="опис_зображення"&gt;</code></p>
+                <p><strong>src</strong> - обов'язковий атрибут з шляхом до файлу</p>
+                <p><strong>alt</strong> - альтернативний текст для доступності</p>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🎯 Основні атрибути зображень</h3>
+                <p>Ключові атрибути для контролю відображення зображень</p>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="attribute-table">
+                    <thead>
+                        <tr>
+                            <th>Атрибут</th>
+                            <th>Опис</th>
+                            <th>Приклад</th>
+                            <th>Примітки</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="code-cell">src</td>
+                            <td>Шлях до файлу зображення</td>
+                            <td><code>src="images/photo.jpg"</code></td>
+                            <td>Обов'язковий атрибут</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">alt</td>
+                            <td>Альтернативний текст</td>
+                            <td><code>alt="Захід сонця над морем"</code></td>
+                            <td>Важливо для доступності</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">width</td>
+                            <td>Ширина зображення в пікселях</td>
+                            <td><code>width="300"</code></td>
+                            <td>Краще використовувати CSS</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">height</td>
+                            <td>Висота зображення в пікселях</td>
+                            <td><code>height="200"</code></td>
+                            <td>Краще використовувати CSS</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">title</td>
+                            <td>Підказка при наведенні</td>
+                            <td><code>title="Прекрасний захід"</code></td>
+                            <td>Спливаюча підказка</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">loading</td>
+                            <td>Контроль завантаження</td>
+                            <td><code>loading="lazy"</code></td>
+                            <td>lazy, eager</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">srcset</td>
+                            <td>Адаптивні зображення</td>
+                            <td><code>srcset="img-2x.jpg 2x"</code></td>
+                            <td>Для різних роздільностей</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">sizes</td>
+                            <td>Розміри для адаптивності</td>
+                            <td><code>sizes="(max-width: 768px) 100vw"</code></td>
+                            <td>Використовується з srcset</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>🎮 Інтерактивна демонстрація атрибутів:</h4>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showImageDemo('basic')">Базове зображення</button>
+                    <button class="demo-button" onclick="showImageDemo('sizing')">Розміри</button>
+                    <button class="demo-button" onclick="showImageDemo('loading')">Ледаче завантаження</button>
+                    <button class="demo-button" onclick="showImageDemo('responsive')">Адаптивність</button>
+                </div>
+                
+                <div class="demo-output" id="imageDemo">
+                    <div class="code-example">
+&lt;img src="landscape.jpg" 
+     alt="Гірський пейзаж з озером"&gt;</div>
+                    <div class="result-example">
+                        <h5>Результат:</h5>
+                        <div class="image-placeholder medium-placeholder">
+                            🏔️ Гірський пейзаж з озером<br>
+                            <small>landscape.jpg</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🎨 Формати зображень</h3>
+                <p>Різні формати файлів та їх особливості</p>
+            </div>
+            
+            <div class="formats-comparison">
+                <div class="format-card">
+                    <div class="format-icon">📷</div>
+                    <div class="format-title">JPEG / JPG</div>
+                    <div class="format-pros">✅ Малий розмір файлу</div>
+                    <div class="format-pros">✅ Підтримка мільйонів кольорів</div>
+                    <div class="format-cons">❌ Втрата якості при стисненні</div>
+                    <div class="format-cons">❌ Немає прозорості</div>
+                    <div class="format-usage">
+                        <strong>Використання:</strong> фотографії, складні зображення з багатьма кольорами
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">🖼️</div>
+                    <div class="format-title">PNG</div>
+                    <div class="format-pros">✅ Без втрати якості</div>
+                    <div class="format-pros">✅ Підтримка прозорості</div>
+                    <div class="format-cons">❌ Більший розмір файлу</div>
+                    <div class="format-cons">❌ Не підходить для фото</div>
+                    <div class="format-usage">
+                        <strong>Використання:</strong> логотипи, іконки, зображення з прозорістю
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">🎯</div>
+                    <div class="format-title">WebP</div>
+                    <div class="format-pros">✅ Відмінне стиснення</div>
+                    <div class="format-pros">✅ Підтримка прозорості</div>
+                    <div class="format-pros">✅ Анімація</div>
+                    <div class="format-cons">❌ Не всі браузери підтримують</div>
+                    <div class="format-usage">
+                        <strong>Використання:</strong> сучасні веб-сайти з fallback
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">📐</div>
+                    <div class="format-title">SVG</div>
+                    <div class="format-pros">✅ Векторна графіка</div>
+                    <div class="format-pros">✅ Малий розмір</div>
+                    <div class="format-pros">✅ Масштабується без втрат</div>
+                    <div class="format-cons">❌ Не підходить для фото</div>
+                    <div class="format-usage">
+                        <strong>Використання:</strong> іконки, логотипи, прості ілюстрації
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">🎬</div>
+                    <div class="format-title">GIF</div>
+                    <div class="format-pros">✅ Підтримка анімації</div>
+                    <div class="format-pros">✅ Широка підтримка</div>
+                    <div class="format-cons">❌ Обмежена палітра (256 кольорів)</div>
+                    <div class="format-cons">❌ Великий розмір для анімації</div>
+                    <div class="format-usage">
+                        <strong>Використання:</strong> прості анімації, мемки
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-icon">🆕</div>
+                    <div class="format-title">AVIF</div>
+                    <div class="format-pros">✅ Найкраще стиснення</div>
+                    <div class="format-pros">✅ Висока якість</div>
+                    <div class="format-pros">✅ Підтримка HDR</div>
+                    <div class="format-cons">❌ Обмежена підтримка браузерів</div>
+                    <div class="format-usage">
+                        <strong>Використання:</strong> майбутнє веб-розробки
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>📱 Адаптивні зображення</h3>
+                <p>Оптимізація зображень для різних пристроїв та екранів</p>
+            </div>
+            
+            <div class="responsive-demo">
+                <h4>🎯 srcset та sizes</h4>
+                
+                <div class="responsive-example">
+                    <h5>Адаптивність за роздільністю екрану:</h5>
+                    <div class="code-example">
+&lt;img src="image-800w.jpg" 
+     srcset="image-400w.jpg 400w,
+             image-800w.jpg 800w,
+             image-1200w.jpg 1200w"
+     sizes="(max-width: 600px) 400px,
+            (max-width: 900px) 800px,
+            1200px"
+     alt="Адаптивне зображення"&gt;</div>
+                    <div class="result-example">
+                        <div class="image-placeholder large-placeholder">
+                            📱💻🖥️<br>
+                            Адаптивне зображення<br>
+                            <small>Автоматично вибирає розмір</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="responsive-example">
+                    <h5>Адаптивність за щільністю пікселів:</h5>
+                    <div class="code-example">
+&lt;img src="logo.png" 
+     srcset="logo.png 1x,
+             logo@2x.png 2x,
+             logo@3x.png 3x"
+     alt="Логотип компанії"&gt;</div>
+                    <div class="result-example">
+                        <div class="image-placeholder small-placeholder">
+                            🏢<br>
+                            Логотип<br>
+                            <small>1x, 2x, 3x</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🖼️ Figure та Figcaption</h3>
+                <p>Семантична розмітка для зображень з підписами</p>
+            </div>
+            
+            <div class="figure-example">
+                <div class="code-example">
+&lt;figure&gt;
+  &lt;img src="chart.png" 
+       alt="Графік продажів за 2024 рік"&gt;
+  &lt;figcaption&gt;
+    Рис. 1: Динаміка продажів компанії за перше півріччя 2024 року
+  &lt;/figcaption&gt;
+&lt;/figure&gt;</div>
+                
+                <div class="result-example">
+                    <figure>
+                        <div class="image-placeholder medium-placeholder">
+                            📊<br>
+                            Графік продажів
+                        </div>
+                        <figcaption>
+                            Рис. 1: Динаміка продажів компанії за перше півріччя 2024 року
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>💡 Переваги Figure та Figcaption</h3>
+                <p><strong>&lt;figure&gt;</strong> - семантично групує зображення з підписом</p>
+                <p><strong>&lt;figcaption&gt;</strong> - надає опис або підпис до зображення</p>
+                <p><strong>SEO дружність</strong> - пошукові системи краще розуміють контекст</p>
+                <p><strong>Доступність</strong> - екранні читачі правильно озвучують зв'язок</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ Оптимізація зображень</h2>
+            
+            <div class="optimization-tips">
+                <h4>🚀 Поради щодо оптимізації:</h4>
+                <ul>
+                    <li><strong>Розмір файлу:</strong> стискайте зображення без втрати якості</li>
+                    <li><strong>Формат:</strong> обирайте правильний формат для типу зображення</li>
+                    <li><strong>Розміри:</strong> не завантажуйте зображення більші ніж потрібно</li>
+                    <li><strong>Lazy loading:</strong> використовуйте <code>loading="lazy"</code></li>
+                    <li><strong>WebP:</strong> використовуйте сучасні формати з fallback</li>
+                    <li><strong>CDN:</strong> розміщуйте зображення на швидких серверах</li>
+                </ul>
+            </div>
+
+            <div class="size-demo">
+                <div class="size-example">
+                    <h4>Мале зображення</h4>
+                    <div class="code-example">
+&lt;img src="thumb.jpg" 
+     alt="Мініатюра"
+     width="100" 
+     height="100"&gt;</div>
+                    <div class="image-placeholder small-placeholder">
+                        🔍<br>
+                        100×100px
+                    </div>
+                    <p>Для превью, аватарів</p>
+                </div>
+
+                <div class="size-example">
+                    <h4>Середнє зображення</h4>
+                    <div class="code-example">
+&lt;img src="medium.jpg" 
+     alt="Середнє зображення"
+     width="300" 
+     height="200"&gt;</div>
+                    <div class="image-placeholder medium-placeholder">
+                        📷<br>
+                        300×200px
+                    </div>
+                    <p>Для карточок, галерей</p>
+                </div>
+
+                <div class="size-example">
+                    <h4>Велике зображення</h4>
+                    <div class="code-example">
+&lt;img src="hero.jpg" 
+     alt="Головне зображення"
+     width="800" 
+     height="400"&gt;</div>
+                    <div class="image-placeholder large-placeholder">
+                        🖼️<br>
+                        800×400px
+                    </div>
+                    <p>Для героїв, банерів</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Доступність зображень</h2>
+            
+            <div class="accessibility-tips">
+                <h4>♿ Важливо для доступності:</h4>
+                <ul>
+                    <li><strong>alt атрибут:</strong> завжди додавайте описовий текст</li>
+                    <li><strong>Декоративні зображення:</strong> використовуйте <code>alt=""</code></li>
+                    <li><strong>Інформативні зображення:</strong> опишіть зміст та контекст</li>
+                    <li><strong>Складні зображення:</strong> додавайте детальний опис</li>
+                    <li><strong>Текст у зображеннях:</strong> дублюйте в alt або на сторінці</li>
+                    <li><strong>Контраст:</strong> забезпечте достатній контраст</li>
+                </ul>
+            </div>
+
+            <div class="example-split">
+                <div class="example-code-section">
+&lt;!-- Інформативне зображення --&gt;
+&lt;img src="weather-chart.png" 
+     alt="Графік температури в Києві: понеділок +15°C, вівторок +18°C, середа +12°C"&gt;
+
+&lt;!-- Декоративне зображення --&gt;
+&lt;img src="decorative-border.png" 
+     alt=""&gt;
+
+&lt;!-- Зображення з текстом --&gt;
+&lt;img src="sale-banner.jpg" 
+     alt="Розпродаж! Знижки до 50% на все взуття. Діє до 31 грудня"&gt;</div>
+                <div class="example-result-section">
+                    <h5>Приклади правильного alt тексту:</h5>
+                    <div class="image-placeholder medium-placeholder" style="margin: 1rem 0;">
+                        📈 Графік температури<br>
+                        <small>Інформативний alt текст</small>
+                    </div>
+                    <div class="image-placeholder small-placeholder" style="margin: 1rem 0;">
+                        🎨 Декорація<br>
+                        <small>alt=""</small>
+                    </div>
+                    <div class="image-placeholder medium-placeholder" style="margin: 1rem 0;">
+                        🏷️ Розпродаж!<br>
+                        <small>Alt включає весь текст</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📚 Практичні приклади</h2>
+            <div class="practical-examples">
+                <div class="example-card">
+                    <div class="example-title">
+                        🛍️ Галерея товарів
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;section class="product-gallery"&gt;
+  &lt;h2&gt;Наші товари&lt;/h2&gt;
+  
+  &lt;div class="product-grid"&gt;
+    &lt;article class="product-card"&gt;
+      &lt;figure&gt;
+        &lt;img src="products/laptop-thumb.jpg" 
+             srcset="products/laptop-thumb.jpg 300w,
+                     products/laptop-medium.jpg 600w"
+             sizes="(max-width: 768px) 300px, 600px"
+             alt="Ноутбук ASUS VivoBook 15 - сірий колір, відкритий екран"
+             loading="lazy"&gt;
+        &lt;figcaption&gt;
+          &lt;h3&gt;ASUS VivoBook 15&lt;/h3&gt;
+          &lt;p class="price"&gt;25,999 ₴&lt;/p&gt;
+        &lt;/figcaption&gt;
+      &lt;/figure&gt;
+      
+      &lt;div class="product-actions"&gt;
+        &lt;button&gt;Купити&lt;/button&gt;
+        &lt;button&gt;До порівняння&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+    &lt;article class="product-card"&gt;
+      &lt;figure&gt;
+        &lt;img src="products/phone-thumb.jpg" 
+             srcset="products/phone-thumb.jpg 300w,
+                     products/phone-medium.jpg 600w"
+             sizes="(max-width: 768px) 300px, 600px"
+             alt="Смартфон iPhone 15 Pro - титановий колір, вид спереду"
+             loading="lazy"&gt;
+        &lt;figcaption&gt;
+          &lt;h3&gt;iPhone 15 Pro&lt;/h3&gt;
+          &lt;p class="price"&gt;45,999 ₴&lt;/p&gt;
+        &lt;/figcaption&gt;
+      &lt;/figure&gt;
+      
+      &lt;div class="product-actions"&gt;
+        &lt;button&gt;Купити&lt;/button&gt;
+        &lt;button&gt;До порівняння&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Наші товари</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                                <article style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                                    <figure style="margin: 0;">
+                                        <div class="image-placeholder medium-placeholder" style="margin-bottom: 1rem;">
+                                            💻<br>
+                                            ASUS VivoBook 15
+                                        </div>
+                                        <figcaption>
+                                            <h5>ASUS VivoBook 15</h5>
+                                            <p style="color: #48bb78; font-weight: bold;">25,999 ₴</p>
+                                        </figcaption>
+                                    </figure>
+                                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                                        <button style="flex: 1; padding: 0.5rem; background: #667eea; color: white; border: none; border-radius: 4px;">Купити</button>
+                                        <button style="flex: 1; padding: 0.5rem; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 4px;">До порівняння</button>
+                                    </div>
+                                </article>
+                                
+                                <article style="border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem;">
+                                    <figure style="margin: 0;">
+                                        <div class="image-placeholder medium-placeholder" style="margin-bottom: 1rem;">
+                                            📱<br>
+                                            iPhone 15 Pro
+                                        </div>
+                                        <figcaption>
+                                            <h5>iPhone 15 Pro</h5>
+                                            <p style="color: #48bb78; font-weight: bold;">45,999 ₴</p>
+                                        </figcaption>
+                                    </figure>
+                                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                                        <button style="flex: 1; padding: 0.5rem; background: #667eea; color: white; border: none; border-radius: 4px;">Купити</button>
+                                        <button style="flex: 1; padding: 0.5rem; background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 4px;">До порівняння</button>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        📰 Стаття з ілюстраціями
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;article class="blog-post"&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Як вибрати ідеальний ноутбук&lt;/h1&gt;
+    &lt;figure class="hero-image"&gt;
+      &lt;img src="blog/laptop-guide-hero.jpg" 
+           srcset="blog/laptop-guide-hero-400w.jpg 400w,
+                   blog/laptop-guide-hero-800w.jpg 800w,
+                   blog/laptop-guide-hero-1200w.jpg 1200w"
+           sizes="(max-width: 768px) 100vw, 800px"
+           alt="Різні моделі ноутбуків на дерев'яному столі в офісі"&gt;
+      &lt;figcaption&gt;
+        Вибір ноутбука - важливе рішення для роботи та навчання
+      &lt;/figcaption&gt;
+    &lt;/figure&gt;
+  &lt;/header&gt;
+
+  &lt;div class="content"&gt;
+    &lt;h2&gt;Типи ноутбуків&lt;/h2&gt;
+    &lt;p&gt;Існує кілька основних категорій ноутбуків...&lt;/p&gt;
+    
+    &lt;figure class="inline-image"&gt;
+      &lt;img src="blog/laptop-types-comparison.png" 
+           alt="Порівняльна таблиця: ультрабуки (вага 1-1.5кг, батарея 8-12год), 
+                ігрові (вага 2-3кг, батарея 3-5год), робочі станції (вага 2.5-4кг, батарея 4-8год)"
+           loading="lazy"&gt;
+      &lt;figcaption&gt;
+        Рис. 1: Порівняння основних типів ноутбуків за характеристиками
+      &lt;/figcaption&gt;
+    &lt;/figure&gt;
+
+    &lt;h2&gt;Технічні характеристики&lt;/h2&gt;
+    &lt;p&gt;При виборі ноутбука зверніть увагу на...&lt;/p&gt;
+    
+    &lt;!-- Декоративне зображення --&gt;
+    &lt;img src="blog/tech-specs-decoration.svg" 
+         alt="" 
+         class="decoration"&gt;
+  &lt;/div&gt;
+&lt;/article&gt;</div>
+                        <div class="example-result-section">
+                            <article>
+                                <header>
+                                    <h4>Як вибрати ідеальний ноутбук</h4>
+                                    <figure style="margin: 1rem 0;">
+                                        <div class="image-placeholder large-placeholder">
+                                            💻📱🖥️<br>
+                                            Різні моделі ноутбуків
+                                        </div>
+                                        <figcaption style="margin-top: 0.5rem; color: #4a5568; font-style: italic;">
+                                            Вибір ноутбука - важливе рішення для роботи та навчання
+                                        </figcaption>
+                                    </figure>
+                                </header>
+
+                                <div>
+                                    <h5>Типи ноутбуків</h5>
+                                    <p>Існує кілька основних категорій ноутбуків...</p>
+                                    
+                                    <figure style="margin: 1rem 0;">
+                                        <div class="image-placeholder medium-placeholder">
+                                            📊<br>
+                                            Порівняльна таблиця
+                                        </div>
+                                        <figcaption style="margin-top: 0.5rem; color: #4a5568; font-style: italic;">
+                                            Рис. 1: Порівняння основних типів ноутбуків
+                                        </figcaption>
+                                    </figure>
+
+                                    <h5>Технічні характеристики</h5>
+                                    <p>При виборі ноутбука зверніть увагу на...</p>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        🏢 Команда компанії
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;section class="team"&gt;
+  &lt;h2&gt;Наша команда&lt;/h2&gt;
+  
+  &lt;div class="team-grid"&gt;
+    &lt;div class="team-member"&gt;
+      &lt;img src="team/john-doe.jpg" 
+           srcset="team/john-doe.jpg 1x,
+                   team/john-doe@2x.jpg 2x"
+           alt="Джон Доу - усміхнений чоловік у сорочці, 
+                портретне фото на білому фоні"
+           width="150" 
+           height="150"&gt;
+      &lt;h3&gt;Джон Доу&lt;/h3&gt;
+      &lt;p&gt;Генеральний директор&lt;/p&gt;
+      &lt;p&gt;15 років досвіду в IT&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class="team-member"&gt;
+      &lt;img src="team/jane-smith.jpg" 
+           srcset="team/jane-smith.jpg 1x,
+                   team/jane-smith@2x.jpg 2x"
+           alt="Джейн Сміт - жінка з довгим волоссям, 
+                професійне фото в діловому костюмі"
+           width="150" 
+           height="150"&gt;
+      &lt;h3&gt;Джейн Сміт&lt;/h3&gt;
+      &lt;p&gt;Технічний директор&lt;/p&gt;
+      &lt;p&gt;10 років у веб-розробці&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class="team-member"&gt;
+      &lt;img src="team/mike-wilson.jpg" 
+           srcset="team/mike-wilson.jpg 1x,
+                   team/mike-wilson@2x.jpg 2x"
+           alt="Майк Вілсон - молодий чоловік в окулярах, 
+                неформальне фото в офісі"
+           width="150" 
+           height="150"&gt;
+      &lt;h3&gt;Майк Вілсон&lt;/h3&gt;
+      &lt;p&gt;Ведучий дизайнер&lt;/p&gt;
+      &lt;p&gt;8 років в UX/UI дизайні&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Наша команда</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1rem;">
+                                <div style="text-align: center;">
+                                    <div class="image-placeholder" style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 1rem;">
+                                        👨‍💼<br>
+                                        Джон Доу
+                                    </div>
+                                    <h5>Джон Доу</h5>
+                                    <p style="color: #667eea; font-weight: 500;">Генеральний директор</p>
+                                    <p style="color: #4a5568; font-size: 0.9rem;">15 років досвіду в IT</p>
+                                </div>
+                                
+                                <div style="text-align: center;">
+                                    <div class="image-placeholder" style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 1rem;">
+                                        👩‍💻<br>
+                                        Джейн Сміт
+                                    </div>
+                                    <h5>Джейн Сміт</h5>
+                                    <p style="color: #667eea; font-weight: 500;">Технічний директор</p>
+                                    <p style="color: #4a5568; font-size: 0.9rem;">10 років у веб-розробці</p>
+                                </div>
+                                
+                                <div style="text-align: center;">
+                                    <div class="image-placeholder" style="width: 150px; height: 150px; border-radius: 50%; margin: 0 auto 1rem;">
+                                        👨‍🎨<br>
+                                        Майк Вілсон
+                                    </div>
+                                    <h5>Майк Вілсон</h5>
+                                    <p style="color: #667eea; font-weight: 500;">Ведучий дизайнер</p>
+                                    <p style="color: #4a5568; font-size: 0.9rem;">8 років в UX/UI дизайні</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="best-practices">
+                <div class="practice-card success">
+                    <h3>✅ Рекомендації:</h3>
+                    <ul>
+                        <li>Завжди додавайте описовий <code>alt</code> текст</li>
+                        <li>Використовуйте правильний формат для типу зображення</li>
+                        <li>Оптимізуйте розмір файлів без втрати якості</li>
+                        <li>Використовуйте <code>loading="lazy"</code> для покращення продуктивності</li>
+                        <li>Додавайте <code>width</code> та <code>height</code> для запобігання зсувам</li>
+                        <li>Використовуйте <code>srcset</code> для адаптивних зображень</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card warning">
+                    <h3>⚠️ Обережно:</h3>
+                    <ul>
+                        <li>Не забувайте про мобільні пристрої при виборі розмірів</li>
+                        <li>Перевіряйте швидкість завантаження сторінки</li>
+                        <li>Використовуйте fallback для нових форматів (WebP, AVIF)</li>
+                        <li>Не покладайтесь тільки на зображення для передачі інформації</li>
+                        <li>Тестуйте доступність з екранними читачами</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card danger">
+                    <h3>❌ Уникайте:</h3>
+                    <ul>
+                        <li>Зображень без <code>alt</code> атрибуту</li>
+                        <li>Використання зображень замість тексту</li>
+                        <li>Завантаження занадто великих файлів</li>
+                        <li>Неоптимізованих зображень для ретина-дисплеїв</li>
+                        <li>Inline стилів для розмірів (використовуйте CSS)</li>
+                        <li>Зображень, які блокують завантаження сторінки</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('links')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 11 з 42</strong><br>
+                <small>Зображення та мультимедіа</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('tables')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const imageDemos = {
+            basic: {
+                code: `&lt;img src="landscape.jpg" 
+     alt="Гірський пейзаж з озером"&gt;`,
+                result: `<h5>Результат:</h5>
+<div class="image-placeholder medium-placeholder">
+    🏔️ Гірський пейзаж з озером<br>
+    <small>landscape.jpg</small>
+</div>`
+            },
+            
+            sizing: {
+                code: `&lt;img src="photo.jpg" 
+     alt="Фотографія"
+     width="300" 
+     height="200"&gt;
+
+&lt;!-- Краще використовувати CSS --&gt;
+&lt;img src="photo.jpg" 
+     alt="Фотографія"
+     style="width: 300px; height: 200px;"&gt;`,
+                result: `<h5>Результат:</h5>
+<div class="image-placeholder medium-placeholder">
+    📷 Фотографія<br>
+    <small>300×200px</small>
+</div>
+<p style="margin-top: 1rem; color: #4a5568;">⚠️ Рекомендується використовувати CSS для розмірів</p>`
+            },
+            
+            loading: {
+                code: `&lt;!-- Ледаче завантаження --&gt;
+&lt;img src="image1.jpg" 
+     alt="Перше зображення"
+     loading="lazy"&gt;
+
+&lt;!-- Пріоритетне завантаження --&gt;
+&lt;img src="hero.jpg" 
+     alt="Головне зображення"
+     loading="eager"&gt;`,
+                result: `<h5>Результат:</h5>
+<div class="image-placeholder medium-placeholder" style="margin-bottom: 1rem;">
+    🚀 Перше зображення<br>
+    <small>loading="lazy"</small>
+</div>
+<div class="image-placeholder large-placeholder">
+    ⭐ Головне зображення<br>
+    <small>loading="eager"</small>
+</div>`
+            },
+            
+            responsive: {
+                code: `&lt;img src="image-800w.jpg" 
+     srcset="image-400w.jpg 400w,
+             image-800w.jpg 800w,
+             image-1200w.jpg 1200w"
+     sizes="(max-width: 600px) 400px,
+            (max-width: 900px) 800px,
+            1200px"
+     alt="Адаптивне зображення"&gt;`,
+                result: `<h5>Результат:</h5>
+<div class="image-placeholder large-placeholder">
+    📱💻🖥️<br>
+    Адаптивне зображення<br>
+    <small>Автоматично вибирає розмір</small>
+</div>
+<p style="margin-top: 1rem; color: #48bb78;">✅ Оптимізовано для всіх пристроїв</p>`
+            }
+        };
+
+        function showImageDemo(type) {
+            // Remove active class from all buttons
+            const demoContainer = document.getElementById('imageDemo').closest('.interactive-demo');
+            demoContainer.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update demo content with both code and result
+            const demo = imageDemos[type];
+            document.getElementById('imageDemo').innerHTML = `
+                <div class="code-example">${demo.code}</div>
+                <div class="result-example">${demo.result}</div>
+            `;
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.image-demo, .format-card, .example-card, .practice-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

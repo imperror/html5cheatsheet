@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заголовки в HTML5</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .hierarchy-showcase {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .heading-example {
+            margin: 1rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .heading-example:last-child {
+            border-bottom: none;
+        }
+
+        .heading-example h1 {
+            font-size: 2.5em;
+            color: #1a202c;
+            margin: 0.5rem 0;
+        }
+
+        .heading-example h2 {
+            font-size: 2em;
+            color: #2d3748;
+            margin: 0.5rem 0;
+        }
+
+        .heading-example h3 {
+            font-size: 1.75em;
+            color: #4a5568;
+            margin: 0.5rem 0;
+        }
+
+        .heading-example h4 {
+            font-size: 1.5em;
+            color: #718096;
+            margin: 0.5rem 0;
+        }
+
+        .heading-example h5 {
+            font-size: 1.25em;
+            color: #a0aec0;
+            margin: 0.5rem 0;
+        }
+
+        .heading-example h6 {
+            font-size: 1.1em;
+            color: #cbd5e0;
+            margin: 0.5rem 0;
+        }
+
+        .heading-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8em;
+            margin-right: 0.5rem;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-example::before {
+            content: "HTML5";
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: #667eea;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .code-example pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .visualization {
+            background: white;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .hierarchy-tree {
+            font-family: monospace;
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .tree-level {
+            margin: 0.25rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .tree-indent {
+            color: #cbd5e0;
+            margin-right: 0.5rem;
+        }
+
+        .tree-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.1rem 0.3rem;
+            border-radius: 2px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.info {
+            border-left-color: #38b2ac;
+            background: #e6fffa;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .seo-tips {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .seo-tips h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .seo-tips ul {
+            padding-left: 1.5rem;
+        }
+
+        .seo-tips li {
+            margin: 0.5rem 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .heading-example h1 { font-size: 2em; }
+            .heading-example h2 { font-size: 1.7em; }
+            .heading-example h3 { font-size: 1.5em; }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+
+        /* Interactive elements */
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 Заголовки в HTML5</h1>
+            <p>Вивчіть ієрархію заголовків h1-h6 та кращі практики їх використання для SEO та доступності</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🏗️ Ієрархія заголовків</h2>
+            <p>HTML надає шість рівнів заголовків: від h1 (найважливіший) до h6 (найменш важливий). Правильна ієрархія заголовків є ключовою для SEO та доступності.</p>
+            
+            <div class="hierarchy-showcase">
+                <div class="heading-example">
+                    <span class="heading-tag">h1</span>
+                    <h1>Головний заголовок сторінки</h1>
+                </div>
+                <div class="heading-example">
+                    <span class="heading-tag">h2</span>
+                    <h2>Заголовок розділу</h2>
+                </div>
+                <div class="heading-example">
+                    <span class="heading-tag">h3</span>
+                    <h3>Підзаголовок розділу</h3>
+                </div>
+                <div class="heading-example">
+                    <span class="heading-tag">h4</span>
+                    <h4>Заголовок підрозділу</h4>
+                </div>
+                <div class="heading-example">
+                    <span class="heading-tag">h5</span>
+                    <h5>Заголовок п'ятого рівня</h5>
+                </div>
+                <div class="heading-example">
+                    <span class="heading-tag">h6</span>
+                    <h6>Заголовок шостого рівня</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="content-section">
+                <h2>💻 Приклад коду</h2>
+                <div class="code-example">
+                    <pre><code><span class="comment">&lt;!-- Основна структура сторінки --&gt;</span>
+<span class="tag">&lt;h1&gt;</span>Путівник по HTML5<span class="tag">&lt;/h1&gt;</span>
+
+<span class="tag">&lt;h2&gt;</span>Розділ 1: Основи<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span>1.1 Що таке HTML?<span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h4&gt;</span>1.1.1 Історія HTML<span class="tag">&lt;/h4&gt;</span>
+<span class="tag">&lt;h4&gt;</span>1.1.2 Версії HTML<span class="tag">&lt;/h4&gt;</span>
+
+<span class="tag">&lt;h3&gt;</span>1.2 Структура документа<span class="tag">&lt;/h3&gt;</span>
+<span class="tag">&lt;h4&gt;</span>1.2.1 Елемент DOCTYPE<span class="tag">&lt;/h4&gt;</span>
+<span class="tag">&lt;h4&gt;</span>1.2.2 Елементи head та body<span class="tag">&lt;/h4&gt;</span>
+
+<span class="tag">&lt;h2&gt;</span>Розділ 2: Семантика<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;h3&gt;</span>2.1 Семантичні елементи<span class="tag">&lt;/h3&gt;</span>
+
+<span class="comment">&lt;!-- Важливо: не пропускайте рівні! --&gt;</span></code></pre>
+                </div>
+
+                <div class="hierarchy-tree">
+                    <div class="tree-level">
+                        <span class="tree-indent">📄</span>
+                        <span class="tree-tag">h1</span>
+                        <span>Путівник по HTML5</span>
+                    </div>
+                    <div class="tree-level">
+                        <span class="tree-indent">├── 📁</span>
+                        <span class="tree-tag">h2</span>
+                        <span>Розділ 1: Основи</span>
+                    </div>
+                    <div class="tree-level">
+                        <span class="tree-indent">│   ├── 📋</span>
+                        <span class="tree-tag">h3</span>
+                        <span>1.1 Що таке HTML?</span>
+                    </div>
+                    <div class="tree-level">
+                        <span class="tree-indent">│   │   ├── 📝</span>
+                        <span class="tree-tag">h4</span>
+                        <span>1.1.1 Історія HTML</span>
+                    </div>
+                    <div class="tree-level">
+                        <span class="tree-indent">│   │   └── 📝</span>
+                        <span class="tree-tag">h4</span>
+                        <span>1.1.2 Версії HTML</span>
+                    </div>
+                    <div class="tree-level">
+                        <span class="tree-indent">│   └── 📋</span>
+                        <span class="tree-tag">h3</span>
+                        <span>1.2 Структура документа</span>
+                    </div>
+                    <div class="tree-level">
+                        <span class="tree-indent">└── 📁</span>
+                        <span class="tree-tag">h2</span>
+                        <span>Розділ 2: Семантика</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎯 Інтерактивна демонстрація</h2>
+                <div class="interactive-demo">
+                    <div class="demo-controls">
+                        <button class="demo-button active" onclick="showHeadingLevel(1)">h1</button>
+                        <button class="demo-button" onclick="showHeadingLevel(2)">h2</button>
+                        <button class="demo-button" onclick="showHeadingLevel(3)">h3</button>
+                        <button class="demo-button" onclick="showHeadingLevel(4)">h4</button>
+                        <button class="demo-button" onclick="showHeadingLevel(5)">h5</button>
+                        <button class="demo-button" onclick="showHeadingLevel(6)">h6</button>
+                    </div>
+                    <div class="demo-output" id="headingDemo">
+                        <h1 style="margin: 0; color: #2d3748;">Приклад заголовка h1</h1>
+                        <p style="margin: 0.5rem 0 0 0; color: #4a5568;">Розмір: 2.5em | Вага: найбільша семантична важливість</p>
+                    </div>
+                </div>
+
+                <div style="background: #e6fffa; border-left: 4px solid #38b2ac; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                    <strong>💡 Порада:</strong> Натисніть на кнопки вище, щоб побачити різні рівні заголовків та їх характеристики.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="best-practices">
+                <div class="practice-card success">
+                    <h3>✅ Правильно:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Використовуйте тільки один h1 на сторінці</li>
+                        <li style="margin: 0.25rem 0;">Дотримуйтесь логічної ієрархії (h1 → h2 → h3...)</li>
+                        <li style="margin: 0.25rem 0;">Робіть заголовки описовими та змістовними</li>
+                        <li style="margin: 0.25rem 0;">Використовуйте заголовки для структури, а не для стилізації</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card warning">
+                    <h3>❌ Неправильно:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Не пропускайте рівні (h1 → h3 без h2)</li>
+                        <li style="margin: 0.25rem 0;">Не використовуйте кілька h1 на одній сторінці</li>
+                        <li style="margin: 0.25rem 0;">Не вибирайте заголовок тільки через розмір шрифту</li>
+                        <li style="margin: 0.25rem 0;">Не залишайте заголовки порожніми</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card info">
+                    <h3>💡 Корисні поради:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Заголовки допомагають користувачам швидко сканувати контент</li>
+                        <li style="margin: 0.25rem 0;">Пошукові системи використовують заголовки для розуміння структури</li>
+                        <li style="margin: 0.25rem 0;">Екранні читачі використовують заголовки для навігації</li>
+                        <li style="margin: 0.25rem 0;">Довжина заголовка h1 оптимально 20-70 символів для SEO</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="seo-tips">
+                <h3>🚀 SEO та доступність</h3>
+                <ul>
+                    <li><strong>h1</strong> - містить головні ключові слова сторінки</li>
+                    <li><strong>h2-h3</strong> - підтримують тему та додають контекст</li>
+                    <li><strong>h4-h6</strong> - для деталізації та уточнень</li>
+                    <li><strong>Ключові слова</strong> - розподіляйте природно по заголовках</li>
+                    <li><strong>Читабельність</strong> - заголовки мають бути зрозумілими людині</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="two-column">
+            <div class="content-section">
+                <h2>🔍 Приклад структури блогу</h2>
+                <div class="code-example">
+                    <pre><code><span class="tag">&lt;article&gt;</span>
+  <span class="tag">&lt;h1&gt;</span>10 порад для кращого HTML<span class="tag">&lt;/h1&gt;</span>
+  
+  <span class="tag">&lt;h2&gt;</span>Вступ<span class="tag">&lt;/h2&gt;</span>
+  <span class="comment">&lt;!-- Контент вступу --&gt;</span>
+  
+  <span class="tag">&lt;h2&gt;</span>Поради для початківців<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;h3&gt;</span>Порада 1: Валідація коду<span class="tag">&lt;/h3&gt;</span>
+  <span class="tag">&lt;h3&gt;</span>Порада 2: Семантичність<span class="tag">&lt;/h3&gt;</span>
+  
+  <span class="tag">&lt;h2&gt;</span>Просунуті техніки<span class="tag">&lt;/h2&gt;</span>
+  <span class="tag">&lt;h3&gt;</span>Оптимізація продуктивності<span class="tag">&lt;/h3&gt;</span>
+  <span class="tag">&lt;h4&gt;</span>Мінімізація HTML<span class="tag">&lt;/h4&gt;</span>
+  <span class="tag">&lt;h4&gt;</span>Lazy loading<span class="tag">&lt;/h4&gt;</span>
+  
+  <span class="tag">&lt;h2&gt;</span>Висновки<span class="tag">&lt;/h2&gt;</span>
+<span class="tag">&lt;/article&gt;</span></code></pre>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>📊 Статистика використання</h2>
+                <div class="visualization">
+                    <div style="margin: 1rem 0;">
+                        <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                            <span style="font-weight: bold; width: 40px;">h1:</span>
+                            <div style="background: #667eea; height: 20px; width: 90%; border-radius: 10px; margin-left: 10px;"></div>
+                            <span style="margin-left: 10px; color: #667eea; font-weight: bold;">90%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                            <span style="font-weight: bold; width: 40px;">h2:</span>
+                            <div style="background: #764ba2; height: 20px; width: 75%; border-radius: 10px; margin-left: 10px;"></div>
+                            <span style="margin-left: 10px; color: #764ba2; font-weight: bold;">75%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                            <span style="font-weight: bold; width: 40px;">h3:</span>
+                            <div style="background: #4a5568; height: 20px; width: 50%; border-radius: 10px; margin-left: 10px;"></div>
+                            <span style="margin-left: 10px; color: #4a5568; font-weight: bold;">50%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                            <span style="font-weight: bold; width: 40px;">h4:</span>
+                            <div style="background: #718096; height: 20px; width: 25%; border-radius: 10px; margin-left: 10px;"></div>
+                            <span style="margin-left: 10px; color: #718096; font-weight: bold;">25%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                            <span style="font-weight: bold; width: 40px;">h5:</span>
+                            <div style="background: #a0aec0; height: 20px; width: 10%; border-radius: 10px; margin-left: 10px;"></div>
+                            <span style="margin-left: 10px; color: #a0aec0; font-weight: bold;">10%</span>
+                        </div>
+                        <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                            <span style="font-weight: bold; width: 40px;">h6:</span>
+                            <div style="background: #cbd5e0; height: 20px; width: 5%; border-radius: 10px; margin-left: 10px;"></div>
+                            <span style="margin-left: 10px; color: #cbd5e0; font-weight: bold;">5%</span>
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #4a5568; font-style: italic; margin-top: 1rem;">
+                        Частота використання заголовків на типовому веб-сайті
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('comments')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 5 з 42</strong><br>
+                <small>Заголовки (h1-h6)</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('paragraphs')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function showHeadingLevel(level) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            document.querySelector(`[onclick="showHeadingLevel(${level})"]`).classList.add('active');
+            
+            const demo = document.getElementById('headingDemo');
+            const sizes = ['2.5em', '2em', '1.75em', '1.5em', '1.25em', '1.1em'];
+            const importance = [
+                'найбільша семантична важливість',
+                'важливий розділ документа', 
+                'підрозділ або тема',
+                'менш важливий підрозділ',
+                'деталізація контенту',
+                'найменша семантична важливість'
+            ];
+            
+            demo.innerHTML = `
+                <h${level} style="margin: 0; color: #2d3748; font-size: ${sizes[level-1]};">Приклад заголовка h${level}</h${level}>
+                <p style="margin: 0.5rem 0 0 0; color: #4a5568;">Розмір: ${sizes[level-1]} | ${importance[level-1]}</p>
+            `;
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.practice-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

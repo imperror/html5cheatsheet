@@ -1,0 +1,1423 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Списки в HTML</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .list-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .list-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .list-header {
+            background: #667eea;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .list-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .list-content {
+            padding: 1.5rem;
+            overflow: hidden;
+        }
+
+        .list-content ul, .list-content ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .result-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+
+        .category-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1.5rem;
+            min-height: 150px;
+        }
+
+        .demo-output .code-example {
+            white-space: pre-wrap !important;
+            line-height: 1.4;
+        }
+
+        .numbering-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .numbering-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .numbering-card ol {
+            text-align: left;
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .numbering-title {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .numbering-code {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+            margin: 0.5rem 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .marker-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .marker-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .marker-visual {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .nested-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .nested-demo ul, .nested-demo ol {
+            margin-left: 1.5rem;
+        }
+
+        .nested-demo li {
+            margin: 0.5rem 0;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.danger {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .practice-card ul {
+            padding-left: 1.5rem;
+        }
+
+        .practice-card li {
+            margin: 0.25rem 0;
+        }
+
+        .practical-examples {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .example-title {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .example-code-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .example-result-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .styling-demo {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .styling-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .styling-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1.5rem;
+            min-height: 200px;
+        }
+
+        .styling-output .code-example {
+            white-space: pre-wrap !important;
+            line-height: 1.4;
+        }
+
+        .custom-list-1 {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .custom-list-1 li {
+            margin: 0.5rem 0;
+            padding-left: 0;
+        }
+
+        .custom-list-1 li::before {
+            content: "🌟";
+            margin-right: 0.5rem;
+        }
+
+        .custom-list-2 {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+            counter-reset: custom-counter;
+        }
+
+        .custom-list-2 li {
+            position: relative;
+            padding-left: 3rem;
+            margin: 0.8rem 0;
+            counter-increment: custom-counter;
+        }
+
+        .custom-list-2 li::before {
+            content: counter(custom-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #667eea;
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .custom-list-3 {
+            list-style-type: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .custom-list-3 li {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: linear-gradient(90deg, #e2e8f0 0%, transparent 100%);
+            border-radius: 5px;
+        }
+
+        .custom-list-3 li::before {
+            content: "▶";
+            margin-right: 0.5rem;
+            color: #667eea;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Code formatting */
+        pre, code {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Ensure HTML entity codes preserve formatting */
+        .code-example,
+        .example-code-section,
+        .numbering-code,
+        [class*="code"] {
+            white-space: pre-wrap !important;
+            font-family: 'Courier New', Consolas, monospace;
+            line-height: 1.4;
+        }
+
+        /* Fix list margins and padding */
+        ul, ol, dl {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        ul ul, ol ol, ul ol, ol ul {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            margin: 0.25rem 0;
+        }
+
+        dt {
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        dd {
+            margin-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Fix specific container list styles */
+        .numbering-card ul, .numbering-card ol {
+            margin: 0.5rem 0;
+            padding-left: 1rem;
+        }
+
+        .result-example ul, .result-example ol, .result-example dl {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .nested-demo ul, .nested-demo ol {
+            margin: 0.25rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .practice-card ul, .practice-card ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .example-result-section ul, .example-result-section ol, .example-result-section dl {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        /* General container overflow protection */
+        .list-demo, .example-card, .category-section, .content-section {
+            overflow-x: hidden;
+        }
+
+        /* Ensure no lists go outside containers */
+        .list-demo ul, .list-demo ol,
+        .example-card ul, .example-card ol, .example-card dl,
+        .category-section ul, .category-section ol, .category-section dl,
+        .content-section ul, .content-section ol, .content-section dl {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 768px) {
+            .list-types-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-split {
+                grid-template-columns: 1fr;
+            }
+            
+            .numbering-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .marker-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls, .styling-controls {
+                justify-content: center;
+            }
+
+            /* Reduce list padding on mobile */
+            ul, ol, dl {
+                padding-left: 1rem;
+            }
+
+            .numbering-card ul, .numbering-card ol {
+                padding-left: 0.75rem;
+            }
+
+            .custom-list-2 li {
+                padding-left: 2.5rem;
+            }
+
+            .custom-list-2 li::before {
+                width: 1.5rem;
+                height: 1.5rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📋 Списки в HTML</h1>
+            <p>Навчіться створювати упорядковані, неупорядковані та списки визначень для структурування контенту</p>
+        </div>
+
+        <div class="content-section">
+            <h2>📝 Типи списків в HTML</h2>
+            <p>HTML пропонує три основні типи списків для організації та структурування інформації:</p>
+            
+            <div class="list-types-grid">
+                <div class="list-demo">
+                    <div class="list-header">
+                        Неупорядковані списки
+                        <span class="list-tag">&lt;ul&gt;</span>
+                    </div>
+                    <div class="list-content">
+                        <div class="code-example">
+&lt;ul&gt;
+  &lt;li&gt;Перший пункт&lt;/li&gt;
+  &lt;li&gt;Другий пункт&lt;/li&gt;
+  &lt;li&gt;Третій пункт&lt;/li&gt;
+&lt;/ul&gt;</div>
+                        <div class="result-example">
+                            <ul>
+                                <li>Перший пункт</li>
+                                <li>Другий пункт</li>
+                                <li>Третій пункт</li>
+                            </ul>
+                        </div>
+                        <p><strong>Використання:</strong> коли порядок не важливий</p>
+                    </div>
+                </div>
+
+                <div class="list-demo">
+                    <div class="list-header">
+                        Упорядковані списки
+                        <span class="list-tag">&lt;ol&gt;</span>
+                    </div>
+                    <div class="list-content">
+                        <div class="code-example">
+&lt;ol&gt;
+  &lt;li&gt;Перший крок&lt;/li&gt;
+  &lt;li&gt;Другий крок&lt;/li&gt;
+  &lt;li&gt;Третій крок&lt;/li&gt;
+&lt;/ol&gt;</div>
+                        <div class="result-example">
+                            <ol>
+                                <li>Перший крок</li>
+                                <li>Другий крок</li>
+                                <li>Третій крок</li>
+                            </ol>
+                        </div>
+                        <p><strong>Використання:</strong> коли порядок важливий</p>
+                    </div>
+                </div>
+
+                <div class="list-demo">
+                    <div class="list-header">
+                        Списки визначень
+                        <span class="list-tag">&lt;dl&gt;</span>
+                    </div>
+                    <div class="list-content">
+                        <div class="code-example">
+&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;Мова розмітки&lt;/dd&gt;
+  &lt;dt&gt;CSS&lt;/dt&gt;
+  &lt;dd&gt;Мова стилів&lt;/dd&gt;
+&lt;/dl&gt;</div>
+                        <div class="result-example">
+                            <dl>
+                                <dt><strong>HTML</strong></dt>
+                                <dd>Мова розмітки</dd>
+                                <dt><strong>CSS</strong></dt>
+                                <dd>Мова стилів</dd>
+                            </dl>
+                        </div>
+                        <p><strong>Використання:</strong> для термінів та визначень</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🔢 Типи нумерації для упорядкованих списків</h3>
+                <p>Атрибут type дозволяє змінювати стиль нумерації</p>
+            </div>
+            
+            <div class="numbering-types">
+                <div class="numbering-card">
+                    <div class="numbering-title">Цифри (за замовчуванням)</div>
+                    <div class="numbering-code">type="1"</div>
+                    <ol type="1">
+                        <li>Пункт один</li>
+                        <li>Пункт два</li>
+                        <li>Пункт три</li>
+                    </ol>
+                </div>
+                
+                <div class="numbering-card">
+                    <div class="numbering-title">Великі літери</div>
+                    <div class="numbering-code">type="A"</div>
+                    <ol type="A">
+                        <li>Пункт А</li>
+                        <li>Пункт Б</li>
+                        <li>Пункт В</li>
+                    </ol>
+                </div>
+                
+                <div class="numbering-card">
+                    <div class="numbering-title">Малі літери</div>
+                    <div class="numbering-code">type="a"</div>
+                    <ol type="a">
+                        <li>Пункт а</li>
+                        <li>Пункт б</li>
+                        <li>Пункт в</li>
+                    </ol>
+                </div>
+                
+                <div class="numbering-card">
+                    <div class="numbering-title">Великі римські</div>
+                    <div class="numbering-code">type="I"</div>
+                    <ol type="I">
+                        <li>Пункт I</li>
+                        <li>Пункт II</li>
+                        <li>Пункт III</li>
+                    </ol>
+                </div>
+                
+                <div class="numbering-card">
+                    <div class="numbering-title">Малі римські</div>
+                    <div class="numbering-code">type="i"</div>
+                    <ol type="i">
+                        <li>Пункт i</li>
+                        <li>Пункт ii</li>
+                        <li>Пункт iii</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div style="background: #e6fffa; border-left: 4px solid #38b2ac; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                <h4 style="color: #2c7a7b; margin-bottom: 1rem;">📋 Пояснення атрибутів для упорядкованих списків:</h4>
+                <ul style="padding-left: 1.5rem;">
+                    <li style="margin: 0.5rem 0;"><strong>start="число"</strong> - задає початкове значення нумерації</li>
+                    <li style="margin: 0.5rem 0;"><strong>reversed</strong> - змінює порядок нумерації на зворотний</li>
+                    <li style="margin: 0.5rem 0;"><strong>value="число"</strong> - задає конкретне значення для елемента li</li>
+                    <li style="margin: 0.5rem 0;"><strong>type="1|A|a|I|i"</strong> - змінює тип нумерації (цифри, літери, римські)</li>
+                </ul>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>🎮 Інтерактивна демонстрація атрибутів:</h4>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showListDemo('start')">start="5"</button>
+                    <button class="demo-button" onclick="showListDemo('reversed')">reversed</button>
+                    <button class="demo-button" onclick="showListDemo('value')">value</button>
+                    <button class="demo-button" onclick="showListDemo('combination')">Комбінація</button>
+                </div>
+                
+                <div class="demo-output" id="listDemo">
+                    <div class="code-example">
+&lt;ol start="5"&gt;
+  &lt;li&gt;П'ятий пункт&lt;/li&gt;
+  &lt;li&gt;Шостий пункт&lt;/li&gt;
+  &lt;li&gt;Сьомий пункт&lt;/li&gt;
+&lt;/ol&gt;</div>
+                    <div class="result-example">
+                        <h5>Результат:</h5>
+                        <ol start="5">
+                            <li>П'ятий пункт</li>
+                            <li>Шостий пункт</li>
+                            <li>Сьомий пункт</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🎯 Маркери для неупорядкованих списків</h3>
+                <p>CSS list-style-type для зміни вигляду маркерів</p>
+            </div>
+            
+            <div class="marker-showcase">
+                <div class="marker-card">
+                    <div class="marker-visual">•</div>
+                    <div><strong>disc</strong></div>
+                    <div>(за замовчуванням)</div>
+                </div>
+                
+                <div class="marker-card">
+                    <div class="marker-visual">○</div>
+                    <div><strong>circle</strong></div>
+                    <div>Кружечки</div>
+                </div>
+                
+                <div class="marker-card">
+                    <div class="marker-visual">■</div>
+                    <div><strong>square</strong></div>
+                    <div>Квадратики</div>
+                </div>
+                
+                <div class="marker-card">
+                    <div class="marker-visual">—</div>
+                    <div><strong>none</strong></div>
+                    <div>Без маркерів</div>
+                </div>
+            </div>
+
+            <div style="background: #fef5e7; border-left: 4px solid #ed8936; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                <h4 style="color: #c05621; margin-bottom: 1rem;">🎨 CSS властивості для стилізації списків:</h4>
+                <ul style="padding-left: 1.5rem;">
+                    <li style="margin: 0.5rem 0;"><strong>list-style-type</strong> - тип маркера (disc, circle, square, none)</li>
+                    <li style="margin: 0.5rem 0;"><strong>list-style-position</strong> - позиція маркера (inside, outside)</li>
+                    <li style="margin: 0.5rem 0;"><strong>list-style-image</strong> - зображення як маркер</li>
+                    <li style="margin: 0.5rem 0;"><strong>::before псевдоелемент</strong> - кастомні маркери через CSS</li>
+                    <li style="margin: 0.5rem 0;"><strong>counter()</strong> - власні лічильники для нумерації</li>
+                </ul>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>✨ Кастомна стилізація списків:</h4>
+                <div class="styling-controls">
+                    <button class="demo-button active" onclick="showStylingDemo('stars')">Зірочки</button>
+                    <button class="demo-button" onclick="showStylingDemo('numbers')">Кольорові номери</button>
+                    <button class="demo-button" onclick="showStylingDemo('arrows')">Стрілки</button>
+                </div>
+                
+                <div class="styling-output" id="stylingDemo">
+                    <div class="code-example">
+&lt;style&gt;
+.custom-list-1 {
+  list-style-type: none;
+  padding-left: 0;
+}
+.custom-list-1 li::before {
+  content: "🌟";
+  margin-right: 0.5rem;
+}
+&lt;/style&gt;
+
+&lt;ul class="custom-list-1"&gt;
+  &lt;li&gt;Елемент зі зірочкою&lt;/li&gt;
+  &lt;li&gt;Ще один елемент&lt;/li&gt;
+  &lt;li&gt;Третій елемент&lt;/li&gt;
+&lt;/ul&gt;</div>
+                    <div class="result-example">
+                        <h5>Результат:</h5>
+                        <ul class="custom-list-1">
+                            <li>Елемент зі зірочкою</li>
+                            <li>Ще один елемент</li>
+                            <li>Третій елемент</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🎄 Вкладені списки</h3>
+                <p>Створення багаторівневої структури</p>
+            </div>
+            
+            <div class="nested-demo">
+                <h4>📖 Структура курсу Frontend розробки:</h4>
+                <ol>
+                    <li><strong>HTML основи</strong>
+                        <ul>
+                            <li>Структура документа</li>
+                            <li>Семантичні елементи</li>
+                            <li>Форми та таблиці</li>
+                        </ul>
+                    </li>
+                    <li><strong>CSS стилізація</strong>
+                        <ol type="A">
+                            <li>Селектори</li>
+                            <li>Box Model</li>
+                            <li>Flexbox та Grid</li>
+                            <li>Анімації
+                                <ul>
+                                    <li>Transitions</li>
+                                    <li>Keyframes</li>
+                                    <li>Transform</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </li>
+                    <li><strong>JavaScript</strong>
+                        <ul>
+                            <li>Основи мови</li>
+                            <li>DOM маніпуляції</li>
+                            <li>Асинхронність</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="code-example">
+&lt;ol&gt;
+  &lt;li&gt;HTML основи
+    &lt;ul&gt;
+      &lt;li&gt;Структура документа&lt;/li&gt;
+      &lt;li&gt;Семантичні елементи&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;CSS стилізація
+    &lt;ol type="A"&gt;
+      &lt;li&gt;Селектори&lt;/li&gt;
+      &lt;li&gt;Анімації
+        &lt;ul&gt;
+          &lt;li&gt;Transitions&lt;/li&gt;
+          &lt;li&gt;Keyframes&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>📚 Практичні приклади</h2>
+            <div class="practical-examples">
+                <div class="example-card">
+                    <div class="example-title">
+                        🛒 Список покупок
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;h3&gt;Список покупок&lt;/h3&gt;
+&lt;ul&gt;
+  &lt;li&gt;🥛 Молоко&lt;/li&gt;
+  &lt;li&gt;🍞 Хліб&lt;/li&gt;
+  &lt;li&gt;🥚 Яйця (десяток)&lt;/li&gt;
+  &lt;li&gt;🧀 Сир&lt;/li&gt;
+  &lt;li&gt;🍎 Яблука (1 кг)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;
+  &lt;strong&gt;Загальна сума:&lt;/strong&gt; ~300₴
+&lt;/p&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Список покупок</h4>
+                            <ul>
+                                <li>🥛 Молоко</li>
+                                <li>🍞 Хліб</li>
+                                <li>🥚 Яйця (десяток)</li>
+                                <li>🧀 Сир</li>
+                                <li>🍎 Яблука (1 кг)</li>
+                            </ul>
+                            <p><strong>Загальна сума:</strong> ~300₴</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        📝 Інструкція по кроках
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;h3&gt;Як приготувати каву&lt;/h3&gt;
+&lt;ol&gt;
+  &lt;li&gt;Нагрійте воду до 90-95°C&lt;/li&gt;
+  &lt;li&gt;Помеліть кавові зерна
+    &lt;ul&gt;
+      &lt;li&gt;Середній помел для френч-прес&lt;/li&gt;
+      &lt;li&gt;Дрібний для еспресо&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Додайте каву у френч-прес&lt;/li&gt;
+  &lt;li&gt;Залийте гарячою водою&lt;/li&gt;
+  &lt;li&gt;Настоюйте 4 хвилини&lt;/li&gt;
+  &lt;li&gt;Повільно опустіть поршень&lt;/li&gt;
+  &lt;li&gt;Насолоджуйтесь! ☕&lt;/li&gt;
+&lt;/ol&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Як приготувати каву</h4>
+                            <ol>
+                                <li>Нагрійте воду до 90-95°C</li>
+                                <li>Помеліть кавові зерна
+                                    <ul>
+                                        <li>Середній помел для френч-прес</li>
+                                        <li>Дрібний для еспресо</li>
+                                    </ul>
+                                </li>
+                                <li>Додайте каву у френч-прес</li>
+                                <li>Залийте гарячою водою</li>
+                                <li>Настоюйте 4 хвилини</li>
+                                <li>Повільно опустіть поршень</li>
+                                <li>Насолоджуйтесь! ☕</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        📖 Глосарій термінів
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;h3&gt;Веб-розробка термінів&lt;/h3&gt;
+&lt;dl&gt;
+  &lt;dt&gt;HTML&lt;/dt&gt;
+  &lt;dd&gt;
+    HyperText Markup Language - 
+    мова розмітки веб-сторінок
+  &lt;/dd&gt;
+  
+  &lt;dt&gt;CSS&lt;/dt&gt;
+  &lt;dd&gt;
+    Cascading Style Sheets - 
+    мова для стилізації веб-елементів
+  &lt;/dd&gt;
+  
+  &lt;dt&gt;JavaScript&lt;/dt&gt;
+  &lt;dd&gt;
+    Мова програмування для 
+    інтерактивності веб-сторінок
+  &lt;/dd&gt;
+  
+  &lt;dt&gt;DOM&lt;/dt&gt;
+  &lt;dd&gt;
+    Document Object Model - 
+    програмний інтерфейс для HTML документів
+  &lt;/dd&gt;
+  
+  &lt;dt&gt;API&lt;/dt&gt;
+  &lt;dd&gt;
+    Application Programming Interface - 
+    інтерфейс для взаємодії між програмами
+  &lt;/dd&gt;
+&lt;/dl&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Веб-розробка термінів</h4>
+                            <dl>
+                                <dt><strong>HTML</strong></dt>
+                                <dd>HyperText Markup Language - мова розмітки веб-сторінок</dd>
+                                
+                                <dt><strong>CSS</strong></dt>
+                                <dd>Cascading Style Sheets - мова для стилізації веб-елементів</dd>
+                                
+                                <dt><strong>JavaScript</strong></dt>
+                                <dd>Мова програмування для інтерактивності веб-сторінок</dd>
+                                
+                                <dt><strong>DOM</strong></dt>
+                                <dd>Document Object Model - програмний інтерфейс для HTML документів</dd>
+                                
+                                <dt><strong>API</strong></dt>
+                                <dd>Application Programming Interface - інтерфейс для взаємодії між програмами</dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        🎯 Навігаційне меню
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;nav&gt;
+  &lt;h3&gt;Головне меню&lt;/h3&gt;
+  &lt;ul&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Головна&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/about"&gt;Про нас&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/about/team"&gt;Команда&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/about/history"&gt;Історія&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href="/services"&gt;Послуги&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li&gt;&lt;a href="/services/web"&gt;Веб-розробка&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/services/mobile"&gt;Мобільні додатки&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href="/services/design"&gt;Дизайн&lt;/a&gt;&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt;&lt;a href="/contact"&gt;Контакти&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Головне меню</h4>
+                            <ul style="list-style-type: none; padding-left: 0;">
+                                <li style="margin: 0.5rem 0;"><a href="#" style="text-decoration: none; color: #667eea;">Головна</a></li>
+                                <li style="margin: 0.5rem 0;"><a href="#" style="text-decoration: none; color: #667eea;">Про нас</a>
+                                    <ul style="margin-left: 1rem; margin-top: 0.25rem;">
+                                        <li style="margin: 0.25rem 0;"><a href="#" style="text-decoration: none; color: #4a5568;">Команда</a></li>
+                                        <li style="margin: 0.25rem 0;"><a href="#" style="text-decoration: none; color: #4a5568;">Історія</a></li>
+                                    </ul>
+                                </li>
+                                <li style="margin: 0.5rem 0;"><a href="#" style="text-decoration: none; color: #667eea;">Послуги</a>
+                                    <ul style="margin-left: 1rem; margin-top: 0.25rem;">
+                                        <li style="margin: 0.25rem 0;"><a href="#" style="text-decoration: none; color: #4a5568;">Веб-розробка</a></li>
+                                        <li style="margin: 0.25rem 0;"><a href="#" style="text-decoration: none; color: #4a5568;">Мобільні додатки</a></li>
+                                        <li style="margin: 0.25rem 0;"><a href="#" style="text-decoration: none; color: #4a5568;">Дизайн</a></li>
+                                    </ul>
+                                </li>
+                                <li style="margin: 0.5rem 0;"><a href="#" style="text-decoration: none; color: #667eea;">Контакти</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="best-practices">
+                <div class="practice-card success">
+                    <h3>✅ Рекомендації:</h3>
+                    <ul>
+                        <li>Використовуйте &lt;ol&gt; коли порядок важливий (інструкції, етапи)</li>
+                        <li>Використовуйте &lt;ul&gt; для звичайних переліків</li>
+                        <li>Використовуйте &lt;dl&gt; для термінів та визначень</li>
+                        <li>Завжди використовуйте &lt;li&gt; всередині &lt;ul&gt; або &lt;ol&gt;</li>
+                        <li>Додавайте семантичний зміст через правильний вибір типу списку</li>
+                        <li>Використовуйте CSS для стилізації замість HTML атрибутів</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card warning">
+                    <h3>⚠️ Обережно:</h3>
+                    <ul>
+                        <li>Не зловживайте вкладеністю списків (максимум 3-4 рівні)</li>
+                        <li>Уникайте порожніх &lt;li&gt; елементів</li>
+                        <li>Не використовуйте списки тільки для відступів</li>
+                        <li>Перевіряйте доступність для екранних читачів</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card danger">
+                    <h3>❌ Уникайте:</h3>
+                    <ul>
+                        <li>Розміщення тексту напряму в &lt;ul&gt; або &lt;ol&gt; без &lt;li&gt;</li>
+                        <li>Використання &lt;br&gt; замість списків для переліків</li>
+                        <li>Змішування типів списків без логічної причини</li>
+                        <li>Надмірної стилізації, яка псує семантику</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('entities')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 9 з 42</strong><br>
+                <small>Списки в HTML</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('links')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const listDemos = {
+            start: {
+                code: `&lt;ol start="5"&gt;
+  &lt;li&gt;П'ятий пункт&lt;/li&gt;
+  &lt;li&gt;Шостий пункт&lt;/li&gt;
+  &lt;li&gt;Сьомий пункт&lt;/li&gt;
+&lt;/ol&gt;`,
+                result: `<h5>Результат:</h5>
+<ol start="5">
+  <li>П'ятий пункт</li>
+  <li>Шостий пункт</li>
+  <li>Сьомий пункт</li>
+</ol>`
+            },
+            
+            reversed: {
+                code: `&lt;ol reversed&gt;
+  &lt;li&gt;Останній пункт&lt;/li&gt;
+  &lt;li&gt;Передостанній пункт&lt;/li&gt;
+  &lt;li&gt;Перший пункт&lt;/li&gt;
+&lt;/ol&gt;`,
+                result: `<h5>Результат:</h5>
+<ol reversed>
+  <li>Останній пункт</li>
+  <li>Передостанній пункт</li>
+  <li>Перший пункт</li>
+</ol>`
+            },
+            
+            value: {
+                code: `&lt;ol&gt;
+  &lt;li&gt;Пункт 1&lt;/li&gt;
+  &lt;li value="10"&gt;Пункт 10&lt;/li&gt;
+  &lt;li&gt;Пункт 11&lt;/li&gt;
+  &lt;li value="50"&gt;Пункт 50&lt;/li&gt;
+&lt;/ol&gt;`,
+                result: `<h5>Результат:</h5>
+<ol>
+  <li>Пункт 1</li>
+  <li value="10">Пункт 10</li>
+  <li>Пункт 11</li>
+  <li value="50">Пункт 50</li>
+</ol>`
+            },
+            
+            combination: {
+                code: `&lt;ol type="A" start="3" reversed&gt;
+  &lt;li&gt;Пункт C&lt;/li&gt;
+  &lt;li&gt;Пункт B&lt;/li&gt;
+  &lt;li value="26"&gt;Пункт Z&lt;/li&gt;
+  &lt;li&gt;Пункт Y&lt;/li&gt;
+&lt;/ol&gt;`,
+                result: `<h5>Результат:</h5>
+<ol type="A" start="3" reversed>
+  <li>Пункт C</li>
+  <li>Пункт B</li>
+  <li value="26">Пункт Z</li>
+  <li>Пункт Y</li>
+</ol>`
+            }
+        };
+
+        const stylingDemos = {
+            stars: {
+                code: `&lt;style&gt;
+.custom-list-1 {
+  list-style-type: none;
+  padding-left: 0;
+}
+.custom-list-1 li::before {
+  content: "🌟";
+  margin-right: 0.5rem;
+}
+&lt;/style&gt;
+
+&lt;ul class="custom-list-1"&gt;
+  &lt;li&gt;Елемент зі зірочкою&lt;/li&gt;
+  &lt;li&gt;Ще один елемент&lt;/li&gt;
+  &lt;li&gt;Третій елемент&lt;/li&gt;
+&lt;/ul&gt;`,
+                result: `<h5>Результат:</h5>
+<ul class="custom-list-1">
+  <li>Елемент зі зірочкою</li>
+  <li>Ще один елемент</li>
+  <li>Третій елемент</li>
+</ul>`
+            },
+            
+            numbers: {
+                code: `&lt;style&gt;
+.custom-list-2 {
+  list-style-type: none;
+  padding-left: 0;
+  counter-reset: custom-counter;
+}
+.custom-list-2 li {
+  padding-left: 3rem;
+  counter-increment: custom-counter;
+}
+.custom-list-2 li::before {
+  content: counter(custom-counter);
+  background: #667eea;
+  color: white;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  font-weight: bold;
+}
+&lt;/style&gt;
+
+&lt;ul class="custom-list-2"&gt;
+  &lt;li&gt;Елемент з кольоровим номером&lt;/li&gt;
+  &lt;li&gt;Другий елемент&lt;/li&gt;
+  &lt;li&gt;Третій елемент&lt;/li&gt;
+&lt;/ul&gt;`,
+                result: `<h5>Результат:</h5>
+<ul class="custom-list-2">
+  <li>Елемент з кольоровим номером</li>
+  <li>Другий елемент</li>
+  <li>Третій елемент</li>
+</ul>`
+            },
+            
+            arrows: {
+                code: `&lt;style&gt;
+.custom-list-3 {
+  list-style-type: none;
+  padding-left: 0;
+}
+.custom-list-3 li {
+  padding: 0.5rem 0.5rem 0.5rem 2rem;
+  background: linear-gradient(90deg, #e2e8f0 0%, transparent 100%);
+  border-radius: 5px;
+  margin: 0.5rem 0;
+}
+.custom-list-3 li::before {
+  content: "▶";
+  margin-right: 0.5rem;
+  color: #667eea;
+}
+&lt;/style&gt;
+
+&lt;ul class="custom-list-3"&gt;
+  &lt;li&gt;Елемент зі стрілкою&lt;/li&gt;
+  &lt;li&gt;Другий елемент&lt;/li&gt;
+  &lt;li&gt;Третій елемент&lt;/li&gt;
+&lt;/ul&gt;`,
+                result: `<h5>Результат:</h5>
+<ul class="custom-list-3">
+  <li>Елемент зі стрілкою</li>
+  <li>Другий елемент</li>
+  <li>Третій елемент</li>
+</ul>`
+            }
+        };
+
+        function showListDemo(type) {
+            // Remove active class from all buttons
+            const demoContainer = document.getElementById('listDemo').closest('.interactive-demo');
+            demoContainer.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update demo content with both code and result
+            const demo = listDemos[type];
+            document.getElementById('listDemo').innerHTML = `
+                <div class="code-example">${demo.code}</div>
+                <div class="result-example">${demo.result}</div>
+            `;
+        }
+
+        function showStylingDemo(type) {
+            // Remove active class from all buttons
+            const demoContainer = document.getElementById('stylingDemo').closest('.interactive-demo');
+            demoContainer.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update demo content with both code and result
+            const demo = stylingDemos[type];
+            document.getElementById('stylingDemo').innerHTML = `
+                <div class="code-example">${demo.code}</div>
+                <div class="result-example">${demo.result}</div>
+            `;
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.list-demo, .numbering-card, .example-card, .practice-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Шпаргалка - Інтерактивний посібник</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-center {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 300px;
+        }
+
+        .menu-toggle {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-size: 1.2rem;
+        }
+
+        .menu-toggle:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .header-nav button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .header-nav button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Progress indicator in header */
+        .progress-indicator {
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            text-align: center;
+            color: white;
+            font-size: 0.9rem;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+        }
+
+        .progress-text {
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 3px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: rgba(255,255,255,0.8);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 350px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            overflow-y: auto;
+            margin-top: 70px;
+            transition: margin-left 0.3s ease;
+            position: relative;
+            z-index: 100;
+        }
+
+        .sidebar.collapsed {
+            margin-left: -350px;
+        }
+
+        .sidebar-header {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .sidebar-header h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .search-box {
+            margin-top: 1rem;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .search-input:focus {
+            border-color: #667eea;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a0aec0;
+        }
+
+        .topic-categories {
+            padding: 1rem;
+        }
+
+        .category {
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header {
+            color: #4a5568;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .topic-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .topic-item {
+            margin: 0.25rem 0;
+        }
+
+        .topic-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            color: #4a5568;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            border-left: 3px solid transparent;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .topic-link:hover {
+            background: #e2e8f0;
+            color: #2d3748;
+            border-left-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .topic-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-left-color: #5a67d8;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .topic-link .emoji {
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            background: #f7fafc;
+            margin-top: 70px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content.expanded {
+            margin-left: 0;
+        }
+
+        .content-frame {
+            width: 100%;
+            height: calc(100vh - 70px);
+            border: none;
+            background: white;
+        }
+
+
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .sidebar {
+                position: fixed;
+                height: calc(100vh - 70px);
+                z-index: 200;
+                box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            }
+            
+            .main-content {
+                margin-left: 0 !important;
+            }
+            
+            .header-center {
+                max-width: 250px;
+            }
+            
+            .progress-indicator {
+                min-width: 180px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0.75rem 1rem;
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+            
+            .header-left {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .header-center {
+                max-width: 100%;
+                order: 3;
+            }
+            
+            .header-nav {
+                order: 2;
+            }
+            
+            .header h1 {
+                font-size: 1.2rem;
+            }
+            
+            .progress-indicator {
+                min-width: 100%;
+                font-size: 0.8rem;
+            }
+            
+            .sidebar {
+                width: 300px;
+            }
+            
+            .sidebar.collapsed {
+                margin-left: -300px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Loading indicator */
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+
+        .loading::after {
+            content: '';
+            width: 20px;
+            height: 20px;
+            border: 2px solid #e2e8f0;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            margin-left: 10px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-left">
+            <button class="menu-toggle" onclick="toggleSidebar()" title="Приховати/показати меню">
+                <span id="menuIcon">☰</span>
+            </button>
+            <h1>📚 HTML5 Шпаргалка</h1>
+        </div>
+        <div class="header-center">
+            <div class="progress-indicator">
+                                    <div class="progress-text">Прогрес: <span id="progressText">1 з 42</span></div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+        </div>
+        <div class="header-nav">
+            <button onclick="toggleFullscreen()" title="Повний екран">🔲</button>
+            <button onclick="resetProgress()" title="Скинути прогрес">🔄</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h3>📋 Навігація по темах</h3>
+                <div class="search-box">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Пошук тем..." onkeyup="searchTopics(this.value)">
+                </div>
+            </div>
+
+            <div class="topic-categories">
+                <div class="category">
+                    <div class="category-header">Основи</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link active" data-topic="intro">
+                                <span class="emoji">🏗️</span>Вступ до HTML5
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="structure">
+                                <span class="emoji">📄</span>Структура документа
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="doctype">
+                                <span class="emoji">📋</span>DOCTYPE та мета-теги
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="comments">
+                                <span class="emoji">💬</span>Коментарі в HTML
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">Текст та форматування</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="headings">
+                                <span class="emoji">📝</span>Заголовки (h1-h6)
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="paragraphs">
+                                <span class="emoji">📄</span>Параграфи та переноси
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="formatting">
+                                <span class="emoji">✨</span>Форматування тексту
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="entities">
+                                <span class="emoji">🔣</span>Спеціальні символи
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">Структурні елементи</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="lists">
+                                <span class="emoji">📋</span>Списки
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="links">
+                                <span class="emoji">🔗</span>Посилання
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="images">
+                                <span class="emoji">🖼️</span>Зображення
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="tables">
+                                <span class="emoji">📊</span>Таблиці
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">CSS основи</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-intro">
+                                <span class="emoji">🎨</span>Вступ до CSS
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-syntax">
+                                <span class="emoji">📝</span>CSS синтаксис та селектори
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-integration">
+                                <span class="emoji">🔗</span>Підключення CSS до HTML
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-properties">
+                                <span class="emoji">⚙️</span>CSS властивості та значення
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-cascade">
+                                <span class="emoji">🌊</span>Каскадність та специфічність
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-units">
+                                <span class="emoji">📏</span>Одиниці виміру в CSS
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-colors">
+                                <span class="emoji">🌈</span>Кольори в CSS
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="css-fonts">
+                                <span class="emoji">🔤</span>Шрифти та текст
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">Layout та позиціонування</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="box-model">
+                                <span class="emoji">📦</span>CSS Box Model
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="display">
+                                <span class="emoji">👁️</span>Display та Visibility
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="position">
+                                <span class="emoji">📍</span>Позиціонування елементів
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="float">
+                                <span class="emoji">🌊</span>Float та Clear
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="flexbox">
+                                <span class="emoji">🔧</span>Flexbox Layout
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="grid">
+                                <span class="emoji">⚡</span>CSS Grid Layout
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="responsive">
+                                <span class="emoji">📱</span>Responsive Design
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">Форми та введення</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="forms">
+                                <span class="emoji">📝</span>Основи форм
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="input-types">
+                                <span class="emoji">⌨️</span>Типи полів введення
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="form-validation">
+                                <span class="emoji">✅</span>Валідація форм
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">HTML5 семантика</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="semantic">
+                                <span class="emoji">🎯</span>Семантичні елементи
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="article-section">
+                                <span class="emoji">📰</span>Article та Section
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="navigation">
+                                <span class="emoji">🧭</span>Навігація та меню
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">Мультимедіа</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="audio">
+                                <span class="emoji">🎵</span>Аудіо
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="video">
+                                <span class="emoji">🎬</span>Відео
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="canvas">
+                                <span class="emoji">🎨</span>Canvas
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="svg">
+                                <span class="emoji">🔺</span>SVG
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">Просунуті теми</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="accessibility">
+                                <span class="emoji">♿</span>Доступність
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="seo">
+                                <span class="emoji">🔍</span>SEO оптимізація
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="performance">
+                                <span class="emoji">⚡</span>Продуктивність
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="best-practices">
+                                <span class="emoji">🛠️</span>Кращі практики
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link" data-topic="publishing">
+                                <span class="emoji">🚀</span>Публікація сайтів
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            
+        </div>
+
+        <div class="main-content" id="mainContent">
+            <iframe class="content-frame" id="contentFrame" src="topics/intro.html">
+                <div class="loading">Завантаження...</div>
+            </iframe>
+        </div>
+    </div>
+
+    <script>
+        let currentTopicIndex = 0;
+        let sidebarCollapsed = false;
+        const totalTopics = document.querySelectorAll('.topic-link').length;
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const mainContent = document.getElementById('mainContent');
+            const menuIcon = document.getElementById('menuIcon');
+            
+            sidebarCollapsed = !sidebarCollapsed;
+            
+            if (sidebarCollapsed) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
+                menuIcon.textContent = '☰';
+            } else {
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
+                menuIcon.textContent = '✕';
+            }
+            
+            // Save state
+            localStorage.setItem('sidebarCollapsed', sidebarCollapsed);
+        }
+
+        function loadTopic(topicId) {
+            const iframe = document.getElementById('contentFrame');
+            const topicFile = `topics/${topicId}.html`;
+            
+            // Show loading
+            iframe.src = 'about:blank';
+            
+            // Load new topic
+            setTimeout(() => {
+                iframe.src = topicFile;
+            }, 100);
+            
+            // Update active link
+            document.querySelectorAll('.topic-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.querySelector(`[data-topic="${topicId}"]`).classList.add('active');
+            
+            // Update progress
+            const topics = Array.from(document.querySelectorAll('.topic-link'));
+            currentTopicIndex = topics.findIndex(link => link.getAttribute('data-topic') === topicId);
+            updateProgress();
+            
+            // Save current topic
+            localStorage.setItem('currentTopic', topicId);
+        }
+
+        function updateProgress() {
+            const progressText = document.getElementById('progressText');
+            const progressFill = document.getElementById('progressFill');
+            
+            const current = currentTopicIndex + 1;
+            const percentage = (current / totalTopics) * 100;
+            
+            progressText.textContent = `${current} з ${totalTopics}`;
+            progressFill.style.width = `${percentage}%`;
+        }
+
+        function searchTopics(query) {
+            const topics = document.querySelectorAll('.topic-link');
+            const categories = document.querySelectorAll('.category');
+            
+            if (!query.trim()) {
+                // Show all topics and categories
+                topics.forEach(topic => topic.parentElement.style.display = 'block');
+                categories.forEach(category => category.style.display = 'block');
+                return;
+            }
+            
+            const searchTerm = query.toLowerCase();
+            
+            categories.forEach(category => {
+                const categoryTopics = category.querySelectorAll('.topic-link');
+                let hasVisibleTopics = false;
+                
+                categoryTopics.forEach(topic => {
+                    const text = topic.textContent.toLowerCase();
+                    if (text.includes(searchTerm)) {
+                        topic.parentElement.style.display = 'block';
+                        hasVisibleTopics = true;
+                    } else {
+                        topic.parentElement.style.display = 'none';
+                    }
+                });
+                
+                category.style.display = hasVisibleTopics ? 'block' : 'none';
+            });
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen();
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        function resetProgress() {
+            currentTopicIndex = 0;
+            loadTopic('intro');
+            localStorage.removeItem('currentTopic');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load saved state
+            const savedTopic = localStorage.getItem('currentTopic') || 'intro';
+            const savedSidebarState = localStorage.getItem('sidebarCollapsed') === 'true';
+            
+            if (savedSidebarState) {
+                toggleSidebar();
+            }
+            
+            // Add click events to topic links
+            document.querySelectorAll('.topic-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const topicId = this.getAttribute('data-topic');
+                    loadTopic(topicId);
+                });
+            });
+            
+            // Load initial topic
+            loadTopic(savedTopic);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey) {
+                    if (e.key === 'ArrowRight') {
+                        e.preventDefault();
+                        const topics = Array.from(document.querySelectorAll('.topic-link'));
+                        if (currentTopicIndex < topics.length - 1) {
+                            const nextTopic = topics[currentTopicIndex + 1].getAttribute('data-topic');
+                            loadTopic(nextTopic);
+                        }
+                    } else if (e.key === 'ArrowLeft') {
+                        e.preventDefault();
+                        const topics = Array.from(document.querySelectorAll('.topic-link'));
+                        if (currentTopicIndex > 0) {
+                            const prevTopic = topics[currentTopicIndex - 1].getAttribute('data-topic');
+                            loadTopic(prevTopic);
+                        }
+                    } else if (e.key === 'b') {
+                        e.preventDefault();
+                        toggleSidebar();
+                    }
+                }
+            });
+            
+            // Handle iframe load errors
+            document.getElementById('contentFrame').addEventListener('error', function() {
+                this.src = 'topics/404.html';
+            });
+        });
+    </script>
+</body>
+</html> 

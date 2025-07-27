@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Параграфи та переноси рядків</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .element-showcase {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .element-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .code-side {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .result-side {
+            background: white;
+            padding: 1.5rem;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .code-side h4 {
+            color: #63b3ed;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .result-side h4 {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .code-side pre {
+            margin: 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .element-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .element-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .element-tag {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .whitespace-demo {
+            background: #f7fafc;
+            border: 2px dashed #cbd5e0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+        }
+
+        .whitespace-input {
+            background: #fef5e7;
+            border: 1px solid #ed8936;
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .whitespace-output {
+            background: #f0fff4;
+            border: 1px solid #48bb78;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            min-height: 150px;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.danger {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .element-demo {
+                grid-template-columns: 1fr;
+            }
+            
+            .result-side {
+                border-left: none;
+                border-top: 1px solid #e2e8f0;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls {
+                justify-content: center;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📄 Параграфи та переноси рядків</h1>
+            <p>Вивчіть основи роботи з текстом в HTML: параграфи, переноси рядків та форматування пробілів</p>
+        </div>
+
+        <div class="content-section">
+            <h2>📝 Елемент &lt;p&gt; - Параграфи</h2>
+            <p><strong>Параграф</strong> - це основний блоковий елемент для організації тексту в HTML. Кожен параграф автоматично відділяється від інших вертикальними відступами.</p>
+            
+            <div class="element-demo">
+                <div class="code-side">
+                    <h4>💻 HTML код:</h4>
+                    <pre><code><span class="tag">&lt;p&gt;</span>Це перший параграф тексту. Він містить кілька речень які пояснюють тему.<span class="tag">&lt;/p&gt;</span>
+
+<span class="tag">&lt;p&gt;</span>Це другий параграф. Між параграфами браузер автоматично додає відступи для кращої читабельності.<span class="tag">&lt;/p&gt;</span>
+
+<span class="tag">&lt;p&gt;</span>Третій параграф може містити <span class="tag">&lt;strong&gt;</span>важливий текст<span class="tag">&lt;/strong&gt;</span> або <span class="tag">&lt;em&gt;</span>виділений текст<span class="tag">&lt;/em&gt;</span>.<span class="tag">&lt;/p&gt;</span></code></pre>
+                </div>
+                <div class="result-side">
+                    <h4>🎨 Результат:</h4>
+                    <p>Це перший параграф тексту. Він містить кілька речень які пояснюють тему.</p>
+                    <p>Це другий параграф. Між параграфами браузер автоматично додає відступи для кращої читабельності.</p>
+                    <p>Третій параграф може містити <strong>важливий текст</strong> або <em>виділений текст</em>.</p>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>🎯 Особливості параграфів:</h3>
+                <ul style="padding-left: 1.5rem;">
+                    <li style="margin: 0.5rem 0;">📦 Блоковий елемент - займає всю доступну ширину</li>
+                    <li style="margin: 0.5rem 0;">📏 Автоматичні відступи зверху і знизу</li>
+                    <li style="margin: 0.5rem 0;">🔄 Може містити inline елементи та текст</li>
+                    <li style="margin: 0.5rem 0;">🚫 Не може містити інші блокові елементи</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>↩️ Елемент &lt;br&gt; - Перенос рядка</h2>
+            <p>Елемент <code>&lt;br&gt;</code> створює принудовий перенос рядка без створення нового параграфа.</p>
+            
+            <div class="element-demo">
+                <div class="code-side">
+                    <h4>💻 HTML код:</h4>
+                    <pre><code><span class="tag">&lt;p&gt;</span>
+    Перший рядок<span class="tag">&lt;br&gt;</span>
+    Другий рядок<span class="tag">&lt;br&gt;</span>
+    Третій рядок
+<span class="tag">&lt;/p&gt;</span>
+
+<span class="comment">&lt;!-- Приклад для адреси --&gt;</span>
+<span class="tag">&lt;address&gt;</span>
+    вул. Хрещатик, 1<span class="tag">&lt;br&gt;</span>
+    м. Київ, 01001<span class="tag">&lt;br&gt;</span>
+    Україна
+<span class="tag">&lt;/address&gt;</span>
+
+<span class="comment">&lt;!-- Поезія --&gt;</span>
+<span class="tag">&lt;blockquote&gt;</span>
+    Україно! Ти для мене свята,<span class="tag">&lt;br&gt;</span>
+    Твоя доля — це моя дорога...<span class="tag">&lt;br&gt;</span>
+    <span class="tag">&lt;cite&gt;</span>— Ліна Костенко<span class="tag">&lt;/cite&gt;</span>
+<span class="tag">&lt;/blockquote&gt;</span></code></pre>
+                </div>
+                <div class="result-side">
+                    <h4>🎨 Результат:</h4>
+                    <p>
+                        Перший рядок<br>
+                        Другий рядок<br>
+                        Третій рядок
+                    </p>
+                    <address style="font-style: normal; background: #f7fafc; padding: 0.5rem; border-radius: 5px;">
+                        вул. Хрещатик, 1<br>
+                        м. Київ, 01001<br>
+                        Україна
+                    </address>
+                    <blockquote style="border-left: 3px solid #667eea; padding-left: 1rem; margin: 1rem 0; font-style: italic;">
+                        Україно! Ти для мене свята,<br>
+                        Твоя доля — це моя дорога...<br>
+                        <cite>— Ліна Костенко</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>➖ Елемент &lt;hr&gt; - Горизонтальна лінія</h2>
+            <p>Елемент <code>&lt;hr&gt;</code> створює тематичний розрив між блоками контенту у вигляді горизонтальної лінії.</p>
+            
+            <div class="element-demo">
+                <div class="code-side">
+                    <h4>💻 HTML код:</h4>
+                    <pre><code><span class="tag">&lt;p&gt;</span>Перший розділ документа.<span class="tag">&lt;/p&gt;</span>
+
+<span class="tag">&lt;hr&gt;</span>
+
+<span class="tag">&lt;p&gt;</span>Другий розділ документа після тематичного розриву.<span class="tag">&lt;/p&gt;</span>
+
+<span class="comment">&lt;!-- Розділення в статті --&gt;</span>
+<span class="tag">&lt;article&gt;</span>
+    <span class="tag">&lt;h2&gt;</span>Заголовок статті<span class="tag">&lt;/h2&gt;</span>
+    <span class="tag">&lt;p&gt;</span>Основний текст статті...<span class="tag">&lt;/p&gt;</span>
+    
+    <span class="tag">&lt;hr&gt;</span>
+    
+    <span class="tag">&lt;footer&gt;</span>
+        <span class="tag">&lt;p&gt;</span>Автор: Іван Петренко<span class="tag">&lt;/p&gt;</span>
+        <span class="tag">&lt;p&gt;</span>Дата: 15 січня 2024<span class="tag">&lt;/p&gt;</span>
+    <span class="tag">&lt;/footer&gt;</span>
+<span class="tag">&lt;/article&gt;</span></code></pre>
+                </div>
+                <div class="result-side">
+                    <h4>🎨 Результат:</h4>
+                    <p>Перший розділ документа.</p>
+                    <hr>
+                    <p>Другий розділ документа після тематичного розриву.</p>
+                    
+                    <article style="border: 1px solid #e2e8f0; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                        <h3 style="margin-bottom: 0.5rem;">Заголовок статті</h3>
+                        <p>Основний текст статті...</p>
+                        <hr>
+                        <footer style="color: #4a5568; font-size: 0.9rem;">
+                            <p>Автор: Іван Петренко</p>
+                            <p>Дата: 15 січня 2024</p>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Елемент &lt;pre&gt; - Попередньо форматований текст</h2>
+            <p>Елемент <code>&lt;pre&gt;</code> зберігає всі пробіли, табуляції та переноси рядків як вони є в коді.</p>
+            
+            <div class="element-demo">
+                <div class="code-side">
+                    <h4>💻 HTML код:</h4>
+                    <pre><code><span class="tag">&lt;pre&gt;</span>
+    Цей текст
+        зберігає
+            всі    пробіли
+                та переноси рядків
+<span class="tag">&lt;/pre&gt;</span>
+
+<span class="comment">&lt;!-- Код програми --&gt;</span>
+<span class="tag">&lt;pre&gt;</span><span class="tag">&lt;code&gt;</span>
+function greet(name) {
+    console.log("Привіт, " + name + "!");
+}
+
+greet("світ");
+<span class="tag">&lt;/code&gt;</span><span class="tag">&lt;/pre&gt;</span>
+
+<span class="comment">&lt;!-- ASCII арт --&gt;</span>
+<span class="tag">&lt;pre&gt;</span>
+  /\_/\  
+ ( o.o ) 
+  > ^ &lt;
+<span class="tag">&lt;/pre&gt;</span></code></pre>
+                </div>
+                <div class="result-side">
+                    <h4>🎨 Результат:</h4>
+                    <pre style="background: #f7fafc; padding: 1rem; border-radius: 5px; margin: 0.5rem 0;">    Цей текст
+        зберігає
+            всі    пробіли
+                та переноси рядків</pre>
+                    
+                    <pre style="background: #1a202c; color: #e2e8f0; padding: 1rem; border-radius: 5px; margin: 0.5rem 0;"><code>function greet(name) {
+    console.log("Привіт, " + name + "!");
+}
+
+greet("світ");</code></pre>
+                    
+                    <pre style="background: #f7fafc; padding: 1rem; border-radius: 5px; margin: 0.5rem 0; text-align: center;">  /\_/\  
+ ( o.o ) 
+  > ^ &lt;</pre>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔤 Як браузер обробляє пробіли (Whitespace)</h2>
+            <p>HTML схлопує множинні пробіли, табуляції та переноси рядків в один пробіл. Це називається <strong>whitespace collapsing</strong>.</p>
+            
+            <div class="whitespace-demo">
+                <div class="whitespace-input">
+                    <strong>Вхідний HTML код:</strong><br>
+                    &lt;p&gt;Цей     текст    має<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;багато&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;пробілів<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;та&nbsp;&nbsp;&nbsp;переносів&lt;/p&gt;
+                </div>
+                <div class="whitespace-output">
+                    <strong>Результат у браузері:</strong><br>
+                    Цей текст має багато пробілів та переносів
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🎯 Інтерактивна демонстрація пробілів</h3>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showWhitespaceExample('normal')">Звичайний текст</button>
+                    <button class="demo-button" onclick="showWhitespaceExample('multiple')">Багато пробілів</button>
+                    <button class="demo-button" onclick="showWhitespaceExample('pre')">Pre елемент</button>
+                    <button class="demo-button" onclick="showWhitespaceExample('entities')">HTML сутності</button>
+                </div>
+                <div class="demo-output" id="whitespaceDemo">
+                    <p>Звичайний текст без додаткових пробілів.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📊 Порівняння елементів</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Елемент</th>
+                        <th>Призначення</th>
+                        <th>Тип</th>
+                        <th>Пробіли</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>&lt;p&gt;</strong></td>
+                        <td>Параграф тексту</td>
+                        <td>Блоковий</td>
+                        <td>Схлопуються</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;br&gt;</strong></td>
+                        <td>Перенос рядка</td>
+                        <td>Inline, void</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;hr&gt;</strong></td>
+                        <td>Тематичний розрив</td>
+                        <td>Блоковий, void</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>&lt;pre&gt;</strong></td>
+                        <td>Попередньо форматований</td>
+                        <td>Блоковий</td>
+                        <td>Зберігаються</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="two-column">
+            <div class="content-section">
+                <h2>✅ Кращі практики</h2>
+                <div class="best-practices">
+                    <div class="practice-card success">
+                        <h3>✅ Рекомендації:</h3>
+                        <ul style="padding-left: 1.5rem;">
+                            <li style="margin: 0.25rem 0;">Використовуйте &lt;p&gt; для звичайних параграфів</li>
+                            <li style="margin: 0.25rem 0;">&lt;br&gt; для адрес, віршів, коротких списків</li>
+                            <li style="margin: 0.25rem 0;">&lt;hr&gt; для тематичних розривів</li>
+                            <li style="margin: 0.25rem 0;">&lt;pre&gt; для коду та ASCII-арту</li>
+                            <li style="margin: 0.25rem 0;">Робіть параграфи логічно завершеними</li>
+                        </ul>
+                    </div>
+
+                    <div class="practice-card warning">
+                        <h3>⚠️ Обережно:</h3>
+                        <ul style="padding-left: 1.5rem;">
+                            <li style="margin: 0.25rem 0;">Не використовуйте &lt;br&gt; для створення відступів</li>
+                            <li style="margin: 0.25rem 0;">Уникайте багато &lt;br&gt; підряд</li>
+                            <li style="margin: 0.25rem 0;">Не ставте блокові елементи в &lt;p&gt;</li>
+                            <li style="margin: 0.25rem 0;">&lt;pre&gt; може псувати адаптивність</li>
+                        </ul>
+                    </div>
+
+                    <div class="practice-card danger">
+                        <h3>❌ Уникайте:</h3>
+                        <ul style="padding-left: 1.5rem;">
+                            <li style="margin: 0.25rem 0;">Порожніх параграфів &lt;p&gt;&lt;/p&gt;</li>
+                            <li style="margin: 0.25rem 0;">Використання &lt;br&gt; замість CSS margin</li>
+                            <li style="margin: 0.25rem 0;">Декоративного використання &lt;hr&gt;</li>
+                            <li style="margin: 0.25rem 0;">Довгих рядків в &lt;pre&gt;</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎨 HTML сутності для пробілів</h2>
+                <div class="element-card">
+                    <h3>Спеціальні символи пробілів</h3>
+                    
+                    <div style="background: #e6fffa; border-left: 4px solid #38b2ac; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                        <strong>📏 Типографічні одиниці:</strong><br>
+                        <strong>em</strong> - ширина літери "M" у поточному шрифті (відносна одиниця)<br>
+                        <strong>en</strong> - половина em, приблизно ширина літери "N"
+                    </div>
+                    
+                    <table style="width: 100%; margin-top: 1rem;">
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.5rem; font-family: monospace;">&amp;nbsp;</td>
+                            <td style="padding: 0.5rem;">Нерозривний пробіл</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.5rem; font-family: monospace;">&amp;ensp;</td>
+                            <td style="padding: 0.5rem;">Пробіл en (половина em)</td>
+                        </tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;">
+                            <td style="padding: 0.5rem; font-family: monospace;">&amp;emsp;</td>
+                            <td style="padding: 0.5rem;">Пробіл em (ширина літери M)</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.5rem; font-family: monospace;">&amp;thinsp;</td>
+                            <td style="padding: 0.5rem;">Тонкий пробіл (1/6 em)</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="element-demo" style="margin-top: 1rem;">
+                    <div class="code-side">
+                        <h4>Приклад:</h4>
+                        <pre><code><span class="tag">&lt;p&gt;</span>Word&amp;nbsp;with&amp;nbsp;non-breaking&amp;nbsp;spaces<span class="tag">&lt;/p&gt;</span>
+<span class="tag">&lt;p&gt;</span>Thin&amp;thinsp;space&amp;thinsp;example<span class="tag">&lt;/p&gt;</span></code></pre>
+                    </div>
+                    <div class="result-side">
+                        <h4>Результат:</h4>
+                        <p>Word&nbsp;with&nbsp;non-breaking&nbsp;spaces</p>
+                        <p>Thin&thinsp;space&thinsp;example</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('comments')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 6 з 42</strong><br>
+                <small>Параграфи та переноси рядків</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('formatting')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const whitespaceExamples = {
+            normal: `<p>Звичайний текст без додаткових пробілів.</p>`,
+            
+            multiple: `<div style="background: #fef5e7; padding: 1rem; border-radius: 5px; margin-bottom: 1rem;">
+<strong>HTML код:</strong><br>
+&lt;p&gt;Цей     текст    має     багато     пробілів&lt;/p&gt;
+</div>
+<div style="background: #f0fff4; padding: 1rem; border-radius: 5px;">
+<strong>Результат:</strong><br>
+<p>Цей     текст    має     багато     пробілів</p>
+</div>`,
+            
+            pre: `<div style="background: #fef5e7; padding: 1rem; border-radius: 5px; margin-bottom: 1rem;">
+<strong>HTML код:</strong><br>
+&lt;pre&gt;Цей     текст    зберігає     всі     пробіли&lt;/pre&gt;
+</div>
+<div style="background: #f0fff4; padding: 1rem; border-radius: 5px;">
+<strong>Результат:</strong><br>
+<pre style="background: #f7fafc; padding: 0.5rem; border-radius: 3px;">Цей     текст    зберігає     всі     пробіли</pre>
+</div>`,
+            
+            entities: `<div style="background: #fef5e7; padding: 1rem; border-radius: 5px; margin-bottom: 1rem;">
+<strong>HTML код:</strong><br>
+&lt;p&gt;Текст&amp;nbsp;з&amp;nbsp;нерозривними&amp;nbsp;пробілами&lt;/p&gt;
+</div>
+<div style="background: #f0fff4; padding: 1rem; border-radius: 5px;">
+<strong>Результат:</strong><br>
+<p>Текст&nbsp;з&nbsp;нерозривними&nbsp;пробілами</p>
+</div>`
+        };
+
+        function showWhitespaceExample(type) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            document.querySelector(`[onclick="showWhitespaceExample('${type}')"]`).classList.add('active');
+            
+            // Update demo content
+            document.getElementById('whitespaceDemo').innerHTML = whitespaceExamples[type];
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.practice-card, .element-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

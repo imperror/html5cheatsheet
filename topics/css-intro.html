@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вступ до CSS - HTML5 Шпаргалка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .demo-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .demo-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .demo-title {
+            background: #4a5568;
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .demo-content {
+            padding: 1.5rem;
+            min-height: 150px;
+        }
+
+        .unstyled-content {
+            background: #fafafa;
+        }
+
+        .styled-content {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            color: #1565c0;
+        }
+
+        .styled-content h2 {
+            color: #0d47a1;
+            border-bottom: 2px solid #2196f3;
+            padding-bottom: 0.5rem;
+        }
+
+        .styled-content p {
+            background: rgba(255,255,255,0.7);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+        }
+
+        .styled-content .highlight {
+            background: #ffeb3b;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+            box-shadow: 0 4px 8px rgba(76, 81, 191, 0.3);
+        }
+
+        .demo-output {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            min-height: 100px;
+            padding: 1rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .css-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .timeline-year {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-right: 1rem;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .feature-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 4px solid #0288d1;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #f57c00;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .benefits-list {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .benefits-list ul {
+            margin-top: 0.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .benefits-list li {
+            margin: 0.25rem 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Вступ до CSS</h1>
+            <p>Cascading Style Sheets - мова стилів для веб-дизайну</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Що таке CSS?</h2>
+            <p><strong>CSS (Cascading Style Sheets)</strong> - це мова стилів, яка використовується для опису зовнішнього вигляду документів HTML. Якщо HTML - це структура вашої веб-сторінки, то CSS - це її дизайн і презентація.</p>
+            
+            <div class="tip-box">
+                <strong>💡 Аналогія:</strong> Уявіть будинок - HTML це фундамент, стіни і каркас, а CSS це фарба, меблі, декор і все те, що робить будинок красивим і зручним.
+            </div>
+
+            <div class="demo-comparison">
+                <div class="demo-box">
+                    <div class="demo-title">Без CSS</div>
+                    <div class="demo-content unstyled-content">
+                        <h2>Заголовок сторінки</h2>
+                        <p>Це параграф тексту без стилізації. Виглядає просто і нудно.</p>
+                        <p>Кольори за замовчуванням, стандартні шрифти, немає відступів.</p>
+                    </div>
+                </div>
+                <div class="demo-box">
+                    <div class="demo-title">З CSS</div>
+                    <div class="demo-content styled-content">
+                        <h2>Заголовок сторінки</h2>
+                        <p>Цей же контент, але з <span class="highlight">красивими стилями</span>! Градієнт фону, кольорові акценти, приємні відступи.</p>
+                        <p>CSS робить веб-сторінки професійними та привабливими.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Навіщо потрібен CSS?</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Дизайн</h4>
+                    <p>Кольори, шрифти, відступи, тіні та ефекти</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📱</div>
+                    <h4>Адаптивність</h4>
+                    <p>Сторінка виглядає добре на всіх пристроях</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔧</div>
+                    <h4>Layout</h4>
+                    <p>Розміщення елементів на сторінці</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">✨</div>
+                    <h4>Анімації</h4>
+                    <p>Плавні переходи та інтерактивність</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Історія CSS</h2>
+            <div class="css-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">1994</div>
+                    <div class="timeline-content">
+                        <strong>Початок</strong> - Хокон Лі запропонував першу ідею CSS
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1996</div>
+                    <div class="timeline-content">
+                        <strong>CSS1</strong> - Перша офіційна версія з базовими стилями
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1998</div>
+                    <div class="timeline-content">
+                        <strong>CSS2</strong> - Додали позиціонування та медіа-запити
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2011</div>
+                    <div class="timeline-content">
+                        <strong>CSS3</strong> - Модульна структура, анімації, Flexbox
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2017</div>
+                    <div class="timeline-content">
+                        <strong>CSS Grid</strong> - Революційний інструмент для layout'у
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Інтерактивна демонстрація</h2>
+            <div class="interactive-demo">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showDemo('basic')">Базові стилі</button>
+                    <button class="demo-button" onclick="showDemo('colors')">Кольори</button>
+                    <button class="demo-button" onclick="showDemo('layout')">Layout</button>
+                    <button class="demo-button" onclick="showDemo('animation')">Анімації</button>
+                </div>
+                
+                <div class="demo-output" id="demoOutput">
+                    <h3>Демонстрація CSS</h3>
+                    <p>Натисніть на кнопки вище, щоб побачити різні можливості CSS!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Переваги CSS</h2>
+            
+            <div class="benefits-list">
+                <strong>✅ Основні переваги:</strong>
+                <ul>
+                    <li><strong>Розділення контенту і дизайну</strong> - HTML для структури, CSS для стилів</li>
+                    <li><strong>Багаторазове використання</strong> - один CSS файл для багатьох сторінок</li>
+                    <li><strong>Швидкість завантаження</strong> - зменшення розміру HTML файлів</li>
+                    <li><strong>Легке оновлення</strong> - зміна дизайну без зміни HTML</li>
+                    <li><strong>Доступність</strong> - кращий досвід для людей з обмеженими можливостями</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Базовий синтаксис CSS</h2>
+            
+            <p>CSS складається з <strong>правил</strong>, кожне правило містить <strong>селектор</strong> і <strong>блок оголошень</strong>:</p>
+
+            <div class="code-example">/* Базова структура CSS правила */
+селектор {
+    властивість: значення;
+    інша-властивість: інше-значення;
+}
+
+/* Приклад реального CSS */
+h1 {
+    color: blue;
+    font-size: 24px;
+    text-align: center;
+}
+
+p {
+    color: #333;
+    line-height: 1.6;
+    margin: 1rem 0;
+}</div>
+
+            <div class="warning-box">
+                <strong>⚠️ Важливо:</strong> Кожне оголошення CSS повинно закінчуватися крапкою з комою <span class="highlight">;</span>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Практичні поради</h2>
+            
+            <div class="benefits-list">
+                <strong>🎯 Кращі практики:</strong>
+                <ul>
+                    <li>Завжди використовуйте зовнішні CSS файли для великих проектів</li>
+                    <li>Дотримуйтесь логічної структури і коментуйте код</li>
+                    <li>Використовуйте семантичні назви класів</li>
+                    <li>Тестуйте дизайн на різних пристроях</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('tables')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 13 з 42</strong><br>
+                <small>Вступ до CSS</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('css-syntax')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const demos = {
+            basic: {
+                title: 'Базові стилі CSS',
+                content: `
+                    <h3 style="color: #2563eb; font-family: Georgia, serif;">Стилізований заголовок</h3>
+                    <p style="font-size: 16px; line-height: 1.6; color: #374151;">
+                        Цей текст має встановлений розмір шрифту, висоту рядка та колір.
+                    </p>
+                    <p style="font-weight: bold; text-decoration: underline;">
+                        Жирний та підкреслений текст
+                    </p>
+                `
+            },
+            colors: {
+                title: 'Кольори та градієнти',
+                content: `
+                    <div style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4); padding: 20px; border-radius: 10px; color: white; margin: 10px 0;">
+                        <h3>Градієнтний фон</h3>
+                        <p>Красивий градієнт від червоного до блакитного</p>
+                    </div>
+                    <div style="background: #f39c12; color: white; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                        Помаранчевий блок
+                    </div>
+                    <div style="background: #9b59b6; color: white; padding: 15px; border-radius: 5px;">
+                        Фіолетовий блок
+                    </div>
+                `
+            },
+            layout: {
+                title: 'Flexbox Layout',
+                content: `
+                    <div style="display: flex; gap: 10px; margin: 10px 0;">
+                        <div style="flex: 1; background: #3498db; color: white; padding: 15px; border-radius: 5px; text-align: center;">
+                            Блок 1
+                        </div>
+                        <div style="flex: 2; background: #e74c3c; color: white; padding: 15px; border-radius: 5px; text-align: center;">
+                            Блок 2 (більший)
+                        </div>
+                        <div style="flex: 1; background: #2ecc71; color: white; padding: 15px; border-radius: 5px; text-align: center;">
+                            Блок 3
+                        </div>
+                    </div>
+                    <p style="text-align: center; color: #666;">Flexbox дозволяє легко розміщувати елементи</p>
+                `
+            },
+            animation: {
+                title: 'CSS Анімації',
+                content: `
+                    <style>
+                        @keyframes bounce {
+                            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+                            40% { transform: translateY(-20px); }
+                            60% { transform: translateY(-10px); }
+                        }
+                        .animated-box {
+                            background: linear-gradient(45deg, #667eea, #764ba2);
+                            color: white;
+                            padding: 20px;
+                            border-radius: 10px;
+                            text-align: center;
+                            animation: bounce 2s infinite;
+                            margin: 20px auto;
+                            width: 200px;
+                        }
+                    </style>
+                    <div class="animated-box">
+                        <h3>Анімована коробка!</h3>
+                        <p>Стрибає вгору і вниз</p>
+                    </div>
+                    <p style="text-align: center; color: #666;">CSS анімації роблять сайт живим і інтерактивним</p>
+                `
+            }
+        };
+
+        function showDemo(type) {
+            // Оновлюємо активну кнопку
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Показуємо демонстрацію
+            const demo = demos[type];
+            document.getElementById('demoOutput').innerHTML = `
+                <h3>${demo.title}</h3>
+                ${demo.content}
+            `;
+        }
+    </script>
+</body>
+</html> 

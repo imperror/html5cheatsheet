@@ -1,0 +1,1439 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Посилання та навігація</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: hidden;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .link-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .link-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .link-header {
+            background: #667eea;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .link-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .link-content {
+            padding: 1.5rem;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .result-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+
+        .category-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: hidden;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .attribute-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .attribute-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .attribute-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .attribute-name {
+            font-weight: bold;
+            color: #2d3748;
+            font-family: monospace;
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+        }
+
+        .attribute-description {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1.5rem;
+            min-height: 150px;
+        }
+
+        .demo-output .code-example {
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .link-states-demo {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .link-state-example {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 5px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .link-state-example a {
+            font-size: 1.2rem;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .link-default a {
+            color: #3182ce;
+            border: 2px solid #3182ce;
+        }
+
+        .link-hover a:hover {
+            background: #3182ce;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .link-visited a:visited {
+            color: #805ad5;
+            border-color: #805ad5;
+        }
+
+        .link-active a:active {
+            background: #e53e3e;
+            border-color: #e53e3e;
+            color: white;
+        }
+
+        .navigation-patterns {
+            display: grid;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .nav-pattern {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+        }
+
+        .nav-pattern h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .nav-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .nav-horizontal {
+            display: flex;
+            gap: 1rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .nav-horizontal li a {
+            color: #4a5568;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-horizontal li a:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .nav-horizontal li a.active {
+            background: #4c51bf;
+            color: white;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+
+        .breadcrumb li:not(:last-child)::after {
+            content: ">";
+            margin-left: 0.5rem;
+            color: #a0aec0;
+        }
+
+        .breadcrumb li a {
+            color: #3182ce;
+            text-decoration: none;
+        }
+
+        .breadcrumb li a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb li.current {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .dropdown-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: white;
+            min-width: 160px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            border-radius: 5px;
+            z-index: 1;
+            padding: 0.5rem 0;
+        }
+
+        .dropdown-menu:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            color: #4a5568;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background: #f7fafc;
+        }
+
+        .accessibility-tips {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .accessibility-tips h4 {
+            color: #2c7a7b;
+            margin-bottom: 0.5rem;
+        }
+
+        .seo-tips {
+            background: #fef5e7;
+            border-left: 4px solid #ed8936;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .seo-tips h4 {
+            color: #c05621;
+            margin-bottom: 0.5rem;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.danger {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .practice-card ul {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .practice-card li {
+            margin: 0.25rem 0;
+        }
+
+        .practical-examples {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: hidden;
+        }
+
+        .example-title {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .example-code-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .example-result-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        .example-result-section ul, .example-result-section ol {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .attribute-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .attribute-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .attribute-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .attribute-table tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .attribute-table tr:hover {
+            background: #e6fffa;
+        }
+
+        .code-cell {
+            font-family: 'Courier New', Consolas, monospace;
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .link-types-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-split {
+                grid-template-columns: 1fr;
+            }
+            
+            .attributes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls {
+                justify-content: center;
+            }
+
+            .nav-horizontal {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔗 Посилання та навігація</h1>
+            <p>Вивчіть як створювати інтерактивні посилання та навігаційні елементи для веб-сторінок</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи посилань в HTML</h2>
+            <p>Посилання (<code>&lt;a&gt;</code>) - це основа навігації в вебі. Вони дозволяють користувачам переходити між сторінками, розділами та ресурсами.</p>
+            
+            <div class="highlight-box">
+                <h3>💡 Анатомія посилання</h3>
+                <p><code>&lt;a href="адреса"&gt;Текст посилання&lt;/a&gt;</code></p>
+                <p><strong>href</strong> - атрибут, що вказує куди веде посилання</p>
+                <p><strong>Текст посилання</strong> - видимий текст, на який клікає користувач</p>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🌐 Типи посилань</h3>
+                <p>Різні способи використання посилань для навігації</p>
+            </div>
+            
+            <div class="link-types-grid">
+                <div class="link-demo">
+                    <div class="link-header">
+                        Зовнішні посилання
+                        <span class="link-tag">href="https://..."</span>
+                    </div>
+                    <div class="link-content">
+                        <div class="code-example">
+&lt;a href="https://google.com"&gt;
+  Перейти на Google
+&lt;/a&gt;
+
+&lt;a href="https://github.com" target="_blank"&gt;
+  GitHub (нова вкладка)
+&lt;/a&gt;</div>
+                        <div class="result-example">
+                            <a href="https://google.com" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">Перейти на Google</a>
+                            <a href="https://github.com" target="_blank" style="color: #3182ce; text-decoration: none;">GitHub (нова вкладка) ↗</a>
+                        </div>
+                        <p><strong>Використання:</strong> для посилань на інші сайти</p>
+                    </div>
+                </div>
+
+                <div class="link-demo">
+                    <div class="link-header">
+                        Внутрішні посилання
+                        <span class="link-tag">href="/page"</span>
+                    </div>
+                    <div class="link-content">
+                        <div class="code-example">
+&lt;a href="/about"&gt;Про нас&lt;/a&gt;
+
+&lt;a href="../blog/post1.html"&gt;
+  Перша стаття
+&lt;/a&gt;
+
+&lt;a href="./images/photo.jpg"&gt;
+  Переглянути фото
+&lt;/a&gt;</div>
+                        <div class="result-example">
+                            <a href="/about" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">Про нас</a>
+                            <a href="../blog/post1.html" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">Перша стаття</a>
+                            <a href="./images/photo.jpg" style="color: #3182ce; text-decoration: none;">Переглянути фото</a>
+                        </div>
+                        <p><strong>Використання:</strong> для навігації по сайту</p>
+                    </div>
+                </div>
+
+                <div class="link-demo">
+                    <div class="link-header">
+                        Якорні посилання
+                        <span class="link-tag">href="#section"</span>
+                    </div>
+                    <div class="link-content">
+                        <div class="code-example">
+&lt;a href="#top"&gt;Вгору сторінки&lt;/a&gt;
+
+&lt;a href="#section1"&gt;
+  До розділу 1
+&lt;/a&gt;
+
+&lt;!-- Цільовий елемент --&gt;
+&lt;h2 id="section1"&gt;Розділ 1&lt;/h2&gt;</div>
+                        <div class="result-example">
+                            <a href="#top" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">Вгору сторінки</a>
+                            <a href="#section1" style="color: #3182ce; text-decoration: none;">До розділу 1</a>
+                        </div>
+                        <p><strong>Використання:</strong> для переходу до розділів сторінки</p>
+                    </div>
+                </div>
+
+                <div class="link-demo">
+                    <div class="link-header">
+                        Email посилання
+                        <span class="link-tag">href="mailto:"</span>
+                    </div>
+                    <div class="link-content">
+                        <div class="code-example">
+&lt;a href="mailto:info@example.com"&gt;
+  Написати листа
+&lt;/a&gt;
+
+&lt;a href="mailto:support@site.com?subject=Питання&amp;body=Привіт!"&gt;
+  Підтримка
+&lt;/a&gt;</div>
+                        <div class="result-example">
+                            <a href="mailto:info@example.com" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">📧 Написати листа</a>
+                            <a href="mailto:support@site.com?subject=Питання&body=Привіт!" style="color: #3182ce; text-decoration: none;">📧 Підтримка</a>
+                        </div>
+                        <p><strong>Використання:</strong> для відкриття поштового клієнта</p>
+                    </div>
+                </div>
+
+                <div class="link-demo">
+                    <div class="link-header">
+                        Телефонні посилання
+                        <span class="link-tag">href="tel:"</span>
+                    </div>
+                    <div class="link-content">
+                        <div class="code-example">
+&lt;a href="tel:+380671234567"&gt;
+  +38 (067) 123-45-67
+&lt;/a&gt;
+
+&lt;a href="tel:911"&gt;
+  Екстрена служба
+&lt;/a&gt;</div>
+                        <div class="result-example">
+                            <a href="tel:+380671234567" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">📞 +38 (067) 123-45-67</a>
+                            <a href="tel:911" style="color: #3182ce; text-decoration: none;">🚨 Екстрена служба</a>
+                        </div>
+                        <p><strong>Використання:</strong> для швидкого дзвінка з мобільних</p>
+                    </div>
+                </div>
+
+                <div class="link-demo">
+                    <div class="link-header">
+                        Завантаження файлів
+                        <span class="link-tag">download</span>
+                    </div>
+                    <div class="link-content">
+                        <div class="code-example">
+&lt;a href="document.pdf" download&gt;
+  Завантажити PDF
+&lt;/a&gt;
+
+&lt;a href="image.jpg" download="my-image.jpg"&gt;
+  Зберегти зображення
+&lt;/a&gt;</div>
+                        <div class="result-example">
+                            <a href="document.pdf" download style="color: #3182ce; text-decoration: none; margin-right: 1rem;">📄 Завантажити PDF</a>
+                            <a href="image.jpg" download="my-image.jpg" style="color: #3182ce; text-decoration: none;">💾 Зберегти зображення</a>
+                        </div>
+                        <p><strong>Використання:</strong> для завантаження файлів</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>⚙️ Атрибути посилань</h3>
+                <p>Додаткові можливості для управління поведінкою посилань</p>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="attribute-table">
+                    <thead>
+                        <tr>
+                            <th>Атрибут</th>
+                            <th>Значення</th>
+                            <th>Опис</th>
+                            <th>Приклад використання</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="code-cell">href</td>
+                            <td>URL, #id, mailto:, tel:</td>
+                            <td>Адреса, куди веде посилання</td>
+                            <td><code>href="https://example.com"</code></td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">target</td>
+                            <td>_blank, _self, _parent, _top</td>
+                            <td>Де відкривати посилання</td>
+                            <td><code>target="_blank"</code> - нова вкладка</td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">rel</td>
+                            <td>noopener, nofollow, noreferrer</td>
+                            <td>Відношення до цільової сторінки</td>
+                            <td><code>rel="noopener noreferrer"</code></td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">download</td>
+                            <td>назва файлу (опціонально)</td>
+                            <td>Завантажити файл замість переходу</td>
+                            <td><code>download="document.pdf"</code></td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">title</td>
+                            <td>текст підказки</td>
+                            <td>Спливаюча підказка при наведенні</td>
+                            <td><code>title="Додаткова інформація"</code></td>
+                        </tr>
+                        <tr>
+                            <td class="code-cell">type</td>
+                            <td>MIME-тип</td>
+                            <td>Тип контенту за посиланням</td>
+                            <td><code>type="application/pdf"</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="interactive-demo">
+                <h4>🎮 Інтерактивна демонстрація атрибутів:</h4>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showLinkDemo('target')">target</button>
+                    <button class="demo-button" onclick="showLinkDemo('rel')">rel</button>
+                    <button class="demo-button" onclick="showLinkDemo('download')">download</button>
+                    <button class="demo-button" onclick="showLinkDemo('title')">title</button>
+                </div>
+                
+                <div class="demo-output" id="linkDemo">
+                    <div class="code-example">
+&lt;a href="https://example.com" target="_blank"&gt;
+  Відкрити в новій вкладці
+&lt;/a&gt;
+
+&lt;a href="https://example.com" target="_self"&gt;
+  Відкрити в тій же вкладці
+&lt;/a&gt;</div>
+                    <div class="result-example">
+                        <h5>Результат:</h5>
+                        <a href="https://example.com" target="_blank" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">Відкрити в новій вкладці ↗</a>
+                        <a href="https://example.com" target="_self" style="color: #3182ce; text-decoration: none;">Відкрити в тій же вкладці</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🎨 Стани посилань</h3>
+                <p>CSS псевдокласи для стилізації посилань в різних станах</p>
+            </div>
+            
+            <div class="link-states-demo">
+                <h4>Демонстрація станів посилань:</h4>
+                
+                <div class="link-state-example link-default">
+                    <strong>:link</strong> - звичайний стан
+                    <div class="code-example">
+a:link {
+  color: #3182ce;
+  text-decoration: none;
+}</div>
+                    <a href="#" style="color: #3182ce; text-decoration: none;">Звичайне посилання</a>
+                </div>
+
+                <div class="link-state-example link-hover">
+                    <strong>:hover</strong> - при наведенні
+                    <div class="code-example">
+a:hover {
+  background: #3182ce;
+  color: white;
+  transform: translateY(-2px);
+}</div>
+                    <a href="#" style="color: #3182ce; border: 2px solid #3182ce; padding: 0.5rem 1rem; text-decoration: none; display: inline-block; transition: all 0.3s;">Наведіть мишку</a>
+                </div>
+
+                <div class="link-state-example link-visited">
+                    <strong>:visited</strong> - відвідане посилання
+                    <div class="code-example">
+a:visited {
+  color: #805ad5;
+  border-color: #805ad5;
+}</div>
+                    <a href="#visited" style="color: #805ad5; border: 2px solid #805ad5; padding: 0.5rem 1rem; text-decoration: none; display: inline-block;">Відвідане посилання</a>
+                </div>
+
+                <div class="link-state-example link-active">
+                    <strong>:active</strong> - при натисканні
+                    <div class="code-example">
+a:active {
+  background: #e53e3e;
+  color: white;
+}</div>
+                    <a href="#" style="color: #e53e3e; border: 2px solid #e53e3e; padding: 0.5rem 1rem; text-decoration: none; display: inline-block;">Натисніть і утримуйте</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🧭 Навігаційні патерни</h3>
+                <p>Популярні способи організації навігації на веб-сайтах</p>
+            </div>
+            
+            <div class="navigation-patterns">
+                <div class="nav-pattern">
+                    <h4>🔗 Горизонтальне меню</h4>
+                    <div class="code-example">
+&lt;nav&gt;
+  &lt;ul class="nav-horizontal"&gt;
+    &lt;li&gt;&lt;a href="/" class="active"&gt;Головна&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/about"&gt;Про нас&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/services"&gt;Послуги&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/contact"&gt;Контакти&lt;/a&gt;&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/nav&gt;</div>
+                    <div class="nav-example">
+                        <nav>
+                            <ul class="nav-horizontal">
+                                <li><a href="/" class="active">Головна</a></li>
+                                <li><a href="/about">Про нас</a></li>
+                                <li><a href="/services">Послуги</a></li>
+                                <li><a href="/contact">Контакти</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="nav-pattern">
+                    <h4>🍞 Хлібні крихти</h4>
+                    <div class="code-example">
+&lt;nav aria-label="breadcrumb"&gt;
+  &lt;ol class="breadcrumb"&gt;
+    &lt;li&gt;&lt;a href="/"&gt;Головна&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/blog"&gt;Блог&lt;/a&gt;&lt;/li&gt;
+    &lt;li&gt;&lt;a href="/blog/category"&gt;Категорія&lt;/a&gt;&lt;/li&gt;
+    &lt;li class="current"&gt;Поточна стаття&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/nav&gt;</div>
+                    <div class="nav-example">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li><a href="/">Головна</a></li>
+                                <li><a href="/blog">Блог</a></li>
+                                <li><a href="/blog/category">Категорія</a></li>
+                                <li class="current">Поточна стаття</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+
+                <div class="nav-pattern">
+                    <h4>📋 Випадаюче меню</h4>
+                    <div class="code-example">
+&lt;div class="dropdown-menu"&gt;
+  &lt;a href="#"&gt;Послуги ▼&lt;/a&gt;
+  &lt;div class="dropdown-content"&gt;
+    &lt;a href="/web-design"&gt;Веб-дизайн&lt;/a&gt;
+    &lt;a href="/development"&gt;Розробка&lt;/a&gt;
+    &lt;a href="/seo"&gt;SEO оптимізація&lt;/a&gt;
+    &lt;a href="/support"&gt;Підтримка&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+                    <div class="nav-example">
+                        <div class="dropdown-menu">
+                            <a href="#" style="color: #4a5568; text-decoration: none; padding: 0.5rem 1rem; background: #f7fafc; border-radius: 5px;">Послуги ▼</a>
+                            <div class="dropdown-content">
+                                <a href="/web-design">Веб-дизайн</a>
+                                <a href="/development">Розробка</a>
+                                <a href="/seo">SEO оптимізація</a>
+                                <a href="/support">Підтримка</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Доступність та SEO</h2>
+            
+            <div class="accessibility-tips">
+                <h4>♿ Поради щодо доступності:</h4>
+                <ul>
+                    <li>Використовуйте описові тексти посилань замість "клікніть тут"</li>
+                    <li>Додавайте <code>aria-label</code> для іконок без тексту</li>
+                    <li>Вказуйте <code>target="_blank"</code> тільки коли необхідно</li>
+                    <li>Використовуйте <code>title</code> для додаткової інформації</li>
+                    <li>Забезпечте достатній контраст кольорів</li>
+                </ul>
+            </div>
+
+            <div class="seo-tips">
+                <h4>🔍 SEO оптимізація:</h4>
+                <ul>
+                    <li>Використовуйте ключові слова в тексті посилань</li>
+                    <li>Додавайте <code>rel="nofollow"</code> для платних посилань</li>
+                    <li>Використовуйте <code>rel="noopener"</code> для зовнішніх посилань</li>
+                    <li>Створюйте логічну структуру внутрішніх посилань</li>
+                    <li>Уникайте надмірної кількості посилань на сторінці</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📚 Практичні приклади</h2>
+            <div class="practical-examples">
+                <div class="example-card">
+                    <div class="example-title">
+                        🏪 Навігація інтернет-магазину
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;header&gt;
+  &lt;nav class="main-nav"&gt;
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="/"&gt;Головна&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;
+        &lt;a href="/catalog"&gt;Каталог&lt;/a&gt;
+        &lt;ul class="submenu"&gt;
+          &lt;li&gt;&lt;a href="/catalog/phones"&gt;Телефони&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="/catalog/laptops"&gt;Ноутбуки&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href="/catalog/accessories"&gt;Аксесуари&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href="/about"&gt;Про нас&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="/contact"&gt;Контакти&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/nav&gt;
+  
+  &lt;div class="user-actions"&gt;
+    &lt;a href="/search" aria-label="Пошук"&gt;🔍&lt;/a&gt;
+    &lt;a href="/cart"&gt;🛒 Кошик&lt;/a&gt;
+    &lt;a href="/login"&gt;👤 Вхід&lt;/a&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Навігація магазину</h4>
+                            <nav style="margin-bottom: 1rem;">
+                                <ul style="display: flex; gap: 1rem; list-style: none; padding: 0; margin: 0;">
+                                    <li><a href="/" style="color: #3182ce; text-decoration: none;">Головна</a></li>
+                                    <li><a href="/catalog" style="color: #3182ce; text-decoration: none;">Каталог ▼</a></li>
+                                    <li><a href="/about" style="color: #3182ce; text-decoration: none;">Про нас</a></li>
+                                    <li><a href="/contact" style="color: #3182ce; text-decoration: none;">Контакти</a></li>
+                                </ul>
+                            </nav>
+                            <div style="display: flex; gap: 1rem;">
+                                <a href="/search" style="color: #3182ce; text-decoration: none;">🔍</a>
+                                <a href="/cart" style="color: #3182ce; text-decoration: none;">🛒 Кошик</a>
+                                <a href="/login" style="color: #3182ce; text-decoration: none;">👤 Вхід</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        📰 Стаття з посиланнями
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;article&gt;
+  &lt;nav aria-label="breadcrumb"&gt;
+    &lt;a href="/"&gt;Головна&lt;/a&gt; &gt; 
+    &lt;a href="/blog"&gt;Блог&lt;/a&gt; &gt; 
+    &lt;span&gt;HTML посилання&lt;/span&gt;
+  &lt;/nav&gt;
+
+  &lt;h1&gt;Повний гід по HTML посиланням&lt;/h1&gt;
+  
+  &lt;p&gt;
+    У цій статті ми розглянемо 
+    &lt;a href="#basics"&gt;основи посилань&lt;/a&gt;, 
+    &lt;a href="#attributes"&gt;корисні атрибути&lt;/a&gt; 
+    та &lt;a href="#best-practices"&gt;кращі практики&lt;/a&gt;.
+  &lt;/p&gt;
+
+  &lt;p&gt;
+    Більше інформації можна знайти в 
+    &lt;a href="https://developer.mozilla.org/docs/Web/HTML/Element/a" 
+       target="_blank" 
+       rel="noopener noreferrer"&gt;
+      офіційній документації MDN
+    &lt;/a&gt;.
+  &lt;/p&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;Питання? &lt;a href="mailto:support@example.com"&gt;Напишіть нам&lt;/a&gt;&lt;/p&gt;
+    &lt;p&gt;Телефон: &lt;a href="tel:+380671234567"&gt;+38 (067) 123-45-67&lt;/a&gt;&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;</div>
+                        <div class="example-result-section">
+                            <nav style="margin-bottom: 1rem; color: #4a5568;">
+                                <a href="/" style="color: #3182ce; text-decoration: none;">Головна</a> > 
+                                <a href="/blog" style="color: #3182ce; text-decoration: none;">Блог</a> > 
+                                <span>HTML посилання</span>
+                            </nav>
+
+                            <h4>Повний гід по HTML посиланням</h4>
+                            
+                            <p>
+                                У цій статті ми розглянемо 
+                                <a href="#basics" style="color: #3182ce;">основи посилань</a>, 
+                                <a href="#attributes" style="color: #3182ce;">корисні атрибути</a> 
+                                та <a href="#best-practices" style="color: #3182ce;">кращі практики</a>.
+                            </p>
+
+                            <p>
+                                Більше інформації можна знайти в 
+                                <a href="https://developer.mozilla.org/docs/Web/HTML/Element/a" target="_blank" style="color: #3182ce;">офіційній документації MDN ↗</a>.
+                            </p>
+
+                            <footer style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2e8f0;">
+                                <p>Питання? <a href="mailto:support@example.com" style="color: #3182ce;">📧 Напишіть нам</a></p>
+                                <p>Телефон: <a href="tel:+380671234567" style="color: #3182ce;">📞 +38 (067) 123-45-67</a></p>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        💼 Портфоліо з посиланнями
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;section class="portfolio"&gt;
+  &lt;h2&gt;Мої проекти&lt;/h2&gt;
+  
+  &lt;div class="project-grid"&gt;
+    &lt;article class="project"&gt;
+      &lt;h3&gt;Інтернет-магазин&lt;/h3&gt;
+      &lt;p&gt;Повнофункціональний магазин на React&lt;/p&gt;
+      &lt;div class="project-links"&gt;
+        &lt;a href="https://demo.shop.com" 
+           target="_blank" 
+           rel="noopener"&gt;
+          🌐 Демо
+        &lt;/a&gt;
+        &lt;a href="https://github.com/user/shop" 
+           target="_blank" 
+           rel="noopener"&gt;
+          📁 Код
+        &lt;/a&gt;
+        &lt;a href="/projects/shop-case-study"&gt;
+          📖 Детальніше
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+
+    &lt;article class="project"&gt;
+      &lt;h3&gt;Мобільний додаток&lt;/h3&gt;
+      &lt;p&gt;ToDo менеджер для iOS та Android&lt;/p&gt;
+      &lt;div class="project-links"&gt;
+        &lt;a href="https://apps.apple.com/app/id123" 
+           target="_blank" 
+           rel="noopener"&gt;
+          📱 App Store
+        &lt;/a&gt;
+        &lt;a href="https://play.google.com/store/apps/details?id=com.example" 
+           target="_blank" 
+           rel="noopener"&gt;
+          🤖 Google Play
+        &lt;/a&gt;
+        &lt;a href="downloads/app-presentation.pdf" 
+           download&gt;
+          📄 Презентація
+        &lt;/a&gt;
+      &lt;/div&gt;
+    &lt;/article&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</div>
+                        <div class="example-result-section">
+                            <h4>Мої проекти</h4>
+                            
+                            <div style="display: grid; gap: 1rem;">
+                                <article style="border: 1px solid #e2e8f0; padding: 1rem; border-radius: 5px;">
+                                    <h5>Інтернет-магазин</h5>
+                                    <p style="color: #4a5568; margin: 0.5rem 0;">Повнофункціональний магазин на React</p>
+                                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                        <a href="#" style="color: #3182ce; text-decoration: none; padding: 0.25rem 0.5rem; background: #f7fafc; border-radius: 3px;">🌐 Демо</a>
+                                        <a href="#" style="color: #3182ce; text-decoration: none; padding: 0.25rem 0.5rem; background: #f7fafc; border-radius: 3px;">📁 Код</a>
+                                        <a href="#" style="color: #3182ce; text-decoration: none; padding: 0.25rem 0.5rem; background: #f7fafc; border-radius: 3px;">📖 Детальніше</a>
+                                    </div>
+                                </article>
+
+                                <article style="border: 1px solid #e2e8f0; padding: 1rem; border-radius: 5px;">
+                                    <h5>Мобільний додаток</h5>
+                                    <p style="color: #4a5568; margin: 0.5rem 0;">ToDo менеджер для iOS та Android</p>
+                                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                                        <a href="#" style="color: #3182ce; text-decoration: none; padding: 0.25rem 0.5rem; background: #f7fafc; border-radius: 3px;">📱 App Store</a>
+                                        <a href="#" style="color: #3182ce; text-decoration: none; padding: 0.25rem 0.5rem; background: #f7fafc; border-radius: 3px;">🤖 Google Play</a>
+                                        <a href="#" style="color: #3182ce; text-decoration: none; padding: 0.25rem 0.5rem; background: #f7fafc; border-radius: 3px;">📄 Презентація</a>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="best-practices">
+                <div class="practice-card success">
+                    <h3>✅ Рекомендації:</h3>
+                    <ul>
+                        <li>Використовуйте описові тексти посилань</li>
+                        <li>Додавайте <code>rel="noopener noreferrer"</code> для зовнішніх посилань</li>
+                        <li>Вказуйте <code>title</code> для додаткової інформації</li>
+                        <li>Використовуйте <code>aria-label</code> для іконок</li>
+                        <li>Групуйте навігаційні посилання в <code>&lt;nav&gt;</code></li>
+                        <li>Створюйте логічну ієрархію посилань</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card warning">
+                    <h3>⚠️ Обережно:</h3>
+                    <ul>
+                        <li>Не зловживайте <code>target="_blank"</code></li>
+                        <li>Уникайте посилань типу "клікніть тут"</li>
+                        <li>Не забувайте про мобільну доступність</li>
+                        <li>Перевіряйте працездатність усіх посилань</li>
+                        <li>Враховуйте швидкість завантаження сторінок</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card danger">
+                    <h3>❌ Уникайте:</h3>
+                    <ul>
+                        <li>Порожніх або неробочих посилань</li>
+                        <li>Занадто довгих URL у тексті</li>
+                        <li>Відкриття нових вкладок без попередження</li>
+                        <li>Посилань без альтернативного тексту</li>
+                        <li>Надмірної кількості посилань на сторінці</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('lists')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 10 з 42</strong><br>
+                <small>Посилання та навігація</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('images')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const linkDemos = {
+            target: {
+                code: `&lt;a href="https://example.com" target="_blank"&gt;
+  Відкрити в новій вкладці
+&lt;/a&gt;
+
+&lt;a href="https://example.com" target="_self"&gt;
+  Відкрити в тій же вкладці
+&lt;/a&gt;`,
+                result: `<h5>Результат:</h5>
+<a href="https://example.com" target="_blank" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">Відкрити в новій вкладці ↗</a>
+<a href="https://example.com" target="_self" style="color: #3182ce; text-decoration: none;">Відкрити в тій же вкладці</a>`
+            },
+            
+            rel: {
+                code: `&lt;a href="https://external-site.com" 
+   rel="noopener noreferrer" 
+   target="_blank"&gt;
+  Безпечне зовнішнє посилання
+&lt;/a&gt;
+
+&lt;a href="https://partner-site.com" 
+   rel="nofollow"&gt;
+  Платне посилання
+&lt;/a&gt;`,
+                result: `<h5>Результат:</h5>
+<a href="https://external-site.com" rel="noopener noreferrer" target="_blank" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">Безпечне зовнішнє посилання ↗</a>
+<a href="https://partner-site.com" rel="nofollow" style="color: #3182ce; text-decoration: none;">Платне посилання</a>`
+            },
+            
+            download: {
+                code: `&lt;a href="document.pdf" download&gt;
+  Завантажити PDF
+&lt;/a&gt;
+
+&lt;a href="image.jpg" download="my-photo.jpg"&gt;
+  Зберегти зображення
+&lt;/a&gt;
+
+&lt;a href="data.csv" 
+   download="report-2024.csv" 
+   type="text/csv"&gt;
+  Експорт даних
+&lt;/a&gt;`,
+                result: `<h5>Результат:</h5>
+<a href="#" download style="color: #3182ce; text-decoration: none; margin-right: 1rem;">📄 Завантажити PDF</a>
+<a href="#" download="my-photo.jpg" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">🖼️ Зберегти зображення</a>
+<a href="#" download="report-2024.csv" style="color: #3182ce; text-decoration: none;">📊 Експорт даних</a>`
+            },
+            
+            title: {
+                code: `&lt;a href="https://github.com" 
+   title="Платформа для розробників"&gt;
+  GitHub
+&lt;/a&gt;
+
+&lt;a href="mailto:support@example.com" 
+   title="Надіслати листа в службу підтримки"&gt;
+  📧 Підтримка
+&lt;/a&gt;
+
+&lt;a href="/profile" 
+   title="Переглянути та редагувати профіль"&gt;
+  👤 Профіль
+&lt;/a&gt;`,
+                result: `<h5>Результат (наведіть мишку для підказки):</h5>
+<a href="#" title="Платформа для розробників" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">GitHub</a>
+<a href="#" title="Надіслати листа в службу підтримки" style="color: #3182ce; text-decoration: none; margin-right: 1rem;">📧 Підтримка</a>
+<a href="#" title="Переглянути та редагувати профіль" style="color: #3182ce; text-decoration: none;">👤 Профіль</a>`
+            }
+        };
+
+        function showLinkDemo(type) {
+            // Remove active class from all buttons
+            const demoContainer = document.getElementById('linkDemo').closest('.interactive-demo');
+            demoContainer.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update demo content with both code and result
+            const demo = linkDemos[type];
+            document.getElementById('linkDemo').innerHTML = `
+                <div class="code-example">${demo.code}</div>
+                <div class="result-example">${demo.result}</div>
+            `;
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.link-demo, .attribute-card, .example-card, .practice-card, .nav-pattern').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Link hover effects for the demo */
+        .link-state-example a:hover {
+            background: #3182ce !important;
+            color: white !important;
+            transform: translateY(-2px);
+        }
+    </style>
+</body>
+</html> 

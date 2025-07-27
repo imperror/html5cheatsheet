@@ -1,0 +1,1762 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблиці в HTML</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .table-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .table-header {
+            background: #667eea;
+            color: white;
+            padding: 1rem 1.5rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .table-content {
+            padding: 1.5rem;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .result-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+        }
+
+        .category-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1.5rem;
+            min-height: 200px;
+            overflow-x: auto;
+        }
+
+        .demo-output .code-example {
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        /* Table Styles */
+        .demo-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin: 1rem 0;
+        }
+
+        .demo-table th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .demo-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .demo-table tr:nth-child(even) td {
+            background: #f7fafc;
+        }
+
+        .demo-table tr:hover td {
+            background: #e6fffa;
+        }
+
+        .basic-table {
+            border: 1px solid #e2e8f0;
+            border-collapse: collapse;
+        }
+
+        .basic-table th,
+        .basic-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .basic-table th {
+            background: #f7fafc;
+            font-weight: bold;
+        }
+
+        .styled-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .styled-table thead th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .styled-table tbody td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .styled-table tbody tr:nth-child(even) {
+            background: #f7fafc;
+        }
+
+        .styled-table tbody tr:hover {
+            background: #e6fffa;
+            transform: scale(1.01);
+            transition: all 0.3s ease;
+        }
+
+        .styled-table tfoot td {
+            background: #f7fafc;
+            font-weight: bold;
+            padding: 1rem;
+            border-top: 2px solid #667eea;
+        }
+
+        .responsive-table-wrapper {
+            overflow-x: auto;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .responsive-table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+        }
+
+        .responsive-table th,
+        .responsive-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .responsive-table th {
+            background: #667eea;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .mobile-cards {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .responsive-table-wrapper {
+                display: none;
+            }
+
+            .mobile-cards {
+                display: block;
+            }
+
+            .mobile-card {
+                background: white;
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+                padding: 1rem;
+                margin: 1rem 0;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+
+            .mobile-card-header {
+                font-weight: bold;
+                color: #667eea;
+                margin-bottom: 0.5rem;
+            }
+
+            .mobile-card-row {
+                display: flex;
+                justify-content: space-between;
+                margin: 0.25rem 0;
+                padding: 0.25rem 0;
+                border-bottom: 1px solid #f7fafc;
+            }
+
+            .mobile-card-label {
+                font-weight: 500;
+                color: #4a5568;
+            }
+
+            .mobile-card-value {
+                color: #2d3748;
+            }
+        }
+
+        .accessibility-tips {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .accessibility-tips h4 {
+            color: #2c7a7b;
+            margin-bottom: 0.5rem;
+        }
+
+        .performance-tips {
+            background: #fef5e7;
+            border-left: 4px solid #ed8936;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+        }
+
+        .performance-tips h4 {
+            color: #c05621;
+            margin-bottom: 0.5rem;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.danger {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .practice-card ul {
+            padding-left: 1.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .practice-card li {
+            margin: 0.25rem 0;
+        }
+
+        .practical-examples {
+            display: grid;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+
+        .example-title {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .example-code-section {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .example-result-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .table-attributes {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .attribute-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .attribute-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+        }
+
+        .attribute-name {
+            font-weight: bold;
+            color: #2d3748;
+            font-family: monospace;
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+
+        .attribute-description {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .code-cell {
+            font-family: 'Courier New', Consolas, monospace;
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.8rem;
+        }
+
+        /* Sortable table styles */
+        .sortable {
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+        }
+
+        .sortable:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .sortable::after {
+            content: "⇅";
+            position: absolute;
+            right: 8px;
+            opacity: 0.6;
+        }
+
+        .sortable.asc::after {
+            content: "↑";
+            opacity: 1;
+        }
+
+        .sortable.desc::after {
+            content: "↓";
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .example-split {
+                grid-template-columns: 1fr;
+            }
+            
+            .table-attributes {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls {
+                justify-content: center;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Таблиці в HTML</h1>
+            <p>Навчіться створювати структуровані таблиці для відображення табличних даних</p>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Основи HTML таблиць</h2>
+            <p>Таблиці використовуються для відображення структурованих даних у рядках та стовпцях. Основні елементи: <code>&lt;table&gt;</code>, <code>&lt;tr&gt;</code>, <code>&lt;th&gt;</code> та <code>&lt;td&gt;</code>.</p>
+            
+            <div class="highlight-box">
+                <h3>💡 Структура таблиці</h3>
+                <p><code>&lt;table&gt;</code> - контейнер таблиці</p>
+                <p><code>&lt;tr&gt;</code> - рядок таблиці (table row)</p>
+                <p><code>&lt;th&gt;</code> - заголовок стовпця (table header)</p>
+                <p><code>&lt;td&gt;</code> - комірка з даними (table data)</p>
+            </div>
+
+            <div class="table-demo">
+                <div class="table-header">
+                    Проста таблиця
+                    <span class="table-tag">&lt;table&gt;</span>
+                </div>
+                <div class="table-content">
+                    <div class="code-example">
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Ім'я&lt;/th&gt;
+    &lt;th&gt;Вік&lt;/th&gt;
+    &lt;th&gt;Місто&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Іван&lt;/td&gt;
+    &lt;td&gt;25&lt;/td&gt;
+    &lt;td&gt;Київ&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Марія&lt;/td&gt;
+    &lt;td&gt;30&lt;/td&gt;
+    &lt;td&gt;Львів&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</div>
+                    <div class="result-example">
+                        <table class="basic-table">
+                            <tr>
+                                <th>Ім'я</th>
+                                <th>Вік</th>
+                                <th>Місто</th>
+                            </tr>
+                            <tr>
+                                <td>Іван</td>
+                                <td>25</td>
+                                <td>Київ</td>
+                            </tr>
+                            <tr>
+                                <td>Марія</td>
+                                <td>30</td>
+                                <td>Львів</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🏗️ Структурні елементи таблиць</h3>
+                <p>Семантичні елементи для організації контенту таблиці</p>
+            </div>
+            
+            <div class="table-attributes">
+                <div class="attribute-card">
+                    <div class="attribute-name">&lt;thead&gt;</div>
+                    <div class="attribute-description">
+                        Заголовок таблиці. Містить рядки з заголовками стовпців. Зазвичай стилізується окремо від основного контенту.
+                    </div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">&lt;tbody&gt;</div>
+                    <div class="attribute-description">
+                        Тіло таблиці. Містить основні дані таблиці. Може бути кілька tbody елементів для групування рядків.
+                    </div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">&lt;tfoot&gt;</div>
+                    <div class="attribute-description">
+                        Підвал таблиці. Містить підсумкові дані, такі як суми, середні значення тощо.
+                    </div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">&lt;caption&gt;</div>
+                    <div class="attribute-description">
+                        Заголовок таблиці. Описує зміст таблиці та покращує доступність для екранних читачів.
+                    </div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">&lt;colgroup&gt;</div>
+                    <div class="attribute-description">
+                        Група стовпців. Дозволяє застосовувати стилі до цілих стовпців або груп стовпців.
+                    </div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">&lt;col&gt;</div>
+                    <div class="attribute-description">
+                        Окремий стовпець. Використовується всередині colgroup для визначення властивостей стовпців.
+                    </div>
+                </div>
+            </div>
+
+            <div class="table-demo">
+                <div class="table-header">
+                    Повна структура таблиці
+                    <span class="table-tag">структурна</span>
+                </div>
+                <div class="table-content">
+                    <div class="code-example">
+&lt;table&gt;
+  &lt;caption&gt;Звіт продажів за квартал&lt;/caption&gt;
+  
+  &lt;colgroup&gt;
+    &lt;col style="background-color: #f7fafc;"&gt;
+    &lt;col span="3" style="background-color: #e6fffa;"&gt;
+  &lt;/colgroup&gt;
+  
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Місяць&lt;/th&gt;
+      &lt;th&gt;Продажі&lt;/th&gt;
+      &lt;th&gt;Витрати&lt;/th&gt;
+      &lt;th&gt;Прибуток&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Січень&lt;/td&gt;
+      &lt;td&gt;50,000₴&lt;/td&gt;
+      &lt;td&gt;30,000₴&lt;/td&gt;
+      &lt;td&gt;20,000₴&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Лютий&lt;/td&gt;
+      &lt;td&gt;65,000₴&lt;/td&gt;
+      &lt;td&gt;35,000₴&lt;/td&gt;
+      &lt;td&gt;30,000₴&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Березень&lt;/td&gt;
+      &lt;td&gt;70,000₴&lt;/td&gt;
+      &lt;td&gt;40,000₴&lt;/td&gt;
+      &lt;td&gt;30,000₴&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td&gt;&lt;strong&gt;Всього&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;185,000₴&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;105,000₴&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;80,000₴&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</div>
+                    <div class="result-example">
+                        <table class="styled-table">
+                            <caption style="caption-side: top; padding: 0.5rem; font-weight: bold; color: #2d3748;">Звіт продажів за квартал</caption>
+                            <thead>
+                                <tr>
+                                    <th>Місяць</th>
+                                    <th>Продажі</th>
+                                    <th>Витрати</th>
+                                    <th>Прибуток</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Січень</td>
+                                    <td>50,000₴</td>
+                                    <td>30,000₴</td>
+                                    <td>20,000₴</td>
+                                </tr>
+                                <tr>
+                                    <td>Лютий</td>
+                                    <td>65,000₴</td>
+                                    <td>35,000₴</td>
+                                    <td>30,000₴</td>
+                                </tr>
+                                <tr>
+                                    <td>Березень</td>
+                                    <td>70,000₴</td>
+                                    <td>40,000₴</td>
+                                    <td>30,000₴</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td><strong>Всього</strong></td>
+                                    <td><strong>185,000₴</strong></td>
+                                    <td><strong>105,000₴</strong></td>
+                                    <td><strong>80,000₴</strong></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🔗 Об'єднання комірок</h3>
+                <p>Атрибути colspan та rowspan для створення складних макетів</p>
+            </div>
+            
+            <div class="interactive-demo">
+                <h4>🎮 Інтерактивна демонстрація об'єднання:</h4>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showTableDemo('colspan')">colspan</button>
+                    <button class="demo-button" onclick="showTableDemo('rowspan')">rowspan</button>
+                    <button class="demo-button" onclick="showTableDemo('complex')">Комплексне</button>
+                    <button class="demo-button" onclick="showTableDemo('schedule')">Розклад</button>
+                </div>
+                
+                <div class="demo-output" id="tableDemo">
+                    <div class="code-example">
+&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Назва&lt;/th&gt;
+    &lt;th colspan="2"&gt;Ціни&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Товар&lt;/td&gt;
+    &lt;td&gt;Стара&lt;/td&gt;
+    &lt;td&gt;Нова&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ноутбук&lt;/td&gt;
+    &lt;td&gt;30,000₴&lt;/td&gt;
+    &lt;td&gt;25,000₴&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;</div>
+                    <div class="result-example">
+                        <h5>Результат:</h5>
+                        <table class="demo-table">
+                            <tr>
+                                <th>Назва</th>
+                                <th colspan="2">Ціни</th>
+                            </tr>
+                            <tr>
+                                <td>Товар</td>
+                                <td>Стара</td>
+                                <td>Нова</td>
+                            </tr>
+                            <tr>
+                                <td>Ноутбук</td>
+                                <td>30,000₴</td>
+                                <td>25,000₴</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>📱 Адаптивні таблиці</h3>
+                <p>Методи створення таблиць, які добре працюють на мобільних пристроях</p>
+            </div>
+            
+            <div class="responsive-table-wrapper">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Товар</th>
+                            <th>Категорія</th>
+                            <th>Ціна</th>
+                            <th>Кількість</th>
+                            <th>Знижка</th>
+                            <th>Загалом</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>iPhone 15 Pro</td>
+                            <td>Смартфони</td>
+                            <td>45,999₴</td>
+                            <td>2</td>
+                            <td>5%</td>
+                            <td>87,398₴</td>
+                        </tr>
+                        <tr>
+                            <td>MacBook Air</td>
+                            <td>Ноутбуки</td>
+                            <td>54,999₴</td>
+                            <td>1</td>
+                            <td>10%</td>
+                            <td>49,499₴</td>
+                        </tr>
+                        <tr>
+                            <td>AirPods Pro</td>
+                            <td>Аксесуари</td>
+                            <td>8,999₴</td>
+                            <td>3</td>
+                            <td>0%</td>
+                            <td>26,997₴</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="mobile-cards">
+                <div class="mobile-card">
+                    <div class="mobile-card-header">iPhone 15 Pro</div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Категорія:</span>
+                        <span class="mobile-card-value">Смартфони</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Ціна:</span>
+                        <span class="mobile-card-value">45,999₴</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Кількість:</span>
+                        <span class="mobile-card-value">2</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Знижка:</span>
+                        <span class="mobile-card-value">5%</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Загалом:</span>
+                        <span class="mobile-card-value">87,398₴</span>
+                    </div>
+                </div>
+
+                <div class="mobile-card">
+                    <div class="mobile-card-header">MacBook Air</div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Категорія:</span>
+                        <span class="mobile-card-value">Ноутбуки</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Ціна:</span>
+                        <span class="mobile-card-value">54,999₴</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Кількість:</span>
+                        <span class="mobile-card-value">1</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Знижка:</span>
+                        <span class="mobile-card-value">10%</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Загалом:</span>
+                        <span class="mobile-card-value">49,499₴</span>
+                    </div>
+                </div>
+
+                <div class="mobile-card">
+                    <div class="mobile-card-header">AirPods Pro</div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Категорія:</span>
+                        <span class="mobile-card-value">Аксесуари</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Ціна:</span>
+                        <span class="mobile-card-value">8,999₴</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Кількість:</span>
+                        <span class="mobile-card-value">3</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Знижка:</span>
+                        <span class="mobile-card-value">0%</span>
+                    </div>
+                    <div class="mobile-card-row">
+                        <span class="mobile-card-label">Загалом:</span>
+                        <span class="mobile-card-value">26,997₴</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-example">
+&lt;!-- Десктопна версія --&gt;
+&lt;div class="responsive-table-wrapper"&gt;
+  &lt;table class="responsive-table"&gt;
+    &lt;!-- Таблиця з горизонтальним скролом --&gt;
+  &lt;/table&gt;
+&lt;/div&gt;
+
+&lt;!-- Мобільна версія --&gt;
+&lt;div class="mobile-cards"&gt;
+  &lt;div class="mobile-card"&gt;
+    &lt;div class="mobile-card-header"&gt;iPhone 15 Pro&lt;/div&gt;
+    &lt;div class="mobile-card-row"&gt;
+      &lt;span class="mobile-card-label"&gt;Категорія:&lt;/span&gt;
+      &lt;span class="mobile-card-value"&gt;Смартфони&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;!-- Інші рядки --&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Доступність таблиць</h2>
+            
+            <div class="accessibility-tips">
+                <h4>♿ Важливо для доступності:</h4>
+                <ul>
+                    <li><strong>scope атрибут:</strong> вказує зв'язок між заголовками та комірками</li>
+                    <li><strong>caption елемент:</strong> описує зміст таблиці</li>
+                    <li><strong>headers атрибут:</strong> явно зв'язує комірки з заголовками</li>
+                    <li><strong>summary атрибут:</strong> короткий опис структури таблиці</li>
+                    <li><strong>Логічна послідовність:</strong> заголовки мають йти перед даними</li>
+                    <li><strong>Контраст:</strong> достатній контраст між текстом та фоном</li>
+                </ul>
+            </div>
+
+            <div class="table-demo">
+                <div class="table-header">
+                    Доступна таблиця
+                    <span class="table-tag">accessibility</span>
+                </div>
+                <div class="table-content">
+                    <div class="code-example">
+&lt;table&gt;
+  &lt;caption&gt;
+    Оцінки студентів за семестр
+  &lt;/caption&gt;
+  
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Студент&lt;/th&gt;
+      &lt;th scope="col"&gt;Математика&lt;/th&gt;
+      &lt;th scope="col"&gt;Фізика&lt;/th&gt;
+      &lt;th scope="col"&gt;Середній бал&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Анна Петренко&lt;/th&gt;
+      &lt;td&gt;95&lt;/td&gt;
+      &lt;td&gt;87&lt;/td&gt;
+      &lt;td&gt;91&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Іван Сидоров&lt;/th&gt;
+      &lt;td&gt;78&lt;/td&gt;
+      &lt;td&gt;92&lt;/td&gt;
+      &lt;td&gt;85&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</div>
+                    <div class="result-example">
+                        <table class="demo-table">
+                            <caption style="caption-side: top; padding: 0.5rem; font-weight: bold;">Оцінки студентів за семестр</caption>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Студент</th>
+                                    <th scope="col">Математика</th>
+                                    <th scope="col">Фізика</th>
+                                    <th scope="col">Середній бал</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Анна Петренко</th>
+                                    <td>95</td>
+                                    <td>87</td>
+                                    <td>91</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Іван Сидоров</th>
+                                    <td>78</td>
+                                    <td>92</td>
+                                    <td>85</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ Продуктивність та оптимізація</h2>
+            
+            <div class="performance-tips">
+                <h4>🚀 Поради щодо продуктивності:</h4>
+                <ul>
+                    <li><strong>table-layout: fixed;</strong> прискорює рендеринг великих таблиць</li>
+                    <li><strong>Віртуалізація:</strong> показуйте тільки видимі рядки для великих даних</li>
+                    <li><strong>Пагінація:</strong> розбивайте великі таблиці на сторінки</li>
+                    <li><strong>Lazy loading:</strong> завантажуйте дані по мірі потреби</li>
+                    <li><strong>Кешування:</strong> зберігайте відсортовані дані</li>
+                    <li><strong>Мінімізація DOM:</strong> уникайте зайвих елементів</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📚 Практичні приклади</h2>
+            <div class="practical-examples">
+                <div class="example-card">
+                    <div class="example-title">
+                        📊 Фінансовий звіт
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;table class="financial-report"&gt;
+  &lt;caption&gt;
+    Фінансовий звіт компанії за 2024 рік
+  &lt;/caption&gt;
+  
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Показник&lt;/th&gt;
+      &lt;th scope="col"&gt;Q1&lt;/th&gt;
+      &lt;th scope="col"&gt;Q2&lt;/th&gt;
+      &lt;th scope="col"&gt;Q3&lt;/th&gt;
+      &lt;th scope="col"&gt;Q4&lt;/th&gt;
+      &lt;th scope="col"&gt;Всього&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Доходи&lt;/th&gt;
+      &lt;td&gt;500,000₴&lt;/td&gt;
+      &lt;td&gt;650,000₴&lt;/td&gt;
+      &lt;td&gt;720,000₴&lt;/td&gt;
+      &lt;td&gt;800,000₴&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;2,670,000₴&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;Витрати&lt;/th&gt;
+      &lt;td&gt;300,000₴&lt;/td&gt;
+      &lt;td&gt;350,000₴&lt;/td&gt;
+      &lt;td&gt;400,000₴&lt;/td&gt;
+      &lt;td&gt;450,000₴&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;1,500,000₴&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr class="profit-row"&gt;
+      &lt;th scope="row"&gt;Прибуток&lt;/th&gt;
+      &lt;td&gt;200,000₴&lt;/td&gt;
+      &lt;td&gt;300,000₴&lt;/td&gt;
+      &lt;td&gt;320,000₴&lt;/td&gt;
+      &lt;td&gt;350,000₴&lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;1,170,000₴&lt;/strong&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td colspan="6"&gt;
+        &lt;small&gt;* Всі суми вказані в українських гривнях&lt;/small&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</div>
+                        <div class="example-result-section">
+                            <table class="demo-table">
+                                <caption style="caption-side: top; padding: 0.5rem; font-weight: bold;">Фінансовий звіт компанії за 2024 рік</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Показник</th>
+                                        <th scope="col">Q1</th>
+                                        <th scope="col">Q2</th>
+                                        <th scope="col">Q3</th>
+                                        <th scope="col">Q4</th>
+                                        <th scope="col">Всього</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">Доходи</th>
+                                        <td>500,000₴</td>
+                                        <td>650,000₴</td>
+                                        <td>720,000₴</td>
+                                        <td>800,000₴</td>
+                                        <td><strong>2,670,000₴</strong></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">Витрати</th>
+                                        <td>300,000₴</td>
+                                        <td>350,000₴</td>
+                                        <td>400,000₴</td>
+                                        <td>450,000₴</td>
+                                        <td><strong>1,500,000₴</strong></td>
+                                    </tr>
+                                    <tr style="background: #f0fff4;">
+                                        <th scope="row">Прибуток</th>
+                                        <td>200,000₴</td>
+                                        <td>300,000₴</td>
+                                        <td>320,000₴</td>
+                                        <td>350,000₴</td>
+                                        <td><strong>1,170,000₴</strong></td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="6" style="text-align: center;">
+                                            <small>* Всі суми вказані в українських гривнях</small>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        📅 Розклад занять
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;table class="schedule"&gt;
+  &lt;caption&gt;Розклад занять - тиждень&lt;/caption&gt;
+  
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Час&lt;/th&gt;
+      &lt;th scope="col"&gt;Понеділок&lt;/th&gt;
+      &lt;th scope="col"&gt;Вівторок&lt;/th&gt;
+      &lt;th scope="col"&gt;Середа&lt;/th&gt;
+      &lt;th scope="col"&gt;Четвер&lt;/th&gt;
+      &lt;th scope="col"&gt;П'ятниця&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;9:00-10:30&lt;/th&gt;
+      &lt;td&gt;Математика&lt;br&gt;&lt;small&gt;ауд. 201&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Фізика&lt;br&gt;&lt;small&gt;ауд. 305&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Хімія&lt;br&gt;&lt;small&gt;ауд. 104&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Математика&lt;br&gt;&lt;small&gt;ауд. 201&lt;/small&gt;&lt;/td&gt;
+      &lt;td rowspan="2"&gt;Лабораторна&lt;br&gt;робота&lt;br&gt;&lt;small&gt;ауд. 501&lt;/small&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;10:45-12:15&lt;/th&gt;
+      &lt;td&gt;Історія&lt;br&gt;&lt;small&gt;ауд. 102&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Література&lt;br&gt;&lt;small&gt;ауд. 203&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Фізика&lt;br&gt;&lt;small&gt;ауд. 305&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Біологія&lt;br&gt;&lt;small&gt;ауд. 401&lt;/small&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;13:00-14:30&lt;/th&gt;
+      &lt;td colspan="4" style="text-align: center; background: #fef5e7;"&gt;
+        &lt;strong&gt;Обідня перерва&lt;/strong&gt;
+      &lt;/td&gt;
+      &lt;td&gt;Англійська&lt;br&gt;&lt;small&gt;ауд. 301&lt;/small&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th scope="row"&gt;14:45-16:15&lt;/th&gt;
+      &lt;td&gt;Фізкультура&lt;br&gt;&lt;small&gt;спортзал&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Інформатика&lt;br&gt;&lt;small&gt;ауд. 105&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Географія&lt;br&gt;&lt;small&gt;ауд. 204&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Мистецтво&lt;br&gt;&lt;small&gt;ауд. 301&lt;/small&gt;&lt;/td&gt;
+      &lt;td&gt;Факультатив&lt;br&gt;&lt;small&gt;різні ауд.&lt;/small&gt;&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;</div>
+                        <div class="example-result-section">
+                            <table class="demo-table">
+                                <caption style="caption-side: top; padding: 0.5rem; font-weight: bold;">Розклад занять - тиждень</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Час</th>
+                                        <th scope="col">Пн</th>
+                                        <th scope="col">Вт</th>
+                                        <th scope="col">Ср</th>
+                                        <th scope="col">Чт</th>
+                                        <th scope="col">Пт</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">9:00-10:30</th>
+                                        <td>Математика<br><small>ауд. 201</small></td>
+                                        <td>Фізика<br><small>ауд. 305</small></td>
+                                        <td>Хімія<br><small>ауд. 104</small></td>
+                                        <td>Математика<br><small>ауд. 201</small></td>
+                                        <td rowspan="2" style="vertical-align: middle; background: #e6fffa;">Лабораторна<br>робота<br><small>ауд. 501</small></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">10:45-12:15</th>
+                                        <td>Історія<br><small>ауд. 102</small></td>
+                                        <td>Література<br><small>ауд. 203</small></td>
+                                        <td>Фізика<br><small>ауд. 305</small></td>
+                                        <td>Біологія<br><small>ауд. 401</small></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">13:00-14:30</th>
+                                        <td colspan="4" style="text-align: center; background: #fef5e7;"><strong>Обідня перерва</strong></td>
+                                        <td>Англійська<br><small>ауд. 301</small></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">14:45-16:15</th>
+                                        <td>Фізкультура<br><small>спортзал</small></td>
+                                        <td>Інформатика<br><small>ауд. 105</small></td>
+                                        <td>Географія<br><small>ауд. 204</small></td>
+                                        <td>Мистецтво<br><small>ауд. 301</small></td>
+                                        <td>Факультатив<br><small>різні ауд.</small></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">
+                        🛒 Кошик покупок
+                    </div>
+                    <div class="example-split">
+                        <div class="example-code-section">
+&lt;table class="shopping-cart"&gt;
+  &lt;caption&gt;Кошик покупок&lt;/caption&gt;
+  
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th scope="col"&gt;Товар&lt;/th&gt;
+      &lt;th scope="col"&gt;Ціна&lt;/th&gt;
+      &lt;th scope="col"&gt;Кількість&lt;/th&gt;
+      &lt;th scope="col"&gt;Загалом&lt;/th&gt;
+      &lt;th scope="col"&gt;Дія&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="product-info"&gt;
+          &lt;strong&gt;iPhone 15 Pro&lt;/strong&gt;&lt;br&gt;
+          &lt;small&gt;Титановий, 256GB&lt;/small&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;45,999₴&lt;/td&gt;
+      &lt;td&gt;
+        &lt;input type="number" value="1" min="1" 
+               style="width: 60px; padding: 0.25rem;"&gt;
+      &lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;45,999₴&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;
+        &lt;button style="background: #f56565; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 3px;"&gt;
+          Видалити
+        &lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;
+        &lt;div class="product-info"&gt;
+          &lt;strong&gt;AirPods Pro&lt;/strong&gt;&lt;br&gt;
+          &lt;small&gt;3-е покоління&lt;/small&gt;
+        &lt;/div&gt;
+      &lt;/td&gt;
+      &lt;td&gt;8,999₴&lt;/td&gt;
+      &lt;td&gt;
+        &lt;input type="number" value="2" min="1" 
+               style="width: 60px; padding: 0.25rem;"&gt;
+      &lt;/td&gt;
+      &lt;td&gt;&lt;strong&gt;17,998₴&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;
+        &lt;button style="background: #f56565; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 3px;"&gt;
+          Видалити
+        &lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+  
+  &lt;tfoot&gt;
+    &lt;tr&gt;
+      &lt;td colspan="3"&gt;&lt;strong&gt;Підсумок:&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;strong style="font-size: 1.2em; color: #48bb78;"&gt;63,997₴&lt;/strong&gt;&lt;/td&gt;
+      &lt;td&gt;
+        &lt;button style="background: #48bb78; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px;"&gt;
+          Оформити
+        &lt;/button&gt;
+      &lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tfoot&gt;
+&lt;/table&gt;</div>
+                        <div class="example-result-section">
+                            <table class="demo-table">
+                                <caption style="caption-side: top; padding: 0.5rem; font-weight: bold;">Кошик покупок</caption>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Товар</th>
+                                        <th scope="col">Ціна</th>
+                                        <th scope="col">Кільк.</th>
+                                        <th scope="col">Загалом</th>
+                                        <th scope="col">Дія</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>iPhone 15 Pro</strong><br>
+                                            <small>Титановий, 256GB</small>
+                                        </td>
+                                        <td>45,999₴</td>
+                                        <td>1</td>
+                                        <td><strong>45,999₴</strong></td>
+                                        <td>
+                                            <button style="background: #f56565; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem;">Видалити</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>AirPods Pro</strong><br>
+                                            <small>3-є покоління</small>
+                                        </td>
+                                        <td>8,999₴</td>
+                                        <td>2</td>
+                                        <td><strong>17,998₴</strong></td>
+                                        <td>
+                                            <button style="background: #f56565; color: white; border: none; padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem;">Видалити</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="3"><strong>Підсумок:</strong></td>
+                                        <td><strong style="font-size: 1.2em; color: #48bb78;">63,997₴</strong></td>
+                                        <td>
+                                            <button style="background: #48bb78; color: white; border: none; padding: 0.5rem 1rem; border-radius: 5px;">Оформити</button>
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="best-practices">
+                <div class="practice-card success">
+                    <h3>✅ Рекомендації:</h3>
+                    <ul>
+                        <li>Використовуйте семантичні елементи (thead, tbody, tfoot)</li>
+                        <li>Додавайте scope атрибути для заголовків</li>
+                        <li>Включайте caption для опису таблиці</li>
+                        <li>Забезпечуйте адаптивність для мобільних пристроїв</li>
+                        <li>Використовуйте CSS для стилізації замість HTML атрибутів</li>
+                        <li>Додавайте hover ефекти для кращого UX</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card warning">
+                    <h3>⚠️ Обережно:</h3>
+                    <ul>
+                        <li>Не використовуйте таблиці для макета сторінки</li>
+                        <li>Тестуйте доступність з екранними читачами</li>
+                        <li>Врахуйте продуктивність для великих таблиць</li>
+                        <li>Забезпечуйте достатній контраст кольорів</li>
+                        <li>Уникайте надмірного використання colspan/rowspan</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card danger">
+                    <h3>❌ Уникайте:</h3>
+                    <ul>
+                        <li>Таблиць без заголовків або caption</li>
+                        <li>Використання таблиць для позиціонування</li>
+                        <li>Фіксованих розмірів без адаптивності</li>
+                        <li>Надмірно складних структур</li>
+                        <li>Пропуску scope атрибутів для складних таблиць</li>
+                        <li>Inline стилів замість CSS класів</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('images')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 12 з 42</strong><br>
+                <small>Таблиці в HTML</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('css-intro')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const tableDemos = {
+            colspan: {
+                code: `&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Назва&lt;/th&gt;
+    &lt;th colspan="2"&gt;Ціни&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Товар&lt;/td&gt;
+    &lt;td&gt;Стара&lt;/td&gt;
+    &lt;td&gt;Нова&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Ноутбук&lt;/td&gt;
+    &lt;td&gt;30,000₴&lt;/td&gt;
+    &lt;td&gt;25,000₴&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;`,
+                result: `<h5>Результат:</h5>
+<table class="demo-table">
+  <tr>
+    <th>Назва</th>
+    <th colspan="2">Ціни</th>
+  </tr>
+  <tr>
+    <td>Товар</td>
+    <td>Стара</td>
+    <td>Нова</td>
+  </tr>
+  <tr>
+    <td>Ноутбук</td>
+    <td>30,000₴</td>
+    <td>25,000₴</td>
+  </tr>
+</table>`
+            },
+            
+            rowspan: {
+                code: `&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Відділ&lt;/th&gt;
+    &lt;th&gt;Співробітник&lt;/th&gt;
+    &lt;th&gt;Посада&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td rowspan="2"&gt;IT&lt;/td&gt;
+    &lt;td&gt;Іван Петров&lt;/td&gt;
+    &lt;td&gt;Розробник&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Марія Сидорова&lt;/td&gt;
+    &lt;td&gt;Тестувальник&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Продажі&lt;/td&gt;
+    &lt;td&gt;Олег Коваль&lt;/td&gt;
+    &lt;td&gt;Менеджер&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;`,
+                result: `<h5>Результат:</h5>
+<table class="demo-table">
+  <tr>
+    <th>Відділ</th>
+    <th>Співробітник</th>
+    <th>Посада</th>
+  </tr>
+  <tr>
+    <td rowspan="2" style="vertical-align: middle; background: #e6fffa;">IT</td>
+    <td>Іван Петров</td>
+    <td>Розробник</td>
+  </tr>
+  <tr>
+    <td>Марія Сидорова</td>
+    <td>Тестувальник</td>
+  </tr>
+  <tr>
+    <td>Продажі</td>
+    <td>Олег Коваль</td>
+    <td>Менеджер</td>
+  </tr>
+</table>`
+            },
+            
+            complex: {
+                code: `&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th rowspan="2"&gt;Регіон&lt;/th&gt;
+    &lt;th colspan="2"&gt;2023&lt;/th&gt;
+    &lt;th colspan="2"&gt;2024&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Q1&lt;/th&gt;
+    &lt;th&gt;Q2&lt;/th&gt;
+    &lt;th&gt;Q1&lt;/th&gt;
+    &lt;th&gt;Q2&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Київ&lt;/td&gt;
+    &lt;td&gt;100&lt;/td&gt;
+    &lt;td&gt;120&lt;/td&gt;
+    &lt;td&gt;130&lt;/td&gt;
+    &lt;td&gt;140&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Львів&lt;/td&gt;
+    &lt;td&gt;80&lt;/td&gt;
+    &lt;td&gt;90&lt;/td&gt;
+    &lt;td&gt;95&lt;/td&gt;
+    &lt;td&gt;105&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;`,
+                result: `<h5>Результат:</h5>
+<table class="demo-table">
+  <tr>
+    <th rowspan="2" style="vertical-align: middle; background: #e6fffa;">Регіон</th>
+    <th colspan="2" style="background: #fef5e7;">2023</th>
+    <th colspan="2" style="background: #f0fff4;">2024</th>
+  </tr>
+  <tr>
+    <th>Q1</th>
+    <th>Q2</th>
+    <th>Q1</th>
+    <th>Q2</th>
+  </tr>
+  <tr>
+    <td>Київ</td>
+    <td>100</td>
+    <td>120</td>
+    <td>130</td>
+    <td>140</td>
+  </tr>
+  <tr>
+    <td>Львів</td>
+    <td>80</td>
+    <td>90</td>
+    <td>95</td>
+    <td>105</td>
+  </tr>
+</table>`
+            },
+            
+            schedule: {
+                code: `&lt;table&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Час&lt;/th&gt;
+    &lt;th&gt;Понеділок&lt;/th&gt;
+    &lt;th&gt;Вівторок&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;9:00&lt;/td&gt;
+    &lt;td&gt;Математика&lt;/td&gt;
+    &lt;td rowspan="2"&gt;Фізика&lt;br&gt;(подвійна пара)&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;10:00&lt;/td&gt;
+    &lt;td&gt;Історія&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;11:00&lt;/td&gt;
+    &lt;td colspan="2"&gt;Перерва&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;`,
+                result: `<h5>Результат:</h5>
+<table class="demo-table">
+  <tr>
+    <th>Час</th>
+    <th>Понеділок</th>
+    <th>Вівторок</th>
+  </tr>
+  <tr>
+    <td>9:00</td>
+    <td>Математика</td>
+    <td rowspan="2" style="vertical-align: middle; background: #e6fffa;">Фізика<br><small>(подвійна пара)</small></td>
+  </tr>
+  <tr>
+    <td>10:00</td>
+    <td>Історія</td>
+  </tr>
+  <tr>
+    <td>11:00</td>
+    <td colspan="2" style="text-align: center; background: #fef5e7;">Перерва</td>
+  </tr>
+</table>`
+            }
+        };
+
+        function showTableDemo(type) {
+            // Remove active class from all buttons
+            const demoContainer = document.getElementById('tableDemo').closest('.interactive-demo');
+            demoContainer.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            event.target.classList.add('active');
+            
+            // Update demo content with both code and result
+            const demo = tableDemos[type];
+            document.getElementById('tableDemo').innerHTML = `
+                <div class="code-example">${demo.code}</div>
+                <div class="result-example">${demo.result}</div>
+            `;
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.table-demo, .attribute-card, .example-card, .practice-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 

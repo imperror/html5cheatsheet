@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Box Model - HTML5 Шпаргалка</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 2rem;
+        }
+
+        .element-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .element-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .element-card h3 {
+            color: #2d3748;
+            margin-top: 0;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .box-model-visual {
+            background: #fff;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem 0;
+            position: relative;
+            font-family: monospace;
+            text-align: center;
+        }
+
+        .margin-box {
+            background: #ffeaa7;
+            border: 2px dashed #fdcb6e;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .border-box {
+            background: #74b9ff;
+            border: 3px solid #0984e3;
+            padding: 15px;
+            border-radius: 6px;
+            color: white;
+        }
+
+        .padding-box {
+            background: #55a3ff;
+            border: 2px dashed rgba(255,255,255,0.5);
+            padding: 15px;
+            border-radius: 4px;
+        }
+
+        .content-box {
+            background: #6c5ce7;
+            padding: 10px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-group label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .control-group input {
+            padding: 0.5rem;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            width: 60px;
+        }
+
+        .demo-box {
+            background: #e53e3e;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin: 20px;
+            border: 5px solid #c53030;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            width: 200px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .code-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 10px;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .nav-button:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .highlight {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 4px solid #0288d1;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #f57c00;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tbody tr:hover {
+            background: #f7fafc;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-box {
+                width: 150px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📦 CSS Box Model</h1>
+            <p>Основи блокової моделі CSS - фундамент веб-верстки</p>
+        </div>
+
+        <div class="content">
+            <div class="element-card">
+                <h3>Що таке Box Model?</h3>
+                <p>CSS Box Model - це концептуальна модель, яка описує, як елементи HTML відображаються на веб-сторінці. Кожен елемент складається з чотирьох основних частин:</p>
+                
+                <div class="box-model-visual">
+                    <div class="margin-box">
+                        <strong>MARGIN</strong> (зовнішній відступ)
+                        <div class="border-box">
+                            <strong>BORDER</strong> (рамка)
+                            <div class="padding-box">
+                                <strong>PADDING</strong> (внутрішній відступ)
+                                <div class="content-box">
+                                    <strong>CONTENT</strong><br>(вміст)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <h3>Компоненти Box Model</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Компонент</th>
+                            <th>Опис</th>
+                            <th>CSS властивість</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Content</strong></td>
+                            <td>Фактичний вміст елемента (текст, зображення)</td>
+                            <td><span class="highlight">width, height</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Padding</strong></td>
+                            <td>Внутрішній відступ між вмістом і рамкою</td>
+                            <td><span class="highlight">padding</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Border</strong></td>
+                            <td>Рамка навколо padding і content</td>
+                            <td><span class="highlight">border</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Margin</strong></td>
+                            <td>Зовнішній відступ від інших елементів</td>
+                            <td><span class="highlight">margin</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="element-card">
+                <h3>Інтерактивна демонстрація</h3>
+                <div class="interactive-demo">
+                    <div class="demo-controls">
+                        <div class="control-group">
+                            <label for="marginValue">Margin (px):</label>
+                            <input type="number" id="marginValue" value="20" min="0" max="50">
+                        </div>
+                        <div class="control-group">
+                            <label for="borderValue">Border (px):</label>
+                            <input type="number" id="borderValue" value="5" min="0" max="20">
+                        </div>
+                        <div class="control-group">
+                            <label for="paddingValue">Padding (px):</label>
+                            <input type="number" id="paddingValue" value="20" min="0" max="50">
+                        </div>
+                        <div class="control-group">
+                            <label for="widthValue">Width (px):</label>
+                            <input type="number" id="widthValue" value="200" min="100" max="300">
+                        </div>
+                        <div class="control-group">
+                            <label for="heightValue">Height (px):</label>
+                            <input type="number" id="heightValue" value="100" min="50" max="150">
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center; align-items: center; min-height: 200px;">
+                        <div class="demo-box" id="demoBox">
+                            Box Model
+                        </div>
+                    </div>
+                    
+                    <div class="code-example" id="generatedCSS">
+.demo-box {
+    margin: 20px;
+    border: 5px solid #c53030;
+    padding: 20px;
+    width: 200px;
+    height: 100px;
+}</div>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <h3>box-sizing: властивість</h3>
+                
+                <div class="tip-box">
+                    <strong>💡 Важливо:</strong> Властивість <span class="highlight">box-sizing</span> визначає, як обчислюється загальний розмір елемента.
+                </div>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Значення</th>
+                            <th>Опис</th>
+                            <th>Формула розрахунку</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">content-box</span> (за замовчуванням)</td>
+                            <td>Width/height стосується тільки вмісту</td>
+                            <td>Total = width + padding + border + margin</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">border-box</span></td>
+                            <td>Width/height включає padding і border</td>
+                            <td>Total = width + margin</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-example">/* Сучасний підхід - border-box для всіх елементів */
+* {
+    box-sizing: border-box;
+}
+
+/* Або тільки для конкретного елемента */
+.container {
+    box-sizing: border-box;
+    width: 300px;
+    padding: 20px;
+    border: 2px solid #333;
+    /* Загальна ширина залишається 300px */
+}</div>
+            </div>
+
+            <div class="element-card">
+                <h3>Margin Collapsing (Злиття відступів)</h3>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Увага:</strong> Вертикальні margin'и сусідніх елементів можуть зливатися в один!
+                </div>
+
+                <p><strong>Коли відбувається злиття:</strong></p>
+                <ul>
+                    <li>Між двома блоковими елементами один над одним</li>
+                    <li>Між батьківським і дочірнім елементом</li>
+                    <li>У порожніх елементів</li>
+                </ul>
+
+                <div class="code-example">/* Приклад margin collapsing */
+.box1 {
+    margin-bottom: 30px;
+}
+
+.box2 {
+    margin-top: 20px;
+}
+
+/* Результат: між box1 і box2 буде тільки 30px відступу, а не 50px! */
+
+/* Як уникнути: */
+.prevent-collapse {
+    padding: 1px 0; /* або border: 1px solid transparent; */
+}</div>
+            </div>
+
+            <div class="element-card">
+                <h3>Практичні поради</h3>
+                
+                <div style="background: #e6fffa; border-left: 4px solid #38b2ac; padding: 1rem; border-radius: 5px;">
+                    <strong>🎯 Кращі практики:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Використовуйте <span class="highlight">box-sizing: border-box</span> для всіх елементів</li>
+                        <li style="margin: 0.25rem 0;">Для layout'а краще використовувати Flexbox або Grid</li>
+                        <li style="margin: 0.25rem 0;">Уникайте фіксованих розмірів - використовуйте відносні одиниці</li>
+                        <li style="margin: 0.25rem 0;">Пам'ятайте про margin collapsing при верстці</li>
+                    </ul>
+                </div>
+
+                <div style="background: #fff5f5; border-left: 4px solid #f56565; padding: 1rem; border-radius: 5px; margin-top: 1rem;">
+                    <strong>❌ Поширені помилки:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Забування про padding і border при розрахунку розмірів</li>
+                        <li style="margin: 0.25rem 0;">Неврахування margin collapsing</li>
+                        <li style="margin: 0.25rem 0;">Використання негативних margin'ів без розуміння наслідків</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="element-card">
+                <h3>Приклади використання</h3>
+                
+                <div class="code-example">/* Центрування блоку */
+.center-block {
+    width: 300px;
+    margin: 0 auto; /* горизонтальне центрування */
+}
+
+/* Рівні відступи */
+.card {
+    padding: 1rem 1.5rem; /* вертикальний | горизонтальний */
+    margin: 1rem 0; /* відступи зверху і знизу */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* Reset для списків */
+ul, ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Responsive padding */
+.container {
+    padding: 1rem;
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem;
+    }
+}</div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('css-fonts')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 21 з 42</strong><br>
+                <small>CSS Box Model</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('publishing')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Інтерактивна демонстрація Box Model
+        function updateBoxModel() {
+            const demoBox = document.getElementById('demoBox');
+            const generatedCSS = document.getElementById('generatedCSS');
+            
+            const margin = document.getElementById('marginValue').value;
+            const border = document.getElementById('borderValue').value;
+            const padding = document.getElementById('paddingValue').value;
+            const width = document.getElementById('widthValue').value;
+            const height = document.getElementById('heightValue').value;
+            
+            // Оновлюємо стилі демо-блоку
+            demoBox.style.margin = `${margin}px`;
+            demoBox.style.borderWidth = `${border}px`;
+            demoBox.style.padding = `${padding}px`;
+            demoBox.style.width = `${width}px`;
+            demoBox.style.height = `${height}px`;
+            
+            // Оновлюємо CSS код
+            generatedCSS.textContent = `.demo-box {
+    margin: ${margin}px;
+    border: ${border}px solid #c53030;
+    padding: ${padding}px;
+    width: ${width}px;
+    height: ${height}px;
+    
+    /* Total width: ${parseInt(width) + parseInt(padding)*2 + parseInt(border)*2 + parseInt(margin)*2}px */
+    /* Total height: ${parseInt(height) + parseInt(padding)*2 + parseInt(border)*2 + parseInt(margin)*2}px */
+}`;
+        }
+        
+        // Додаємо обробники подій
+        document.getElementById('marginValue').addEventListener('input', updateBoxModel);
+        document.getElementById('borderValue').addEventListener('input', updateBoxModel);
+        document.getElementById('paddingValue').addEventListener('input', updateBoxModel);
+        document.getElementById('widthValue').addEventListener('input', updateBoxModel);
+        document.getElementById('heightValue').addEventListener('input', updateBoxModel);
+        
+        // Ініціалізуємо демонстрацію
+        updateBoxModel();
+    </script>
+</body>
+</html> 

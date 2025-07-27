@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форматування тексту</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .element-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .element-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .element-header {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem 1rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .element-tag {
+            background: rgba(255,255,255,0.2);
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.8rem;
+        }
+
+        .element-content {
+            padding: 1rem;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .result-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 0.5rem 0;
+        }
+
+        .category-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .category-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+
+        .category-header h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .semantic-vs-visual {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            border-left: 4px solid #667eea;
+        }
+
+        .comparison-card.semantic {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .comparison-card.visual {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .comparison-card h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.3s;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+        }
+
+        .demo-output {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1.5rem;
+            min-height: 120px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .best-practices {
+            display: grid;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .practice-card {
+            background: #f7fafc;
+            border-left: 4px solid #667eea;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .practice-card.success {
+            border-left-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .practice-card.warning {
+            border-left-color: #ed8936;
+            background: #fef5e7;
+        }
+
+        .practice-card.danger {
+            border-left-color: #f56565;
+            background: #fed7d7;
+        }
+
+        .practice-card h3 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .usage-examples {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .usage-examples h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .example-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .example-code {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 3px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            margin: 0.5rem 0;
+        }
+
+        .example-result {
+            padding: 0.5rem;
+            border-left: 3px solid #667eea;
+            background: #f0f8ff;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .nav-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        @media (max-width: 768px) {
+            .element-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .semantic-vs-visual {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .demo-controls {
+                justify-content: center;
+            }
+        }
+
+        /* Syntax highlighting */
+        .tag { color: #e06c75; }
+        .attr { color: #d19a66; }
+        .string { color: #98c379; }
+        .comment { color: #5c6370; font-style: italic; }
+
+        /* Special styling for examples */
+        kbd {
+            background: #f1f3f4;
+            border: 1px solid #dadce0;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0,0,0,.1);
+            color: #3c4043;
+            display: inline-block;
+            font-family: monospace;
+            font-size: 0.85em;
+            font-weight: 500;
+            line-height: 1.5;
+            margin: 0 2px;
+            padding: 2px 6px;
+            text-align: center;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✨ Форматування тексту</h1>
+            <p>Вивчіть семантичні та візуальні елементи для правильного форматування тексту в HTML</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Семантичне vs Візуальне форматування</h2>
+            <p>HTML надає два типи елементів форматування: <strong>семантичні</strong> (передають значення) та <strong>візуальні</strong> (змінюють тільки вигляд).</p>
+            
+            <div class="semantic-vs-visual">
+                <div class="comparison-card semantic">
+                    <h4>✅ Семантичні елементи</h4>
+                    <p><strong>Передають значення</strong> тексту для браузерів, пошукових систем та екранних читачів.</p>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin: 0.25rem 0;"><code>&lt;strong&gt;</code> - важливий текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;em&gt;</code> - наголошений текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;mark&gt;</code> - виділений текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;del&gt;</code> - видалений текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;ins&gt;</code> - доданий текст</li>
+                    </ul>
+                </div>
+                
+                <div class="comparison-card visual">
+                    <h4>⚠️ Візуальні елементи</h4>
+                    <p><strong>Змінюють тільки вигляд</strong> без передачі семантичного значення.</p>
+                    <ul style="padding-left: 1.5rem; margin-top: 0.5rem;">
+                        <li style="margin: 0.25rem 0;"><code>&lt;b&gt;</code> - жирний текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;i&gt;</code> - курсивний текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;u&gt;</code> - підкреслений текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;s&gt;</code> - закреслений текст</li>
+                        <li style="margin: 0.25rem 0;"><code>&lt;small&gt;</code> - малий текст</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="highlight-box">
+                <h3>💡 Коли використовувати?</h3>
+                <p><strong>Семантичні елементи</strong> - коли текст має особливе значення (важливість, наголос, виділення)</p>
+                <p><strong>Візуальні елементи</strong> - коли потрібно тільки змінити вигляд без додавання значення</p>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>🔥 Основні семантичні елементи</h3>
+                <p>Елементи, які передають значення та важливість тексту</p>
+            </div>
+            
+            <div class="element-grid">
+                <div class="element-demo">
+                    <div class="element-header">
+                        Важливий текст
+                        <span class="element-tag">&lt;strong&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Це &lt;strong&gt;дуже важлива&lt;/strong&gt; інформація!&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Це <strong>дуже важлива</strong> інформація!</p>
+                        </div>
+                        <p><strong>Використання:</strong> для тексту високої важливості</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Наголошений текст
+                        <span class="element-tag">&lt;em&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Я &lt;em&gt;справді&lt;/em&gt; люблю HTML!&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Я <em>справді</em> люблю HTML!</p>
+                        </div>
+                        <p><strong>Використання:</strong> для логічного наголосу</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Виділений текст
+                        <span class="element-tag">&lt;mark&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Знайдено &lt;mark&gt;HTML5&lt;/mark&gt; у тексті&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Знайдено <mark>HTML5</mark> у тексті</p>
+                        </div>
+                        <p><strong>Використання:</strong> для підсвічування в результатах пошуку</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Видалений текст
+                        <span class="element-tag">&lt;del&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Ціна: &lt;del&gt;100₴&lt;/del&gt; 80₴&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Ціна: <del>100₴</del> 80₴</p>
+                        </div>
+                        <p><strong>Використання:</strong> для показу видаленого контенту</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Доданий текст
+                        <span class="element-tag">&lt;ins&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Курс: &lt;ins&gt;HTML5 для початківців&lt;/ins&gt;&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Курс: <ins>HTML5 для початківців</ins></p>
+                        </div>
+                        <p><strong>Використання:</strong> для показу доданого контенту</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Малий текст
+                        <span class="element-tag">&lt;small&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Головний текст &lt;small&gt;(примітка)&lt;/small&gt;&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Головний текст <small>(примітка)</small></p>
+                        </div>
+                        <p><strong>Використання:</strong> для авторських прав, примітків</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">
+                <h3>💻 Комп'ютерні та технічні елементи</h3>
+                <p>Спеціальні елементи для коду, клавіш та технічної документації</p>
+            </div>
+            
+            <div class="element-grid">
+                <div class="element-demo">
+                    <div class="element-header">
+                        Код у тексті
+                        <span class="element-tag">&lt;code&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Використовуйте &lt;code&gt;console.log()&lt;/code&gt; для виводу&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Використовуйте <code>console.log()</code> для виводу</p>
+                        </div>
+                        <p><strong>Використання:</strong> для фрагментів коду в тексті</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Клавіші
+                        <span class="element-tag">&lt;kbd&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Натисніть &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;C&lt;/kbd&gt;&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Натисніть <kbd>Ctrl</kbd> + <kbd>C</kbd></p>
+                        </div>
+                        <p><strong>Використання:</strong> для комбінацій клавіш</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Вивід програми
+                        <span class="element-tag">&lt;samp&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Результат: &lt;samp&gt;Hello, World!&lt;/samp&gt;&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Результат: <samp>Hello, World!</samp></p>
+                        </div>
+                        <p><strong>Використання:</strong> для прикладів виводу</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Змінні
+                        <span class="element-tag">&lt;var&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;Площа = &lt;var&gt;π&lt;/var&gt; × &lt;var&gt;r&lt;/var&gt;&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>Площа = <var>π</var> × <var>r</var><sup>2</sup></p>
+                        </div>
+                        <p><strong>Використання:</strong> для математичних змінних</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Надрядковий текст
+                        <span class="element-tag">&lt;sup&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O та E=mc&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p>H<sub>2</sub>O та E=mc<sup>2</sup></p>
+                        </div>
+                        <p><strong>Використання:</strong> для ступенів, індексів</p>
+                    </div>
+                </div>
+
+                <div class="element-demo">
+                    <div class="element-header">
+                        Абревіатури
+                        <span class="element-tag">&lt;abbr&gt;</span>
+                    </div>
+                    <div class="element-content">
+                        <div class="code-example">
+&lt;p&gt;&lt;abbr title="Україна"&gt;UA&lt;/abbr&gt; - моя країна&lt;/p&gt;</div>
+                        <div class="result-example">
+                            <p><abbr title="Україна">UA</abbr> - моя країна</p>
+                        </div>
+                        <p><strong>Використання:</strong> для скорочень з поясненням</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎮 Інтерактивна демонстрація</h2>
+            <div class="interactive-demo">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showFormattingExample('basic')">Основне</button>
+                    <button class="demo-button" onclick="showFormattingExample('semantic')">Семантичне</button>
+                    <button class="demo-button" onclick="showFormattingExample('technical')">Технічне</button>
+                    <button class="demo-button" onclick="showFormattingExample('combined')">Комбіноване</button>
+                </div>
+                <div class="demo-output" id="formattingDemo">
+                    <p>Це <strong>важливий</strong> текст з <em>наголосом</em> та <mark>виділенням</mark>.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            <div class="best-practices">
+                <div class="practice-card success">
+                    <h3>✅ Рекомендації:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Використовуйте семантичні елементи для передачі значення</li>
+                        <li style="margin: 0.25rem 0;">&lt;strong&gt; для важливого тексту, а не тільки жирного</li>
+                        <li style="margin: 0.25rem 0;">&lt;em&gt; для наголосу, а не тільки курсиву</li>
+                        <li style="margin: 0.25rem 0;">&lt;code&gt; для фрагментів коду в тексті</li>
+                        <li style="margin: 0.25rem 0;">&lt;kbd&gt; для клавіш та комбінацій</li>
+                        <li style="margin: 0.25rem 0;">Додавайте title до &lt;abbr&gt; для пояснення</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card warning">
+                    <h3>⚠️ Обережно:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Не зловживайте візуальними елементами (b, i, u)</li>
+                        <li style="margin: 0.25rem 0;">Уникайте &lt;u&gt; - може плутатися з посиланнями</li>
+                        <li style="margin: 0.25rem 0;">Не використовуйте &lt;small&gt; тільки для зменшення розміру</li>
+                        <li style="margin: 0.25rem 0;">Перевіряйте контрастність для &lt;mark&gt;</li>
+                    </ul>
+                </div>
+
+                <div class="practice-card danger">
+                    <h3>❌ Уникайте:</h3>
+                    <ul style="padding-left: 1.5rem;">
+                        <li style="margin: 0.25rem 0;">Використання &lt;b&gt; замість &lt;strong&gt;</li>
+                        <li style="margin: 0.25rem 0;">Використання &lt;i&gt; замість &lt;em&gt;</li>
+                        <li style="margin: 0.25rem 0;">Надмірного форматування в одному тексті</li>
+                        <li style="margin: 0.25rem 0;">Форматування замість CSS для стилізації</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📚 Практичні приклади</h2>
+            <div class="usage-examples">
+                <h4>💡 Реальні сценарії використання</h4>
+                
+                <div class="example-item">
+                    <h5>📰 Новинна стаття</h5>
+                    <div class="example-code">
+&lt;article&gt;
+  &lt;h1&gt;Важливі новини про &lt;abbr title="HTML5"&gt;HTML&lt;/abbr&gt;&lt;/h1&gt;
+  &lt;p&gt;&lt;strong&gt;Увага!&lt;/strong&gt; Нова версія стандарту &lt;em&gt;значно&lt;/em&gt; покращує можливості веб-розробки.&lt;/p&gt;
+  &lt;p&gt;&lt;small&gt;Опубліковано 15 січня 2024&lt;/small&gt;&lt;/p&gt;
+&lt;/article&gt;</div>
+                    <div class="example-result">
+                        <h3>Важливі новини про <abbr title="HTML5">HTML</abbr></h3>
+                        <p><strong>Увага!</strong> Нова версія стандарту <em>значно</em> покращує можливості веб-розробки.</p>
+                        <p><small>Опубліковано 15 січня 2024</small></p>
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <h5>🛍️ Електронна комерція</h5>
+                    <div class="example-code">
+&lt;div class="product"&gt;
+  &lt;h2&gt;Ноутбук ASUS&lt;/h2&gt;
+  &lt;p&gt;Ціна: &lt;del&gt;25000₴&lt;/del&gt; &lt;strong&gt;20000₴&lt;/strong&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;mark&gt;Знижка 20%!&lt;/mark&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;small&gt;Гарантія 2 роки&lt;/small&gt;&lt;/p&gt;
+&lt;/div&gt;</div>
+                    <div class="example-result">
+                        <h3>Ноутбук ASUS</h3>
+                        <p>Ціна: <del>25000₴</del> <strong>20000₴</strong></p>
+                        <p><mark>Знижка 20%!</mark></p>
+                        <p><small>Гарантія 2 роки</small></p>
+                    </div>
+                </div>
+
+                <div class="example-item">
+                    <h5>💻 Технічна документація</h5>
+                    <div class="example-code">
+&lt;section&gt;
+  &lt;h3&gt;Встановлення&lt;/h3&gt;
+  &lt;p&gt;Виконайте команду &lt;code&gt;npm install&lt;/code&gt; у терміналі.&lt;/p&gt;
+  &lt;p&gt;Для збереження натисніть &lt;kbd&gt;Ctrl&lt;/kbd&gt; + &lt;kbd&gt;S&lt;/kbd&gt;&lt;/p&gt;
+  &lt;p&gt;Очікуваний вивід: &lt;samp&gt;Package installed successfully&lt;/samp&gt;&lt;/p&gt;
+&lt;/section&gt;</div>
+                    <div class="example-result">
+                        <h4>Встановлення</h4>
+                        <p>Виконайте команду <code>npm install</code> у терміналі.</p>
+                        <p>Для збереження натисніть <kbd>Ctrl</kbd> + <kbd>S</kbd></p>
+                        <p>Очікуваний вивід: <samp>Package installed successfully</samp></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('paragraphs')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 7 з 42</strong><br>
+                <small>Форматування тексту</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('entities')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const formattingExamples = {
+            basic: `<p>Це <strong>важливий</strong> текст з <em>наголосом</em> та <mark>виділенням</mark>.</p>
+<p>Також є <small>малий текст</small> та <del>видалений контент</del>.</p>`,
+            
+            semantic: `<p><strong>Увага!</strong> Це <em>дуже важлива</em> інформація.</p>
+<p>Знайдено <mark>HTML5</mark> у результатах пошуку.</p>
+<p>Стара ціна: <del>100₴</del>, нова ціна: <ins>80₴</ins></p>`,
+            
+            technical: `<p>Функція <code>getElementById()</code> повертає елемент.</p>
+<p>Натисніть <kbd>F12</kbd> для відкриття консолі.</p>
+<p>Результат: <samp>Element found successfully</samp></p>
+<p>Формула: E = mc<sup>2</sup>, H<sub>2</sub>O</p>`,
+            
+            combined: `<p><strong>Важливо:</strong> Для роботи з <abbr title="Application Programming Interface">API</abbr> використовуйте функцію <code>fetch()</code>.</p>
+<p><em>Примітка:</em> Натисніть <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>I</kbd> для відкриття DevTools.</p>
+<p><mark>Новина:</mark> Версія 2.0<sup>beta</sup> тепер доступна! <small>(з 15 січня 2024)</small></p>`
+        };
+
+        function showFormattingExample(type) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Add active class to clicked button
+            document.querySelector(`[onclick="showFormattingExample('${type}')"]`).classList.add('active');
+            
+            // Update demo content
+            document.getElementById('formattingDemo').innerHTML = formattingExamples[type];
+        }
+
+        // Add scroll animation
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.element-demo, .practice-card, .example-item').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</body>
+</html> 
