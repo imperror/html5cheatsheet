@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Article та Section</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .interactive-demo {
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interactive-demo:hover {
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+
+        .interactive-demo.selected {
+            border-color: #667eea;
+            background: #edf2f7;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .layout-example {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .example-code {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📰 Article та Section</h1>
+            <p>Детальне розуміння різниці та правильного використання</p>
+        </div>
+
+        <div class="content-section">
+            <h2>📰 Article vs Section: Детальне порівняння</h2>
+            <p>Найчастіше плутають саме ці два елементи. Ось чітка різниця:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Критерій</th>
+                        <th>&lt;article&gt;</th>
+                        <th>&lt;section&gt;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Самодостатність</strong></td>
+                        <td>Можна читати окремо від сторінки</td>
+                        <td>Має сенс тільки в контексті</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Розповсюдження</strong></td>
+                        <td>Можна опублікувати в RSS, соц. мережах</td>
+                        <td>Не призначено для окремої публікації</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Заголовок</strong></td>
+                        <td>Зазвичай має власний заголовок</td>
+                        <td>Майже завжди має заголовок</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Вкладеність</strong></td>
+                        <td>Може містити section елементи</td>
+                        <td>Може містити article елементи</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Приклади</strong></td>
+                        <td>Пост блогу, новина, коментар</td>
+                        <td>Розділ статті, вкладка, крок інструкції</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="demo-container">
+                <div class="demo-title">Інтерактивний приклад: Article + Section</div>
+                
+                <div class="layout-example">
+                    <div style="padding: 1rem; background: #f8fafc;">
+                        <div class="interactive-demo" onclick="highlightElement(this, 'article')" data-element="article">
+                            <strong style="color: #667eea;">&lt;article&gt;</strong> - Стаття про веб-розробку
+                            <div style="margin: 0.5rem 0; padding: 0.5rem; background: white; border-radius: 4px;">
+                                <h4>Заголовок статті</h4>
+                                <p style="margin: 0.5rem 0; color: #4a5568;">Ця стаття розповідає про основи HTML5...</p>
+                                
+                                <div class="interactive-demo" onclick="highlightElement(this, 'section'); event.stopPropagation();" data-element="section" style="margin: 0.5rem 0;">
+                                    <strong style="color: #38a169;">&lt;section&gt;</strong> - Розділ 1: Семантичні елементи
+                                    <div style="padding: 0.5rem; background: #f7fafc; border-radius: 4px; margin: 0.25rem 0;">
+                                        <p style="margin: 0; color: #4a5568; font-size: 0.9rem;">Контент про семантичні елементи...</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="interactive-demo" onclick="highlightElement(this, 'section'); event.stopPropagation();" data-element="section" style="margin: 0.5rem 0;">
+                                    <strong style="color: #38a169;">&lt;section&gt;</strong> - Розділ 2: Практичні приклади
+                                    <div style="padding: 0.5rem; background: #f7fafc; border-radius: 4px; margin: 0.25rem 0;">
+                                        <p style="margin: 0; color: #4a5568; font-size: 0.9rem;">Приклади використання...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #718096;">
+                                💡 Цю статтю можна опублікувати в RSS або поділитися окремо
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1rem; padding: 1rem; background: #edf2f7; border-radius: 6px; text-align: center; display: none;" id="elementInfo">
+                    <strong>Клікніть на елементи вище, щоб побачити пояснення</strong>
+                </div>
+            </div>
+
+            <h3>Коли використовувати що?</h3>
+            <div class="code-block">/* Тест "чи це article?" */
+❓ Чи можна цей контент:
+   - Опублікувати в RSS?
+   - Поділитися окремо?
+   - Читати поза контекстом сторінки?
+
+✅ Якщо ТАК → використовуйте &lt;article&gt;
+❌ Якщо НІ → використовуйте &lt;section&gt;
+
+/* Конкретні приклади */
+✅ &lt;article&gt; - пост блогу, новина, рецепт, коментар
+✅ &lt;section&gt; - розділ документа, вкладка, крок інструкції
+
+/* Вкладеність */
+&lt;article&gt;  ← Стаття про приготування їжі
+  &lt;section&gt; ← Розділ "Інгредієнти"
+  &lt;section&gt; ← Розділ "Приготування"
+  &lt;section&gt; ← Розділ "Поради"
+&lt;/article&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>📄 Детально про &lt;article&gt;</h2>
+            <p>Елемент &lt;article&gt; представляє самодостатній блок контенту, який має сенс сам по собі:</p>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-title">🔗 Пост блогу</div>
+                    <div class="example-description">
+                        Типовий приклад article - пост блогу з заголовком, автором, датою та контентом
+                    </div>
+                    <div class="example-code">&lt;article&gt;
+  &lt;header&gt;
+    &lt;h2&gt;Заголовок поста&lt;/h2&gt;
+    &lt;p&gt;Автор: Іван | 15.03.2024&lt;/p&gt;
+  &lt;/header&gt;
+  &lt;p&gt;Контент поста...&lt;/p&gt;
+  &lt;footer&gt;
+    &lt;p&gt;Теги: HTML, CSS&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">📰 Новина</div>
+                    <div class="example-description">
+                        Новинна стаття - ідеальний кандидат для article
+                    </div>
+                    <div class="example-code">&lt;article&gt;
+  &lt;h2&gt;Заголовок новини&lt;/h2&gt;
+  &lt;time datetime="2024-03-15"&gt;15 березня&lt;/time&gt;
+  &lt;p&gt;Текст новини...&lt;/p&gt;
+  &lt;p&gt;Джерело: BBC News&lt;/p&gt;
+&lt;/article&gt;</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">💬 Коментар</div>
+                    <div class="example-description">
+                        Коментар користувача також є самодостатнім контентом
+                    </div>
+                    <div class="example-code">&lt;article&gt;
+  &lt;h4&gt;Коментар від Марії&lt;/h4&gt;
+  &lt;time datetime="2024-03-15T14:30"&gt;сьогодні о 14:30&lt;/time&gt;
+  &lt;p&gt;Дуже корисна стаття!&lt;/p&gt;
+  &lt;button&gt;Відповісти&lt;/button&gt;
+&lt;/article&gt;</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🍽️ Рецепт</div>
+                    <div class="example-description">
+                        Кулінарний рецепт - класичний приклад самодостатнього контенту
+                    </div>
+                    <div class="example-code">&lt;article&gt;
+  &lt;h2&gt;Борщ український&lt;/h2&gt;
+  &lt;p&gt;Час приготування: 2 години&lt;/p&gt;
+  &lt;section&gt;
+    &lt;h3&gt;Інгредієнти&lt;/h3&gt;
+    &lt;ul&gt;&lt;li&gt;Буряк - 2 шт&lt;/li&gt;&lt;/ul&gt;
+  &lt;/section&gt;
+&lt;/article&gt;</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📑 Детально про &lt;section&gt;</h2>
+            <p>Елемент &lt;section&gt; представляє тематичне групування контенту з заголовком:</p>
+
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-title">📖 Розділи книги</div>
+                    <div class="example-description">
+                        Розділи або глави документа - природне використання section
+                    </div>
+                    <div class="example-code">&lt;main&gt;
+  &lt;h1&gt;Підручник з HTML&lt;/h1&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Глава 1: Основи&lt;/h2&gt;
+    &lt;p&gt;Контент глави...&lt;/p&gt;
+  &lt;/section&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Глава 2: Семантика&lt;/h2&gt;
+    &lt;p&gt;Контент глави...&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🗂️ Вкладки контенту</div>
+                    <div class="example-description">
+                        Вкладки в інтерфейсі - кожна вкладка є окремою секцією
+                    </div>
+                    <div class="example-code">&lt;div class="tabs"&gt;
+  &lt;section id="tab1"&gt;
+    &lt;h3&gt;Опис товару&lt;/h3&gt;
+    &lt;p&gt;Детальний опис...&lt;/p&gt;
+  &lt;/section&gt;
+  
+  &lt;section id="tab2"&gt;
+    &lt;h3&gt;Відгуки&lt;/h3&gt;
+    &lt;p&gt;Відгуки користувачів...&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/div&gt;</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🏪 Розділи інтернет-магазину</div>
+                    <div class="example-description">
+                        Тематичні блоки на головній сторінці магазину
+                    </div>
+                    <div class="example-code">&lt;main&gt;
+  &lt;section&gt;
+    &lt;h2&gt;Нові надходження&lt;/h2&gt;
+    &lt;!-- товари --&gt;
+  &lt;/section&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Популярні товари&lt;/h2&gt;
+    &lt;!-- товари --&gt;
+  &lt;/section&gt;
+&lt;/main&gt;</div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">📋 Кроки інструкції</div>
+                    <div class="example-description">
+                        Покрокова інструкція - кожен крок є окремою секцією
+                    </div>
+                    <div class="example-code">&lt;article&gt;
+  &lt;h1&gt;Як налаштувати Wi-Fi&lt;/h1&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Крок 1: Підключення&lt;/h2&gt;
+    &lt;p&gt;Увімкніть роутер...&lt;/p&gt;
+  &lt;/section&gt;
+  
+  &lt;section&gt;
+    &lt;h2&gt;Крок 2: Налаштування&lt;/h2&gt;
+    &lt;p&gt;Відкрийте браузер...&lt;/p&gt;
+  &lt;/section&gt;
+&lt;/article&gt;</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔄 Вкладеність елементів</h2>
+            <p>Article та Section можуть містити один одного в залежності від контексту:</p>
+
+            <h3>Article містить Section</h3>
+            <div class="code-block">/* Стаття з розділами */
+&lt;article&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Повний гід по CSS Grid&lt;/h1&gt;
+    &lt;p&gt;Автор: Петро Іваненко | 15.03.2024&lt;/p&gt;
+  &lt;/header&gt;
+
+  &lt;section&gt;
+    &lt;h2&gt;Вступ&lt;/h2&gt;
+    &lt;p&gt;CSS Grid це...&lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;section&gt;
+    &lt;h2&gt;Основні концепції&lt;/h2&gt;
+    &lt;p&gt;Grid container та grid items...&lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;section&gt;
+    &lt;h2&gt;Практичні приклади&lt;/h2&gt;
+    &lt;p&gt;Розглянемо реальні кейси...&lt;/p&gt;
+  &lt;/section&gt;
+
+  &lt;footer&gt;
+    &lt;p&gt;Теги: CSS, Grid, Layout&lt;/p&gt;
+  &lt;/footer&gt;
+&lt;/article&gt;</div>
+
+            <h3>Section містить Article</h3>
+            <div class="code-block">/* Розділ з кількома статтями */
+&lt;section&gt;
+  &lt;h2&gt;Останні новини технологій&lt;/h2&gt;
+  
+  &lt;article&gt;
+    &lt;h3&gt;Випуск нової версії React&lt;/h3&gt;
+    &lt;time&gt;14.03.2024&lt;/time&gt;
+    &lt;p&gt;React 19 додає нові можливості...&lt;/p&gt;
+  &lt;/article&gt;
+
+  &lt;article&gt;
+    &lt;h3&gt;Chrome оновлює політику безпеки&lt;/h3&gt;
+    &lt;time&gt;13.03.2024&lt;/time&gt;
+    &lt;p&gt;Нові правила для HTTPS...&lt;/p&gt;
+  &lt;/article&gt;
+
+  &lt;article&gt;
+    &lt;h3&gt;CSS Container Queries в продакшені&lt;/h3&gt;
+    &lt;time&gt;12.03.2024&lt;/time&gt;
+    &lt;p&gt;Браузери нарешті підтримують...&lt;/p&gt;
+  &lt;/article&gt;
+&lt;/section&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚠️ Поширені помилки</h2>
+            
+            <div class="warning-box">
+                <strong>❌ Неправильно:</strong> Використання для стилізації
+                <div class="code-block" style="margin-top: 0.5rem;">/* НЕ РОБІТЬ ТАК */
+&lt;section class="red-background"&gt;
+  &lt;p&gt;Цей текст має червоний фон&lt;/p&gt;
+&lt;/section&gt;
+
+/* Краще використати div */
+&lt;div class="red-background"&gt;
+  &lt;p&gt;Цей текст має червоний фон&lt;/p&gt;
+&lt;/div&gt;</div>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ Неправильно:</strong> Section без заголовка
+                <div class="code-block" style="margin-top: 0.5rem;">/* НЕ РОБІТЬ ТАК */
+&lt;section&gt;
+  &lt;p&gt;Просто текст без заголовка&lt;/p&gt;
+&lt;/section&gt;
+
+/* Краще використати div або додайте заголовок */
+&lt;section&gt;
+  &lt;h2&gt;Заголовок секції&lt;/h2&gt;
+  &lt;p&gt;Тепер це правильно&lt;/p&gt;
+&lt;/section&gt;</div>
+            </div>
+
+            <div class="tip-box">
+                <strong>✅ Кращі практики:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Кожна section має заголовок</strong> (h1-h6)</li>
+                    <li><strong>Article повинен мати сенс окремо</strong> від сторінки</li>
+                    <li><strong>Використовуйте outline алгоритм</strong> для перевірки структури</li>
+                    <li><strong>Тестуйте з screen reader</strong> для доступності</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('semantic')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 31 з 41</strong><br>
+                <small>Article та Section</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('navigation')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Інтерактивне виділення елементів
+        function highlightElement(element, type) {
+            // Скидаємо всі виділення
+            document.querySelectorAll('.interactive-demo').forEach(el => {
+                el.classList.remove('selected');
+            });
+            
+            // Виділяємо поточний елемент
+            element.classList.add('selected');
+            
+            // Показуємо інформацію
+            const info = document.getElementById('elementInfo');
+            info.style.display = 'block';
+            
+            if (type === 'article') {
+                info.innerHTML = `
+                    <strong style="color: #667eea;">&lt;article&gt;</strong><br>
+                    🎯 Самодостатній контент, який можна читати окремо<br>
+                    📰 Можна опублікувати в RSS або поділитися в соц. мережах<br>
+                    💡 Зазвичай містить заголовок, контент та метадані
+                `;
+            } else if (type === 'section') {
+                info.innerHTML = `
+                    <strong style="color: #38a169;">&lt;section&gt;</strong><br>
+                    📑 Тематичне групування контенту з заголовком<br>
+                    🧩 Має сенс тільки в контексті батьківського елемента<br>
+                    📋 Ідеально для розділів, кроків, вкладок контенту
+                `;
+            }
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            // Підказка для інтерактивного демо
+            setTimeout(() => {
+                const info = document.getElementById('elementInfo');
+                if (info) {
+                    info.style.display = 'block';
+                    info.innerHTML = '<strong>💡 Клікніть на елементи вище, щоб побачити детальне пояснення</strong>';
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html> 

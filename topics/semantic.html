@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Семантичні Елементи</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .elements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .element-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .element-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .element-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .element-syntax {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .element-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .element-usage {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .element-usage h5 {
+            color: #2f855a;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .element-usage ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            font-size: 0.85rem;
+            color: #4a5568;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .layout-visual {
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow: hidden;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .layout-header {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .layout-nav {
+            background: #4299e1;
+            color: white;
+            padding: 0.75rem 1rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .layout-main {
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            min-height: 200px;
+        }
+
+        .layout-content {
+            background: #f7fafc;
+            padding: 1rem;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .layout-aside {
+            background: #edf2f7;
+            padding: 1rem;
+        }
+
+        .layout-footer {
+            background: #4a5568;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .layout-article {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .layout-section {
+            background: #f8fafc;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            padding: 0.75rem;
+            margin: 0.25rem 0;
+        }
+
+        .before-after {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .before-after .before {
+            background: #fed7d7;
+            border: 1px solid #feb2b2;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .before-after .after {
+            background: #c6f6d5;
+            border: 1px solid #9ae6b4;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .before-after h4 {
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .before-after .before h4 {
+            color: #c53030;
+        }
+
+        .before-after .after h4 {
+            color: #2f855a;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .elements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .before-after {
+                grid-template-columns: 1fr;
+            }
+            
+            .layout-main {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Семантичні Елементи</h1>
+            <p>Основи структурування HTML5 контенту</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Що таке семантичні елементи?</h2>
+            <p>Семантичні елементи HTML5 надають <strong>значення</strong> структурі документа, а не тільки його вигляду:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>Зрозумілість для браузерів</strong> - машини розуміють структуру контенту</li>
+                <li><strong>Покращена доступність</strong> - screen readers краще навігують сайтом</li>
+                <li><strong>Кращий SEO</strong> - пошукові системи краще індексують контент</li>
+                <li><strong>Легше підтримувати код</strong> - розробники швидше розуміють структуру</li>
+                <li><strong>Стандартизація</strong> - єдиний підхід до структурування контенту</li>
+            </ul>
+
+            <div class="before-after">
+                <div class="before">
+                    <h4>❌ До HTML5 (div-суп)</h4>
+                    <div class="code-block" style="background: #2d3748; font-size: 0.8rem;">&lt;div id="header"&gt;...&lt;/div&gt;
+&lt;div id="nav"&gt;...&lt;/div&gt;
+&lt;div id="content"&gt;
+    &lt;div class="post"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="sidebar"&gt;...&lt;/div&gt;
+&lt;div id="footer"&gt;...&lt;/div&gt;</div>
+                </div>
+                
+                <div class="after">
+                    <h4>✅ HTML5 (семантичні елементи)</h4>
+                    <div class="code-block" style="background: #2d3748; font-size: 0.8rem;">&lt;header&gt;...&lt;/header&gt;
+&lt;nav&gt;...&lt;/nav&gt;
+&lt;main&gt;
+    &lt;article&gt;...&lt;/article&gt;
+&lt;/main&gt;
+&lt;aside&gt;...&lt;/aside&gt;
+&lt;footer&gt;...&lt;/footer&gt;</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Всі семантичні елементи HTML5</h2>
+            <p>Огляд основних семантичних елементів та їх призначення:</p>
+            
+            <div class="elements-grid">
+                <div class="element-card">
+                    <div class="element-name">&lt;header&gt;</div>
+                    <div class="element-syntax">&lt;header&gt;Заголовок документа/секції&lt;/header&gt;</div>
+                    <div class="element-description">
+                        Містить вступний контент: логотип, навігацію, заголовки, пошук
+                    </div>
+                    <div class="element-usage">
+                        <h5>Типове використання:</h5>
+                        <ul>
+                            <li>Шапка сайту з логотипом</li>
+                            <li>Заголовок статті з автором</li>
+                            <li>Заголовок секції</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">&lt;nav&gt;</div>
+                    <div class="element-syntax">&lt;nav&gt;Навігаційні посилання&lt;/nav&gt;</div>
+                    <div class="element-description">
+                        Містить основні навігаційні посилання сайту або секції
+                    </div>
+                    <div class="element-usage">
+                        <h5>Типове використання:</h5>
+                        <ul>
+                            <li>Головне меню сайту</li>
+                            <li>Хлібні крихти</li>
+                            <li>Пагінація</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">&lt;main&gt;</div>
+                    <div class="element-syntax">&lt;main&gt;Основний контент&lt;/main&gt;</div>
+                    <div class="element-description">
+                        Основний унікальний контент документа. Тільки один на сторінку!
+                    </div>
+                    <div class="element-usage">
+                        <h5>Важливо:</h5>
+                        <ul>
+                            <li>Тільки один &lt;main&gt; на сторінку</li>
+                            <li>Не вкладати в article, aside, nav</li>
+                            <li>Пропускати повторювані елементи</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">&lt;article&gt;</div>
+                    <div class="element-syntax">&lt;article&gt;Самостійний контент&lt;/article&gt;</div>
+                    <div class="element-description">
+                        Самодостатній контент, який можна читати окремо від решти сторінки
+                    </div>
+                    <div class="element-usage">
+                        <h5>Приклади:</h5>
+                        <ul>
+                            <li>Стаття блогу</li>
+                            <li>Новина</li>
+                            <li>Коментар користувача</li>
+                            <li>Пост у соціальній мережі</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">&lt;section&gt;</div>
+                    <div class="element-syntax">&lt;section&gt;Тематична секція&lt;/section&gt;</div>
+                    <div class="element-description">
+                        Тематичне групування контенту, зазвичай з заголовком
+                    </div>
+                    <div class="element-usage">
+                        <h5>Приклади:</h5>
+                        <ul>
+                            <li>Розділи книги</li>
+                            <li>Вкладки контенту</li>
+                            <li>Тематичні блоки</li>
+                            <li>Кроки інструкції</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">&lt;aside&gt;</div>
+                    <div class="element-syntax">&lt;aside&gt;Додатковий контент&lt;/aside&gt;</div>
+                    <div class="element-description">
+                        Контент пов'язаний з основним, але може існувати окремо
+                    </div>
+                    <div class="element-usage">
+                        <h5>Приклади:</h5>
+                        <ul>
+                            <li>Sidebar з віджетами</li>
+                            <li>Реклама</li>
+                            <li>Пов'язані статті</li>
+                            <li>Додаткова інформація</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">&lt;footer&gt;</div>
+                    <div class="element-syntax">&lt;footer&gt;Підвал документа/секції&lt;/footer&gt;</div>
+                    <div class="element-description">
+                        Містить інформацію про автора, копірайт, зворотний зв'язок
+                    </div>
+                    <div class="element-usage">
+                        <h5>Типове використання:</h5>
+                        <ul>
+                            <li>Підвал сайту</li>
+                            <li>Інформація про автора статті</li>
+                            <li>Копірайт і контакти</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">&lt;figure&gt; &amp; &lt;figcaption&gt;</div>
+                    <div class="element-syntax">&lt;figure&gt;&lt;img&gt;&lt;figcaption&gt;Підпис&lt;/figcaption&gt;&lt;/figure&gt;</div>
+                    <div class="element-description">
+                        Самодостатній контент з необов'язковим підписом
+                    </div>
+                    <div class="element-usage">
+                        <h5>Приклади:</h5>
+                        <ul>
+                            <li>Зображення з підписом</li>
+                            <li>Код з коментарем</li>
+                            <li>Діаграма з поясненням</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🏗️ Приклад семантичного макету</h2>
+            <p>Типова структура веб-сторінки з семантичними елементами:</p>
+
+            <div class="layout-visual">
+                <div class="layout-header">
+                    &lt;header&gt; - Шапка сайту
+                </div>
+                <div class="layout-nav">
+                    <span>&lt;nav&gt;</span>
+                    <span>Головна</span>
+                    <span>Каталог</span>
+                    <span>Блог</span>
+                    <span>Контакти</span>
+                </div>
+                <div class="layout-main">
+                    <div class="layout-content">
+                        <div style="font-weight: bold; margin-bottom: 0.5rem;">&lt;main&gt; - Основний контент</div>
+                        <div class="layout-article">
+                            <div style="font-weight: bold; color: #667eea;">&lt;article&gt; - Стаття блогу</div>
+                            <div class="layout-section">
+                                &lt;section&gt; - Вступ
+                            </div>
+                            <div class="layout-section">
+                                &lt;section&gt; - Основна частина
+                            </div>
+                            <div class="layout-section">
+                                &lt;section&gt; - Висновки
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layout-aside">
+                        <div style="font-weight: bold; margin-bottom: 0.5rem;">&lt;aside&gt; - Sidebar</div>
+                        <div style="background: white; padding: 0.5rem; border-radius: 4px; margin: 0.25rem 0; font-size: 0.8rem;">Віджет 1</div>
+                        <div style="background: white; padding: 0.5rem; border-radius: 4px; margin: 0.25rem 0; font-size: 0.8rem;">Віджет 2</div>
+                        <div style="background: white; padding: 0.5rem; border-radius: 4px; margin: 0.25rem 0; font-size: 0.8rem;">Реклама</div>
+                    </div>
+                </div>
+                <div class="layout-footer">
+                    &lt;footer&gt; - Підвал з контактами та копірайтом
+                </div>
+            </div>
+
+            <div class="code-block">/* Базова HTML5 структура */
+&lt;!DOCTYPE html&gt;
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Мій сайт&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Логотип сайту&lt;/h1&gt;
+        &lt;nav&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/"&gt;Головна&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/about"&gt;Про нас&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/contact"&gt;Контакти&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;main&gt;
+        &lt;article&gt;
+            &lt;h2&gt;Заголовок статті&lt;/h2&gt;
+            &lt;section&gt;
+                &lt;h3&gt;Розділ 1&lt;/h3&gt;
+                &lt;p&gt;Контент розділу...&lt;/p&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;
+    &lt;/main&gt;
+
+    &lt;aside&gt;
+        &lt;h3&gt;Пов'язані статті&lt;/h3&gt;
+        &lt;ul&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Стаття 1&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="#"&gt;Стаття 2&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/aside&gt;
+
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2024 Мій сайт&lt;/p&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 Переваги семантичної розмітки</h2>
+            
+            <div class="elements-grid">
+                <div class="element-card">
+                    <div class="element-name">🤖 SEO та пошукові системи</div>
+                    <div class="element-description">
+                        Google, Bing та інші краще розуміють структуру сайту та індексують контент
+                    </div>
+                    <div class="element-usage">
+                        <h5>Переваги:</h5>
+                        <ul>
+                            <li>Кращі позиції в пошуку</li>
+                            <li>Розширені сніпети (rich snippets)</li>
+                            <li>Виділення в результатах пошуку</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">♿ Доступність (Accessibility)</div>
+                    <div class="element-description">
+                        Screen readers та асистивні технології краще навігують сайтом
+                    </div>
+                    <div class="element-usage">
+                        <h5>Покращення:</h5>
+                        <ul>
+                            <li>Швидша навігація для незрячих</li>
+                            <li>Пропуск навігації до контенту</li>
+                            <li>Зрозуміла структура документа</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">📱 Кросплатформність</div>
+                    <div class="element-description">
+                        Краща адаптація для різних пристроїв та браузерів
+                    </div>
+                    <div class="element-usage">
+                        <h5>Переваги:</h5>
+                        <ul>
+                            <li>Кращий responsive дизайн</li>
+                            <li>Оптимізація для мобільних</li>
+                            <li>Підтримка голосових асистентів</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="element-card">
+                    <div class="element-name">👥 Розробка та підтримка</div>
+                    <div class="element-description">
+                        Код стає зрозумілішим для команди розробників
+                    </div>
+                    <div class="element-usage">
+                        <h5>Переваги:</h5>
+                        <ul>
+                            <li>Швидше розуміння структури</li>
+                            <li>Легше додавати функції</li>
+                            <li>Менше помилок при редагуванні</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>✅ Кращі практики семантичної розмітки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Логічна ієрархія:</strong> h1 → h2 → h3, не пропускайте рівні</li>
+                    <li><strong>Один &lt;main&gt; на сторінку:</strong> основний контент тільки один</li>
+                    <li><strong>Заголовки в секціях:</strong> кожна section має h2-h6</li>
+                    <li><strong>aria-label для навігації:</strong> розрізняйте різні nav блоки</li>
+                    <li><strong>Валідний HTML:</strong> перевіряйте на validator.w3.org</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використання семантичних тегів тільки для стилізації</li>
+                    <li>Кілька &lt;main&gt; елементів на сторінці</li>
+                    <li>&lt;header&gt; та &lt;footer&gt; всередині &lt;address&gt;</li>
+                    <li>Порожні семантичні елементи без контенту</li>
+                    <li>Ігнорування accessibility атрибутів</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('form-validation')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 30 з 41</strong><br>
+                <small>Семантичні Елементи</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('article-section')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+</body>
+</html> 

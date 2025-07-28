@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Video</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .video-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .video-placeholder {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            padding: 3rem 1rem;
+            color: white;
+            text-align: center;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white"><path d="M8 5v14l11-7z"/></svg>') center center no-repeat;
+            background-size: 60px;
+            opacity: 0.3;
+        }
+
+        .custom-video-player {
+            background: #2d3748;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .video-screen {
+            background: #000;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .video-controls {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-1px);
+        }
+
+        .progress-container {
+            flex: 1;
+            min-width: 200px;
+            margin: 0 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .time-display {
+            color: white;
+            font-size: 0.9rem;
+            margin: 0 0.5rem;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .volume-slider {
+            width: 60px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .attribute-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .attribute-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .attribute-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .attribute-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .attribute-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .formats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .formats-table th,
+        .formats-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .formats-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .formats-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .support-icon {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .support-full {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .support-partial {
+            background: #fef2c7;
+            color: #d69e2e;
+        }
+
+        .support-none {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-preview {
+            background: #2d3748;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .accessibility-features {
+            background: #f0f4ff;
+            border: 1px solid #bed5ff;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .accessibility-features h5 {
+            color: #4299e1;
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .attributes-grid,
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .video-controls {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+            
+            .progress-container {
+                min-width: 150px;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎬 HTML5 Video</h1>
+            <p>Відтворення відео контенту в браузері</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи Video елемента</h2>
+            <p>Елемент &lt;video&gt; дозволяє вбудовувати відео контент безпосередньо в HTML документ:</p>
+
+            <div class="code-block">/* Базовий синтаксис */
+&lt;video controls width="400" height="300"&gt;
+  &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;source src="video.webm" type="video/webm"&gt;
+  &lt;source src="video.ogg" type="video/ogg"&gt;
+  Ваш браузер не підтримує HTML5 video.
+&lt;/video&gt;
+
+/* З додатковими атрибутами */
+&lt;video 
+  controls 
+  autoplay 
+  muted
+  loop 
+  poster="thumbnail.jpg"
+  preload="metadata"
+  width="640" 
+  height="360"&gt;
+  &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;source src="movie.webm" type="video/webm"&gt;
+  &lt;track kind="subtitles" src="subtitles_uk.vtt" srclang="uk" label="Українські субтитри"&gt;
+  &lt;track kind="subtitles" src="subtitles_en.vtt" srclang="en" label="English subtitles"&gt;
+&lt;/video&gt;</div>
+
+            <div class="demo-container">
+                <div class="demo-title">Приклад Video елемента</div>
+                <div class="video-demo">
+                    <video controls width="100%" height="300" style="border-radius: 8px;">
+                        <source src="../media/video/demo.mp4" type="video/mp4">
+                        <p>Ваш браузер не підтримує HTML5 video. <a href="../media/video/demo.mp4">Завантажити відео</a></p>
+                    </video>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                        🎬 Реальний HTML5 video елемент з базовими елементами управління
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚙️ Атрибути Video елемента</h2>
+            <p>Основні атрибути для управління поведінкою відео:</p>
+
+            <div class="attributes-grid">
+                <div class="attribute-card">
+                    <div class="attribute-name">controls</div>
+                    <div class="attribute-description">
+                        Показує стандартні елементи управління (play, pause, volume, seek, fullscreen)
+                    </div>
+                    <div class="attribute-example">&lt;video controls&gt;...&lt;/video&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">autoplay</div>
+                    <div class="attribute-description">
+                        Автоматично розпочинає відтворення (потребує muted у більшості браузерів)
+                    </div>
+                    <div class="attribute-example">&lt;video autoplay muted&gt;...&lt;/video&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">loop</div>
+                    <div class="attribute-description">
+                        Зациклює відтворення відео після завершення
+                    </div>
+                    <div class="attribute-example">&lt;video loop&gt;...&lt;/video&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">muted</div>
+                    <div class="attribute-description">
+                        Відключає звук за замовчуванням (необхідно для autoplay)
+                    </div>
+                    <div class="attribute-example">&lt;video muted&gt;...&lt;/video&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">poster</div>
+                    <div class="attribute-description">
+                        Зображення-заставка, що показується до початку відтворення
+                    </div>
+                    <div class="attribute-example">&lt;video poster="thumb.jpg"&gt;...&lt;/video&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">preload</div>
+                    <div class="attribute-description">
+                        Контролює попереднє завантаження: "none", "metadata", "auto"
+                    </div>
+                    <div class="attribute-example">&lt;video preload="metadata"&gt;...&lt;/video&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">width / height</div>
+                    <div class="attribute-description">
+                        Розміри відео плеєра в пікселях (краще використовувати CSS)
+                    </div>
+                    <div class="attribute-example">&lt;video width="640" height="360"&gt;...&lt;/video&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">playsinline</div>
+                    <div class="attribute-description">
+                        Відтворення в лінію на iOS (без переходу в повноекранний режим)
+                    </div>
+                    <div class="attribute-example">&lt;video playsinline&gt;...&lt;/video&gt;</div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Autoplay політика:</strong> Сучасні браузери блокують autoplay з звуком. 
+                Використовуйте autoplay muted або дочекайтеся взаємодії користувача.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📁 Формати відео файлів</h2>
+            <p>Підтримка різних форматів відео в браузерах:</p>
+
+            <table class="formats-table">
+                <thead>
+                    <tr>
+                        <th>Формат</th>
+                        <th>MIME тип</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Кодеки</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>MP4</strong></td>
+                        <td>video/mp4</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td>H.264, H.265</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WebM</strong></td>
+                        <td>video/webm</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-partial">⚠</span></td>
+                        <td>VP8, VP9, AV1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OGG</strong></td>
+                        <td>video/ogg</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-none">✗</span></td>
+                        <td>Theora</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AV1</strong></td>
+                        <td>video/mp4; codecs="av01"</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-partial">⚠</span></td>
+                        <td>AV1</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>✅ Рекомендація:</strong> Використовуйте MP4 (H.264) як основний формат + WebM для оптимізації:
+                <div class="code-block" style="margin-top: 0.5rem;">&lt;video controls&gt;
+  &lt;source src="video.webm" type="video/webm"&gt;
+  &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;p&gt;Ваш браузер не підтримує HTML5 video. 
+     &lt;a href="../media/video/demo.mp4"&gt;Завантажити відео&lt;/a&gt;&lt;/p&gt;
+&lt;/video&gt;</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎮 JavaScript Video API</h2>
+            <p>Програмне управління відео за допомогою JavaScript:</p>
+
+            <div class="demo-container">
+                <div class="demo-title">Кастомний відео плеєр</div>
+                <div class="custom-video-player">
+                    <video id="customVideo" width="100%" height="300" style="border-radius: 8px 8px 0 0;" onclick="toggleCustomVideoPlay()">
+                        <source src="../media/video/demo.mp4" type="video/mp4">
+                        <p>Ваш браузер не підтримує HTML5 video.</p>
+                    </video>
+                    
+                    <div class="video-controls">
+                        <button class="control-button" onclick="toggleCustomVideoPlay()" id="customPlayButton">▶️</button>
+                        <button class="control-button" onclick="stopCustomVideo()">⏹️</button>
+                        <button class="control-button" onclick="rewindCustomVideo()">⏪</button>
+                        <button class="control-button" onclick="forwardCustomVideo()">⏩</button>
+                        
+                        <span class="time-display" id="customCurrentTime">0:00</span>
+                        
+                        <div class="progress-container">
+                            <div class="progress-bar" onclick="seekCustomVideo(event)">
+                                <div class="progress-fill" id="customVideoProgress"></div>
+                            </div>
+                        </div>
+                        
+                        <span class="time-display" id="customDuration">0:00</span>
+                        
+                        <div class="volume-control">
+                            <span>🔊</span>
+                            <input type="range" class="volume-slider" 
+                                   min="0" max="1" step="0.1" value="0.5" 
+                                   onchange="setCustomVideoVolume(this.value)"
+                                   appearance="none">
+                        </div>
+                        
+                        <button class="control-button" onclick="toggleCustomFullscreen()">⛶</button>
+                    </div>
+                </div>
+                <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">
+                    🎮 Кастомний плеєр з JavaScript API управлінням
+                </p>
+            </div>
+
+            <h3>Основні JavaScript методи та властивості</h3>
+            <div class="code-block">/* Основні методи */
+const video = document.getElementById('myVideo');
+
+// Управління відтворенням
+video.play();           // Розпочати відтворення (повертає Promise)
+video.pause();          // Призупинити
+video.load();           // Перезавантажити відео
+
+// Властивості відтворення
+video.currentTime = 30;     // Перемотка на 30 секунду
+video.volume = 0.5;         // Гучність 50%
+video.playbackRate = 1.5;   // Швидкість 1.5x
+video.muted = true;         // Вимкнути звук
+
+// Інформація про відео
+console.log(video.duration);       // Тривалість в секундах
+console.log(video.videoWidth);     // Ширина відео
+console.log(video.videoHeight);    // Висота відео
+console.log(video.buffered);       // Буферизована частина
+console.log(video.played);         // Відтворена частина
+
+// Стан відтворення
+console.log(video.paused);         // Чи на паузі
+console.log(video.ended);          // Чи завершено
+console.log(video.readyState);     // Готовність до відтворення
+
+/* Основні події відео */
+video.addEventListener('loadstart', () => {
+    console.log('Почато завантаження відео');
+});
+
+video.addEventListener('loadedmetadata', () => {
+    console.log('Метадані завантажені');
+    console.log(`Розмір: ${video.videoWidth}x${video.videoHeight}`);
+    console.log(`Тривалість: ${video.duration} сек`);
+});
+
+video.addEventListener('loadeddata', () => {
+    console.log('Перший кадр завантажений');
+});
+
+video.addEventListener('canplay', () => {
+    console.log('Можна почати відтворення');
+});
+
+video.addEventListener('canplaythrough', () => {
+    console.log('Можна відтворювати без зупинок');
+});
+
+video.addEventListener('play', () => {
+    console.log('Відтворення розпочато');
+});
+
+video.addEventListener('pause', () => {
+    console.log('Відтворення призупинено');
+});
+
+video.addEventListener('timeupdate', () => {
+    const progress = (video.currentTime / video.duration) * 100;
+    console.log(`Прогрес: ${progress}%`);
+});
+
+video.addEventListener('ended', () => {
+    console.log('Відтворення завершено');
+});
+
+video.addEventListener('error', (e) => {
+    console.error('Помилка відтворення:', e);
+});</div>
+
+            <h3>Fullscreen API</h3>
+            <div class="code-block">/* Повноекранний режим */
+function enterFullscreen(element) {
+  if (element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if (element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if (document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  } else if (document.msExitFullscreen) {
+    document.msExitFullscreen();
+  }
+}
+
+// Перевірка підтримки
+if (document.fullscreenEnabled) {
+  console.log('Fullscreen підтримується');
+}
+
+// Події fullscreen
+document.addEventListener('fullscreenchange', () => {
+  if (document.fullscreenElement) {
+    console.log('Увійшли в fullscreen');
+  } else {
+    console.log('Вийшли з fullscreen');
+  }
+});</div>
+        </div>
+
+        <div class="content-section">
+            <h2>📺 Субтитри та WebVTT</h2>
+            <p>Додавання субтитрів та інших текстових доріжок до відео:</p>
+
+            <div class="code-block">/* Додавання субтитрів */
+&lt;video controls&gt;
+  &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  
+  &lt;!-- Субтитри різними мовами --&gt;
+  &lt;track kind="subtitles" src="subtitles_uk.vtt" 
+         srclang="uk" label="Українські субтитри" default&gt;
+  &lt;track kind="subtitles" src="subtitles_en.vtt" 
+         srclang="en" label="English subtitles"&gt;
+  &lt;track kind="subtitles" src="subtitles_fr.vtt" 
+         srclang="fr" label="Sous-titres français"&gt;
+  
+  &lt;!-- Описи для незрячих --&gt;
+  &lt;track kind="descriptions" src="descriptions.vtt" 
+         srclang="uk" label="Аудіо описи"&gt;
+  
+  &lt;!-- Розділи --&gt;
+  &lt;track kind="chapters" src="chapters.vtt" 
+         srclang="uk" label="Розділи"&gt;
+&lt;/video&gt;</div>
+
+            <h3>Формат WebVTT файлу</h3>
+            <div class="code-block">/* Приклад WebVTT файлу (subtitles_uk.vtt) */
+WEBVTT
+
+00:00:00.000 --&gt; 00:00:05.000
+Привіт! Це перші субтитри.
+
+00:00:05.500 --&gt; 00:00:10.000
+Ось другий рядок субтитрів.
+
+00:00:10.500 --&gt; 00:00:15.000
+&lt;v Speaker&gt;Можна вказати, хто говорить.
+
+00:00:15.500 --&gt; 00:00:20.000
+&lt;c.highlight&gt;Можна додати CSS класи&lt;/c&gt; для стилізації.
+
+NOTE
+Це коментар, який не відображається
+
+00:00:20.500 --&gt; 00:00:25.000
+Кінець відео!</div>
+
+            <h3>JavaScript управління треками</h3>
+            <div class="code-block">/* Робота з text tracks */
+const video = document.getElementById('myVideo');
+
+// Отримання всіх треків
+const tracks = video.textTracks;
+console.log(`Кількість треків: ${tracks.length}`);
+
+// Перебір треків
+for (let i = 0; i &lt; tracks.length; i++) {
+  const track = tracks[i];
+  console.log(`Трек ${i}: ${track.label} (${track.language})`);
+}
+
+// Увімкнення конкретного треку
+function enableTrack(trackIndex) {
+  for (let i = 0; i &lt; tracks.length; i++) {
+    tracks[i].mode = i === trackIndex ? 'showing' : 'disabled';
+  }
+}
+
+// Слухач подій cue
+tracks[0].addEventListener('cuechange', () => {
+  const activeCues = tracks[0].activeCues;
+  for (let cue of activeCues) {
+    console.log('Поточний субтитр:', cue.text);
+  }
+});</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Стилізація відео елемента</h2>
+            <p>CSS можливості для кастомізації відео плеєра:</p>
+
+            <div class="code-block">/* Адаптивне відео */
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  overflow: hidden;
+}
+
+.video-container video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* або contain */
+}
+
+/* Базові стилі відео */
+video {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+/* Кастомний poster */
+video[poster] {
+  object-fit: cover;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Приховування контролів */
+video::-webkit-media-controls {
+  display: none !important;
+}
+
+video::-moz-media-controls {
+  display: none !important;
+}
+
+/* Стилізація в fullscreen */
+video:fullscreen {
+  object-fit: contain;
+  background: black;
+}
+
+video:-webkit-full-screen {
+  object-fit: contain;
+  background: black;
+}
+
+/* Hover ефекти */
+.video-wrapper {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.video-wrapper:hover {
+  transform: scale(1.02);
+}
+
+.video-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.1);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.video-wrapper:hover::before {
+  opacity: 1;
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Практичні приклади</h2>
+            
+            <div class="example-grid">
+                <div class="example-card">
+                    <div class="example-title">🎬 Відео галерея</div>
+                    <div class="example-preview">
+                        <div class="code-block" style="font-size: 0.8rem; margin: 0;">&lt;div class="video-gallery"&gt;
+  &lt;video controls poster="thumb1.jpg"&gt;
+    &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;/video&gt;
+  &lt;video controls poster="thumb2.jpg"&gt;
+    &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;/video&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.video-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+}
+&lt;/style&gt;</div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">📱 Vertical відео (Stories)</div>
+                    <div class="example-preview">
+                        <div class="code-block" style="font-size: 0.8rem; margin: 0;">&lt;div class="story-container"&gt;
+  &lt;video 
+    autoplay 
+    muted 
+    loop 
+    playsinline
+    class="story-video"&gt;
+    &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;/video&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.story-container {
+  width: 280px;
+  height: 500px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 auto;
+}
+.story-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+&lt;/style&gt;</div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🖼️ Background відео</div>
+                    <div class="example-preview">
+                        <div class="code-block" style="font-size: 0.8rem; margin: 0;">&lt;div class="hero-section"&gt;
+  &lt;video 
+    autoplay 
+    muted 
+    loop 
+    playsinline
+    class="bg-video"&gt;
+    &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;/video&gt;
+  &lt;div class="hero-content"&gt;
+    &lt;h1&gt;Заголовок&lt;/h1&gt;
+    &lt;p&gt;Текст поверх відео&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;style&gt;
+.hero-section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.bg-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  padding-top: 40vh;
+}
+&lt;/style&gt;</div>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🎪 Відео плейлист</div>
+                    <div class="example-preview">
+                        <div class="code-block" style="font-size: 0.8rem; margin: 0;">&lt;div class="playlist"&gt;
+  &lt;video id="mainVideo" controls&gt;
+    &lt;source id="currentSource" src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;/video&gt;
+  
+  &lt;ul class="playlist-items"&gt;
+    &lt;li data-src="video1.mp4" class="active"&gt;Відео 1&lt;/li&gt;
+    &lt;li data-src="video2.mp4"&gt;Відео 2&lt;/li&gt;
+    &lt;li data-src="video3.mp4"&gt;Відео 3&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+document.querySelectorAll('.playlist-items li').forEach(item =&gt; {
+  item.addEventListener('click', () =&gt; {
+    const video = document.getElementById('mainVideo');
+    const source = document.getElementById('currentSource');
+    source.src = item.dataset.src;
+    video.load();
+    
+    // Оновлення активного елемента
+    document.querySelector('.playlist-items .active').classList.remove('active');
+    item.classList.add('active');
+  });
+});
+&lt;/script&gt;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Доступність та кращі практики</h2>
+            
+            <div class="accessibility-features">
+                <h5>🎯 Доступність відео</h5>
+                <div class="code-block" style="font-size: 0.85rem;">/* Повна accessibility розмітка */
+&lt;video 
+  controls 
+  aria-label="Навчальне відео: Основи HTML5"
+  aria-describedby="video-description"
+  poster="lesson-thumbnail.jpg"&gt;
+  
+  &lt;source src="../media/video/demo.mp4" type="video/mp4"&gt;
+  &lt;source src="lesson.webm" type="video/webm"&gt;
+  
+  &lt;!-- Субтитри для глухих та слабочуючих --&gt;
+  &lt;track kind="captions" src="captions_uk.vtt" srclang="uk" label="Українські титри" default&gt;
+  &lt;track kind="captions" src="captions_en.vtt" srclang="en" label="English captions"&gt;
+  
+  &lt;!-- Описи для незрячих --&gt;
+  &lt;track kind="descriptions" src="descriptions.vtt" srclang="uk" label="Аудіо описи"&gt;
+  
+  &lt;!-- Fallback для старих браузерів --&gt;
+  &lt;p&gt;Ваш браузер не підтримує HTML5 video. 
+     &lt;a href="lesson.mp4"&gt;Завантажити відео&lt;/a&gt;&lt;/p&gt;
+&lt;/video&gt;
+
+&lt;div id="video-description"&gt;
+  &lt;p&gt;Тривалість: 15 хвилин. Навчальне відео про основи HTML5 з субтитрами українською та англійською мовами.&lt;/p&gt;
+&lt;/div&gt;</div>
+            </div>
+
+            <div class="tip-box">
+                <strong>✅ Кращі практики:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Завжди додавайте poster</strong> для кращого UX</li>
+                    <li><strong>Використовуйте кілька форматів</strong> для сумісності</li>
+                    <li><strong>Додавайте субтитри</strong> для доступності</li>
+                    <li><strong>Оптимізуйте розмір файлів</strong> для мобільних</li>
+                    <li><strong>Використовуйте playsinline</strong> на iOS</li>
+                    <li><strong>Надавайте контроль користувачу</strong> над autoplay</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Autoplay з звуком (порушує UX та accessibility)</li>
+                    <li>Відсутність fallback контенту</li>
+                    <li>Надто великі файли без стиснення</li>
+                    <li>Відсутність субтитрів</li>
+                    <li>Ігнорування мобільної оптимізації</li>
+                    <li>Відсутність aria-label для кастомних контролів</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('audio')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 34 з 41</strong><br>
+                <small>HTML5 Video</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('canvas')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Реальний відео плеєр з JavaScript API
+        let customVideo;
+        let updateInterval;
+
+        function toggleCustomVideoPlay() {
+            const video = document.getElementById('customVideo');
+            const playButton = document.getElementById('customPlayButton');
+            
+            if (video.paused) {
+                video.play();
+                playButton.textContent = '⏸️';
+            } else {
+                video.pause();
+                playButton.textContent = '▶️';
+            }
+        }
+
+        function stopCustomVideo() {
+            const video = document.getElementById('customVideo');
+            const playButton = document.getElementById('customPlayButton');
+            
+            video.pause();
+            video.currentTime = 0;
+            playButton.textContent = '▶️';
+        }
+
+        function rewindCustomVideo() {
+            const video = document.getElementById('customVideo');
+            video.currentTime = Math.max(0, video.currentTime - 10);
+        }
+
+        function forwardCustomVideo() {
+            const video = document.getElementById('customVideo');
+            video.currentTime = Math.min(video.duration, video.currentTime + 10);
+        }
+
+        function setCustomVideoVolume(value) {
+            const video = document.getElementById('customVideo');
+            video.volume = value;
+        }
+
+        function seekCustomVideo(event) {
+            const video = document.getElementById('customVideo');
+            const progressBar = event.currentTarget;
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (event.clientX - rect.left) / rect.width;
+            video.currentTime = percent * video.duration;
+        }
+
+        function toggleCustomFullscreen() {
+            const video = document.getElementById('customVideo');
+            
+            if (!document.fullscreenElement) {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        function updateCustomVideoDisplay() {
+            const video = document.getElementById('customVideo');
+            
+            if (video.duration) {
+                const progress = (video.currentTime / video.duration) * 100;
+                document.getElementById('customVideoProgress').style.width = progress + '%';
+                document.getElementById('customCurrentTime').textContent = formatTime(video.currentTime);
+                document.getElementById('customDuration').textContent = formatTime(video.duration);
+            }
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Ініціалізація та події відео
+        document.addEventListener('DOMContentLoaded', function() {
+            const video = document.getElementById('customVideo');
+            
+            // Оновлення прогресу кожні 100мс
+            updateInterval = setInterval(updateCustomVideoDisplay, 100);
+            
+            // Події відео
+            video.addEventListener('loadedmetadata', function() {
+                updateCustomVideoDisplay();
+            });
+            
+            video.addEventListener('play', function() {
+                document.getElementById('customPlayButton').textContent = '⏸️';
+            });
+            
+            video.addEventListener('pause', function() {
+                document.getElementById('customPlayButton').textContent = '▶️';
+            });
+            
+            video.addEventListener('ended', function() {
+                document.getElementById('customPlayButton').textContent = '▶️';
+            });
+            
+            console.log('Custom video player initialized');
+        });
+    </script>
+</body>
+</html> 

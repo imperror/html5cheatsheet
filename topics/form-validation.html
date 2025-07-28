@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .validation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .validation-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .validation-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .attr-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .attr-syntax {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .demo-form {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input:valid {
+            border-color: #38a169;
+        }
+
+        .form-input:invalid:not(:focus):not(:placeholder-shown) {
+            border-color: #e53e3e;
+        }
+
+        .form-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .validation-message {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .validation-message.error {
+            color: #e53e3e;
+            background: #fed7d7;
+            border: 1px solid #feb2b2;
+        }
+
+        .validation-message.success {
+            color: #38a169;
+            background: #c6f6d5;
+            border: 1px solid #9ae6b4;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .validation-example {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .validation-example .code-side {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .validation-example .demo-side {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Стилі для кастомних повідомлень */
+        .custom-validation {
+            position: relative;
+        }
+
+        .custom-validation .error-message {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #e53e3e;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 0 0 6px 6px;
+            font-size: 0.875rem;
+            transform: translateY(-100%);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .custom-validation .error-message.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .validation-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .validation-example {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>✅ Form Validation</h1>
+            <p>HTML5 валідація та кастомна перевірка форм</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Типи валідації</h2>
+            <p>Існує кілька способів валідації форм у веб-розробці:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>HTML5 валідація</strong> - вбудована в браузер, працює автоматично</li>
+                <li><strong>JavaScript валідація</strong> - кастомна логіка на стороні клієнта</li>
+                <li><strong>Server-side валідація</strong> - обов'язкова перевірка на сервері</li>
+                <li><strong>Real-time валідація</strong> - перевірка під час введення</li>
+                <li><strong>Progressive enhancement</strong> - покращення базової HTML валідації</li>
+            </ul>
+
+            <div class="tip-box">
+                <strong>🔒 Правило безпеки:</strong> Ніколи не покладайтеся тільки на клієнтську валідацію! 
+                Завжди перевіряйте дані на сервері, оскільки JavaScript можна відключити або обійти.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 HTML5 атрибути валідації</h2>
+            <p>HTML5 надає потужні вбудовані можливості валідації:</p>
+            
+            <div class="validation-grid">
+                <div class="validation-card">
+                    <div class="attr-name">required</div>
+                    <div class="attr-syntax">&lt;input required&gt;</div>
+                    <div style="margin: 0.5rem 0;">Робить поле обов'язковим для заповнення</div>
+                    <div class="code-block" style="font-size: 0.8rem;">/* Приклад */
+&lt;input type="text" required&gt;
+&lt;textarea required&gt;&lt;/textarea&gt;
+&lt;select required&gt;
+    &lt;option value=""&gt;Оберіть...&lt;/option&gt;
+&lt;/select&gt;</div>
+                </div>
+
+                <div class="validation-card">
+                    <div class="attr-name">minlength / maxlength</div>
+                    <div class="attr-syntax">&lt;input minlength="3" maxlength="20"&gt;</div>
+                    <div style="margin: 0.5rem 0;">Обмежує довжину тексту</div>
+                    <div class="code-block" style="font-size: 0.8rem;">/* Приклади */
+&lt;input type="text" minlength="2" maxlength="50"&gt;
+&lt;textarea minlength="10" maxlength="500"&gt;&lt;/textarea&gt;
+
+/* Тільки для text, search, tel, url, 
+   password, textarea */</div>
+                </div>
+
+                <div class="validation-card">
+                    <div class="attr-name">min / max</div>
+                    <div class="attr-syntax">&lt;input type="number" min="1" max="100"&gt;</div>
+                    <div style="margin: 0.5rem 0;">Обмежує числові значення та дати</div>
+                    <div class="code-block" style="font-size: 0.8rem;">/* Приклади */
+&lt;input type="number" min="18" max="65"&gt;
+&lt;input type="range" min="0" max="100"&gt;
+&lt;input type="date" min="2024-01-01" max="2024-12-31"&gt;
+&lt;input type="time" min="09:00" max="17:00"&gt;</div>
+                </div>
+
+                <div class="validation-card">
+                    <div class="attr-name">step</div>
+                    <div class="attr-syntax">&lt;input type="number" step="0.01"&gt;</div>
+                    <div style="margin: 0.5rem 0;">Визначає крок для числових значень</div>
+                    <div class="code-block" style="font-size: 0.8rem;">/* Приклади */
+&lt;input type="number" step="1"&gt; &lt;!-- Цілі числа --&gt;
+&lt;input type="number" step="0.01"&gt; &lt;!-- Копійки --&gt;
+&lt;input type="number" step="5"&gt; &lt;!-- Кратні 5 --&gt;
+&lt;input type="number" step="any"&gt; &lt;!-- Будь-які --&gt;</div>
+                </div>
+
+                <div class="validation-card">
+                    <div class="attr-name">pattern</div>
+                    <div class="attr-syntax">&lt;input pattern="[A-Za-z]{3,}"&gt;</div>
+                    <div style="margin: 0.5rem 0;">Регулярний вираз для перевірки</div>
+                    <div class="code-block" style="font-size: 0.8rem;">/* Приклади */
+&lt;!-- Тільки літери --&gt;
+&lt;input pattern="[A-Za-z]+"&gt;
+
+&lt;!-- Телефон формату +380XXXXXXXXX --&gt;
+&lt;input pattern="\+380[0-9]{9}"&gt;
+
+&lt;!-- Поштовий індекс України --&gt;
+&lt;input pattern="[0-9]{5}"&gt;</div>
+                </div>
+
+                <div class="validation-card">
+                    <div class="attr-name">title</div>
+                    <div class="attr-syntax">&lt;input title="Підказка для користувача"&gt;</div>
+                    <div style="margin: 0.5rem 0;">Кастомне повідомлення про помилку</div>
+                    <div class="code-block" style="font-size: 0.8rem;">/* Приклад */
+&lt;input type="text" 
+       pattern="[A-Za-z]{3,}"
+       title="Мінімум 3 літери, тільки латиниця"&gt;
+
+&lt;input type="email"
+       required
+       title="Введіть коректну email адресу"&gt;</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Інтерактивна демонстрація HTML5 валідації</h2>
+            <p>Спробуйте різні поля та подивіться, як працює вбудована валідація:</p>
+
+            <div class="demo-form">
+                <div class="demo-title">Повна демонстрація валідації</div>
+                <form id="validationDemo" onsubmit="return handleValidationSubmit(event)">
+                    <div class="form-group">
+                        <label class="form-label" for="demo-name">Ім'я (обов'язкове, мін. 2 символи):</label>
+                        <input 
+                            type="text" 
+                            id="demo-name" 
+                            class="form-input" 
+                            required 
+                            minlength="2"
+                            placeholder="Введіть ваше ім'я">
+                        <div class="validation-message" id="demo-name-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="demo-email">Email (перевірка формату):</label>
+                        <input 
+                            type="email" 
+                            id="demo-email" 
+                            class="form-input" 
+                            required
+                            placeholder="user@example.com">
+                        <div class="validation-message" id="demo-email-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="demo-phone">Телефон (формат +380XXXXXXXXX):</label>
+                        <input 
+                            type="tel" 
+                            id="demo-phone" 
+                            class="form-input" 
+                            pattern="\+380[0-9]{9}"
+                            title="Формат: +380XXXXXXXXX"
+                            placeholder="+380501234567">
+                        <div class="validation-message" id="demo-phone-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="demo-age">Вік (18-100 років):</label>
+                        <input 
+                            type="number" 
+                            id="demo-age" 
+                            class="form-input" 
+                            min="18" 
+                            max="100" 
+                            required
+                            placeholder="Введіть ваш вік">
+                        <div class="validation-message" id="demo-age-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="demo-website">Веб-сайт (опціонально):</label>
+                        <input 
+                            type="url" 
+                            id="demo-website" 
+                            class="form-input"
+                            placeholder="https://yourwebsite.com">
+                        <div class="validation-message" id="demo-website-error"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label" for="demo-password">Пароль (мін. 8 символів, має містити цифру):</label>
+                        <input 
+                            type="password" 
+                            id="demo-password" 
+                            class="form-input" 
+                            required 
+                            minlength="8"
+                            pattern="^(?=.*[0-9]).{8,}$"
+                            title="Мінімум 8 символів, обов'язково має містити цифру"
+                            placeholder="Мінімум 8 символів з цифрою">
+                        <div class="validation-message" id="demo-password-error"></div>
+                    </div>
+
+                    <button type="submit" class="form-button">Перевірити всю валідацію</button>
+                </form>
+                
+                <div id="demo-result" style="margin-top: 1rem; padding: 1rem; background: #f7fafc; border-radius: 6px; display: none;"></div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ JavaScript валідація</h2>
+            <p>Кастомна валідація дає більше контролю та кращий UX:</p>
+
+            <h3>Constraint Validation API</h3>
+            <div class="code-block">/* Основні методи та властивості */
+
+// Перевірка валідності
+input.checkValidity()      // true/false
+input.reportValidity()     // показує повідомлення
+form.checkValidity()       // перевіряє всю форму
+
+// Властивості валідності
+input.validity.valid       // чи валідне поле
+input.validity.valueMissing // пусте обов'язкове поле
+input.validity.typeMismatch // невірний тип (email, url)
+input.validity.patternMismatch // не відповідає pattern
+input.validity.tooLong     // занадто довге
+input.validity.tooShort    // занадто коротке
+input.validity.rangeUnderflow // менше min
+input.validity.rangeOverflow  // більше max
+
+// Кастомні повідомлення
+input.setCustomValidity('Кастомна помилка')
+input.setCustomValidity('') // очищує помилку
+
+// Отримання повідомлення
+input.validationMessage    // текст помилки</div>
+
+            <h3>Real-time валідація</h3>
+            <div class="demo-container">
+                <div class="demo-title">Валідація під час введення</div>
+                
+                <div class="validation-example">
+                    <div class="code-side">
+<span style="color: #f7fafc;">// JavaScript код</span>
+input.addEventListener('input', function() {
+    const value = this.value;
+    const errorDiv = document.getElementById('error');
+    
+    if (value.length < 3) {
+        this.setCustomValidity('Мінімум 3 символи');
+        errorDiv.textContent = 'Мінімум 3 символи';
+        errorDiv.className = 'error show';
+    } else if (!/^[a-zA-Z]+$/.test(value)) {
+        this.setCustomValidity('Тільки літери');
+        errorDiv.textContent = 'Тільки літери дозволені';
+        errorDiv.className = 'error show';
+    } else {
+        this.setCustomValidity('');
+        errorDiv.className = 'error';
+    }
+});
+                    </div>
+                    
+                    <div class="demo-side">
+                        <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Ім'я (тільки літери, мін. 3):</label>
+                        <div class="custom-validation">
+                            <input type="text" id="realtime-input" placeholder="Введіть ім'я" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px;">
+                            <div class="error-message" id="realtime-error">Мінімум 3 літери</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Кастомна валідація форми</h3>
+            <div class="code-block">/* Повна кастомна валідація */
+function validateForm(form) {
+    const errors = {};
+    let isValid = true;
+    
+    // Перевіряємо кожне поле
+    const inputs = form.querySelectorAll('input, select, textarea');
+    
+    inputs.forEach(input => {
+        const fieldErrors = validateField(input);
+        if (fieldErrors.length > 0) {
+            errors[input.name] = fieldErrors;
+            isValid = false;
+        }
+    });
+    
+    // Відображаємо помилки
+    displayErrors(errors);
+    
+    return isValid;
+}
+
+function validateField(input) {
+    const errors = [];
+    const value = input.value.trim();
+    
+    // Обов'язкові поля
+    if (input.required && !value) {
+        errors.push('Це поле обов\'язкове');
+    }
+    
+    // Email валідація
+    if (input.type === 'email' && value) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) {
+            errors.push('Некоректний формат email');
+        }
+    }
+    
+    // Пароль валідація
+    if (input.type === 'password' && value) {
+        if (value.length < 8) {
+            errors.push('Мінімум 8 символів');
+        }
+        if (!/[0-9]/.test(value)) {
+            errors.push('Має містити цифру');
+        }
+        if (!/[A-Z]/.test(value)) {
+            errors.push('Має містити велику літеру');
+        }
+    }
+    
+    return errors;
+}
+
+// Використання
+form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    if (validateForm(this)) {
+        // Форма валідна, відправляємо
+        console.log('Форма валідна!');
+    } else {
+        console.log('Є помилки валідації');
+    }
+});</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 UX кращі практики</h2>
+            
+            <div class="tip-box">
+                <strong>✅ Хороший UX валідації:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Inline валідація:</strong> Показуйте помилки під час введення</li>
+                    <li><strong>Позитивний feedback:</strong> Показуйте успіх (зелена галочка)</li>
+                    <li><strong>Зрозумілі повідомлення:</strong> "Пароль занадто короткий" замість "Invalid"</li>
+                    <li><strong>Показуйте вимоги:</strong> "Мінімум 8 символів, 1 цифра"</li>
+                    <li><strong>Групуйте помилки:</strong> Список всіх помилок вгорі форми</li>
+                    <li><strong>Фокус на помилці:</strong> Автоматично фокусуйте перше неправильне поле</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ Погані практики:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Показувати помилки до того, як користувач почав вводити</li>
+                    <li>Неконкретні повідомлення: "Помилка валідації"</li>
+                    <li>Валідація тільки при відправці форми</li>
+                    <li>Відсутність індикаторів обов'язкових полів</li>
+                    <li>Очищення форми при помилці</li>
+                    <li>Вимкнення відправки до виправлення всіх помилок</li>
+                </ul>
+            </div>
+
+            <h3>🎯 Приклади хороших повідомлень</h3>
+            <div class="code-block">/* Замість загальних повідомлень */
+❌ "Invalid input"
+✅ "Email має містити символ @"
+
+❌ "Required field"  
+✅ "Будь ласка, введіть ваше ім'я"
+
+❌ "Pattern mismatch"
+✅ "Телефон має бути у форматі +380XXXXXXXXX"
+
+❌ "Value too short"
+✅ "Пароль має містити мінімум 8 символів"
+
+❌ "Out of range"
+✅ "Вік має бути від 18 до 65 років"</div>
+
+            <h3>📱 Мобільна оптимізація</h3>
+            <div class="code-block">/* Поради для мобільних пристроїв */
+
+// 1. Великі touch targets (мінімум 44px)
+.form-input {
+    min-height: 44px;
+    padding: 12px;
+}
+
+// 2. Запобігання zoom на iOS
+.form-input {
+    font-size: 16px; /* Мінімум для iOS */
+}
+
+// 3. Правильні inputmode для клавіатур
+&lt;input type="text" inputmode="numeric"&gt; &lt;!-- Цифрова клавіатура --&gt;
+&lt;input type="email" inputmode="email"&gt;   &lt;!-- Email клавіатура --&gt;
+&lt;input type="url" inputmode="url"&gt;       &lt;!-- URL клавіатура --&gt;
+
+// 4. Autocomplete для швидкого заповнення
+&lt;input type="email" autocomplete="email"&gt;
+&lt;input type="tel" autocomplete="tel"&gt;
+&lt;input type="text" autocomplete="given-name"&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Готові рішення</h2>
+            
+            <h3>Універсальна функція валідації</h3>
+            <div class="code-block">/* Готова до використання функція */
+class FormValidator {
+    constructor(form) {
+        this.form = form;
+        this.errors = new Map();
+        this.init();
+    }
+    
+    init() {
+        // Real-time валідація
+        this.form.addEventListener('input', (e) => {
+            if (e.target.matches('input, select, textarea')) {
+                this.validateField(e.target);
+            }
+        });
+        
+        // Валідація при відправці
+        this.form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            this.validateForm();
+        });
+    }
+    
+    validateField(field) {
+        const errors = [];
+        const value = field.value.trim();
+        
+        // Перевірка обов'язкових полів
+        if (field.hasAttribute('required') && !value) {
+            errors.push(`${this.getFieldLabel(field)} обов'язкове`);
+        }
+        
+        // Перевірка довжини
+        if (value && field.minLength && value.length < field.minLength) {
+            errors.push(`Мінімум ${field.minLength} символів`);
+        }
+        
+        // Спеціальні перевірки по типу
+        if (value) {
+            switch (field.type) {
+                case 'email':
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+                        errors.push('Некоректний формат email');
+                    }
+                    break;
+                    
+                case 'tel':
+                    if (field.pattern && !new RegExp(field.pattern).test(value)) {
+                        errors.push('Некоректний формат телефону');
+                    }
+                    break;
+            }
+        }
+        
+        this.updateFieldUI(field, errors);
+        
+        if (errors.length > 0) {
+            this.errors.set(field.name, errors);
+        } else {
+            this.errors.delete(field.name);
+        }
+        
+        return errors.length === 0;
+    }
+    
+    validateForm() {
+        const fields = this.form.querySelectorAll('input, select, textarea');
+        let isValid = true;
+        
+        fields.forEach(field => {
+            if (!this.validateField(field)) {
+                isValid = false;
+            }
+        });
+        
+        if (isValid) {
+            this.onSuccess();
+        } else {
+            this.onError();
+        }
+        
+        return isValid;
+    }
+    
+    updateFieldUI(field, errors) {
+        const errorContainer = field.parentNode.querySelector('.field-error');
+        
+        if (errors.length > 0) {
+            field.classList.add('error');
+            if (errorContainer) {
+                errorContainer.textContent = errors[0];
+                errorContainer.style.display = 'block';
+            }
+        } else {
+            field.classList.remove('error');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+        }
+    }
+    
+    getFieldLabel(field) {
+        const label = this.form.querySelector(`label[for="${field.id}"]`);
+        return label ? label.textContent.replace('*', '').trim() : 'Поле';
+    }
+    
+    onSuccess() {
+        console.log('Форма валідна, відправляємо...');
+        // Тут відправка на сервер
+    }
+    
+    onError() {
+        const firstError = this.form.querySelector('.error');
+        if (firstError) {
+            firstError.focus();
+        }
+    }
+}
+
+// Використання
+const validator = new FormValidator(document.getElementById('myForm'));</div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('input-types')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 29 з 41</strong><br>
+                <small>Form Validation</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('semantic')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Обробка демо-форми валідації
+        function handleValidationSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const result = document.getElementById('demo-result');
+            
+            if (form.checkValidity()) {
+                result.innerHTML = '<div style="color: #38a169; font-weight: bold;">✅ Всі поля заповнені правильно!</div>';
+                result.style.display = 'block';
+            } else {
+                result.innerHTML = '<div style="color: #e53e3e; font-weight: bold;">❌ Будь ласка, виправте помилки у формі</div>';
+                result.style.display = 'block';
+            }
+            
+            return false;
+        }
+
+        // Real-time валідація для демо
+        document.addEventListener('DOMContentLoaded', function() {
+            const realtimeInput = document.getElementById('realtime-input');
+            const realtimeError = document.getElementById('realtime-error');
+            
+            realtimeInput.addEventListener('input', function() {
+                const value = this.value;
+                
+                if (value.length === 0) {
+                    this.style.borderColor = '#e2e8f0';
+                    realtimeError.classList.remove('show');
+                } else if (value.length < 3) {
+                    this.style.borderColor = '#e53e3e';
+                    realtimeError.textContent = 'Мінімум 3 символи';
+                    realtimeError.classList.add('show');
+                } else if (!/^[a-zA-Zа-яА-ЯіІїЇєЄ]+$/.test(value)) {
+                    this.style.borderColor = '#e53e3e';
+                    realtimeError.textContent = 'Тільки літери дозволені';
+                    realtimeError.classList.add('show');
+                } else {
+                    this.style.borderColor = '#38a169';
+                    realtimeError.classList.remove('show');
+                }
+            });
+
+            // Загальна валідація для всіх полів демо-форми
+            const demoInputs = document.querySelectorAll('#validationDemo input');
+            
+            demoInputs.forEach(input => {
+                input.addEventListener('blur', function() {
+                    if (this.value.length > 0) {
+                        if (this.checkValidity()) {
+                            this.style.borderColor = '#38a169';
+                        } else {
+                            this.style.borderColor = '#e53e3e';
+                        }
+                    }
+                });
+                
+                input.addEventListener('input', function() {
+                    if (this.checkValidity()) {
+                        this.style.borderColor = '#38a169';
+                    } else if (this.value.length > 0) {
+                        this.style.borderColor = '#e53e3e';
+                    } else {
+                        this.style.borderColor = '#e2e8f0';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

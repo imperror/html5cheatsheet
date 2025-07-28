@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Синтаксис CSS та Селектори - HTML5 Шпаргалка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .code-label {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #4a5568;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .syntax-breakdown {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .syntax-part {
+            display: inline-block;
+            margin: 0.25rem;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .selector-part {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .property-part {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .value-part {
+            background: #bee3f8;
+            color: #2b6cb0;
+        }
+
+        .punctuation-part {
+            background: #fbb6ce;
+            color: #b83280;
+        }
+
+        .selector-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .selector-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .selector-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .selector-card h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .demo-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            background: #fafafa;
+            min-height: 150px;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+            box-shadow: 0 4px 8px rgba(76, 81, 191, 0.3);
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 4px solid #0288d1;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #f57c00;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid #7b1fa2;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .specificity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .specificity-table th,
+        .specificity-table td {
+            border: 1px solid #e2e8f0;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .specificity-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .specificity-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .cascade-example {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .cascade-box {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .cascade-title {
+            background: #4a5568;
+            color: white;
+            padding: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .cascade-content {
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .selector-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cascade-example {
+                grid-template-columns: 1fr;
+            }
+
+            .specificity-table {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Синтаксис CSS та Селектори</h1>
+            <p>Детальний розгляд структури CSS правил та способів вибору елементів</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Анатомія CSS правила</h2>
+            <p>Кожне CSS правило складається з декількох частин. Розберемо їх детально:</p>
+            
+            <div class="syntax-breakdown">
+                <div style="font-family: monospace; font-size: 1.1rem; margin-bottom: 1rem;">
+                    <span class="selector-part">селектор</span>
+                    <span class="punctuation-part"> { </span><br>
+                    &nbsp;&nbsp;<span class="property-part">властивість</span><span class="punctuation-part">:</span>
+                    <span class="value-part"> значення</span><span class="punctuation-part">;</span><br>
+                    &nbsp;&nbsp;<span class="property-part">інша-властивість</span><span class="punctuation-part">:</span>
+                    <span class="value-part"> інше-значення</span><span class="punctuation-part">;</span><br>
+                    <span class="punctuation-part">}</span>
+                </div>
+                
+                <ul style="margin-top: 1rem;">
+                    <li><span class="selector-part">Селектор</span> - вказує, які елементи стилізувати</li>
+                    <li><span class="property-part">Властивість</span> - що змінювати (колір, розмір, тощо)</li>
+                    <li><span class="value-part">Значення</span> - на що змінювати</li>
+                    <li><span class="punctuation-part">Пунктуація</span> - фігурні дужки та крапка з комою</li>
+                </ul>
+            </div>
+
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* Приклад повного CSS правила */
+h1 {
+    color: #2d3748;           /* Колір тексту */
+    font-size: 2rem;          /* Розмір шрифту */
+    text-align: center;       /* Вирівнювання */
+    margin-bottom: 1rem;      /* Відступ знизу */
+}
+
+/* Правило для параграфів */
+p {
+    line-height: 1.6;         /* Висота рядка */
+    color: #4a5568;           /* Сірий колір */
+}
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Важливо:</strong> Кожне оголошення властивості повинно закінчуватися крапкою з комою <span class="highlight">;</span>. Остання властивість у блоці може не мати крапку з комою, але краще завжди її ставити.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Коментарі в CSS</h2>
+            <p>Коментарі допомагають пояснювати код і тимчасово відключати стилі:</p>
+
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* Це однорядковий коментар */
+
+/*
+   Це багаторядковий коментар
+   Може займати декілька рядків
+   Корисно для детальних пояснень
+*/
+
+h1 {
+    color: blue;        /* Коментар наприкінці рядка */
+    /* font-size: 3rem;   - цей стиль відключений */
+    text-align: center;
+}
+
+/* ========================================
+   РОЗДІЛ: Стилі для навігації
+   ======================================== */
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Увага:</strong> У CSS коментарі завжди пишуться у форматі <span class="highlight">/* коментар */</span>. Одинарні слеші <span class="highlight">//</span> НЕ працюють!
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Типи селекторів CSS</h2>
+            <p>Селектори визначають, до яких HTML елементів застосовуються стилі. Існує багато типів селекторів:</p>
+
+            <div class="selector-types">
+                <div class="selector-card">
+                    <h4>🏷️ Селектор тегу</h4>
+                    <div class="code-example">h1 { color: red; }
+p { font-size: 16px; }</div>
+                    <p>Вибирає всі елементи вказаного тегу</p>
+                </div>
+
+                <div class="selector-card">
+                    <h4>🎯 Селектор класу</h4>
+                    <div class="code-example">.header { background: blue; }
+.button { padding: 10px; }</div>
+                    <p>Вибирає елементи з атрибутом <span class="highlight">class</span></p>
+                </div>
+
+                <div class="selector-card">
+                    <h4>🆔 Селектор ID</h4>
+                    <div class="code-example">#main { width: 100%; }
+#sidebar { float: left; }</div>
+                    <p>Вибирає елемент з унікальним <span class="highlight">id</span></p>
+                </div>
+
+                <div class="selector-card">
+                    <h4>⭐ Універсальний селектор</h4>
+                    <div class="code-example">* {
+  margin: 0;
+  padding: 0;
+}</div>
+                    <p>Вибирає всі елементи на сторінці</p>
+                </div>
+
+                <div class="selector-card">
+                    <h4>📋 Селектор атрибуту</h4>
+                    <div class="code-example">[type="text"] { border: 1px solid; }
+a[href^="https"] { color: green; }</div>
+                    <p>Вибирає елементи за атрибутами</p>
+                </div>
+
+                <div class="selector-card">
+                    <h4>🔗 Комбіновані селектори</h4>
+                    <div class="code-example">div p { color: blue; }
+.header > h1 { font-size: 2rem; }</div>
+                    <p>Комбінують декілька селекторів</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Детальніше про селектори</h2>
+
+            <h3>Селектори нащадків та дітей</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* Селектор нащадків (пробіл) */
+div p {
+    color: blue;  /* Всі p всередині div */
+}
+
+/* Селектор прямих дітей (>) */
+div > p {
+    color: red;   /* Тільки p - прямі діти div */
+}
+
+/* Сусідній селектор (+) */
+h1 + p {
+    font-weight: bold;  /* p одразу після h1 */
+}
+
+/* Загальний сусідній селектор (~) */
+h1 ~ p {
+    margin-left: 20px;  /* Всі p після h1 на тому ж рівні */
+}
+            </div>
+
+            <h3>Псевдокласи</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* Стани посилань */
+a:link { color: blue; }      /* Не відвідані */
+a:visited { color: purple; } /* Відвідані */
+a:hover { color: red; }      /* При наведенні */
+a:active { color: orange; }  /* При кліку */
+
+/* Структурні псевдокласи */
+p:first-child { font-weight: bold; }
+p:last-child { margin-bottom: 0; }
+p:nth-child(2n) { background: #f0f0f0; } /* Парні */
+
+/* Псевдокласи форм */
+input:focus { border-color: blue; }
+input:disabled { opacity: 0.5; }
+            </div>
+
+            <h3>Псевдоелементи</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* Псевдоелементи створюють віртуальні елементи */
+p::before {
+    content: "👉 ";     /* Додає контент перед p */
+    color: blue;
+}
+
+p::after {
+    content: " ✓";      /* Додає контент після p */
+    color: green;
+}
+
+p::first-line {
+    font-weight: bold;  /* Стилізує перший рядок */
+}
+
+p::first-letter {
+    font-size: 2em;     /* Велика перша літера */
+    float: left;
+}
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Специфічність (Specificity)</h2>
+            <p>Коли до одного елемента застосовуються декілька CSS правил, браузер визначає пріоритет за специфічністю:</p>
+
+            <table class="specificity-table">
+                <thead>
+                    <tr>
+                        <th>Тип селектора</th>
+                        <th>Вага</th>
+                        <th>Приклад</th>
+                        <th>Специфічність</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Inline стилі</td>
+                        <td>1000</td>
+                        <td>style="color: red"</td>
+                        <td>1,0,0,0</td>
+                    </tr>
+                    <tr>
+                        <td>ID</td>
+                        <td>100</td>
+                        <td>#header</td>
+                        <td>0,1,0,0</td>
+                    </tr>
+                    <tr>
+                        <td>Класи, атрибути, псевдокласи</td>
+                        <td>10</td>
+                        <td>.nav, [type], :hover</td>
+                        <td>0,0,1,0</td>
+                    </tr>
+                    <tr>
+                        <td>Теги, псевдоелементи</td>
+                        <td>1</td>
+                        <td>div, ::before</td>
+                        <td>0,0,0,1</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-example">
+                <div class="code-label">Приклади специфічності</div>
+/* Специфічність: 0,0,0,1 */
+p { color: black; }
+
+/* Специфічність: 0,0,1,0 */
+.text { color: blue; }
+
+/* Специфічність: 0,1,0,0 */
+#main { color: green; }
+
+/* Специфічність: 0,1,1,1 */
+#main .text p { color: red; }
+
+/* !important перемагає все (не рекомендується) */
+p { color: purple !important; }
+            </div>
+
+            <div class="important-box">
+                <strong>🎯 Правило специфічності:</strong> Чим вища специфічність, тим вищий пріоритет. При однаковій специфічності виграє останнє правило у коді.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Каскадність CSS</h2>
+            <p>Каскадність - це механізм, який визначає, які стилі застосувати, коли є конфлікт. Пріоритет (від найвищого):</p>
+
+            <div class="cascade-example">
+                <div class="cascade-box">
+                    <div class="cascade-title">Джерела стилів</div>
+                    <div class="cascade-content">
+                        <ol>
+                            <li><strong>Inline стилі</strong> (style="...")</li>
+                            <li><strong>Внутрішні стилі</strong> (&lt;style&gt;)</li>
+                            <li><strong>Зовнішні стилі</strong> (&lt;link&gt;)</li>
+                            <li><strong>Стилі браузера</strong> (за замовчуванням)</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="cascade-box">
+                    <div class="cascade-title">Фактори пріоритету</div>
+                    <div class="cascade-content">
+                        <ol>
+                            <li><strong>!important</strong></li>
+                            <li><strong>Специфічність</strong></li>
+                            <li><strong>Порядок у коді</strong></li>
+                            <li><strong>Наслідування</strong></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-label">Приклад каскадності</div>
+&lt;!-- HTML --&gt;
+&lt;p class="highlight" id="intro" style="color: purple;"&gt;
+    Текст з кількома стилями
+&lt;/p&gt;
+
+&lt;!-- CSS --&gt;
+&lt;style&gt;
+p { color: black; }              /* Специфічність: 0,0,0,1 */
+.highlight { color: blue; }      /* Специфічність: 0,0,1,0 */
+#intro { color: green; }         /* Специфічність: 0,1,0,0 */
+&lt;/style&gt;
+
+/* Результат: текст буде фіолетовим через inline стиль */
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Інтерактивна демонстрація селекторів</h2>
+            <div class="interactive-demo">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showSelectorDemo('basic')">Базові селектори</button>
+                    <button class="demo-button" onclick="showSelectorDemo('advanced')">Комбіновані</button>
+                    <button class="demo-button" onclick="showSelectorDemo('pseudo')">Псевдокласи</button>
+                    <button class="demo-button" onclick="showSelectorDemo('specificity')">Специфічність</button>
+                </div>
+                
+                <div class="demo-area" id="selectorDemo">
+                    <h3>Демонстрація селекторів</h3>
+                    <p>Виберіть тип селекторів вище для інтерактивної демонстрації!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Практичні поради</h2>
+            
+            <div class="tip-box">
+                <strong>🎯 Кращі практики селекторів:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використовуйте класи для повторюваних стилів</li>
+                    <li>ID тільки для унікальних елементів</li>
+                    <li>Уникайте надто довгих ланцюжків селекторів</li>
+                    <li>Називайте класи семантично (.header, .button)</li>
+                    <li>Мінімізуйте використання !important</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Забування крапки з комою після властивостей</li>
+                    <li>Неправильні назви властивостей (color-text замість color)</li>
+                    <li>Зловживання !important</li>
+                    <li>Використання тегових селекторів для стилізації</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('css-intro')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 14 з 41</strong><br>
+                <small>Синтаксис CSS та Селектори</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('css-integration')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const selectorDemos = {
+            basic: {
+                content: `
+                    <style>
+                        .demo-tag { background: #ffeaa7; padding: 10px; margin: 5px 0; }
+                        .demo-class { background: #74b9ff; color: white; padding: 10px; margin: 5px 0; }
+                        #demo-id { background: #fd79a8; color: white; padding: 10px; margin: 5px 0; }
+                    </style>
+                    <div class="demo-tag">h1 { } - селектор тегу</div>
+                    <div class="demo-class">.highlight { } - селектор класу</div>
+                    <div id="demo-id">#main { } - селектор ID</div>
+                    <div style="background: #a29bfe; color: white; padding: 10px; margin: 5px 0;">
+                        style="" - inline стилі
+                    </div>
+                `
+            },
+            advanced: {
+                content: `
+                    <style>
+                        .parent-demo { background: #ddd; padding: 15px; margin: 10px 0; }
+                        .parent-demo p { color: blue; margin: 5px 0; }
+                        .parent-demo > .direct { background: yellow; padding: 5px; }
+                        .demo-sibling + .next { border-left: 4px solid green; padding-left: 10px; }
+                    </style>
+                    <div class="parent-demo">
+                        <p>Нащадок: div p { color: blue; }</p>
+                        <div class="direct">Пряма дитина: div > .direct</div>
+                    </div>
+                    <div class="demo-sibling">Елемент перед</div>
+                    <div class="next">Сусідній: .demo-sibling + .next</div>
+                `
+            },
+            pseudo: {
+                content: `
+                    <style>
+                        .pseudo-demo a { color: blue; text-decoration: none; padding: 5px; display: inline-block; margin: 2px; }
+                        .pseudo-demo a:hover { background: yellow; }
+                        .pseudo-demo a:active { background: red; color: white; }
+                        .pseudo-list li:first-child { font-weight: bold; color: green; }
+                        .pseudo-list li:nth-child(even) { background: #f0f0f0; }
+                        .pseudo-list li:last-child { color: red; }
+                    </style>
+                    <div class="pseudo-demo">
+                        <a href="#">Наведіть курсор</a>
+                        <a href="#">Клацніть тут</a>
+                    </div>
+                    <ul class="pseudo-list">
+                        <li>Перший елемент (жирний)</li>
+                        <li>Другий елемент (сірий фон)</li>
+                        <li>Третій елемент</li>
+                        <li>Останній елемент (червоний)</li>
+                    </ul>
+                `
+            },
+            specificity: {
+                content: `
+                    <style>
+                        .spec-demo p { color: blue; }
+                        .spec-demo .highlight { color: green; }
+                        .spec-demo #special { color: purple; }
+                        .spec-demo #special.highlight { color: orange; }
+                    </style>
+                    <div class="spec-demo">
+                        <p>p { } - специфічність: 0,0,0,1</p>
+                        <p class="highlight">.highlight { } - специфічність: 0,0,1,0</p>
+                        <p id="special">id - специфічність: 0,1,0,0</p>
+                        <p id="special" class="highlight" style="color: red;">
+                            style="" переважає все!
+                        </p>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 10px;">
+                        Кожен колір показує, який селектор виграв
+                    </p>
+                `
+            }
+        };
+
+        function showSelectorDemo(type) {
+            // Оновлюємо активну кнопку
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Показуємо демонстрацію
+            const demo = selectorDemos[type];
+            document.getElementById('selectorDemo').innerHTML = demo.content;
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,1477 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS властивості та значення - HTML5 Шпаргалка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .property-category {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .property-category:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .category-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-content {
+            padding: 1.5rem;
+        }
+
+        .property-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .property-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.2s;
+        }
+
+        .property-item:hover {
+            background: #edf2f7;
+            border-left-color: #4c51bf;
+            transform: translateX(5px);
+        }
+
+        .property-name {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .property-desc {
+            font-size: 0.9rem;
+            color: #718096;
+        }
+
+        .value-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .value-type {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .value-type:hover {
+            background: #edf2f7;
+            border-color: #667eea;
+        }
+
+        .value-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-name {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .value-example {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            color: #4a5568;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .code-label {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #4a5568;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+            box-shadow: 0 4px 8px rgba(76, 81, 191, 0.3);
+        }
+
+        .demo-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .demo-code-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .demo-code-header {
+            background: #4a5568;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .demo-code-content {
+            padding: 1rem;
+        }
+
+        .demo-result-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .demo-result-header {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .demo-result-content {
+            padding: 1rem;
+            min-height: 150px;
+        }
+
+        .demo-code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .syntax-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .syntax-table th,
+        .syntax-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .syntax-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .syntax-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .syntax-table tr:hover {
+            background: #edf2f7;
+        }
+
+        .property-syntax {
+            font-family: 'Courier New', monospace;
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 4px solid #0288d1;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #f57c00;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid #7b1fa2;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .units-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .unit-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .unit-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .unit-name {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .unit-description {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .unit-example {
+            font-family: 'Courier New', monospace;
+            background: #f7fafc;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: #2d3748;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .value-types {
+                grid-template-columns: 1fr;
+            }
+            
+            .units-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-split {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .syntax-table {
+                font-size: 0.8rem;
+            }
+
+            .syntax-table th,
+            .syntax-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚙️ CSS властивості та значення</h1>
+            <p>Повний огляд CSS властивостей, типів значень та правил їх використання</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Що таке CSS властивості?</h2>
+            <p><strong>CSS властивості</strong> - це характеристики елементів, які ми можемо змінювати для створення дизайну. Кожна властивість має назву та приймає певні типи значень.</p>
+            
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+selector {
+    property: value;
+    властивість: значення;
+}
+
+/* Приклади */
+h1 {
+    color: blue;           /* властивість: значення */
+    font-size: 24px;       /* число з одиницею */
+    text-align: center;    /* ключове слово */
+    margin: 10px 5px;      /* кілька значень */
+}
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Структура:</strong> Кожне CSS оголошення складається з <span class="highlight">властивості</span> (що змінюємо) та <span class="highlight">значення</span> (на що змінюємо), розділених двокрапкою.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Категорії CSS властивостей</h2>
+            <p>CSS властивості можна поділити на логічні групи за їх призначенням:</p>
+
+            <div class="properties-grid">
+                <div class="property-category">
+                    <div class="category-header">
+                        <div class="category-icon">🎨</div>
+                        <h3>Зовнішній вигляд</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="property-list">
+                            <li class="property-item">
+                                <span class="property-name">color</span>
+                                <span class="property-desc">Колір тексту</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">background</span>
+                                <span class="property-desc">Фон елемента</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">border</span>
+                                <span class="property-desc">Границі</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">box-shadow</span>
+                                <span class="property-desc">Тіні</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">opacity</span>
+                                <span class="property-desc">Прозорість</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="property-category">
+                    <div class="category-header">
+                        <div class="category-icon">📝</div>
+                        <h3>Текст та шрифт</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="property-list">
+                            <li class="property-item">
+                                <span class="property-name">font-family</span>
+                                <span class="property-desc">Сім'я шрифтів</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">font-size</span>
+                                <span class="property-desc">Розмір шрифту</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">font-weight</span>
+                                <span class="property-desc">Жирність</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">text-align</span>
+                                <span class="property-desc">Вирівнювання</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">line-height</span>
+                                <span class="property-desc">Висота рядка</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="property-category">
+                    <div class="category-header">
+                        <div class="category-icon">📦</div>
+                        <h3>Розміри та відступи</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="property-list">
+                            <li class="property-item">
+                                <span class="property-name">width / height</span>
+                                <span class="property-desc">Ширина / висота</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">margin</span>
+                                <span class="property-desc">Зовнішні відступи</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">padding</span>
+                                <span class="property-desc">Внутрішні відступи</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">max-width</span>
+                                <span class="property-desc">Максимальні розміри</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">box-sizing</span>
+                                <span class="property-desc">Модель коробки</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="property-category">
+                    <div class="category-header">
+                        <div class="category-icon">🎯</div>
+                        <h3>Позиціонування</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="property-list">
+                            <li class="property-item">
+                                <span class="property-name">position</span>
+                                <span class="property-desc">Тип позиціонування</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">top / left</span>
+                                <span class="property-desc">Координати</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">display</span>
+                                <span class="property-desc">Тип відображення</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">float</span>
+                                <span class="property-desc">Обтікання</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">z-index</span>
+                                <span class="property-desc">Порядок шарів</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="property-category">
+                    <div class="category-header">
+                        <div class="category-icon">🔧</div>
+                        <h3>Flexbox та Grid</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="property-list">
+                            <li class="property-item">
+                                <span class="property-name">flex</span>
+                                <span class="property-desc">Flex елементи</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">justify-content</span>
+                                <span class="property-desc">Вирівнювання</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">grid-template</span>
+                                <span class="property-desc">Grid сітка</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">gap</span>
+                                <span class="property-desc">Проміжки</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">align-items</span>
+                                <span class="property-desc">Вирівнювання</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="property-category">
+                    <div class="category-header">
+                        <div class="category-icon">✨</div>
+                        <h3>Анімації та ефекти</h3>
+                    </div>
+                    <div class="category-content">
+                        <ul class="property-list">
+                            <li class="property-item">
+                                <span class="property-name">transition</span>
+                                <span class="property-desc">Плавні переходи</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">transform</span>
+                                <span class="property-desc">Трансформації</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">animation</span>
+                                <span class="property-desc">Анімації</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">filter</span>
+                                <span class="property-desc">Фільтри</span>
+                            </li>
+                            <li class="property-item">
+                                <span class="property-name">clip-path</span>
+                                <span class="property-desc">Обрізання</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Типи значень CSS</h2>
+            <p>CSS властивості приймають різні типи значень. Розуміння цих типів допомагає правильно використовувати властивості:</p>
+
+            <div class="value-types">
+                <div class="value-type">
+                    <div class="value-icon">🔢</div>
+                    <div class="value-name">Числа</div>
+                    <div class="value-example">42, 3.14, -10</div>
+                </div>
+                <div class="value-type">
+                    <div class="value-icon">📏</div>
+                    <div class="value-name">Розміри</div>
+                    <div class="value-example">10px, 2rem, 50%</div>
+                </div>
+                <div class="value-type">
+                    <div class="value-icon">🌈</div>
+                    <div class="value-name">Кольори</div>
+                    <div class="value-example">red, #ff0000, rgb(255,0,0)</div>
+                </div>
+                <div class="value-type">
+                    <div class="value-icon">📝</div>
+                    <div class="value-name">Рядки</div>
+                    <div class="value-example">"Arial", 'Hello'</div>
+                </div>
+                <div class="value-type">
+                    <div class="value-icon">🔑</div>
+                    <div class="value-name">Ключові слова</div>
+                    <div class="value-example">auto, inherit, none</div>
+                </div>
+                <div class="value-type">
+                    <div class="value-icon">🔗</div>
+                    <div class="value-name">URL</div>
+                    <div class="value-example">url('image.jpg')</div>
+                </div>
+                <div class="value-type">
+                    <div class="value-icon">🎨</div>
+                    <div class="value-name">Функції</div>
+                    <div class="value-example">calc(), linear-gradient()</div>
+                </div>
+                <div class="value-type">
+                    <div class="value-icon">📝</div>
+                    <div class="value-name">Списки</div>
+                    <div class="value-example">10px 5px, Arial sans-serif</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Довідник CSS властивостей</h2>
+            <p>Детальний перелік найважливіших CSS властивостей з їх можливими значеннями та прикладами використання:</p>
+
+            <h3>🎨 Властивості кольорів та фону</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">color</td>
+                        <td>red, #ff0000, rgb(255,0,0), hsl(0,100%,50%)</td>
+                        <td class="property-syntax">color: #2d3748;</td>
+                        <td>Колір тексту</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">background-color</td>
+                        <td>transparent, назва кольору, hex, rgb, hsl</td>
+                        <td class="property-syntax">background-color: rgba(0,0,0,0.5);</td>
+                        <td>Колір фону</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">background-image</td>
+                        <td>none, url(), linear-gradient(), radial-gradient()</td>
+                        <td class="property-syntax">background-image: url('bg.jpg');</td>
+                        <td>Зображення фону</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">background-size</td>
+                        <td>auto, cover, contain, розмір в px/%</td>
+                        <td class="property-syntax">background-size: cover;</td>
+                        <td>Розмір фонового зображення</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">background-position</td>
+                        <td>top, center, bottom, left, right, % або px</td>
+                        <td class="property-syntax">background-position: center top;</td>
+                        <td>Позиція фонового зображення</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>📝 Властивості тексту та шрифту</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">font-family</td>
+                        <td>"Назва шрифту", serif, sans-serif, monospace</td>
+                        <td class="property-syntax">font-family: Arial, sans-serif;</td>
+                        <td>Сім'я шрифтів</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">font-size</td>
+                        <td>xx-small...xx-large, розмір в px/em/rem/%</td>
+                        <td class="property-syntax">font-size: 16px;</td>
+                        <td>Розмір шрифту</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">font-weight</td>
+                        <td>normal, bold, bolder, lighter, 100-900</td>
+                        <td class="property-syntax">font-weight: 600;</td>
+                        <td>Товщина шрифту</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">text-align</td>
+                        <td>left, right, center, justify</td>
+                        <td class="property-syntax">text-align: center;</td>
+                        <td>Вирівнювання тексту</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">text-decoration</td>
+                        <td>none, underline, overline, line-through</td>
+                        <td class="property-syntax">text-decoration: underline;</td>
+                        <td>Оздоблення тексту</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">line-height</td>
+                        <td>normal, number, px/em/rem/%</td>
+                        <td class="property-syntax">line-height: 1.6;</td>
+                        <td>Висота рядка</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>📦 Властивості розмірів та відступів</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">width / height</td>
+                        <td>auto, px/em/rem/%, min-content, max-content</td>
+                        <td class="property-syntax">width: 300px;</td>
+                        <td>Ширина / висота</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">margin</td>
+                        <td>auto, px/em/rem/%, негативні значення</td>
+                        <td class="property-syntax">margin: 10px 5px;</td>
+                        <td>Зовнішні відступи</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">padding</td>
+                        <td>px/em/rem/%, тільки позитивні</td>
+                        <td class="property-syntax">padding: 20px;</td>
+                        <td>Внутрішні відступи</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">box-sizing</td>
+                        <td>content-box, border-box</td>
+                        <td class="property-syntax">box-sizing: border-box;</td>
+                        <td>Модель розрахунку розмірів</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">max-width</td>
+                        <td>none, px/em/rem/%</td>
+                        <td class="property-syntax">max-width: 100%;</td>
+                        <td>Максимальна ширина</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🎯 Властивості позиціонування та layout</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">display</td>
+                        <td>block, inline, flex, grid, none, inline-block</td>
+                        <td class="property-syntax">display: flex;</td>
+                        <td>Тип відображення</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">position</td>
+                        <td>static, relative, absolute, fixed, sticky</td>
+                        <td class="property-syntax">position: absolute;</td>
+                        <td>Тип позиціонування</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">top/right/bottom/left</td>
+                        <td>auto, px/em/rem/%</td>
+                        <td class="property-syntax">top: 50px;</td>
+                        <td>Координати позиціонування</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">z-index</td>
+                        <td>auto, integer (будь-яке ціле число)</td>
+                        <td class="property-syntax">z-index: 10;</td>
+                        <td>Порядок шарів</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">float</td>
+                        <td>none, left, right</td>
+                        <td class="property-syntax">float: left;</td>
+                        <td>Обтікання елемента</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🔧 Flexbox властивості</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">flex-direction</td>
+                        <td>row, column, row-reverse, column-reverse</td>
+                        <td class="property-syntax">flex-direction: column;</td>
+                        <td>Напрямок flex контейнера</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">justify-content</td>
+                        <td>flex-start, center, space-between, space-around</td>
+                        <td class="property-syntax">justify-content: center;</td>
+                        <td>Вирівнювання по головній осі</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">align-items</td>
+                        <td>stretch, flex-start, center, flex-end, baseline</td>
+                        <td class="property-syntax">align-items: center;</td>
+                        <td>Вирівнювання по поперечній осі</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">flex</td>
+                        <td>none, auto, number, grow shrink basis</td>
+                        <td class="property-syntax">flex: 1;</td>
+                        <td>Гнучкість flex елемента</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">gap</td>
+                        <td>px/em/rem/%</td>
+                        <td class="property-syntax">gap: 1rem;</td>
+                        <td>Проміжки між елементами</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🖼️ Властивості границь</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">border</td>
+                        <td>width style color (короткий запис)</td>
+                        <td class="property-syntax">border: 2px solid #000;</td>
+                        <td>Універсальна границя</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">border-width</td>
+                        <td>thin, medium, thick, px/em/rem</td>
+                        <td class="property-syntax">border-width: 3px;</td>
+                        <td>Товщина границі</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">border-style</td>
+                        <td>none, solid, dashed, dotted, double, groove</td>
+                        <td class="property-syntax">border-style: dashed;</td>
+                        <td>Стиль границі</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">border-radius</td>
+                        <td>px/em/rem/%, може бути 1-4 значення</td>
+                        <td class="property-syntax">border-radius: 8px;</td>
+                        <td>Заокруглення кутів</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">box-shadow</td>
+                        <td>none, x y blur spread color inset</td>
+                        <td class="property-syntax">box-shadow: 0 4px 8px rgba(0,0,0,0.2);</td>
+                        <td>Тінь елемента</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>✨ Властивості анімацій та переходів</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">transition</td>
+                        <td>property duration timing-function delay</td>
+                        <td class="property-syntax">transition: all 0.3s ease;</td>
+                        <td>Плавний перехід</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">transform</td>
+                        <td>rotate(), scale(), translate(), skew()</td>
+                        <td class="property-syntax">transform: rotate(45deg);</td>
+                        <td>Трансформації елемента</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">opacity</td>
+                        <td>0.0 до 1.0</td>
+                        <td class="property-syntax">opacity: 0.8;</td>
+                        <td>Прозорість елемента</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">animation</td>
+                        <td>name duration timing iteration direction</td>
+                        <td class="property-syntax">animation: slide 2s ease infinite;</td>
+                        <td>CSS анімація</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">cursor</td>
+                        <td>auto, pointer, text, not-allowed, grab</td>
+                        <td class="property-syntax">cursor: pointer;</td>
+                        <td>Вигляд курсора</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🏗️ CSS Grid властивості</h3>
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Властивість</th>
+                        <th>Можливі значення</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="property-syntax">grid-template-columns</td>
+                        <td>px/fr/%, repeat(), auto, min-content</td>
+                        <td class="property-syntax">grid-template-columns: 1fr 2fr;</td>
+                        <td>Колонки grid сітки</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">grid-template-rows</td>
+                        <td>px/fr/%, repeat(), auto, min-content</td>
+                        <td class="property-syntax">grid-template-rows: 100px auto;</td>
+                        <td>Рядки grid сітки</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">grid-column</td>
+                        <td>число / число, span число</td>
+                        <td class="property-syntax">grid-column: 1 / 3;</td>
+                        <td>Позиція по колонкам</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">grid-row</td>
+                        <td>число / число, span число</td>
+                        <td class="property-syntax">grid-row: span 2;</td>
+                        <td>Позиція по рядкам</td>
+                    </tr>
+                    <tr>
+                        <td class="property-syntax">grid-area</td>
+                        <td>row-start / col-start / row-end / col-end</td>
+                        <td class="property-syntax">grid-area: 1 / 2 / 3 / 4;</td>
+                        <td>Область на сітці</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>Синтаксис значень</h2>
+            <p>Різні властивості мають свої особливості синтаксису значень:</p>
+
+            <table class="syntax-table">
+                <thead>
+                    <tr>
+                        <th>Тип значення</th>
+                        <th>Синтаксис</th>
+                        <th>Приклад</th>
+                        <th>Опис</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Одиночне значення</td>
+                        <td class="property-syntax">property: value;</td>
+                        <td class="property-syntax">color: red;</td>
+                        <td>Одне значення для властивості</td>
+                    </tr>
+                    <tr>
+                        <td>Кілька значень</td>
+                        <td class="property-syntax">property: value1 value2;</td>
+                        <td class="property-syntax">margin: 10px 5px;</td>
+                        <td>Список значень через пробіл</td>
+                    </tr>
+                    <tr>
+                        <td>Значення з комами</td>
+                        <td class="property-syntax">property: value1, value2;</td>
+                        <td class="property-syntax">font-family: Arial, sans-serif;</td>
+                        <td>Альтернативні значення</td>
+                    </tr>
+                    <tr>
+                        <td>Функції</td>
+                        <td class="property-syntax">property: function(args);</td>
+                        <td class="property-syntax">transform: rotate(45deg);</td>
+                        <td>CSS функції з параметрами</td>
+                    </tr>
+                    <tr>
+                        <td>Ключові слова</td>
+                        <td class="property-syntax">property: keyword;</td>
+                        <td class="property-syntax">display: none;</td>
+                        <td>Предвизначені значення</td>
+                    </tr>
+                    <tr>
+                        <td>Глобальні значення</td>
+                        <td class="property-syntax">property: inherit;</td>
+                        <td class="property-syntax">color: inherit;</td>
+                        <td>initial, inherit, unset</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>Інтерактивна демонстрація властивостей</h2>
+            <div class="interactive-demo">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showPropertyDemo('text')">Текст</button>
+                    <button class="demo-button" onclick="showPropertyDemo('layout')">Layout</button>
+                    <button class="demo-button" onclick="showPropertyDemo('visual')">Візуальні</button>
+                    <button class="demo-button" onclick="showPropertyDemo('borders')">Границі</button>
+                </div>
+                
+                <div id="propertyDemo">
+                    <h3>Властивості тексту</h3>
+                    <div class="demo-split">
+                        <div class="demo-code-section">
+                            <div class="demo-code-header">📝 CSS</div>
+                            <div class="demo-code-content">
+                                <div class="demo-code-block">.text-demo {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2d3748;
+    text-align: center;
+    line-height: 1.6;
+    text-decoration: underline;
+    letter-spacing: 1px;
+}</div>
+                            </div>
+                        </div>
+                        <div class="demo-result-section">
+                            <div class="demo-result-header">👁️ Результат</div>
+                            <div class="demo-result-content">
+                                <div style="font-family: 'Georgia', serif; font-size: 18px; font-weight: bold; color: #2d3748; text-align: center; line-height: 1.6; text-decoration: underline; letter-spacing: 1px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                                    Приклад стилізованого тексту з різними властивостями шрифту та оформлення
+                                </div>
+                                <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                                    💡 Комбінація властивостей створює унікальний стиль тексту
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Практичні поради</h2>
+            
+            <div class="tip-box">
+                <strong>🎯 Кращі практики роботи з властивостями:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використовуйте короткі властивості: <span class="highlight">margin: 10px 5px;</span> замість окремих margin-top, margin-right</li>
+                    <li>Групуйте логічно пов'язані властивості разом (розміри, кольори, позиціонування)</li>
+                    <li>Використовуйте CSS змінні для повторюваних значень кольорів і розмірів</li>
+                    <li>Дотримуйтесь послідовності в порядку властивостей</li>
+                    <li>Вивчайте нові властивості для кращих рішень (container queries, logical properties)</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Неправильні назви властивостей: <span class="highlight">font-color</span> ❌ → <span class="highlight">color</span> ✅</li>
+                    <li>Невідповідні значення: <span class="highlight">display: red;</span> ❌ → <span class="highlight">display: block;</span> ✅</li>
+                    <li>Ігнорування браузерної підтримки нових властивостей</li>
+                    <li>Надмірне використання <span class="highlight">!important</span> замість розуміння специфічності</li>
+                    <li>Забування про fallback значення для старих браузерів</li>
+                </ul>
+            </div>
+
+            <div class="important-box">
+                <strong>📚 Додаткові ресурси:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>MDN Web Docs</strong> - повна документація з усіх CSS властивостей</li>
+                    <li><strong>Can I Use</strong> - перевірка підтримки властивостей браузерами</li>
+                    <li><strong>CSS-Tricks</strong> - практичні приклади та пояснення</li>
+                    <li><strong>DevTools</strong> - експериментуйте з властивостями в браузері</li>
+                </ul>
+            </div>
+
+            <h3>Приклад добре структурованого CSS</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* CSS змінні */
+:root {
+    --primary-color: #667eea;
+    --font-size-base: 16px;
+    --spacing-unit: 8px;
+}
+
+/* Групування властивостей */
+.card {
+    /* Розміри та позиціонування */
+    width: 300px;
+    max-width: 100%;
+    position: relative;
+    
+    /* Відступи */
+    padding: calc(var(--spacing-unit) * 2);
+    margin: var(--spacing-unit);
+    
+    /* Зовнішній вигляд */
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+    /* Анімації */
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+}
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('css-integration')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 16 з 41</strong><br>
+                <small>CSS властивості та значення</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('css-units')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const propertyDemos = {
+            text: {
+                title: 'Властивості тексту',
+                code: `.text-demo {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    font-weight: bold;
+    color: #2d3748;
+    text-align: center;
+    line-height: 1.6;
+    text-decoration: underline;
+    letter-spacing: 1px;
+}`,
+                result: `
+                    <div style="font-family: 'Georgia', serif; font-size: 18px; font-weight: bold; color: #2d3748; text-align: center; line-height: 1.6; text-decoration: underline; letter-spacing: 1px; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+                        Приклад стилізованого тексту з різними властивостями шрифту та оформлення
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Комбінація властивостей створює унікальний стиль тексту
+                    </p>
+                `
+            },
+            layout: {
+                title: 'Layout властивості',
+                code: `.layout-demo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    padding: 20px;
+    margin: 10px 0;
+    box-sizing: border-box;
+}
+
+.item {
+    flex: 1;
+    margin: 0 10px;
+    padding: 15px;
+    text-align: center;
+}`,
+                result: `
+                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; height: 100px; padding: 20px; margin: 10px 0; box-sizing: border-box; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc;">
+                        <div style="flex: 1; margin: 0 10px; padding: 15px; text-align: center; background: #667eea; color: white; border-radius: 4px;">Елемент 1</div>
+                        <div style="flex: 1; margin: 0 10px; padding: 15px; text-align: center; background: #764ba2; color: white; border-radius: 4px;">Елемент 2</div>
+                        <div style="flex: 1; margin: 0 10px; padding: 15px; text-align: center; background: #38a169; color: white; border-radius: 4px;">Елемент 3</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Flexbox дозволяє легко створювати складні layout'и
+                    </p>
+                `
+            },
+            visual: {
+                title: 'Візуальні властивості',
+                code: `.visual-demo {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border: 3px solid #4c51bf;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    opacity: 0.9;
+    transform: rotate(2deg);
+    transition: all 0.3s ease;
+}
+
+.visual-demo:hover {
+    transform: rotate(0deg) scale(1.02);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+}`,
+                result: `
+                    <div style="background: linear-gradient(45deg, #667eea, #764ba2); border: 3px solid #4c51bf; border-radius: 15px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); opacity: 0.9; transform: rotate(2deg); transition: all 0.3s ease; padding: 30px; color: white; text-align: center; margin: 20px 0; cursor: pointer;" 
+                         onmouseover="this.style.transform='rotate(0deg) scale(1.02)'; this.style.boxShadow='0 12px 24px rgba(0,0,0,0.3)'"
+                         onmouseout="this.style.transform='rotate(2deg) scale(1)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.2)'">
+                        Наведіть курсор для анімації!<br>
+                        <small>Градієнт, тіні, трансформації</small>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Візуальні властивості створюють ефектний дизайн
+                    </p>
+                `
+            },
+            borders: {
+                title: 'Властивості границь',
+                code: `.border-demo {
+    /* Базова границя */
+    border: 3px solid #667eea;
+    border-radius: 12px;
+    
+    /* Складна тінь */
+    box-shadow: 
+        0 4px 8px rgba(0,0,0,0.1),
+        0 8px 16px rgba(102,126,234,0.2);
+    
+    /* Різні сторони */
+    border-top: 5px solid #e53e3e;
+    border-left: 8px dotted #38a169;
+}
+
+.advanced-border {
+    border-image: linear-gradient(45deg, #667eea, #764ba2) 1;
+    border-style: solid;
+    border-width: 4px;
+}`,
+                result: `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div style="border: 3px solid #667eea; border-radius: 12px; box-shadow: 0 4px 8px rgba(0,0,0,0.1), 0 8px 16px rgba(102,126,234,0.2); padding: 1rem; text-align: center; background: #f8fafc;">
+                            <strong>Базова границя</strong><br>
+                            <small>solid + border-radius + box-shadow</small>
+                        </div>
+                        <div style="border: 3px dashed #e53e3e; border-radius: 8px; padding: 1rem; text-align: center; background: #fed7d7;">
+                            <strong>Пунктирна</strong><br>
+                            <small>dashed стиль</small>
+                        </div>
+                        <div style="border-top: 5px solid #e53e3e; border-left: 8px dotted #38a169; border-right: 2px double #764ba2; border-bottom: 4px groove #667eea; padding: 1rem; text-align: center; background: #f0fff4;">
+                            <strong>Різні сторони</strong><br>
+                            <small>solid, dotted, double, groove</small>
+                        </div>
+                        <div style="border: 4px solid; border-image: linear-gradient(45deg, #667eea, #764ba2) 1; padding: 1rem; text-align: center; background: #fafafa;">
+                            <strong>Gradient границя</strong><br>
+                            <small>border-image з градієнтом</small>
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Широкі можливості стилізації границь
+                    </p>
+                `
+            }
+        };
+
+        function showPropertyDemo(type) {
+            // Оновлюємо активну кнопку
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Показуємо демонстрацію
+            const demo = propertyDemos[type];
+            document.getElementById('propertyDemo').innerHTML = `
+                <h3>${demo.title}</h3>
+                <div class="demo-split">
+                    <div class="demo-code-section">
+                        <div class="demo-code-header">📝 CSS</div>
+                        <div class="demo-code-content">
+                            <div class="demo-code-block">${demo.code}</div>
+                        </div>
+                    </div>
+                    <div class="demo-result-section">
+                        <div class="demo-result-header">👁️ Результат</div>
+                        <div class="demo-result-content">
+                            ${demo.result}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    </script>
+</body>
+</html> 

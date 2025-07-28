@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Audio</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .audio-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .custom-audio-player {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: white;
+            margin: 1rem 0;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .control-button:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        .control-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .volume-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.1s;
+        }
+
+        .time-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .attributes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .attribute-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .attribute-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .attribute-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .attribute-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .attribute-example {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .formats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .formats-table th,
+        .formats-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .formats-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .formats-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .support-icon {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .support-full {
+            background: #c6f6d5;
+            color: #2f855a;
+        }
+
+        .support-partial {
+            background: #fef2c7;
+            color: #d69e2e;
+        }
+
+        .support-none {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .accessibility-features {
+            background: #f0f4ff;
+            border: 1px solid #bed5ff;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .accessibility-features h5 {
+            color: #4299e1;
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .attributes-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .player-controls {
+                justify-content: center;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 HTML5 Audio</h1>
+            <p>Відтворення аудіо контенту в браузері</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи Audio елемента</h2>
+            <p>Елемент &lt;audio&gt; дозволяє вбудовувати аудіо контент безпосередньо в HTML документ:</p>
+
+            <div class="code-block">/* Базовий синтаксис */
+&lt;audio controls&gt;
+  &lt;source src="../media/audio/demo.mp3" type="audio/mpeg"&gt;
+  &lt;source src="audio.ogg" type="audio/ogg"&gt;
+  Ваш браузер не підтримує HTML5 audio.
+&lt;/audio&gt;
+
+/* З додатковими атрибутами */
+&lt;audio 
+  controls 
+  autoplay 
+  loop 
+  muted
+  preload="auto"&gt;
+  &lt;source src="../media/audio/demo.mp3" type="audio/mpeg"&gt;
+  &lt;source src="music.wav" type="audio/wav"&gt;
+&lt;/audio&gt;</div>
+
+            <div class="demo-container">
+                <div class="demo-title">Базовий приклад Audio елемента</div>
+                <div class="audio-demo">
+                    <audio controls preload="metadata">
+                        <source src="../media/audio/demo.mp3" type="audio/mpeg">
+                        <p>Ваш браузер не підтримує HTML5 audio. <a href="../media/audio/demo.mp3">Завантажити аудіо</a></p>
+                    </audio>
+                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                        🎵 Реальний HTML5 audio елемент з базовими елементами управління
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚙️ Атрибути Audio елемента</h2>
+            <p>Основні атрибути для управління поведінкою аудіо:</p>
+
+            <div class="attributes-grid">
+                <div class="attribute-card">
+                    <div class="attribute-name">controls</div>
+                    <div class="attribute-description">
+                        Показує стандартні елементи управління (play, pause, volume, seek bar)
+                    </div>
+                    <div class="attribute-example">&lt;audio controls&gt;...&lt;/audio&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">autoplay</div>
+                    <div class="attribute-description">
+                        Автоматично розпочинає відтворення після завантаження сторінки
+                    </div>
+                    <div class="attribute-example">&lt;audio autoplay&gt;...&lt;/audio&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">loop</div>
+                    <div class="attribute-description">
+                        Зациклює відтворення аудіо після завершення
+                    </div>
+                    <div class="attribute-example">&lt;audio loop&gt;...&lt;/audio&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">muted</div>
+                    <div class="attribute-description">
+                        Відключає звук за замовчуванням (корисно з autoplay)
+                    </div>
+                    <div class="attribute-example">&lt;audio muted&gt;...&lt;/audio&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">preload</div>
+                    <div class="attribute-description">
+                        Контролює попереднє завантаження: "none", "metadata", "auto"
+                    </div>
+                    <div class="attribute-example">&lt;audio preload="metadata"&gt;...&lt;/audio&gt;</div>
+                </div>
+
+                <div class="attribute-card">
+                    <div class="attribute-name">src</div>
+                    <div class="attribute-description">
+                        Прямий шлях до аудіо файлу (альтернатива source елементам)
+                    </div>
+                    <div class="attribute-example">&lt;audio src="../media/audio/demo.mp3"&gt;&lt;/audio&gt;</div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Autoplay обмеження:</strong> Сучасні браузери блокують autoplay без взаємодії користувача. 
+                Використовуйте muted + autoplay або дочекайтеся user interaction.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📁 Формати аудіо файлів</h2>
+            <p>Підтримка різних форматів аудіо в браузерах:</p>
+
+            <table class="formats-table">
+                <thead>
+                    <tr>
+                        <th>Формат</th>
+                        <th>MIME тип</th>
+                        <th>Chrome</th>
+                        <th>Firefox</th>
+                        <th>Safari</th>
+                        <th>Якість/Розмір</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>MP3</strong></td>
+                        <td>audio/mpeg</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td>Добра/Мала</td>
+                    </tr>
+                    <tr>
+                        <td><strong>WAV</strong></td>
+                        <td>audio/wav</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td>Висока/Велика</td>
+                    </tr>
+                    <tr>
+                        <td><strong>OGG</strong></td>
+                        <td>audio/ogg</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-none">✗</span></td>
+                        <td>Висока/Мала</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AAC</strong></td>
+                        <td>audio/aac</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-partial">⚠</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td>Висока/Мала</td>
+                    </tr>
+                    <tr>
+                        <td><strong>FLAC</strong></td>
+                        <td>audio/flac</td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-full">✓</span></td>
+                        <td><span class="support-icon support-partial">⚠</span></td>
+                        <td>Lossless/Велика</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>✅ Рекомендація:</strong> Використовуйте кілька форматів для максимальної сумісності:
+                <div class="code-block" style="margin-top: 0.5rem;">&lt;audio controls&gt;
+  &lt;source src="../media/audio/demo.mp3" type="audio/mpeg"&gt;
+  &lt;source src="audio.ogg" type="audio/ogg"&gt;
+  &lt;source src="audio.wav" type="audio/wav"&gt;
+  Fallback текст для старих браузерів
+&lt;/audio&gt;</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎮 JavaScript Audio API</h2>
+            <p>Програмне управління аудіо за допомогою JavaScript:</p>
+
+            <div class="demo-container">
+                <div class="demo-title">Кастомний аудіо плеєр</div>
+                <div class="custom-audio-player">
+                    <audio id="customAudio" preload="metadata">
+                        <source src="../media/audio/demo.mp3" type="audio/mpeg">
+                        <p>Ваш браузер не підтримує HTML5 audio.</p>
+                    </audio>
+
+                    <div class="player-controls">
+                        <button class="control-button" id="playBtn" onclick="togglePlay()">▶️</button>
+                        <button class="control-button" id="stopBtn" onclick="stopAudio()">⏹️</button>
+                        <button class="control-button" onclick="rewindAudio()">⏪</button>
+                        <button class="control-button" onclick="forwardAudio()">⏩</button>
+                        
+                        <div class="volume-control">
+                            <span>🔊</span>
+                            <input type="range" class="volume-slider" id="volumeSlider" 
+                                   min="0" max="1" step="0.1" value="0.5" 
+                                   onchange="setVolume(this.value)"
+                                   appearance="none">
+                        </div>
+                    </div>
+
+                    <div class="progress-container">
+                        <div class="progress-bar" id="progressBar" onclick="seekTo(event)">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <div class="time-info">
+                            <span id="currentTime">0:00</span>
+                            <span id="duration">0:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Основні JavaScript методи та події</h3>
+            <div class="code-block">/* Основні методи */
+const audio = document.getElementById('myAudio');
+
+// Управління відтворенням
+audio.play();           // Розпочати відтворення
+audio.pause();          // Призупинити
+audio.load();           // Перезавантажити аудіо
+
+// Властивості
+audio.currentTime = 30; // Перемотка на 30 секунду
+audio.volume = 0.5;     // Гучність 50%
+audio.playbackRate = 2; // Швидкість 2x
+audio.muted = true;     // Вимкнути звук
+
+// Інформація про стан
+console.log(audio.duration);    // Тривалість в секундах
+console.log(audio.buffered);    // Буферизована частина
+console.log(audio.played);      // Відтворена частина
+console.log(audio.paused);      // Чи на паузі
+
+/* Основні події */
+audio.addEventListener('loadstart', () => {
+    console.log('Почато завантаження');
+});
+
+audio.addEventListener('loadedmetadata', () => {
+    console.log('Метадані завантажені');
+    console.log(`Тривалість: ${audio.duration} сек`);
+});
+
+audio.addEventListener('canplay', () => {
+    console.log('Можна почати відтворення');
+});
+
+audio.addEventListener('play', () => {
+    console.log('Відтворення розпочато');
+});
+
+audio.addEventListener('pause', () => {
+    console.log('Відтворення призупинено');
+});
+
+audio.addEventListener('timeupdate', () => {
+    console.log(`Поточний час: ${audio.currentTime}`);
+    // Оновлення progress bar
+});
+
+audio.addEventListener('ended', () => {
+    console.log('Відтворення завершено');
+});</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Стилізація аудіо елемента</h2>
+            <p>CSS можливості для кастомізації аудіо плеєра:</p>
+
+            <div class="code-block">/* Базова стилізація */
+audio {
+  width: 100%;
+  height: 40px;
+  outline: none;
+  border-radius: 8px;
+  background: #f7fafc;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Webkit браузери (Chrome, Safari) */
+audio::-webkit-media-controls-panel {
+  background-color: #667eea;
+  border-radius: 8px;
+}
+
+audio::-webkit-media-controls-play-button {
+  background-color: white;
+  border-radius: 50%;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  color: white;
+  font-size: 14px;
+}
+
+audio::-webkit-media-controls-timeline {
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 4px;
+  margin: 0 10px;
+}
+
+audio::-webkit-media-controls-volume-slider {
+  background-color: rgba(255,255,255,0.3);
+  border-radius: 4px;
+}
+
+/* Firefox */
+audio::-moz-media-controls {
+  background-color: #667eea;
+  border-radius: 8px;
+}
+
+/* Повне приховування стандартних контролів */
+audio::-webkit-media-controls {
+  display: none !important;
+}
+
+audio::-moz-media-controls {
+  display: none !important;
+}</div>
+
+            <div class="tip-box">
+                <strong>💡 Рада:</strong> Для повного контролю над дизайном створіть власний плеєр з JavaScript API замість стилізації нативних контролів.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Доступність та кращі практики</h2>
+            
+            <div class="accessibility-features">
+                <h5>🎯 Доступність</h5>
+                <div class="code-block" style="font-size: 0.85rem;">/* ARIA атрибути та accessibility */
+&lt;audio 
+  controls 
+  aria-label="Подкаст: Епізод 1 - Вступ до HTML5"
+  aria-describedby="audio-description"&gt;
+  &lt;source src="../media/audio/podcast.mp3" type="audio/mpeg"&gt;
+  &lt;track kind="captions" src="captions.vtt" srclang="uk" label="Українські субтитри"&gt;
+&lt;/audio&gt;
+
+&lt;p id="audio-description"&gt;
+  Тривалість: 25 хвилин. Включає субтитри українською мовою.
+&lt;/p&gt;</div>
+            </div>
+
+            <div class="tip-box">
+                <strong>✅ Кращі практики:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Завжди надавайте fallback текст</strong> для старих браузерів</li>
+                    <li><strong>Використовуйте кілька форматів</strong> для кросбраузерності</li>
+                    <li><strong>Додавайте субтитри</strong> для доступності (WebVTT)</li>
+                    <li><strong>Оптимізуйте розмір файлів</strong> для швидшого завантаження</li>
+                    <li><strong>Надавайте користувацький контроль</strong> над autoplay</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Autoplay без muted (порушує UX)</li>
+                    <li>Відсутність fallback контенту</li>
+                    <li>Надто великі файли без стиснення</li>
+                    <li>Відсутність альтернативних форматів</li>
+                    <li>Ігнорування accessibility атрибутів</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Практичні приклади</h2>
+            
+            <h3>1. Подкаст плеєр</h3>
+            <div class="code-block">&lt;div class="podcast-player"&gt;
+  &lt;h3&gt;Подкаст: Веб-розробка сьогодні&lt;/h3&gt;
+  &lt;audio controls preload="metadata"&gt;
+    &lt;source src="../media/audio/podcast.mp3" type="audio/mpeg"&gt;
+    &lt;source src="podcast-episode-1.ogg" type="audio/ogg"&gt;
+    &lt;track kind="chapters" src="chapters.vtt" srclang="uk"&gt;
+    &lt;track kind="captions" src="captions.vtt" srclang="uk" default&gt;
+    Ваш браузер не підтримує HTML5 audio.
+  &lt;/audio&gt;
+  &lt;p&gt;Епізод 1: Вступ до HTML5 (25 хв)&lt;/p&gt;
+&lt;/div&gt;</div>
+
+            <h3>2. Музичний плейлист</h3>
+            <div class="code-block">&lt;div class="playlist"&gt;
+  &lt;h3&gt;Мій плейлист&lt;/h3&gt;
+  &lt;audio id="playlistAudio" controls&gt;
+    &lt;source id="currentTrack" src="../media/audio/demo.mp3" type="audio/mpeg"&gt;
+  &lt;/audio&gt;
+  
+  &lt;ul class="track-list"&gt;
+    &lt;li data-src="track1.mp3"&gt;Трек 1 - Назва пісні&lt;/li&gt;
+    &lt;li data-src="track2.mp3"&gt;Трек 2 - Інша пісня&lt;/li&gt;
+    &lt;li data-src="track3.mp3"&gt;Трек 3 - Ще одна пісня&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+// Переключення треків
+document.querySelectorAll('.track-list li').forEach(item =&gt; {
+  item.addEventListener('click', () =&gt; {
+    const audio = document.getElementById('playlistAudio');
+    const source = document.getElementById('currentTrack');
+    source.src = item.dataset.src;
+    audio.load();
+    audio.play();
+  });
+});
+&lt;/script&gt;</div>
+
+            <h3>3. Звукові ефекти</h3>
+            <div class="code-block">&lt;!-- Звукові ефекти для гри --&gt;
+&lt;audio id="clickSound" preload="auto"&gt;
+  &lt;source src="../media/audio/click.mp3" type="audio/mpeg"&gt;
+  &lt;source src="click.wav" type="audio/wav"&gt;
+&lt;/audio&gt;
+
+&lt;audio id="successSound" preload="auto"&gt;
+  &lt;source src="../media/audio/click.mp3" type="audio/mpeg"&gt;
+&lt;/audio&gt;
+
+&lt;button onclick="playClickSound()"&gt;Кнопка з звуком&lt;/button&gt;
+
+&lt;script&gt;
+function playClickSound() {
+  const sound = document.getElementById('clickSound');
+  sound.currentTime = 0; // Перемотка на початок
+  sound.play();
+}
+
+function playSuccessSound() {
+  document.getElementById('successSound').play();
+}
+&lt;/script&gt;</div>
+
+            <h3>4. Інтерактивне демо</h3>
+            
+            <div class="demo-container">
+                <div class="demo-title">Музичний плеєр з вибором треку</div>
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 12px; color: white;">
+                    
+                    <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                        <label for="trackSelector" style="font-weight: bold;">🎵 Виберіть трек:</label>
+                        <select id="trackSelector" onchange="changeTrack()" style="padding: 0.5rem; border-radius: 6px; border: none; background: white; color: #333; font-size: 1rem; min-width: 200px;">
+                            <option value="../media/audio/demo.mp3" data-name="Демо Музика" data-size="4.3MB">Демо Музика (4.3MB)</option>
+                            <option value="../media/audio/podcast.mp3" data-name="Подкаст" data-size="3.1MB">Подкаст Епізод (3.1MB)</option>
+                            <option value="../media/audio/click.mp3" data-name="Мелодія" data-size="3.2MB">Мелодія 3 (3.2MB)</option>
+                        </select>
+                    </div>
+
+                    <audio id="interactiveAudio" controls style="width: 100%; margin-bottom: 1rem;">
+                        <source src="../media/audio/demo.mp3" type="audio/mpeg">
+                        <p>Ваш браузер не підтримує HTML5 audio.</p>
+                    </audio>
+                    
+                    <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
+                        <span id="currentTrackInfo" style="font-size: 0.9rem; opacity: 0.9;">
+                            🎶 Зараз грає: Демо Музика
+                        </span>
+                        <button id="playCurrentButton" onclick="playCurrentTrack()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;">
+                            ▶️ Відтворити
+                        </button>
+                    </div>
+                </div>
+                
+                <h5 style="margin: 1.5rem 0 0.5rem 0; color: #667eea;">💻 Код для цього демо:</h5>
+                <div class="code-block">/* HTML */
+&lt;div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            padding: 1.5rem; border-radius: 12px; color: white;"&gt;
+    
+    &lt;div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;"&gt;
+        &lt;label for="trackSelector"&gt;🎵 Виберіть трек:&lt;/label&gt;
+        &lt;select id="trackSelector" onchange="changeTrack()"&gt;
+            &lt;option value="../media/audio/demo.mp3" data-name="Демо Музика"&gt;
+                Демо Музика (4.3MB)
+            &lt;/option&gt;
+            &lt;option value="../media/audio/podcast.mp3" data-name="Подкаст"&gt;
+                Подкаст Епізод (3.1MB)
+            &lt;/option&gt;
+            &lt;option value="../media/audio/click.mp3" data-name="Мелодія"&gt;
+                Мелодія 3 (3.2MB)
+            &lt;/option&gt;
+        &lt;/select&gt;
+    &lt;/div&gt;
+
+    &lt;audio id="interactiveAudio" controls&gt;
+        &lt;source src="../media/audio/demo.mp3" type="audio/mpeg"&gt;
+    &lt;/audio&gt;
+    
+    &lt;div style="display: flex; gap: 1rem; align-items: center;"&gt;
+        &lt;span id="currentTrackInfo"&gt;🎶 Зараз грає: Демо Музика&lt;/span&gt;
+        &lt;button id="playCurrentButton" onclick="playCurrentTrack()"&gt;
+            ▶️ Відтворити
+        &lt;/button&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+/* JavaScript */
+function changeTrack() {
+    const selector = document.getElementById('trackSelector');
+    const audio = document.getElementById('interactiveAudio');
+    const trackInfo = document.getElementById('currentTrackInfo');
+    
+    const selectedOption = selector.options[selector.selectedIndex];
+    const trackName = selectedOption.dataset.name;
+    const newSrc = selectedOption.value;
+    
+    // Оновлюємо source аудіо
+    audio.src = newSrc;
+    audio.load(); // Перезавантажуємо аудіо з новим файлом
+    
+    // Оновлюємо інформацію про трек
+    trackInfo.textContent = `🎶 Зараз грає: ${trackName}`;
+}
+
+function playCurrentTrack() {
+    const audio = document.getElementById('interactiveAudio');
+    
+    if (audio.paused) {
+        audio.play().catch(e =&gt; console.log('Play failed:', e));
+    } else {
+        audio.pause();
+    }
+}
+
+// Оновлення кнопки в залежності від стану програвання
+const interactiveAudio = document.getElementById('interactiveAudio');
+const playCurrentButton = document.getElementById('playCurrentButton');
+
+interactiveAudio.addEventListener('play', () =&gt; {
+    playCurrentButton.textContent = '⏸️ Пауза';
+});
+
+interactiveAudio.addEventListener('pause', () =&gt; {
+    playCurrentButton.textContent = '▶️ Відтворити';
+});
+
+interactiveAudio.addEventListener('ended', () =&gt; {
+    playCurrentButton.textContent = '▶️ Відтворити';
+});</div>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('navigation')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 33 з 41</strong><br>
+                <small>HTML5 Audio</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('video')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Кастомний аудіо плеєр
+        let audio;
+        let isPlaying = false;
+
+        function togglePlay() {
+            const playBtn = document.getElementById('playBtn');
+            
+            if (isPlaying) {
+                audio.pause();
+                playBtn.textContent = '▶️';
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    playBtn.textContent = '⏸️';
+                    isPlaying = true;
+                }).catch(e => {
+                    console.log('Audio play failed:', e);
+                });
+            }
+        }
+
+        function stopAudio() {
+            audio.pause();
+            audio.currentTime = 0;
+            document.getElementById('playBtn').textContent = '▶️';
+            isPlaying = false;
+        }
+
+        function rewindAudio() {
+            audio.currentTime = Math.max(0, audio.currentTime - 10);
+        }
+
+        function forwardAudio() {
+            audio.currentTime = Math.min(audio.duration, audio.currentTime + 10);
+        }
+
+        function setVolume(value) {
+            if (audio) {
+                audio.volume = value;
+            }
+        }
+
+        function seekTo(event) {
+            const progressBar = document.getElementById('progressBar');
+            const rect = progressBar.getBoundingClientRect();
+            const percent = (event.clientX - rect.left) / rect.width;
+            audio.currentTime = percent * audio.duration;
+        }
+
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            audio = document.getElementById('customAudio');
+            
+            // Події аудіо
+            audio.addEventListener('loadedmetadata', () => {
+                document.getElementById('duration').textContent = formatTime(audio.duration);
+            });
+
+            audio.addEventListener('timeupdate', () => {
+                if (audio.duration) {
+                    const progress = (audio.currentTime / audio.duration) * 100;
+                    document.getElementById('progressFill').style.width = progress + '%';
+                    document.getElementById('currentTime').textContent = formatTime(audio.currentTime);
+                }
+            });
+
+            audio.addEventListener('ended', () => {
+                document.getElementById('playBtn').textContent = '▶️';
+                isPlaying = false;
+            });
+
+            audio.addEventListener('play', () => {
+                document.getElementById('playBtn').textContent = '⏸️';
+                isPlaying = true;
+            });
+
+            audio.addEventListener('pause', () => {
+                document.getElementById('playBtn').textContent = '▶️';
+                isPlaying = false;
+            });
+            
+            // Встановлення початкової гучності
+            setVolume(0.5);
+            
+            console.log('Custom audio player initialized');
+            
+            // Ініціалізація інтерактивного плеєра
+            const interactiveAudio = document.getElementById('interactiveAudio');
+            const playCurrentButton = document.getElementById('playCurrentButton');
+            
+            if (interactiveAudio && playCurrentButton) {
+                interactiveAudio.addEventListener('play', () => {
+                    playCurrentButton.textContent = '⏸️ Пауза';
+                });
+                
+                interactiveAudio.addEventListener('pause', () => {
+                    playCurrentButton.textContent = '▶️ Відтворити';
+                });
+                
+                interactiveAudio.addEventListener('ended', () => {
+                    playCurrentButton.textContent = '▶️ Відтворити';
+                });
+            }
+        });
+
+        // Функції для інтерактивного музичного плеєра
+        function changeTrack() {
+            const selector = document.getElementById('trackSelector');
+            const audio = document.getElementById('interactiveAudio');
+            const trackInfo = document.getElementById('currentTrackInfo');
+            
+            const selectedOption = selector.options[selector.selectedIndex];
+            const trackName = selectedOption.dataset.name;
+            const newSrc = selectedOption.value;
+            
+            // Оновлюємо source аудіо
+            audio.src = newSrc;
+            audio.load(); // Перезавантажуємо аудіо з новим файлом
+            
+            // Оновлюємо інформацію про трек
+            trackInfo.textContent = `🎶 Зараз грає: ${trackName}`;
+            
+            console.log(`Track changed to: ${trackName}`);
+        }
+
+        function playCurrentTrack() {
+            const audio = document.getElementById('interactiveAudio');
+            
+            if (audio.paused) {
+                audio.play().catch(e => console.log('Play failed:', e));
+            } else {
+                audio.pause();
+            }
+        }
+    </script>
+</body>
+</html> 

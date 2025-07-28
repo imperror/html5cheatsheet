@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продуктивність веб-сайтів</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .performance-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .performance-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .performance-card p {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .performance-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .performance-card li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .performance-card li::before {
+            content: '⚡';
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        .vitals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .vital-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .vital-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .vital-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .vital-card h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .vital-score {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .score-good { color: #48bb78; }
+        .score-needs-improvement { color: #ed8936; }
+        .score-poor { color: #e53e3e; }
+
+        .speed-test {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .speed-test h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .test-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            margin: 1rem;
+            transition: transform 0.2s;
+        }
+
+        .test-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .test-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .test-results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            text-align: left;
+        }
+
+        .optimization-techniques {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .technique-card {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .technique-card h4 {
+            margin-bottom: 1rem;
+        }
+
+        .technique-card p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .technique-card .impact {
+            background: rgba(255,255,255,0.2);
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        .image-optimization {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .image-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .image-format {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .format-name {
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .format-size {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .lazy-loading-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .lazy-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(45deg, #f1f5f9, #e2e8f0);
+            margin: 1rem 0;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #718096;
+            transition: all 0.3s;
+        }
+
+        .lazy-image.loaded {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tool-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tool-card h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card p {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-link {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .tool-link:hover {
+            opacity: 0.9;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .tip-box {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fed7d7;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .performance-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚡ Продуктивність веб-сайтів</h1>
+            <p>Оптимізація швидкості завантаження та користувацького досвіду</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Чому продуктивність важлива?</h2>
+            <p>Швидкість завантаження сайту критично впливає на користувацький досвід, SEO рейтинг та конверсію. Дослідження показують:</p>
+            
+            <div class="performance-grid">
+                <div class="performance-card">
+                    <h3>👥 Користувацький досвід</h3>
+                    <p>Вплив на поведінку відвідувачів</p>
+                    <ul>
+                        <li>53% користувачів залишають сайт, якщо він завантажується > 3 сек</li>
+                        <li>Затримка в 1 сек зменшує задоволення на 16%</li>
+                        <li>Швидкі сайти мають вищий рейтинг задоволення</li>
+                    </ul>
+                </div>
+
+                <div class="performance-card">
+                    <h3>🔍 SEO рейтинг</h3>
+                    <p>Вплив на позиції в пошуку</p>
+                    <ul>
+                        <li>Google використовує швидкість як фактор ранжування</li>
+                        <li>Core Web Vitals впливають на позиції</li>
+                        <li>Мобільна швидкість особливо важлива</li>
+                    </ul>
+                </div>
+
+                <div class="performance-card">
+                    <h3>💰 Бізнес-показники</h3>
+                    <p>Вплив на доходи та конверсію</p>
+                    <ul>
+                        <li>Amazon: +1% швидкості = +1% доходів</li>
+                        <li>Walmart: -1 сек = +2% конверсія</li>
+                        <li>Pinterest: -40% час завантаження = +15% реєстрацій</li>
+                    </ul>
+                </div>
+
+                <div class="performance-card">
+                    <h3>📱 Мобільні пристрої</h3>
+                    <p>Особливості мобільної продуктивності</p>
+                    <ul>
+                        <li>Повільніші процесори та з'єднання</li>
+                        <li>Обмежена пропускна спроможність</li>
+                        <li>Більше залежність від швидкості</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📊 Core Web Vitals</h2>
+            <p>Ключові метрики користувацького досвіду, які Google використовує для ранжування:</p>
+
+            <div class="vitals-grid">
+                <div class="vital-card">
+                    <div class="vital-icon">🏃‍♂️</div>
+                    <h4>Largest Contentful Paint (LCP)</h4>
+                    <p>Час завантаження найбільшого елемента</p>
+                    <div class="vital-score score-good">< 2.5 сек</div>
+                    <small>Вимірює швидкість завантаження</small>
+                </div>
+
+                <div class="vital-card">
+                    <div class="vital-icon">📱</div>
+                    <h4>First Input Delay (FID)</h4>
+                    <p>Затримка першої взаємодії</p>
+                    <div class="vital-score score-good">< 100 мс</div>
+                    <small>Вимірює інтерактивність</small>
+                </div>
+
+                <div class="vital-card">
+                    <div class="vital-icon">🎯</div>
+                    <h4>Cumulative Layout Shift (CLS)</h4>
+                    <p>Стабільність візуального контенту</p>
+                    <div class="vital-score score-good">< 0.1</div>
+                    <small>Вимірює візуальну стабільність</small>
+                </div>
+
+                <div class="vital-card">
+                    <div class="vital-icon">⚡</div>
+                    <h4>First Contentful Paint (FCP)</h4>
+                    <p>Час появи першого контенту</p>
+                    <div class="vital-score score-good">< 1.8 сек</div>
+                    <small>Вимірює сприйняття швидкості</small>
+                </div>
+            </div>
+
+            <div class="demo-container">
+                <div class="demo-title">Тест швидкості сайту</div>
+                <div class="speed-test">
+                    <h4>Перевірка Core Web Vitals</h4>
+                    <p>Введіть URL для аналізу продуктивності:</p>
+                    
+                    <input type="url" id="testUrl" placeholder="https://example.com" 
+                           style="width: 300px; padding: 0.75rem; margin: 1rem; border: 1px solid #e2e8f0; border-radius: 6px;">
+                    
+                    <br>
+                    
+                    <button class="test-button" onclick="testWebsiteSpeed()" id="testButton">
+                        🚀 Запустити тест
+                    </button>
+                    
+                    <div id="speedResults" class="test-results" style="display: none;">
+                        <h5 style="margin-bottom: 1rem;">Результати тесту:</h5>
+                        <div id="resultsContent"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🖼️ Оптимізація зображень</h2>
+            <p>Зображення часто складають 60-70% розміру сторінки. Їх оптимізація дає найбільший ефект:</p>
+
+            <div class="image-optimization">
+                <h4>Сучасні формати зображень:</h4>
+                <div class="image-comparison">
+                    <div class="image-format">
+                        <div class="format-name">WebP</div>
+                        <div class="format-size">-25-30% менше JPEG</div>
+                        <div style="color: #48bb78; margin-top: 0.5rem;">✅ Рекомендовано</div>
+                    </div>
+                    <div class="image-format">
+                        <div class="format-name">AVIF</div>
+                        <div class="format-size">-50% менше JPEG</div>
+                        <div style="color: #48bb78; margin-top: 0.5rem;">✅ Найкраще</div>
+                    </div>
+                    <div class="image-format">
+                        <div class="format-name">JPEG</div>
+                        <div class="format-size">Базовий розмір</div>
+                        <div style="color: #ed8936; margin-top: 0.5rem;">⚠️ Застарілий</div>
+                    </div>
+                    <div class="image-format">
+                        <div class="format-name">PNG</div>
+                        <div class="format-size">+40-60% більше</div>
+                        <div style="color: #e53e3e; margin-top: 0.5rem;">❌ Тільки для альфа</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">/* Оптимізація зображень */
+
+/* 1. Сучасні формати з fallback */
+&lt;picture&gt;
+  &lt;source srcset="image.avif" type="image/avif"&gt;
+  &lt;source srcset="image.webp" type="image/webp"&gt;
+  &lt;img src="image.jpg" alt="Опис зображення" loading="lazy"&gt;
+&lt;/picture&gt;
+
+/* 2. Адаптивні зображення */
+&lt;img srcset="image-320w.webp 320w,
+             image-640w.webp 640w,
+             image-1280w.webp 1280w"
+     sizes="(max-width: 320px) 280px,
+            (max-width: 640px) 600px,
+            1200px"
+     src="image-640w.webp"
+     alt="Адаптивне зображення"
+     loading="lazy"&gt;
+
+/* 3. CSS оптимізація зображень */
+img {
+    max-width: 100%;
+    height: auto;
+    /* Плавне з'явлення */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+img.loaded {
+    opacity: 1;
+}
+
+/* 4. Lazy loading з Intersection Observer */
+const imageObserver = new IntersectionObserver((entries, observer) =&gt; {
+    entries.forEach(entry =&gt; {
+        if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.classList.add('loaded');
+            imageObserver.unobserve(img);
+        }
+    });
+});
+
+document.querySelectorAll('img[data-src]').forEach(img =&gt; {
+    imageObserver.observe(img);
+});</div>
+
+            <div class="demo-container">
+                <div class="demo-title">Демо Lazy Loading</div>
+                <div class="lazy-loading-demo" id="lazyDemo">
+                    <div class="lazy-image" data-loaded="false">🖼️ Зображення 1 (завантажується при скролі)</div>
+                    <div class="lazy-image" data-loaded="false">🖼️ Зображення 2 (завантажується при скролі)</div>
+                    <div class="lazy-image" data-loaded="false">🖼️ Зображення 3 (завантажується при скролі)</div>
+                    <div class="lazy-image" data-loaded="false">🖼️ Зображення 4 (завантажується при скролі)</div>
+                    <div class="lazy-image" data-loaded="false">🖼️ Зображення 5 (завантажується при скролі)</div>
+                </div>
+                <p style="text-align: center; margin-top: 1rem; color: #718096;">
+                    Прокрутіть вниз щоб побачити lazy loading в дії
+                </p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🗜️ Мініфікація та стиснення</h2>
+            <p>Зменшення розміру CSS, JavaScript та HTML файлів:</p>
+
+            <div class="code-block">/* Мініфікація та стиснення */
+
+/* 1. HTML мініфікація */
+&lt;!-- До мініфікації --&gt;
+&lt;div class="container"&gt;
+    &lt;h1&gt;Заголовок&lt;/h1&gt;
+    &lt;p&gt;Параграф тексту&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;!-- Після мініфікації --&gt;
+&lt;div class="container"&gt;&lt;h1&gt;Заголовок&lt;/h1&gt;&lt;p&gt;Параграф тексту&lt;/p&gt;&lt;/div&gt;
+
+/* 2. CSS мініфікація */
+/* До */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Після */
+.container{width:100%;max-width:1200px;margin:0 auto;padding:2rem}
+
+/* 3. Gzip стиснення в .htaccess */
+&lt;IfModule mod_deflate.c&gt;
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE text/javascript
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/json
+&lt;/IfModule&gt;
+
+/* 4. Brotli стиснення (кращий за Gzip) */
+&lt;IfModule mod_brotli.c&gt;
+    AddOutputFilterByType BROTLI_COMPRESS text/html
+    AddOutputFilterByType BROTLI_COMPRESS text/css
+    AddOutputFilterByType BROTLI_COMPRESS application/javascript
+    AddOutputFilterByType BROTLI_COMPRESS application/json
+&lt;/IfModule&gt;
+
+/* 5. Critical CSS inline */
+&lt;style&gt;
+/* Критичний CSS для above-the-fold контенту */
+body{font-family:Arial,sans-serif;margin:0}
+.header{background:#333;color:#fff;padding:1rem}
+&lt;/style&gt;
+
+/* 6. Відкладене завантаження CSS */
+&lt;link rel="preload" href="styles.css" as="style" onload="this.onload=null;this.rel='stylesheet'"&gt;
+&lt;noscript&gt;&lt;link rel="stylesheet" href="styles.css"&gt;&lt;/noscript&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>💾 Кешування</h2>
+            <p>Правильне налаштування кешування значно покращує швидкість повторних візитів:</p>
+
+            <div class="code-block">/* Стратегії кешування */
+
+/* 1. HTTP заголовки кешування в .htaccess */
+&lt;IfModule mod_expires.c&gt;
+    ExpiresActive on
+    
+    # Зображення (1 рік)
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    
+    # CSS та JavaScript (1 місяць)
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    
+    # HTML (1 година)
+    ExpiresByType text/html "access plus 1 hour"
+    
+    # Fonts (1 рік)
+    ExpiresByType font/woff2 "access plus 1 year"
+    ExpiresByType font/woff "access plus 1 year"
+&lt;/IfModule&gt;
+
+/* 2. Service Worker для кешування */
+// Реєстрація Service Worker
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js');
+}
+
+// sw.js - Service Worker файл
+const CACHE_NAME = 'site-cache-v1';
+const urlsToCache = [
+    '/',
+    '/styles.css',
+    '/script.js',
+    '/images/logo.png'
+];
+
+// Встановлення SW та кешування
+self.addEventListener('install', event =&gt; {
+    event.waitUntil(
+        caches.open(CACHE_NAME)
+            .then(cache =&gt; cache.addAll(urlsToCache))
+    );
+});
+
+// Обробка запитів
+self.addEventListener('fetch', event =&gt; {
+    event.respondWith(
+        caches.match(event.request)
+            .then(response =&gt; {
+                // Повертаємо кешовану версію або завантажуємо з мережі
+                return response || fetch(event.request);
+            })
+    );
+});
+
+/* 3. Browser caching з правильними заголовками */
+// Cache-Control заголовки
+Cache-Control: public, max-age=31536000  // 1 рік для статичних ресурсів
+Cache-Control: public, max-age=3600      // 1 година для HTML
+Cache-Control: no-cache                   // Завжди перевіряти актуальність
+
+/* 4. CDN кешування */
+// Використання CDN для статичних ресурсів
+&lt;link href="https://cdn.example.com/css/styles.css" rel="stylesheet"&gt;
+&lt;script src="https://cdn.example.com/js/app.js"&gt;&lt;/script&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 Техніки оптимізації</h2>
+            <p>Найефективніші методи покращення продуктивності:</p>
+
+            <div class="optimization-techniques">
+                <div class="technique-card">
+                    <h4>📦 Code Splitting</h4>
+                    <p>Розділення JavaScript на менші модулі, які завантажуються за потребою</p>
+                    <div class="impact">Покращення: 30-50%</div>
+                </div>
+
+                <div class="technique-card">
+                    <h4>🔄 Tree Shaking</h4>
+                    <p>Видалення невикористаного коду з JavaScript бандлів</p>
+                    <div class="impact">Зменшення розміру: 20-40%</div>
+                </div>
+
+                <div class="technique-card">
+                    <h4>📱 Resource Hints</h4>
+                    <p>Попереднє завантаження критичних ресурсів</p>
+                    <div class="impact">Покращення LCP: 10-30%</div>
+                </div>
+
+                <div class="technique-card">
+                    <h4>⚡ Critical CSS</h4>
+                    <p>Інлайн CSS для above-the-fold контенту</p>
+                    <div class="impact">Покращення FCP: 15-25%</div>
+                </div>
+
+                <div class="technique-card">
+                    <h4>🖼️ Image Optimization</h4>
+                    <p>WebP/AVIF формати, адаптивні розміри, lazy loading</p>
+                    <div class="impact">Зменшення розміру: 50-70%</div>
+                </div>
+
+                <div class="technique-card">
+                    <h4>📡 HTTP/2 Push</h4>
+                    <p>Проактивна відправка критичних ресурсів</p>
+                    <div class="impact">Покращення швидкості: 10-20%</div>
+                </div>
+            </div>
+
+            <div class="code-block">/* Resource Hints для оптимізації */
+
+/* 1. Preload - завантаження критичних ресурсів */
+&lt;link rel="preload" href="critical.css" as="style"&gt;
+&lt;link rel="preload" href="hero-image.webp" as="image"&gt;
+&lt;link rel="preload" href="font.woff2" as="font" type="font/woff2" crossorigin&gt;
+
+/* 2. Prefetch - завантаження ресурсів для наступних сторінок */
+&lt;link rel="prefetch" href="next-page.html"&gt;
+&lt;link rel="prefetch" href="secondary-styles.css"&gt;
+
+/* 3. Preconnect - з'єднання з зовнішніми доменами */
+&lt;link rel="preconnect" href="https://fonts.googleapis.com"&gt;
+&lt;link rel="preconnect" href="https://cdn.example.com"&gt;
+
+/* 4. DNS-prefetch - резолв DNS для зовнішніх доменів */
+&lt;link rel="dns-prefetch" href="//analytics.google.com"&gt;
+&lt;link rel="dns-prefetch" href="//api.example.com"&gt;
+
+/* 5. Modulepreload - передзавантаження ES модулів */
+&lt;link rel="modulepreload" href="./modules/app.js"&gt;
+&lt;link rel="modulepreload" href="./modules/utils.js"&gt;
+
+/* 6. JavaScript lazy loading */
+// Динамічний імпорт модулів
+const loadModule = async () =&gt; {
+    const module = await import('./heavy-module.js');
+    module.init();
+};
+
+// Завантаження при необхідності
+document.getElementById('button').addEventListener('click', loadModule);</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🛠️ Інструменти для аналізу продуктивності</h2>
+            <p>Інструменти для вимірювання та моніторингу продуктивності:</p>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>🏠 Google PageSpeed Insights</h4>
+                    <p>Аналіз Core Web Vitals та рекомендації по оптимізації</p>
+                    <a href="https://pagespeed.web.dev" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>💡 Google Lighthouse</h4>
+                    <p>Комплексний аудит продуктивності в Chrome DevTools</p>
+                    <a href="https://developers.google.com/web/tools/lighthouse" class="tool-link" target="_blank">Докладніше</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>🌐 GTmetrix</h4>
+                    <p>Детальний аналіз швидкості з waterfall діаграмами</p>
+                    <a href="https://gtmetrix.com" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>⚡ WebPageTest</h4>
+                    <p>Професійний тестинг з різних локацій та пристроїв</p>
+                    <a href="https://webpagetest.org" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>📊 Pingdom</h4>
+                    <p>Моніторинг продуктивності та uptime</p>
+                    <a href="https://pingdom.com" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>🔍 Chrome DevTools</h4>
+                    <p>Вбудовані інструменти для профілювання та налагодження</p>
+                    <a href="https://developers.google.com/web/tools/chrome-devtools" class="tool-link" target="_blank">Докладніше</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>📈 Web Vitals Extension</h4>
+                    <p>Розширення для Chrome для моніторингу Core Web Vitals</p>
+                    <a href="https://chrome.google.com/webstore/detail/web-vitals/ahfhijdlegdabablpippeagghigmibma" class="tool-link" target="_blank">Встановити</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>🖼️ Squoosh</h4>
+                    <p>Онлайн оптимізація зображень з порівнянням форматів</p>
+                    <a href="https://squoosh.app" class="tool-link" target="_blank">Перейти</a>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Поради для кращої продуктивності:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Пріоритизуйте</strong> — оптимізуйте спочатку найбільші файли</li>
+                    <li><strong>Вимірюйте</strong> — використовуйте реальні дані користувачів (RUM)</li>
+                    <li><strong>Автоматизуйте</strong> — налаштуйте CI/CD для моніторингу продуктивності</li>
+                    <li><strong>Тестуйте на реальних пристроях</strong> — особливо на слабких мобільних</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Поширені помилки продуктивності:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Завантаження надто великих зображень без оптимізації</li>
+                    <li>Блокування рендерингу JavaScript і CSS</li>
+                    <li>Відсутність кешування статичних ресурсів</li>
+                    <li>Використання синхронних запитів</li>
+                    <li>Надмірна кількість HTTP запитів</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('seo')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 39 з 41</strong><br>
+                <small>Продуктивність веб-сайтів</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('best-practices')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Тест швидкості сайту (симуляція)
+        function testWebsiteSpeed() {
+            const button = document.getElementById('testButton');
+            const results = document.getElementById('speedResults');
+            const content = document.getElementById('resultsContent');
+            const url = document.getElementById('testUrl').value || 'https://example.com';
+            
+            button.disabled = true;
+            button.textContent = '⏳ Тестування...';
+            
+            // Симуляція тестування
+            setTimeout(() => {
+                const metrics = generateRandomMetrics();
+                
+                content.innerHTML = `
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="text-align: center; padding: 1rem; background: white; border-radius: 6px;">
+                            <div style="font-size: 1.5rem; color: ${getScoreColor(metrics.lcp)};">${metrics.lcp}s</div>
+                            <div style="font-size: 0.8rem; color: #718096;">LCP</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: white; border-radius: 6px;">
+                            <div style="font-size: 1.5rem; color: ${getScoreColor(metrics.fid)};">${metrics.fid}ms</div>
+                            <div style="font-size: 0.8rem; color: #718096;">FID</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: white; border-radius: 6px;">
+                            <div style="font-size: 1.5rem; color: ${getScoreColor(metrics.cls)};">${metrics.cls}</div>
+                            <div style="font-size: 0.8rem; color: #718096;">CLS</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: white; border-radius: 6px;">
+                            <div style="font-size: 1.5rem; color: ${getScoreColor(metrics.fcp)};">${metrics.fcp}s</div>
+                            <div style="font-size: 0.8rem; color: #718096;">FCP</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 1rem; padding: 1rem; background: #f0f8ff; border-radius: 6px;">
+                        <strong>📋 Рекомендації:</strong>
+                        <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                            <li>Оптимізуйте зображення (WebP/AVIF формати)</li>
+                            <li>Мініфікуйте CSS та JavaScript</li>
+                            <li>Використовуйте CDN для статичних ресурсів</li>
+                            <li>Налаштуйте кешування браузера</li>
+                        </ul>
+                    </div>
+                `;
+                
+                results.style.display = 'block';
+                button.disabled = false;
+                button.textContent = '🚀 Запустити тест';
+            }, 2000);
+        }
+
+        function generateRandomMetrics() {
+            return {
+                lcp: (Math.random() * 3 + 1).toFixed(1),
+                fid: Math.floor(Math.random() * 200 + 50),
+                cls: (Math.random() * 0.3).toFixed(2),
+                fcp: (Math.random() * 2 + 0.8).toFixed(1)
+            };
+        }
+
+        function getScoreColor(value) {
+            const num = parseFloat(value);
+            if (num <= 2.5 || num <= 100 || num <= 0.1) return '#48bb78';
+            if (num <= 4 || num <= 300 || num <= 0.25) return '#ed8936';
+            return '#e53e3e';
+        }
+
+        // Lazy Loading демо
+        function initLazyLoadingDemo() {
+            const lazyImages = document.querySelectorAll('.lazy-image');
+            
+            const imageObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.target.dataset.loaded === 'false') {
+                        setTimeout(() => {
+                            entry.target.classList.add('loaded');
+                            entry.target.dataset.loaded = 'true';
+                            entry.target.textContent = entry.target.textContent.replace('завантажується при скролі', '✅ Завантажено!');
+                        }, 500);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            initLazyLoadingDemo();
+            console.log('Performance tools loaded');
+        });
+    </script>
+</body>
+</html> 

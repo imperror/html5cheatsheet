@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Одиниці виміру CSS - HTML5 Шпаргалка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .unit-category {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .unit-category:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .category-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .category-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-content {
+            padding: 1.5rem;
+        }
+
+        .unit-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .unit-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.2s;
+        }
+
+        .unit-item:hover {
+            background: #edf2f7;
+            border-left-color: #4c51bf;
+            transform: translateX(5px);
+        }
+
+        .unit-name {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #2d3748;
+            font-size: 1rem;
+        }
+
+        .unit-desc {
+            font-size: 0.85rem;
+            color: #718096;
+            text-align: right;
+            flex: 1;
+            margin-left: 1rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .comparison-table tr:hover {
+            background: #edf2f7;
+        }
+
+        .unit-syntax {
+            font-family: 'Courier New', monospace;
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+            box-shadow: 0 4px 8px rgba(76, 81, 191, 0.3);
+        }
+
+        .demo-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .demo-code-section {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .demo-code-header {
+            background: #4a5568;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .demo-code-content {
+            padding: 1rem;
+        }
+
+        .demo-result-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+        }
+
+        .demo-result-header {
+            background: #667eea;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 8px 8px 0 0;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .demo-result-content {
+            padding: 1rem;
+            min-height: 150px;
+        }
+
+        .demo-code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 5px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            margin: 0;
+        }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .code-label {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #4a5568;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .measurement-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .measure-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .measure-item:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .measure-unit {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .measure-value {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .measure-demo {
+            height: 30px;
+            border-radius: 4px;
+            margin-top: 0.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 4px solid #0288d1;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #f57c00;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid #7b1fa2;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .calc-playground {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .calc-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .calc-result {
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 4px;
+            border: 1px solid #e2e8f0;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .units-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .measurement-showcase {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .demo-split {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📏 Одиниці виміру</h1>
+            <p>Повний посібник з абсолютних, відносних, viewport та функціональних одиниць</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Типи одиниць виміру</h2>
+            <p>CSS підтримує безліч одиниць виміру, які діляться на кілька категорій. Кожна має свої особливості та застосування:</p>
+
+            <div class="units-grid">
+                <div class="unit-category">
+                    <div class="category-header">
+                        <div class="category-icon">📐</div>
+                        <h3>Абсолютні одиниці</h3>
+                        <p>Фіксовані розміри</p>
+                    </div>
+                    <div class="category-content">
+                        <ul class="unit-list">
+                            <li class="unit-item">
+                                <span class="unit-name">px</span>
+                                <span class="unit-desc">Пікселі (найпопулярніша)</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">pt</span>
+                                <span class="unit-desc">Пункти (1pt = 1.33px)</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">pc</span>
+                                <span class="unit-desc">Піки (1pc = 12pt)</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">in</span>
+                                <span class="unit-desc">Дюйми (1in = 96px)</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">cm</span>
+                                <span class="unit-desc">Сантиметри</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">mm</span>
+                                <span class="unit-desc">Міліметри</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit-category">
+                    <div class="category-header">
+                        <div class="category-icon">🔗</div>
+                        <h3>Відносні одиниці</h3>
+                        <p>Залежать від контексту</p>
+                    </div>
+                    <div class="category-content">
+                        <ul class="unit-list">
+                            <li class="unit-item">
+                                <span class="unit-name">%</span>
+                                <span class="unit-desc">Відсоток від батьківського</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">em</span>
+                                <span class="unit-desc">Відносно font-size елемента</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">rem</span>
+                                <span class="unit-desc">Відносно root font-size</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">ex</span>
+                                <span class="unit-desc">Висота символу 'x'</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">ch</span>
+                                <span class="unit-desc">Ширина символу '0'</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">lh</span>
+                                <span class="unit-desc">Висота рядка елемента</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit-category">
+                    <div class="category-header">
+                        <div class="category-icon">🖥️</div>
+                        <h3>Viewport одиниці</h3>
+                        <p>Відносно розміру екрану</p>
+                    </div>
+                    <div class="category-content">
+                        <ul class="unit-list">
+                            <li class="unit-item">
+                                <span class="unit-name">vw</span>
+                                <span class="unit-desc">1% ширини viewport</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">vh</span>
+                                <span class="unit-desc">1% висоти viewport</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">vmin</span>
+                                <span class="unit-desc">1% меншої сторони</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">vmax</span>
+                                <span class="unit-desc">1% більшої сторони</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">vi</span>
+                                <span class="unit-desc">Viewport inline (логічна)</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">vb</span>
+                                <span class="unit-desc">Viewport block (логічна)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="unit-category">
+                    <div class="category-header">
+                        <div class="category-icon">🧮</div>
+                        <h3>Функціональні одиниці</h3>
+                        <p>Обчислювані значення</p>
+                    </div>
+                    <div class="category-content">
+                        <ul class="unit-list">
+                            <li class="unit-item">
+                                <span class="unit-name">calc()</span>
+                                <span class="unit-desc">Математичні вирази</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">min()</span>
+                                <span class="unit-desc">Найменше з значень</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">max()</span>
+                                <span class="unit-desc">Найбільше з значень</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">clamp()</span>
+                                <span class="unit-desc">Обмежене значення</span>
+                            </li>
+                            <li class="unit-item">
+                                <span class="unit-name">fr</span>
+                                <span class="unit-desc">Частка простору (Grid)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Абсолютні одиниці</h2>
+            <p>Абсолютні одиниці мають фіксовані розміри, незалежно від інших елементів:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Одиниця</th>
+                        <th>Повна назва</th>
+                        <th>Еквівалент в px</th>
+                        <th>Використання</th>
+                        <th>Приклад</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="unit-syntax">px</td>
+                        <td>Піксель</td>
+                        <td>1px = 1px</td>
+                        <td>Веб-дизайн, границі, точне позиціонування</td>
+                        <td class="unit-syntax">width: 300px;</td>
+                    </tr>
+                    <tr>
+                        <td class="unit-syntax">pt</td>
+                        <td>Пункт</td>
+                        <td>1pt ≈ 1.33px</td>
+                        <td>Друк, документи</td>
+                        <td class="unit-syntax">font-size: 12pt;</td>
+                    </tr>
+                    <tr>
+                        <td class="unit-syntax">pc</td>
+                        <td>Піка</td>
+                        <td>1pc ≈ 16px</td>
+                        <td>Типографіка, друк</td>
+                        <td class="unit-syntax">margin: 1pc;</td>
+                    </tr>
+                    <tr>
+                        <td class="unit-syntax">in</td>
+                        <td>Дюйм</td>
+                        <td>1in = 96px</td>
+                        <td>Фізичні розміри, друк</td>
+                        <td class="unit-syntax">width: 2in;</td>
+                    </tr>
+                    <tr>
+                        <td class="unit-syntax">cm</td>
+                        <td>Сантиметр</td>
+                        <td>1cm ≈ 37.8px</td>
+                        <td>Фізичні розміри, друк</td>
+                        <td class="unit-syntax">height: 5cm;</td>
+                    </tr>
+                    <tr>
+                        <td class="unit-syntax">mm</td>
+                        <td>Міліметр</td>
+                        <td>1mm ≈ 3.78px</td>
+                        <td>Точні фізичні розміри</td>
+                        <td class="unit-syntax">border: 2mm solid;</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 Коли використовувати абсолютні одиниці:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>px</strong> - для границь, точного позиціонування, іконок</li>
+                    <li><strong>pt</strong> - для друкованих документів та email</li>
+                    <li><strong>cm/mm/in</strong> - для CSS друку та фізичних розмірів</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Відносні одиниці</h2>
+            <p>Відносні одиниці залежать від контексту - розміру шрифту, батьківського елемента або viewport:</p>
+
+            <h3>em vs rem - важлива відмінність</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* em - відносно font-size ПОТОЧНОГО елемента */
+.parent {
+    font-size: 20px;
+}
+
+.child {
+    font-size: 1.5em;    /* 1.5 * 20px = 30px */
+    padding: 1em;        /* 1 * 30px = 30px */
+}
+
+/* rem - відносно font-size ROOT елемента (html) */
+html {
+    font-size: 16px;     /* базовий розмір */
+}
+
+.element {
+    font-size: 1.5rem;   /* 1.5 * 16px = 24px */
+    margin: 2rem;        /* 2 * 16px = 32px */
+}
+            </div>
+
+            <h3>Відсотки - залежать від властивості</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+.parent {
+    width: 400px;
+    height: 300px;
+    font-size: 20px;
+}
+
+.child {
+    width: 50%;          /* 50% від width батьківського = 200px */
+    height: 75%;         /* 75% від height батьківського = 225px */
+    font-size: 120%;     /* 120% від font-size батьківського = 24px */
+    padding: 5%;         /* 5% від WIDTH батьківського = 20px */
+}
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Важливо:</strong> Відсотки для <span class="highlight">padding</span> та <span class="highlight">margin</span> завжди відраховуються від <strong>ширини</strong> батьківського елемента, навіть для вертикальних значень!
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Viewport одиниці</h2>
+            <p>Viewport одиниці дозволяють створювати елементи, розміри яких залежать від розміру екрану:</p>
+
+            <div class="measurement-showcase">
+                <div class="measure-item">
+                    <div class="measure-unit">vw</div>
+                    <div class="measure-value">1vw = 1% ширини екрану</div>
+                    <div class="measure-demo" style="background: #667eea; width: 10vw;">10vw</div>
+                </div>
+                <div class="measure-item">
+                    <div class="measure-unit">vh</div>
+                    <div class="measure-value">1vh = 1% висоти екрану</div>
+                    <div class="measure-demo" style="background: #764ba2; height: 15vh;">15vh</div>
+                </div>
+                <div class="measure-item">
+                    <div class="measure-unit">vmin</div>
+                    <div class="measure-value">1% меншої сторони</div>
+                    <div class="measure-demo" style="background: #38a169; width: 8vmin;">8vmin</div>
+                </div>
+                <div class="measure-item">
+                    <div class="measure-unit">vmax</div>
+                    <div class="measure-value">1% більшої сторони</div>
+                    <div class="measure-demo" style="background: #e53e3e; width: 6vmax;">6vmax</div>
+                </div>
+            </div>
+
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* Повноекранні елементи */
+.hero-section {
+    width: 100vw;        /* Повна ширина екрану */
+    height: 100vh;       /* Повна висота екрану */
+}
+
+/* Адаптивна типографіка */
+.responsive-title {
+    font-size: 4vw;      /* Розмір залежить від ширини */
+    font-size: clamp(1.5rem, 4vw, 3rem); /* Обмежений діапазон */
+}
+
+/* Квадратний елемент */
+.square {
+    width: 30vmin;       /* Залежить від меншої сторони */
+    height: 30vmin;      /* Завжди буде квадратом */
+}
+            </div>
+
+            <div class="important-box">
+                <strong>🎯 Популярні use cases для viewport одиниць:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>100vh</strong> - повноекранні секції (hero, splash screen)</li>
+                    <li><strong>vw</strong> - адаптивна типографіка і spacing</li>
+                    <li><strong>vmin/vmax</strong> - елементи з фіксованим співвідношенням сторін</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Функціональні одиниці</h2>
+            <p>CSS надає функції для складних обчислень та адаптивного дизайну:</p>
+
+            <h3>calc() - математичні вирази</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* Змішування різних одиниць */
+.container {
+    width: calc(100% - 40px);      /* Повна ширина мінус відступи */
+    height: calc(100vh - 200px);   /* Повна висота мінус header */
+    margin: calc(1rem + 5px);      /* Складне значення */
+}
+
+/* Responsive grid */
+.grid-item {
+    width: calc(33.333% - 20px);   /* 3 колонки з gap */
+    margin-right: 20px;
+}
+
+/* Центрування з offset */
+.centered {
+    position: absolute;
+    left: calc(50% - 150px);       /* Центр мінус половина ширини */
+    top: calc(50% - 100px);
+}
+            </div>
+
+            <h3>min(), max(), clamp() - адаптивні значення</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* min() - найменше значення */
+.responsive-width {
+    width: min(100%, 600px);       /* Не більше 600px, але адаптивна */
+}
+
+/* max() - найбільше значення */
+.min-height {
+    height: max(200px, 50vh);      /* Мінімум 200px або 50% екрану */
+}
+
+/* clamp() - значення в діапазоні */
+.fluid-typography {
+    font-size: clamp(1rem, 4vw, 2.5rem);
+    /* мінімум 1rem, ідеально 4vw, максимум 2.5rem */
+}
+
+.adaptive-padding {
+    padding: clamp(1rem, 5%, 3rem);
+    /* Адаптивні відступи з обмеженнями */
+}
+            </div>
+
+            <div class="calc-playground">
+                <h4>🧮 Calc() Playground</h4>
+                <p>Експериментуйте з calc() функцією:</p>
+                <input type="text" class="calc-input" placeholder="calc(100% - 40px)" 
+                       onkeyup="updateCalcDemo(this.value)" 
+                       value="calc(100% - 40px)">
+                <div class="calc-result" id="calcResult">
+                    Введіть calc() вираз вище
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Інтерактивна демонстрація</h2>
+            <div class="interactive-demo">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="showUnitDemo('comparison')">Порівняння</button>
+                    <button class="demo-button" onclick="showUnitDemo('responsive')">Адаптивність</button>
+                    <button class="demo-button" onclick="showUnitDemo('functions')">Функції</button>
+                    <button class="demo-button" onclick="showUnitDemo('practical')">Практика</button>
+                </div>
+                
+                <div id="unitDemo">
+                    <h3>Порівняння одиниць</h3>
+                    <div class="demo-split">
+                        <div class="demo-code-section">
+                            <div class="demo-code-header">📝 CSS</div>
+                            <div class="demo-code-content">
+                                <div class="demo-code-block">.px-demo { width: 200px; }
+.percent-demo { width: 50%; }
+.rem-demo { width: 20rem; }
+.vw-demo { width: 30vw; }</div>
+                            </div>
+                        </div>
+                        <div class="demo-result-section">
+                            <div class="demo-result-header">👁️ Результат</div>
+                            <div class="demo-result-content">
+                                <div style="margin: 0.5rem 0;">
+                                    <div style="width: 200px; height: 30px; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-bottom: 5px;">200px (фіксовано)</div>
+                                    <div style="width: 50%; height: 30px; background: #764ba2; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-bottom: 5px;">50% (адаптивно)</div>
+                                    <div style="width: 20rem; height: 30px; background: #38a169; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-bottom: 5px;">20rem (залежить від root font-size)</div>
+                                    <div style="width: 30vw; height: 30px; background: #e53e3e; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px;">30vw (залежить від ширини екрану)</div>
+                                </div>
+                                <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                                    💡 Змініть розмір вікна, щоб побачити різницю
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Практичні рекомендації</h2>
+            
+            <div class="tip-box">
+                <strong>🎯 Коли використовувати кожну одиницю:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>px</strong> - границі, тіні, точне позиціонування, іконки</li>
+                    <li><strong>rem</strong> - розміри шрифтів, відступи, розміри компонентів</li>
+                    <li><strong>em</strong> - відступи всередині компонентів (кнопки, input)</li>
+                    <li><strong>%</strong> - ширина контейнерів, адаптивний layout</li>
+                    <li><strong>vw/vh</strong> - повноекранні елементи, hero секції</li>
+                    <li><strong>vmin/vmax</strong> - квадратні елементи, медіа контент</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використання em для font-size може призвести до каскадного збільшення</li>
+                    <li>Viewport одиниці можуть створювати проблеми на мобільних через address bar</li>
+                    <li>Змішування px та відносних одиниць без розуміння контексту</li>
+                    <li>Забування про accessibility при використанні viewport одиниць для тексту</li>
+                </ul>
+            </div>
+
+            <h3>Приклад сучасного підходу</h3>
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* CSS змінні для консистентності */
+:root {
+    --font-size-base: 1rem;
+    --spacing-unit: 1rem;
+    --content-width: min(1200px, 90vw);
+}
+
+/* Адаптивна типографіка */
+.heading {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    line-height: 1.2;
+}
+
+/* Гнучкі контейнери */
+.container {
+    width: var(--content-width);
+    margin: 0 auto;
+    padding: calc(var(--spacing-unit) * 2);
+}
+
+/* Responsive spacing */
+.section {
+    padding-block: clamp(2rem, 8vh, 6rem);
+    padding-inline: max(1rem, 5vw);
+}
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('css-properties')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 17 з 41</strong><br>
+                <small>Одиниці виміру CSS</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('css-colors')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const unitDemos = {
+            comparison: {
+                title: 'Порівняння одиниць',
+                code: `.px-demo { width: 200px; }
+.percent-demo { width: 50%; }
+.rem-demo { width: 20rem; }
+.vw-demo { width: 30vw; }`,
+                result: `
+                    <div style="margin: 0.5rem 0;">
+                        <div style="width: 200px; height: 30px; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-bottom: 5px;">200px (фіксовано)</div>
+                        <div style="width: 50%; height: 30px; background: #764ba2; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-bottom: 5px;">50% (адаптивно)</div>
+                        <div style="width: 20rem; height: 30px; background: #38a169; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin-bottom: 5px;">20rem (залежить від root font-size)</div>
+                        <div style="width: 30vw; height: 30px; background: #e53e3e; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px;">30vw (залежить від ширини екрану)</div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Змініть розмір вікна, щоб побачити різницю
+                    </p>
+                `
+            },
+            responsive: {
+                title: 'Адаптивна типографіка',
+                code: `.fluid-title {
+    font-size: clamp(1.5rem, 5vw, 4rem);
+    line-height: 1.2;
+}
+
+.responsive-spacing {
+    padding: clamp(1rem, 4vw, 3rem);
+    margin-block: max(2rem, 8vh);
+}`,
+                result: `
+                    <div style="padding: clamp(1rem, 4vw, 3rem); background: #f8fafc; border-radius: 8px; text-align: center;">
+                        <h2 style="font-size: clamp(1.5rem, 5vw, 4rem); line-height: 1.2; margin: 0; color: #2d3748;">
+                            Адаптивний заголовок
+                        </h2>
+                        <p style="margin-top: 1rem; font-size: clamp(0.9rem, 2vw, 1.2rem); color: #4a5568;">
+                            Цей текст масштабується з розміром екрану
+                        </p>
+                        <div style="margin-top: max(2rem, 8vh); padding: 1rem; background: #667eea; color: white; border-radius: 4px;">
+                            Блок з адаптивними відступами
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Змініть розмір браузера для перевірки
+                    </p>
+                `
+            },
+            functions: {
+                title: 'CSS функції',
+                code: `.calc-demo {
+    width: calc(100% - 40px);
+    height: calc(50vh - 2rem);
+}
+
+.clamp-demo {
+    font-size: clamp(1rem, 3vw, 2rem);
+    padding: min(5%, 2rem);
+}
+
+.minmax-demo {
+    width: min(600px, 100%);
+    height: max(300px, 30vh);
+}`,
+                result: `
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="width: calc(100% - 40px); height: 60px; background: #667eea; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px; margin: 0 auto;">
+                            calc(100% - 40px) width
+                        </div>
+                        <div style="font-size: clamp(1rem, 3vw, 2rem); padding: min(5%, 2rem); background: #764ba2; color: white; text-align: center; border-radius: 4px;">
+                            clamp() font-size + min() padding
+                        </div>
+                        <div style="width: min(600px, 100%); height: max(100px, 15vh); background: #38a169; color: white; display: flex; align-items: center; justify-content: center; border-radius: 4px;">
+                            min() width + max() height
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Функції обчислюються динамічно
+                    </p>
+                `
+            },
+            practical: {
+                title: 'Практичні приклади',
+                code: `/* Повноекранна секція */
+.hero {
+    height: 100vh;
+    padding: 5vw;
+}
+
+/* Центрована карточка */
+.card {
+    width: min(400px, 90%);
+    margin: 2rem auto;
+    padding: clamp(1rem, 4%, 2rem);
+}
+
+/* Адаптивна сітка */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 
+        minmax(min(250px, 100%), 1fr));
+    gap: 1rem;
+}`,
+                result: `
+                    <div style="display: grid; gap: 1rem;">
+                        <div style="height: 20vh; background: linear-gradient(135deg, #667eea, #764ba2); color: white; display: flex; align-items: center; justify-content: center; border-radius: 8px; padding: 2vw;">
+                            Hero секція (20vh для демо)
+                        </div>
+                        <div style="width: min(400px, 90%); margin: 1rem auto; padding: clamp(1rem, 4%, 2rem); background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; text-align: center;">
+                            <h4 style="margin: 0 0 0.5rem 0;">Адаптивна карточка</h4>
+                            <p style="margin: 0; color: #666; font-size: 0.9rem;">min(400px, 90%) ширина</p>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(120px, 100%), 1fr)); gap: 0.5rem;">
+                            <div style="background: #38a169; color: white; padding: 1rem; text-align: center; border-radius: 4px; font-size: 0.9rem;">Grid 1</div>
+                            <div style="background: #e53e3e; color: white; padding: 1rem; text-align: center; border-radius: 4px; font-size: 0.9rem;">Grid 2</div>
+                            <div style="background: #f56500; color: white; padding: 1rem; text-align: center; border-radius: 4px; font-size: 0.9rem;">Grid 3</div>
+                        </div>
+                    </div>
+                    <p style="margin-top: 10px; font-size: 0.9rem; color: #666;">
+                        💡 Реальні паттерни сучасного веб-дизайну
+                    </p>
+                `
+            }
+        };
+
+        function showUnitDemo(type) {
+            // Оновлюємо активну кнопку
+            document.querySelectorAll('.demo-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Показуємо демонстрацію
+            const demo = unitDemos[type];
+            document.getElementById('unitDemo').innerHTML = `
+                <h3>${demo.title}</h3>
+                <div class="demo-split">
+                    <div class="demo-code-section">
+                        <div class="demo-code-header">📝 CSS</div>
+                        <div class="demo-code-content">
+                            <div class="demo-code-block">${demo.code}</div>
+                        </div>
+                    </div>
+                    <div class="demo-result-section">
+                        <div class="demo-result-header">👁️ Результат</div>
+                        <div class="demo-result-content">
+                            ${demo.result}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function updateCalcDemo(value) {
+            const result = document.getElementById('calcResult');
+            if (value.trim() === '') {
+                result.innerHTML = 'Введіть calc() вираз вище';
+                result.style.width = 'auto';
+                return;
+            }
+            
+            try {
+                result.style.width = value;
+                result.style.background = '#667eea';
+                result.style.color = 'white';
+                result.innerHTML = `Ширина: ${value}`;
+            } catch (e) {
+                result.style.background = '#fed7d7';
+                result.style.color = '#c53030';
+                result.innerHTML = 'Невірний синтаксис calc()';
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Input Types</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .input-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .input-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .input-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-syntax {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .input-demo {
+            margin: 1rem 0;
+        }
+
+        .input-demo input,
+        .input-demo select,
+        .input-demo textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .input-demo input:focus,
+        .input-demo select:focus,
+        .input-demo textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-description {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .input-attributes {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .input-attributes h5 {
+            color: #2f855a;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .input-attributes ul {
+            margin: 0;
+            padding-left: 1.5rem;
+            font-size: 0.85rem;
+            color: #4a5568;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .category-section {
+            margin: 2rem 0;
+        }
+
+        .category-title {
+            color: #667eea;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .input-types-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔤 HTML Input Types</h1>
+            <p>Всі типи полів введення та їх можливості</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Вступ до Input Types</h2>
+            <p>HTML5 надає багато різних типів полів для різних видів даних. Кожен тип має свої особливості, валідацію та поведінку:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>Автоматична валідація</strong> - браузер перевіряє коректність даних</li>
+                <li><strong>Спеціальні клавіатури</strong> - на мобільних з'являється відповідна клавіатура</li>
+                <li><strong>Вбудовані віджети</strong> - календарі, колірні палітри, слайдери</li>
+                <li><strong>Покращена доступність</strong> - screen readers розуміють тип поля</li>
+                <li><strong>Автозаповнення</strong> - браузери можуть підказувати значення</li>
+            </ul>
+
+            <div class="code-block">/* Базовий синтаксис input елемента */
+&lt;input type="тип" 
+       id="унікальний_id" 
+       name="назва_для_форми"
+       placeholder="підказка"
+       required&gt;
+
+/* Приклад з усіма атрибутами */
+&lt;label for="email"&gt;Email адреса:&lt;/label&gt;
+&lt;input type="email" 
+       id="email" 
+       name="user_email"
+       placeholder="user@example.com"
+       required
+       autocomplete="email"&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>📝 Текстові поля</h2>
+            
+            <div class="input-types-grid">
+                <div class="input-card">
+                    <div class="input-name">text</div>
+                    <div class="input-syntax">&lt;input type="text"&gt;</div>
+                    <div class="input-demo">
+                        <input type="text" placeholder="Введіть текст">
+                    </div>
+                    <div class="input-description">Звичайне текстове поле для коротких рядків тексту</div>
+                    <div class="input-attributes">
+                        <h5>Корисні атрибути:</h5>
+                        <ul>
+                            <li><code>maxlength</code> - максимальна кількість символів</li>
+                            <li><code>minlength</code> - мінімальна кількість символів</li>
+                            <li><code>pattern</code> - регулярний вираз для валідації</li>
+                            <li><code>autocomplete</code> - підказки браузера</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">password</div>
+                    <div class="input-syntax">&lt;input type="password"&gt;</div>
+                    <div class="input-demo">
+                        <input type="password" placeholder="Введіть пароль">
+                    </div>
+                    <div class="input-description">Приховує введений текст, автозаповнення паролів</div>
+                    <div class="input-attributes">
+                        <h5>Особливості:</h5>
+                        <ul>
+                            <li>Символи відображаються як крапки/зірочки</li>
+                            <li>Браузери пропонують зберегти пароль</li>
+                            <li>Можна використовувати з менеджерами паролів</li>
+                            <li>Підтримує autocomplete="current-password"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">search</div>
+                    <div class="input-syntax">&lt;input type="search"&gt;</div>
+                    <div class="input-demo">
+                        <input type="search" placeholder="Пошук...">
+                    </div>
+                    <div class="input-description">Поле пошуку з кнопкою очищення</div>
+                    <div class="input-attributes">
+                        <h5>Переваги:</h5>
+                        <ul>
+                            <li>Автоматична кнопка "X" для очищення</li>
+                            <li>Історія пошукових запитів</li>
+                            <li>Оптимізація для пошукових алгоритмів</li>
+                            <li>Кращі стилі в деяких браузерах</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">textarea</div>
+                    <div class="input-syntax">&lt;textarea rows="5"&gt;&lt;/textarea&gt;</div>
+                    <div class="input-demo">
+                        <textarea rows="3" placeholder="Багаторядковий текст..."></textarea>
+                    </div>
+                    <div class="input-description">Багаторядкове текстове поле</div>
+                    <div class="input-attributes">
+                        <h5>Атрибути:</h5>
+                        <ul>
+                            <li><code>rows</code> - кількість рядків</li>
+                            <li><code>cols</code> - кількість колонок</li>
+                            <li><code>resize</code> - CSS для контролю зміни розміру</li>
+                            <li><code>wrap</code> - переніс тексту</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📧 Поля з валідацією</h2>
+            
+            <div class="input-types-grid">
+                <div class="input-card">
+                    <div class="input-name">email</div>
+                    <div class="input-syntax">&lt;input type="email"&gt;</div>
+                    <div class="input-demo">
+                        <input type="email" placeholder="user@example.com">
+                    </div>
+                    <div class="input-description">Автоматична валідація email адреси, спеціальна клавіатура на мобільних</div>
+                    <div class="input-attributes">
+                        <h5>Можливості:</h5>
+                        <ul>
+                            <li>Перевірка формату email (містить @)</li>
+                            <li>Клавіатура з @ та .com на мобільних</li>
+                            <li>Підтримує <code>multiple</code> для кількох email</li>
+                            <li>Автозаповнення з адресної книги</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">url</div>
+                    <div class="input-syntax">&lt;input type="url"&gt;</div>
+                    <div class="input-demo">
+                        <input type="url" placeholder="https://example.com">
+                    </div>
+                    <div class="input-description">Автоматична валідація URL адрес</div>
+                    <div class="input-attributes">
+                        <h5>Валідація:</h5>
+                        <ul>
+                            <li>Перевіряє наявність протоколу (http/https)</li>
+                            <li>Валідує структуру URL</li>
+                            <li>Клавіатура з .com/.org на мобільних</li>
+                            <li>Підказки з історії браузера</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">tel</div>
+                    <div class="input-syntax">&lt;input type="tel"&gt;</div>
+                    <div class="input-demo">
+                        <input type="tel" placeholder="+380 XX XXX XX XX">
+                    </div>
+                    <div class="input-description">Телефонні номери, спеціальна клавіатура на мобільних</div>
+                    <div class="input-attributes">
+                        <h5>Особливості:</h5>
+                        <ul>
+                            <li>Цифрова клавіатура на мобільних</li>
+                            <li>Без автоматичної валідації (формати різні)</li>
+                            <li>Використовуйте pattern для валідації</li>
+                            <li>Підтримує autocomplete="tel"</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔢 Числові поля</h2>
+            
+            <div class="input-types-grid">
+                <div class="input-card">
+                    <div class="input-name">number</div>
+                    <div class="input-syntax">&lt;input type="number" min="1" max="100"&gt;</div>
+                    <div class="input-demo">
+                        <input type="number" min="1" max="100" placeholder="1-100">
+                    </div>
+                    <div class="input-description">Тільки числа, кнопки +/-, атрибути min/max</div>
+                    <div class="input-attributes">
+                        <h5>Атрибути:</h5>
+                        <ul>
+                            <li><code>min</code> - мінімальне значення</li>
+                            <li><code>max</code> - максимальне значення</li>
+                            <li><code>step</code> - крок зміни (0.1, 5, any)</li>
+                            <li><code>placeholder</code> - підказка</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">range</div>
+                    <div class="input-syntax">&lt;input type="range" min="0" max="100"&gt;</div>
+                    <div class="input-demo">
+                        <input type="range" min="0" max="100" value="50" oninput="updateRangeValue(this)">
+                        <div style="text-align: center; margin-top: 0.5rem;">Значення: <span id="rangeValue">50</span></div>
+                    </div>
+                    <div class="input-description">Слайдер для вибору значення в діапазоні</div>
+                    <div class="input-attributes">
+                        <h5>Використання:</h5>
+                        <ul>
+                            <li>Гучність, яскравість, швидкість</li>
+                            <li>Оцінки, рейтинги</li>
+                            <li>Прогрес-бари</li>
+                            <li>Налаштування фільтрів</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📅 Дата та час</h2>
+            
+            <div class="input-types-grid">
+                <div class="input-card">
+                    <div class="input-name">date</div>
+                    <div class="input-syntax">&lt;input type="date"&gt;</div>
+                    <div class="input-demo">
+                        <input type="date">
+                    </div>
+                    <div class="input-description">Вбудований календар для вибору дати</div>
+                    <div class="input-attributes">
+                        <h5>Формат:</h5>
+                        <ul>
+                            <li>Значення: YYYY-MM-DD (2024-03-15)</li>
+                            <li>Відображення залежить від локалі</li>
+                            <li>Підтримує min/max для діапазону</li>
+                            <li>step для кроку в днях</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">time</div>
+                    <div class="input-syntax">&lt;input type="time"&gt;</div>
+                    <div class="input-demo">
+                        <input type="time">
+                    </div>
+                    <div class="input-description">Вибір часу з годинами та хвилинами</div>
+                    <div class="input-attributes">
+                        <h5>Формат:</h5>
+                        <ul>
+                            <li>Значення: HH:MM або HH:MM:SS</li>
+                            <li>24-годинний формат в коді</li>
+                            <li>Відображення залежить від системи</li>
+                            <li>step для точності (секунди)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">datetime-local</div>
+                    <div class="input-syntax">&lt;input type="datetime-local"&gt;</div>
+                    <div class="input-demo">
+                        <input type="datetime-local">
+                    </div>
+                    <div class="input-description">Дата та час без часового поясу</div>
+                    <div class="input-attributes">
+                        <h5>Використання:</h5>
+                        <ul>
+                            <li>Бронювання, зустрічі</li>
+                            <li>Дедлайни, нагадування</li>
+                            <li>Формат: YYYY-MM-DDTHH:MM</li>
+                            <li>Без часового поясу</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">month</div>
+                    <div class="input-syntax">&lt;input type="month"&gt;</div>
+                    <div class="input-demo">
+                        <input type="month">
+                    </div>
+                    <div class="input-description">Вибір місяця та року</div>
+                    <div class="input-attributes">
+                        <h5>Приклади:</h5>
+                        <ul>
+                            <li>Звіти по місяцях</li>
+                            <li>Термін дії карток</li>
+                            <li>Формат: YYYY-MM</li>
+                            <li>Зручно для періодів</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">week</div>
+                    <div class="input-syntax">&lt;input type="week"&gt;</div>
+                    <div class="input-demo">
+                        <input type="week">
+                    </div>
+                    <div class="input-description">Вибір тижня в році</div>
+                    <div class="input-attributes">
+                        <h5>Формат:</h5>
+                        <ul>
+                            <li>YYYY-W##</li>
+                            <li>W01 - перший тиждень року</li>
+                            <li>Планування по тижнях</li>
+                            <li>Розклади, графіки</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Спеціальні типи</h2>
+            
+            <div class="input-types-grid">
+                <div class="input-card">
+                    <div class="input-name">color</div>
+                    <div class="input-syntax">&lt;input type="color" value="#667eea"&gt;</div>
+                    <div class="input-demo">
+                        <input type="color" value="#667eea">
+                    </div>
+                    <div class="input-description">Колірна палітра для вибору кольору</div>
+                    <div class="input-attributes">
+                        <h5>Можливості:</h5>
+                        <ul>
+                            <li>Значення у форматі #RRGGBB</li>
+                            <li>Вбудований color picker</li>
+                            <li>Підтримує тільки hex кольори</li>
+                            <li>Не підтримує прозорість</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">file</div>
+                    <div class="input-syntax">&lt;input type="file" accept=".jpg,.png"&gt;</div>
+                    <div class="input-demo">
+                        <input type="file" accept=".jpg,.png,.pdf">
+                    </div>
+                    <div class="input-description">Завантаження файлів з фільтром по типу</div>
+                    <div class="input-attributes">
+                        <h5>Атрибути:</h5>
+                        <ul>
+                            <li><code>accept</code> - типи файлів (.jpg, image/*, .pdf)</li>
+                            <li><code>multiple</code> - кілька файлів</li>
+                            <li><code>capture</code> - камера на мобільних</li>
+                            <li>Потребує enctype="multipart/form-data"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">hidden</div>
+                    <div class="input-syntax">&lt;input type="hidden" value="data"&gt;</div>
+                    <div class="input-demo">
+                        <div style="padding: 1rem; background: #f7fafc; border-radius: 4px; text-align: center; color: #4a5568;">
+                            Поле не відображається<br>
+                            <small>(передає дані на сервер)</small>
+                        </div>
+                    </div>
+                    <div class="input-description">Приховане поле для передачі даних</div>
+                    <div class="input-attributes">
+                        <h5>Використання:</h5>
+                        <ul>
+                            <li>ID записів для редагування</li>
+                            <li>CSRF токени безпеки</li>
+                            <li>Версії для оптимістичного блокування</li>
+                            <li>Стан форми</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>☑️ Чекбокси та радіо</h2>
+            
+            <div class="input-types-grid">
+                <div class="input-card">
+                    <div class="input-name">checkbox</div>
+                    <div class="input-syntax">&lt;input type="checkbox" checked&gt;</div>
+                    <div class="input-demo">
+                        <label style="display: flex; align-items: center; gap: 0.5rem;">
+                            <input type="checkbox" checked>
+                            Я погоджуюся з умовами
+                        </label>
+                        <label style="display: flex; align-items: center; gap: 0.5rem; margin-top: 0.5rem;">
+                            <input type="checkbox">
+                            Підписатися на розсилку
+                        </label>
+                    </div>
+                    <div class="input-description">Множинний вибір, так/ні варіанти</div>
+                    <div class="input-attributes">
+                        <h5>Особливості:</h5>
+                        <ul>
+                            <li>Може бути checked або unchecked</li>
+                            <li>Значення передається тільки якщо checked</li>
+                            <li>Група з однаковим name[] для масиву</li>
+                            <li>indeterminate стан через JavaScript</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">radio</div>
+                    <div class="input-syntax">&lt;input type="radio" name="group"&gt;</div>
+                    <div class="input-demo">
+                        <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="radio" name="size" value="small" checked>
+                                Малий
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="radio" name="size" value="medium">
+                                Середній
+                            </label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                <input type="radio" name="size" value="large">
+                                Великий
+                            </label>
+                        </div>
+                    </div>
+                    <div class="input-description">Вибір одного варіанту з групи</div>
+                    <div class="input-attributes">
+                        <h5>Правила:</h5>
+                        <ul>
+                            <li>Однаковий name для групи</li>
+                            <li>Тільки один може бути вибраний</li>
+                            <li>Різні value для кожного варіанту</li>
+                            <li>Завжди групувати в fieldset</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔘 Кнопки форм</h2>
+            
+            <div class="input-types-grid">
+                <div class="input-card">
+                    <div class="input-name">submit</div>
+                    <div class="input-syntax">&lt;input type="submit" value="Відправити"&gt;</div>
+                    <div class="input-demo">
+                        <input type="submit" value="Відправити форму" style="background: #667eea; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">
+                    </div>
+                    <div class="input-description">Відправляє форму на сервер</div>
+                    <div class="input-attributes">
+                        <h5>Поведінка:</h5>
+                        <ul>
+                            <li>Запускає валідацію форми</li>
+                            <li>Відправляє дані на action URL</li>
+                            <li>Можна перевизначити formaction</li>
+                            <li>Краще використовувати &lt;button type="submit"&gt;</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">reset</div>
+                    <div class="input-syntax">&lt;input type="reset" value="Скинути"&gt;</div>
+                    <div class="input-demo">
+                        <input type="reset" value="Скинути форму" style="background: #e53e3e; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">
+                    </div>
+                    <div class="input-description">Скидає всі поля до початкових значень</div>
+                    <div class="input-attributes">
+                        <h5>Рідко використовується:</h5>
+                        <ul>
+                            <li>Погана UX - користувачі втрачають дані</li>
+                            <li>Не запитує підтвердження</li>
+                            <li>Краще зробити кастомну кнопку</li>
+                            <li>Або не використовувати взагалі</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">button</div>
+                    <div class="input-syntax">&lt;input type="button" value="Дія"&gt;</div>
+                    <div class="input-demo">
+                        <input type="button" value="Кастомна дія" onclick="alert('Кнопка натиснута!')" style="background: #38a169; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 6px; cursor: pointer;">
+                    </div>
+                    <div class="input-description">Кнопка без дії за замовчуванням</div>
+                    <div class="input-attributes">
+                        <h5>Використання:</h5>
+                        <ul>
+                            <li>JavaScript обробники подій</li>
+                            <li>AJAX запити</li>
+                            <li>Динамічна поведінка</li>
+                            <li>&lt;button&gt;&lt;/button&gt; більш гнучкий</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="input-card">
+                    <div class="input-name">image</div>
+                    <div class="input-syntax">&lt;input type="image" src="button.png"&gt;</div>
+                    <div class="input-demo">
+                        <div style="padding: 1rem; background: #f7fafc; border-radius: 4px; text-align: center; color: #4a5568;">
+                            Графічна кнопка відправки<br>
+                            <small>(рідко використовується)</small>
+                        </div>
+                    </div>
+                    <div class="input-description">Графічна кнопка для відправки форми</div>
+                    <div class="input-attributes">
+                        <h5>Особливості:</h5>
+                        <ul>
+                            <li>Працює як submit кнопка</li>
+                            <li>Передає координати кліка (x, y)</li>
+                            <li>Потребує src та alt атрибути</li>
+                            <li>Краще використовувати CSS кнопки</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Списки та вибір</h2>
+            
+            <div class="demo-container">
+                <div class="demo-title">Select елементи</div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">Простий select</h4>
+                        <select style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px;">
+                            <option value="">Оберіть країну</option>
+                            <option value="ua">Україна</option>
+                            <option value="us">США</option>
+                            <option value="de">Німеччина</option>
+                            <option value="fr">Франція</option>
+                        </select>
+                        
+                        <div class="code-block" style="margin-top: 1rem;">
+&lt;select name="country"&gt;
+    &lt;option value=""&gt;Оберіть країну&lt;/option&gt;
+    &lt;option value="ua"&gt;Україна&lt;/option&gt;
+    &lt;option value="us"&gt;США&lt;/option&gt;
+&lt;/select&gt;</div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">Групований select</h4>
+                        <select style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px;">
+                            <option value="">Оберіть технологію</option>
+                            <optgroup label="Frontend">
+                                <option value="html">HTML</option>
+                                <option value="css">CSS</option>
+                                <option value="js">JavaScript</option>
+                            </optgroup>
+                            <optgroup label="Backend">
+                                <option value="php">PHP</option>
+                                <option value="python">Python</option>
+                                <option value="node">Node.js</option>
+                            </optgroup>
+                        </select>
+                        
+                        <div class="code-block" style="margin-top: 1rem;">
+&lt;select name="tech"&gt;
+    &lt;optgroup label="Frontend"&gt;
+        &lt;option value="html"&gt;HTML&lt;/option&gt;
+        &lt;option value="css"&gt;CSS&lt;/option&gt;
+    &lt;/optgroup&gt;
+    &lt;optgroup label="Backend"&gt;
+        &lt;option value="php"&gt;PHP&lt;/option&gt;
+    &lt;/optgroup&gt;
+&lt;/select&gt;</div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">Множинний вибір</h4>
+                        <select multiple style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px; height: 120px;">
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="js">JavaScript</option>
+                            <option value="react">React</option>
+                            <option value="vue">Vue.js</option>
+                            <option value="angular">Angular</option>
+                        </select>
+                        
+                        <div class="code-block" style="margin-top: 1rem;">
+&lt;select name="skills[]" multiple&gt;
+    &lt;option value="html"&gt;HTML&lt;/option&gt;
+    &lt;option value="css"&gt;CSS&lt;/option&gt;
+    &lt;option value="js"&gt;JavaScript&lt;/option&gt;
+&lt;/select&gt;</div>
+                    </div>
+                    
+                    <div>
+                        <h4 style="color: #667eea; margin-bottom: 0.5rem;">Datalist (автодоповнення)</h4>
+                        <input list="cities" placeholder="Введіть місто" style="width: 100%; padding: 0.75rem; border: 2px solid #e2e8f0; border-radius: 6px;">
+                        <datalist id="cities">
+                            <option value="Київ">
+                            <option value="Львів">
+                            <option value="Одеса">
+                            <option value="Харків">
+                            <option value="Дніпро">
+                        </datalist>
+                        
+                        <div class="code-block" style="margin-top: 1rem;">
+&lt;input list="cities" name="city"&gt;
+&lt;datalist id="cities"&gt;
+    &lt;option value="Київ"&gt;
+    &lt;option value="Львів"&gt;
+    &lt;option value="Одеса"&gt;
+&lt;/datalist&gt;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>💡 Кращі практики</h2>
+            
+            <div class="tip-box">
+                <strong>✅ Рекомендації по вибору типів:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>email/tel/url:</strong> Завжди замість text для відповідних даних</li>
+                    <li><strong>number:</strong> Тільки для чисел, які можна +/- (не ID, не телефон)</li>
+                    <li><strong>search:</strong> Для всіх пошукових полів</li>
+                    <li><strong>date/time:</strong> Замість text для дат, але з fallback для старих браузерів</li>
+                    <li><strong>hidden:</strong> Для технічних даних, ніколи для чутливої інформації</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>type="number" для телефонів (номер можна +/-, телефон - ні)</li>
+                    <li>Відсутність labels (погана доступність)</li>
+                    <li>Ігнорування autocomplete атрибутів</li>
+                    <li>Placeholder замість label</li>
+                    <li>type="text" замість спеціалізованих типів</li>
+                    <li>Забування про мобільні клавіатури</li>
+                </ul>
+            </div>
+
+            <h3>🏆 Ідеальний приклад input поля</h3>
+            <div class="code-block">/* Повністю оптимізоване email поле */
+&lt;div class="form-group"&gt;
+    &lt;label for="email"&gt;
+        Email адреса &lt;span class="required"&gt;*&lt;/span&gt;
+    &lt;/label&gt;
+    &lt;input type="email" 
+           id="email" 
+           name="email"
+           placeholder="user@example.com"
+           required
+           autocomplete="email"
+           aria-describedby="email-help email-error"
+           class="form-input"&gt;
+    &lt;div id="email-help" class="field-help"&gt;
+        Ми не передаємо ваш email третім особам
+    &lt;/div&gt;
+    &lt;div id="email-error" class="field-error" aria-live="polite"&gt;
+        &lt;!-- Тут з'являться повідомлення про помилки --&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('forms')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 28 з 41</strong><br>
+                <small>HTML Input Types</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('form-validation')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Оновлення значення range слайдера
+        function updateRangeValue(slider) {
+            document.getElementById('rangeValue').textContent = slider.value;
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            // Встановлюємо фокус стилі для демонстрації
+            const inputs = document.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = '#667eea';
+                    this.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.1)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = '#e2e8f0';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

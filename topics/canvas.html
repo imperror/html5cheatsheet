@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML5 Canvas</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .canvas-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .drawing-app {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .drawing-toolbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.1);
+            padding: 0.5rem;
+            border-radius: 6px;
+        }
+
+        .toolbar-label {
+            color: white;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .tool-button {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .tool-button:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .tool-button.active {
+            background: rgba(255,255,255,0.4);
+            font-weight: bold;
+        }
+
+        .color-input {
+            width: 40px;
+            height: 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .size-slider {
+            width: 80px;
+            height: 4px;
+            border-radius: 2px;
+            background: rgba(255,255,255,0.3);
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+
+        .drawing-canvas {
+            display: block;
+            border: none;
+            background: white;
+            cursor: crosshair;
+        }
+
+        .canvas-info {
+            background: #f7fafc;
+            padding: 0.75rem;
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .example-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .example-canvas {
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: block;
+            width: 100%;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .methods-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .methods-table th,
+        .methods-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .methods-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .methods-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .method-name {
+            font-family: 'Courier New', monospace;
+            background: #edf2f7;
+            padding: 0.25rem 0.5rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .drawing-toolbar {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .toolbar-group {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 HTML5 Canvas</h1>
+            <p>Малювання та графіка в браузері</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи Canvas елемента</h2>
+            <p>Елемент &lt;canvas&gt; надає JavaScript API для малювання графіки в браузері:</p>
+
+            <div class="code-block">/* Базовий синтаксис */
+&lt;canvas id="myCanvas" width="400" height="300"&gt;
+  Ваш браузер не підтримує HTML5 Canvas.
+&lt;/canvas&gt;
+
+&lt;script&gt;
+// Отримання контексту малювання
+const canvas = document.getElementById('myCanvas');
+const ctx = canvas.getContext('2d');
+
+// Малювання прямокутника
+ctx.fillStyle = '#667eea';
+ctx.fillRect(50, 50, 100, 80);
+
+// Малювання кола
+ctx.beginPath();
+ctx.arc(200, 100, 40, 0, 2 * Math.PI);
+ctx.fillStyle = '#e53e3e';
+ctx.fill();
+&lt;/script&gt;</div>
+
+            <div class="demo-container">
+                <div class="demo-title">Базовий приклад Canvas</div>
+                <div class="canvas-demo">
+                    <canvas id="basicCanvas" width="400" height="200" style="border: 1px solid #e2e8f0;"></canvas>
+                    <p style="margin-top: 1rem; color: #4a5568; font-size: 0.9rem;">
+                        Автоматично намальовані фігури при завантаженні сторінки
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🖌️ Інтерактивний редактор малювання</h2>
+            <p>Повнофункціональний Canvas додаток для малювання:</p>
+
+            <div class="drawing-app">
+                <div class="drawing-toolbar">
+                    <div class="toolbar-group">
+                        <span class="toolbar-label">Інструмент:</span>
+                        <button class="tool-button active" onclick="setTool('brush')" id="brushTool">🖌️ Пензель</button>
+                        <button class="tool-button" onclick="setTool('eraser')" id="eraserTool">🧽 Ластик</button>
+                        <button class="tool-button" onclick="setTool('line')" id="lineTool">📏 Лінія</button>
+                        <button class="tool-button" onclick="setTool('rectangle')" id="rectangleTool">▭ Прямокутник</button>
+                        <button class="tool-button" onclick="setTool('circle')" id="circleTool">⭕ Коло</button>
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <span class="toolbar-label">Колір:</span>
+                        <input type="color" class="color-input" value="#667eea" onchange="setColor(this.value)" id="colorPicker">
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <span class="toolbar-label">Розмір:</span>
+                        <input type="range" class="size-slider" min="1" max="50" value="5" onchange="setBrushSize(this.value)" id="brushSize">
+                        <span class="toolbar-label" id="sizeDisplay">5px</span>
+                    </div>
+                    
+                    <div class="toolbar-group">
+                        <button class="tool-button" onclick="clearCanvas()">🗑️ Очистити</button>
+                        <button class="tool-button" onclick="downloadCanvas()">💾 Зберегти</button>
+                    </div>
+                </div>
+                
+                <canvas id="drawingCanvas" class="drawing-canvas" width="800" height="400"></canvas>
+                
+                <div class="canvas-info">
+                    🎨 Клікніть та рухайте мишею для малювання. Оберіть інструмент та налаштуйте параметри.
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📐 Основні методи малювання</h2>
+            <p>Ключові методи Canvas 2D Context:</p>
+
+            <table class="methods-table">
+                <thead>
+                    <tr>
+                        <th>Метод</th>
+                        <th>Опис</th>
+                        <th>Приклад</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="method-name">fillRect(x, y, w, h)</span></td>
+                        <td>Малює заповнений прямокутник</td>
+                        <td>ctx.fillRect(10, 10, 100, 50)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">strokeRect(x, y, w, h)</span></td>
+                        <td>Малює контур прямокутника</td>
+                        <td>ctx.strokeRect(10, 10, 100, 50)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">arc(x, y, r, start, end)</span></td>
+                        <td>Створює дугу або коло</td>
+                        <td>ctx.arc(50, 50, 30, 0, 2*Math.PI)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">moveTo(x, y)</span></td>
+                        <td>Переміщує "перо" без малювання</td>
+                        <td>ctx.moveTo(50, 50)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">lineTo(x, y)</span></td>
+                        <td>Малює лінію до точки</td>
+                        <td>ctx.lineTo(100, 100)</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">beginPath()</span></td>
+                        <td>Починає новий шлях</td>
+                        <td>ctx.beginPath()</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">closePath()</span></td>
+                        <td>Замикає поточний шлях</td>
+                        <td>ctx.closePath()</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">fill()</span></td>
+                        <td>Заповнює шлях</td>
+                        <td>ctx.fill()</td>
+                    </tr>
+                    <tr>
+                        <td><span class="method-name">stroke()</span></td>
+                        <td>Обводить шлях</td>
+                        <td>ctx.stroke()</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Стилі та властивості</h3>
+            <div class="code-block">/* Налаштування стилів */
+const ctx = canvas.getContext('2d');
+
+// Кольори
+ctx.fillStyle = '#667eea';        // Колір заповнення
+ctx.strokeStyle = '#e53e3e';      // Колір контуру
+
+// Лінії
+ctx.lineWidth = 5;                // Товщина лінії
+ctx.lineCap = 'round';            // Закінчення: butt, round, square
+ctx.lineJoin = 'round';           // З'єднання: miter, round, bevel
+
+// Тіні
+ctx.shadowColor = 'rgba(0,0,0,0.5)';
+ctx.shadowOffsetX = 5;
+ctx.shadowOffsetY = 5;
+ctx.shadowBlur = 10;
+
+// Прозорість
+ctx.globalAlpha = 0.8;            // 0.0 - 1.0
+
+// Композитні операції
+ctx.globalCompositeOperation = 'source-over'; // Режим накладання</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🖼️ Робота з зображеннями</h2>
+            <p>Завантаження, відображення та маніпуляція зображень:</p>
+
+            <div class="code-block">/* Завантаження та відображення зображення */
+const img = new Image();
+img.onload = function() {
+  // Простое відображення
+  ctx.drawImage(img, 0, 0);
+  
+  // З масштабуванням
+  ctx.drawImage(img, 0, 0, 200, 150);
+  
+  // Обрізка та розміщення
+  ctx.drawImage(
+    img,
+    100, 50, 200, 100,  // Джерело: x, y, width, height
+    0, 0, 400, 200      // Призначення: x, y, width, height
+  );
+};
+img.src = 'image.jpg';
+
+/* Отримання даних пікселів */
+const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+const data = imageData.data; // Масив RGBA значень
+
+// Зміна пікселів (інверсія кольорів)
+for (let i = 0; i &lt; data.length; i += 4) {
+  data[i] = 255 - data[i];       // Red
+  data[i + 1] = 255 - data[i + 1]; // Green
+  data[i + 2] = 255 - data[i + 2]; // Blue
+  // data[i + 3] - Alpha (прозорість)
+}
+
+// Повернення змінених даних
+ctx.putImageData(imageData, 0, 0);</div>
+
+            <div class="demo-container">
+                <div class="demo-title">Демо: Ефекти зображення</div>
+                <div class="canvas-demo">
+                    <canvas id="imageCanvas" width="300" height="200" style="border: 1px solid #e2e8f0;"></canvas>
+                    <div style="margin-top: 1rem;">
+                        <button class="tool-button" onclick="generatePattern()" style="background: #667eea; margin: 0.25rem;">🎨 Згенерувати патерн</button>
+                        <button class="tool-button" onclick="applyGrayscale()" style="background: #4a5568; margin: 0.25rem;">⬜ Чорно-білий</button>
+                        <button class="tool-button" onclick="applyInvert()" style="background: #e53e3e; margin: 0.25rem;">🔄 Інверсія</button>
+                        <button class="tool-button" onclick="resetImage()" style="background: #38a169; margin: 0.25rem;">↺ Скинути</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📊 Практичні приклади</h2>
+            <p>Різноманітні застосування Canvas в реальних проектах:</p>
+
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-title">📈 Інтерактивний графік</div>
+                    <canvas id="chartCanvas" class="example-canvas" width="280" height="200"></canvas>
+                    <button class="tool-button" onclick="animateChart()" style="background: #667eea; margin-top: 0.5rem;">📊 Анімувати дані</button>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🎯 Анімований годинник</div>
+                    <canvas id="clockCanvas" class="example-canvas" width="280" height="200"></canvas>
+                    <div style="text-align: center; margin-top: 0.5rem; color: #4a5568; font-size: 0.9rem;">
+                        Оновлюється кожну секунду
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🌈 Генератор патернів</div>
+                    <canvas id="patternCanvas" class="example-canvas" width="280" height="200"></canvas>
+                    <button class="tool-button" onclick="generateRandomPattern()" style="background: #764ba2; margin-top: 0.5rem;">🎲 Новий патерн</button>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-title">🎮 Проста гра (Bounce)</div>
+                    <canvas id="gameCanvas" class="example-canvas" width="280" height="200"></canvas>
+                    <div style="text-align: center; margin-top: 0.5rem;">
+                        <button class="tool-button" onclick="startGame()" style="background: #e53e3e;">▶️ Старт</button>
+                        <button class="tool-button" onclick="stopGame()" style="background: #4a5568;">⏹️ Стоп</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 Продвинуті техніки</h2>
+
+            <h3>Трансформації</h3>
+            <div class="code-block">/* Трансформації Canvas */
+const ctx = canvas.getContext('2d');
+
+// Збереження стану
+ctx.save();
+
+// Переміщення початку координат
+ctx.translate(100, 100);
+
+// Поворот (в радіанах)
+ctx.rotate(Math.PI / 4); // 45 градусів
+
+// Масштабування
+ctx.scale(1.5, 1.5);
+
+// Малювання з трансформаціями
+ctx.fillRect(-25, -25, 50, 50);
+
+// Відновлення стану
+ctx.restore();</div>
+
+            <h3>Градієнти та патерни</h3>
+            <div class="code-block">/* Лінійний градієнт */
+const gradient = ctx.createLinearGradient(0, 0, 200, 0);
+gradient.addColorStop(0, '#667eea');
+gradient.addColorStop(0.5, '#764ba2');
+gradient.addColorStop(1, '#e53e3e');
+ctx.fillStyle = gradient;
+ctx.fillRect(0, 0, 200, 100);
+
+/* Радіальний градієнт */
+const radialGradient = ctx.createRadialGradient(100, 100, 0, 100, 100, 50);
+radialGradient.addColorStop(0, '#ffffff');
+radialGradient.addColorStop(1, '#667eea');
+ctx.fillStyle = radialGradient;
+ctx.fillRect(50, 50, 100, 100);
+
+/* Патерн з зображення */
+const img = new Image();
+img.onload = function() {
+  const pattern = ctx.createPattern(img, 'repeat');
+  ctx.fillStyle = pattern;
+  ctx.fillRect(0, 0, 300, 200);
+};
+img.src = 'pattern.png';</div>
+
+            <h3>Анімація</h3>
+            <div class="code-block">/* Базова анімація */
+let x = 0;
+let direction = 1;
+
+function animate() {
+  // Очищення canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Оновлення позиції
+  x += direction * 2;
+  if (x > canvas.width - 50 || x < 0) {
+    direction *= -1;
+  }
+  
+  // Малювання об'єкта
+  ctx.fillStyle = '#667eea';
+  ctx.fillRect(x, 100, 50, 50);
+  
+  // Наступний кадр
+  requestAnimationFrame(animate);
+}
+
+// Запуск анімації
+animate();
+
+/* Анімація з часом */
+let startTime = Date.now();
+
+function timeBasedAnimation() {
+  const currentTime = Date.now();
+  const elapsed = currentTime - startTime;
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // Обертання базоване на часі
+  const angle = (elapsed / 1000) * Math.PI; // 1 оборот за 2 секунди
+  
+  ctx.save();
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(angle);
+  ctx.fillRect(-25, -25, 50, 50);
+  ctx.restore();
+  
+  requestAnimationFrame(timeBasedAnimation);
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Доступність та кращі практики</h2>
+            
+            <div class="tip-box">
+                <strong>✅ Кращі практики Canvas:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Завжди надавайте fallback контент</strong> між тегами canvas</li>
+                    <li><strong>Використовуйте ARIA атрибути</strong> для доступності</li>
+                    <li><strong>Оптимізуйте для мобільних</strong> (touch events, responsive розміри)</li>
+                    <li><strong>Кешуйте складні малюнки</strong> у окремих canvas</li>
+                    <li><strong>Використовуйте requestAnimationFrame</strong> для анімацій</li>
+                    <li><strong>Очищуйте canvas правильно</strong> (clearRect vs getContext)</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Обмеження Canvas:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Немає DOM структури</strong> - складна доступність</li>
+                    <li><strong>Піксельна графіка</strong> - не масштабується добре</li>
+                    <li><strong>Продуктивність</strong> - великі canvas можуть бути повільними</li>
+                    <li><strong>SEO</strong> - контент не індексується пошуковими системами</li>
+                    <li><strong>Same-origin policy</strong> - обмеження завантаження зображень</li>
+                </ul>
+            </div>
+
+            <div class="code-block">/* Accessibility для Canvas */
+&lt;canvas id="myCanvas" width="400" height="300" 
+        role="img" 
+        aria-label="Інтерактивний графік продажів за 2024 рік"
+        aria-describedby="chart-description"&gt;
+  &lt;p&gt;Графік показує зростання продажів з 1000 до 5000 одиниць протягом року.&lt;/p&gt;
+  &lt;table&gt;
+    &lt;tr&gt;&lt;th&gt;Місяць&lt;/th&gt;&lt;th&gt;Продажі&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Січень&lt;/td&gt;&lt;td&gt;1000&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;Лютий&lt;/td&gt;&lt;td&gt;1500&lt;/td&gt;&lt;/tr&gt;
+    &lt;!-- більше даних --&gt;
+  &lt;/table&gt;
+&lt;/canvas&gt;
+
+&lt;div id="chart-description"&gt;
+  Детальний опис графіка та інструкції з навігації клавіатурою.
+&lt;/div&gt;</div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('video')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 35 з 41</strong><br>
+                <small>HTML5 Canvas</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('svg')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Глобальні змінні для малювання
+        let isDrawing = false;
+        let currentTool = 'brush';
+        let currentColor = '#667eea';
+        let currentSize = 5;
+        let startX, startY;
+
+        // Ініціалізація після завантаження DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            setupBasicCanvas();
+            setupDrawingCanvas();
+            setupImageCanvas();
+            setupExamples();
+        });
+
+        // Базовий приклад Canvas
+        function setupBasicCanvas() {
+            const canvas = document.getElementById('basicCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Прямокутник
+            ctx.fillStyle = '#667eea';
+            ctx.fillRect(50, 50, 100, 80);
+
+            // Коло
+            ctx.beginPath();
+            ctx.arc(250, 90, 40, 0, 2 * Math.PI);
+            ctx.fillStyle = '#e53e3e';
+            ctx.fill();
+
+            // Трикутник
+            ctx.beginPath();
+            ctx.moveTo(320, 150);
+            ctx.lineTo(370, 50);
+            ctx.lineTo(420, 150);
+            ctx.closePath();
+            ctx.fillStyle = '#38a169';
+            ctx.fill();
+        }
+
+        // Налаштування інтерактивного canvas для малювання
+        function setupDrawingCanvas() {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // Події миші
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+
+            // Touch події для мобільних
+            canvas.addEventListener('touchstart', handleTouch);
+            canvas.addEventListener('touchmove', handleTouch);
+            canvas.addEventListener('touchend', stopDrawing);
+
+            function startDrawing(e) {
+                isDrawing = true;
+                const rect = canvas.getBoundingClientRect();
+                startX = e.clientX - rect.left;
+                startY = e.clientY - rect.top;
+                
+                if (currentTool === 'brush' || currentTool === 'eraser') {
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                }
+            }
+
+            function draw(e) {
+                if (!isDrawing) return;
+
+                const rect = canvas.getBoundingClientRect();
+                const currentX = e.clientX - rect.left;
+                const currentY = e.clientY - rect.top;
+
+                ctx.lineWidth = currentSize;
+                ctx.lineCap = 'round';
+
+                if (currentTool === 'brush') {
+                    ctx.globalCompositeOperation = 'source-over';
+                    ctx.strokeStyle = currentColor;
+                    ctx.lineTo(currentX, currentY);
+                    ctx.stroke();
+                } else if (currentTool === 'eraser') {
+                    ctx.globalCompositeOperation = 'destination-out';
+                    ctx.lineTo(currentX, currentY);
+                    ctx.stroke();
+                }
+            }
+
+            function stopDrawing(e) {
+                if (!isDrawing) return;
+                isDrawing = false;
+
+                const rect = canvas.getBoundingClientRect();
+                const endX = e.clientX - rect.left;
+                const endY = e.clientY - rect.top;
+
+                if (currentTool === 'line') {
+                    ctx.beginPath();
+                    ctx.moveTo(startX, startY);
+                    ctx.lineTo(endX, endY);
+                    ctx.strokeStyle = currentColor;
+                    ctx.lineWidth = currentSize;
+                    ctx.stroke();
+                } else if (currentTool === 'rectangle') {
+                    const width = endX - startX;
+                    const height = endY - startY;
+                    ctx.strokeStyle = currentColor;
+                    ctx.lineWidth = currentSize;
+                    ctx.strokeRect(startX, startY, width, height);
+                } else if (currentTool === 'circle') {
+                    const radius = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+                    ctx.beginPath();
+                    ctx.arc(startX, startY, radius, 0, 2 * Math.PI);
+                    ctx.strokeStyle = currentColor;
+                    ctx.lineWidth = currentSize;
+                    ctx.stroke();
+                }
+            }
+
+            function handleTouch(e) {
+                e.preventDefault();
+                const touch = e.touches[0];
+                const mouseEvent = new MouseEvent(e.type === 'touchstart' ? 'mousedown' : 
+                                                e.type === 'touchmove' ? 'mousemove' : 'mouseup', {
+                    clientX: touch.clientX,
+                    clientY: touch.clientY
+                });
+                canvas.dispatchEvent(mouseEvent);
+            }
+        }
+
+        // Функції для інструментів малювання
+        function setTool(tool) {
+            currentTool = tool;
+            document.querySelectorAll('.tool-button').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tool + 'Tool').classList.add('active');
+        }
+
+        function setColor(color) {
+            currentColor = color;
+        }
+
+        function setBrushSize(size) {
+            currentSize = size;
+            document.getElementById('sizeDisplay').textContent = size + 'px';
+        }
+
+        function clearCanvas() {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function downloadCanvas() {
+            const canvas = document.getElementById('drawingCanvas');
+            const link = document.createElement('a');
+            link.download = 'my-drawing.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        // Налаштування canvas для ефектів зображення
+        function setupImageCanvas() {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            // Створюємо початковий патерн
+            generatePattern();
+        }
+
+        function generatePattern() {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Створюємо барвистий патерн
+            for (let i = 0; i < 50; i++) {
+                ctx.fillStyle = `hsl(${Math.random() * 360}, 70%, 60%)`;
+                ctx.fillRect(
+                    Math.random() * canvas.width,
+                    Math.random() * canvas.height,
+                    Math.random() * 30 + 10,
+                    Math.random() * 30 + 10
+                );
+            }
+        }
+
+        function applyGrayscale() {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const gray = data[i] * 0.299 + data[i + 1] * 0.587 + data[i + 2] * 0.114;
+                data[i] = gray;
+                data[i + 1] = gray;
+                data[i + 2] = gray;
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function applyInvert() {
+            const canvas = document.getElementById('imageCanvas');
+            const ctx = canvas.getContext('2d');
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                data[i] = 255 - data[i];
+                data[i + 1] = 255 - data[i + 1];
+                data[i + 2] = 255 - data[i + 2];
+            }
+
+            ctx.putImageData(imageData, 0, 0);
+        }
+
+        function resetImage() {
+            generatePattern();
+        }
+
+        // Налаштування прикладів
+        function setupExamples() {
+            setupChart();
+            setupClock();
+            setupPattern();
+            setupGame();
+        }
+
+        // Графік
+        let chartData = [10, 25, 15, 40, 30, 60, 45];
+        let chartAnimationProgress = 0;
+
+        function setupChart() {
+            drawChart();
+        }
+
+        function drawChart() {
+            const canvas = document.getElementById('chartCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const padding = 30;
+            const chartWidth = canvas.width - 2 * padding;
+            const chartHeight = canvas.height - 2 * padding;
+            const barWidth = chartWidth / chartData.length;
+            const maxValue = Math.max(...chartData);
+            
+            // Малюємо стовпці
+            chartData.forEach((value, index) => {
+                const barHeight = (value / maxValue) * chartHeight * chartAnimationProgress;
+                const x = padding + index * barWidth + barWidth * 0.1;
+                const y = canvas.height - padding - barHeight;
+                const width = barWidth * 0.8;
+                
+                ctx.fillStyle = `hsl(${index * 50}, 70%, 60%)`;
+                ctx.fillRect(x, y, width, barHeight);
+                
+                // Підписи
+                ctx.fillStyle = '#333';
+                ctx.font = '12px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(value.toString(), x + width/2, y - 5);
+            });
+        }
+
+        function animateChart() {
+            chartAnimationProgress = 0;
+            const animate = () => {
+                chartAnimationProgress += 0.02;
+                if (chartAnimationProgress < 1) {
+                    drawChart();
+                    requestAnimationFrame(animate);
+                } else {
+                    chartAnimationProgress = 1;
+                    drawChart();
+                }
+            };
+            animate();
+        }
+
+        // Годинник
+        function setupClock() {
+            updateClock();
+            setInterval(updateClock, 1000);
+        }
+
+        function updateClock() {
+            const canvas = document.getElementById('clockCanvas');
+            const ctx = canvas.getContext('2d');
+            const now = new Date();
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 80;
+            
+            // Циферблат
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#667eea';
+            ctx.lineWidth = 3;
+            ctx.stroke();
+            
+            // Цифри
+            for (let i = 1; i <= 12; i++) {
+                const angle = (i * Math.PI) / 6 - Math.PI / 2;
+                const x = centerX + Math.cos(angle) * (radius - 20);
+                const y = centerY + Math.sin(angle) * (radius - 20);
+                
+                ctx.fillStyle = '#333';
+                ctx.font = '14px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(i.toString(), x, y);
+            }
+            
+            // Стрілки
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+            
+            // Годинна стрілка
+            const hourAngle = ((hours * 60 + minutes) / 720) * 2 * Math.PI - Math.PI / 2;
+            drawHand(ctx, centerX, centerY, hourAngle, radius * 0.5, 4, '#333');
+            
+            // Хвилинна стрілка
+            const minuteAngle = (minutes / 30) * Math.PI - Math.PI / 2;
+            drawHand(ctx, centerX, centerY, minuteAngle, radius * 0.7, 2, '#667eea');
+            
+            // Секундна стрілка
+            const secondAngle = (seconds / 30) * Math.PI - Math.PI / 2;
+            drawHand(ctx, centerX, centerY, secondAngle, radius * 0.8, 1, '#e53e3e');
+            
+            // Центр
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, 5, 0, 2 * Math.PI);
+            ctx.fillStyle = '#333';
+            ctx.fill();
+        }
+
+        function drawHand(ctx, centerX, centerY, angle, length, width, color) {
+            ctx.beginPath();
+            ctx.moveTo(centerX, centerY);
+            ctx.lineTo(
+                centerX + Math.cos(angle) * length,
+                centerY + Math.sin(angle) * length
+            );
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            ctx.stroke();
+        }
+
+        // Генератор патернів
+        function setupPattern() {
+            generateRandomPattern();
+        }
+
+        function generateRandomPattern() {
+            const canvas = document.getElementById('patternCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const patterns = ['circles', 'squares', 'lines'];
+            const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+            
+            if (pattern === 'circles') {
+                for (let i = 0; i < 30; i++) {
+                    ctx.beginPath();
+                    ctx.arc(
+                        Math.random() * canvas.width,
+                        Math.random() * canvas.height,
+                        Math.random() * 20 + 5,
+                        0, 2 * Math.PI
+                    );
+                    ctx.fillStyle = `hsla(${Math.random() * 360}, 70%, 60%, 0.7)`;
+                    ctx.fill();
+                }
+            } else if (pattern === 'squares') {
+                for (let i = 0; i < 20; i++) {
+                    const size = Math.random() * 30 + 10;
+                    ctx.fillStyle = `hsla(${Math.random() * 360}, 70%, 60%, 0.7)`;
+                    ctx.fillRect(
+                        Math.random() * (canvas.width - size),
+                        Math.random() * (canvas.height - size),
+                        size, size
+                    );
+                }
+            } else {
+                for (let i = 0; i < 15; i++) {
+                    ctx.beginPath();
+                    ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                    ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+                    ctx.strokeStyle = `hsla(${Math.random() * 360}, 70%, 60%, 0.8)`;
+                    ctx.lineWidth = Math.random() * 5 + 1;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Проста гра
+        let gameRunning = false;
+        let gameInterval;
+        let ballX = 140, ballY = 100, ballDX = 2, ballDY = 2;
+
+        function setupGame() {
+            drawGame();
+        }
+
+        function drawGame() {
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // М'яч
+            ctx.beginPath();
+            ctx.arc(ballX, ballY, 10, 0, 2 * Math.PI);
+            ctx.fillStyle = '#e53e3e';
+            ctx.fill();
+            
+            if (gameRunning) {
+                // Оновлення позиції
+                ballX += ballDX;
+                ballY += ballDY;
+                
+                // Відбиття від стін
+                if (ballX <= 10 || ballX >= canvas.width - 10) ballDX = -ballDX;
+                if (ballY <= 10 || ballY >= canvas.height - 10) ballDY = -ballDY;
+            }
+        }
+
+        function startGame() {
+            if (!gameRunning) {
+                gameRunning = true;
+                gameInterval = setInterval(drawGame, 16); // ~60 FPS
+            }
+        }
+
+        function stopGame() {
+            gameRunning = false;
+            clearInterval(gameInterval);
+        }
+    </script>
+</body>
+</html> 

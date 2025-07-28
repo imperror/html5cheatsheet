@@ -375,7 +375,7 @@
         </div>
         <div class="header-center">
             <div class="progress-indicator">
-                                    <div class="progress-text">Прогрес: <span id="progressText">1 з 42</span></div>
+                                    <div class="progress-text">Прогрес: <span id="progressText">1 з 41</span></div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
@@ -498,12 +498,7 @@
                             <a href="#" class="topic-link" data-topic="css-properties">
                                 <span class="emoji">⚙️</span>CSS властивості та значення
                             </a>
-                        </li>
-                        <li class="topic-item">
-                            <a href="#" class="topic-link" data-topic="css-cascade">
-                                <span class="emoji">🌊</span>Каскадність та специфічність
-                            </a>
-                        </li>
+                                                </li>
                         <li class="topic-item">
                             <a href="#" class="topic-link" data-topic="css-units">
                                 <span class="emoji">📏</span>Одиниці виміру в CSS
@@ -661,6 +656,22 @@
                         </li>
                     </ul>
                 </div>
+
+                <div class="category">
+                    <div class="category-header">Додаткові матеріали</div>
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="#" class="topic-link extra-material" data-topic="demo-templates">
+                                <span class="emoji">🎨</span>Демо-шаблони сайтів
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="#" class="topic-link extra-material" data-topic="ui-components">
+                                <span class="emoji">🧩</span>UI Компоненти
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
 
             
@@ -676,7 +687,7 @@
     <script>
         let currentTopicIndex = 0;
         let sidebarCollapsed = false;
-        const totalTopics = document.querySelectorAll('.topic-link').length;
+        const totalTopics = document.querySelectorAll('.topic-link:not(.extra-material)').length;
 
         function toggleSidebar() {
             const sidebar = document.getElementById('sidebar');
@@ -717,10 +728,14 @@
             });
             document.querySelector(`[data-topic="${topicId}"]`).classList.add('active');
             
-            // Update progress
-            const topics = Array.from(document.querySelectorAll('.topic-link'));
+            // Update progress (only for main topics, not extra materials)
+            const topics = Array.from(document.querySelectorAll('.topic-link:not(.extra-material)'));
             currentTopicIndex = topics.findIndex(link => link.getAttribute('data-topic') === topicId);
-            updateProgress();
+            
+            // Only update progress if it's a main topic
+            if (currentTopicIndex !== -1) {
+                updateProgress();
+            }
             
             // Save current topic
             localStorage.setItem('currentTopic', topicId);

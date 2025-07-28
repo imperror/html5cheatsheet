@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Design</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .breakpoints-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .breakpoint-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .breakpoint-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .breakpoint-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .breakpoint-size {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .breakpoint-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .device-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .demo-button.active {
+            background: #764ba2;
+        }
+
+        .responsive-demo {
+            background: white;
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .responsive-demo.mobile {
+            max-width: 360px;
+            margin: 1rem auto;
+        }
+
+        .responsive-demo.tablet {
+            max-width: 768px;
+            margin: 1rem auto;
+        }
+
+        .responsive-demo.desktop {
+            max-width: 100%;
+        }
+
+        .demo-nav {
+            background: #4a5568;
+            color: white;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .demo-nav.mobile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .demo-nav.tablet,
+        .demo-nav.desktop {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .demo-nav .nav-items {
+            display: none;
+        }
+
+        .demo-nav.tablet .nav-items,
+        .demo-nav.desktop .nav-items {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .demo-content {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .demo-content.mobile {
+            grid-template-columns: 1fr;
+        }
+
+        .demo-content.tablet {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .demo-content.desktop {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .demo-card {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .pattern-example {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .pattern-example h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .units-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .unit-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .unit-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .unit-description {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tool-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+
+        .tool-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Приклади responsive паттернів */
+        .hamburger-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background: white;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Responsive images */
+        .responsive-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        /* Responsive typography */
+        .responsive-text {
+            font-size: clamp(1rem, 2.5vw, 2rem);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hamburger-menu {
+                display: flex;
+            }
+
+            .breakpoints-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .units-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Responsive Design</h1>
+            <p>Адаптивний дизайн для всіх пристроїв та екранів</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи Responsive Design</h2>
+            <p>Responsive Design - це підхід до веб-дизайну, який забезпечує оптимальне відображення сайту на всіх пристроях:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>Гнучка сітка</strong> - макет адаптується до розміру екрана</li>
+                <li><strong>Flexible Images</strong> - зображення масштабуються пропорційно</li>
+                <li><strong>Media Queries</strong> - різні стилі для різних екранів</li>
+                <li><strong>Mobile-First</strong> - спочатку для мобільних, потім для більших екранів</li>
+                <li><strong>Viewport Meta Tag</strong> - правильне масштабування на мобільних</li>
+            </ul>
+
+            <div class="code-block">/* Обов'язковий viewport meta tag в HTML */
+&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+
+/* Базові responsive стилі */
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>📐 Стандартні Breakpoints</h2>
+            <p>Точки перелому (breakpoints) визначають, коли дизайн має змінюватися для різних розмірів екранів:</p>
+            
+            <div class="breakpoints-grid">
+                <div class="breakpoint-card">
+                    <div class="device-icon">📱</div>
+                    <div class="breakpoint-name">Mobile (XS)</div>
+                    <div class="breakpoint-size">0px - 575px</div>
+                    <div class="breakpoint-description">
+                        Смартфони в портретній орієнтації. Однокольоровий макет, великі кнопки.
+                    </div>
+                </div>
+
+                <div class="breakpoint-card">
+                    <div class="device-icon">📱</div>
+                    <div class="breakpoint-name">Mobile (SM)</div>
+                    <div class="breakpoint-size">576px - 767px</div>
+                    <div class="breakpoint-description">
+                        Великі смартфони в альбомній орієнтації. Можливі 2 колонки контенту.
+                    </div>
+                </div>
+
+                <div class="breakpoint-card">
+                    <div class="device-icon">📱</div>
+                    <div class="breakpoint-name">Tablet (MD)</div>
+                    <div class="breakpoint-size">768px - 991px</div>
+                    <div class="breakpoint-description">
+                        Планшети. Sidebar може з'являтися, навігація стає горизонтальною.
+                    </div>
+                </div>
+
+                <div class="breakpoint-card">
+                    <div class="device-icon">💻</div>
+                    <div class="breakpoint-name">Desktop (LG)</div>
+                    <div class="breakpoint-size">992px - 1199px</div>
+                    <div class="breakpoint-description">
+                        Малі десктопи та ноутбуки. Повноцінний багатоколонковий макет.
+                    </div>
+                </div>
+
+                <div class="breakpoint-card">
+                    <div class="device-icon">🖥️</div>
+                    <div class="breakpoint-name">Large Desktop (XL)</div>
+                    <div class="breakpoint-size">1200px+</div>
+                    <div class="breakpoint-description">
+                        Великі монітори. Максимальна ширина контенту, додаткові елементи.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Media Queries</h2>
+            <p>Media Queries дозволяють застосовувати різні стилі залежно від характеристик пристрою:</p>
+
+            <h3>Основний синтаксис</h3>
+            <div class="code-block">/* Базовий синтаксис media query */
+@media (max-width: 768px) {
+    /* Стилі для екранів до 768px */
+    .container {
+        padding: 1rem;
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    /* Стилі для екранів від 769px до 1024px */
+    .container {
+        padding: 2rem;
+    }
+}
+
+/* Mobile-first підхід */
+.container {
+    padding: 1rem; /* Мобільний по замовчуванню */
+}
+
+@media (min-width: 768px) {
+    .container {
+        padding: 2rem; /* Планшет і більше */
+    }
+}
+
+@media (min-width: 1200px) {
+    .container {
+        padding: 3rem; /* Десктоп */
+    }
+}</div>
+
+            <h3>Різні типи медіа-запитів</h3>
+            <div class="code-block">/* За шириною екрана */
+@media (max-width: 768px) { /* До 768px */ }
+@media (min-width: 769px) { /* Від 769px */ }
+@media (width: 768px) { /* Точно 768px */ }
+
+/* За висотою екрана */
+@media (max-height: 600px) { /* Низькі екрани */ }
+@media (min-height: 800px) { /* Високі екрани */ }
+
+/* За орієнтацією */
+@media (orientation: portrait) { /* Портретна */ }
+@media (orientation: landscape) { /* Альбомна */ }
+
+/* За роздільною здатністю */
+@media (min-resolution: 300dpi) { /* Retina екрани */ }
+@media (-webkit-min-device-pixel-ratio: 2) { /* Retina */ }
+
+/* За типом пристрою */
+@media screen { /* Екрани */ }
+@media print { /* Принтери */ }
+
+/* Комбінування умов */
+@media screen and (max-width: 768px) and (orientation: portrait) {
+    /* Мобільні екрани в портретній орієнтації */
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Інтерактивне демо адаптивності</h2>
+            <p>Подивіться, як змінюється макет для різних розмірів екранів:</p>
+
+            <div class="demo-container">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="setDeviceSize('mobile', this)">📱 Mobile</button>
+                    <button class="demo-button" onclick="setDeviceSize('tablet', this)">📱 Tablet</button>
+                    <button class="demo-button" onclick="setDeviceSize('desktop', this)">💻 Desktop</button>
+                </div>
+
+                <div class="responsive-demo mobile" id="responsiveDemo">
+                    <div class="demo-nav mobile" id="demoNav">
+                        <div class="logo">Logo</div>
+                        <div class="hamburger-menu">
+                            <div class="hamburger-line"></div>
+                            <div class="hamburger-line"></div>
+                            <div class="hamburger-line"></div>
+                        </div>
+                        <div class="nav-items">
+                            <span>Головна</span>
+                            <span>Про нас</span>
+                            <span>Контакти</span>
+                        </div>
+                    </div>
+
+                    <div class="demo-content mobile" id="demoContent">
+                        <div class="demo-card">Картка 1</div>
+                        <div class="demo-card">Картка 2</div>
+                        <div class="demo-card">Картка 3</div>
+                    </div>
+                </div>
+
+                <div id="deviceInfo" style="margin-top: 1rem; padding: 1rem; background: #edf2f7; border-radius: 6px; text-align: center;">
+                    📱 Mobile: 360px - Одна колонка, гамбургер меню
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📏 Адаптивні одиниці виміру</h2>
+            <p>Використовуйте правильні одиниці для створення гнучкого дизайну:</p>
+
+            <div class="units-grid">
+                <div class="unit-card">
+                    <div class="unit-name">vw / vh</div>
+                    <div class="unit-description">Відсоток від ширини/висоти viewport</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-name">%</div>
+                    <div class="unit-description">Відсоток від батьківського елемента</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-name">rem</div>
+                    <div class="unit-description">Відносно кореневого елемента</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-name">em</div>
+                    <div class="unit-description">Відносно батьківського елемента</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-name">fr</div>
+                    <div class="unit-description">Частка доступного простору (Grid)</div>
+                </div>
+                <div class="unit-card">
+                    <div class="unit-name">clamp()</div>
+                    <div class="unit-description">Мін, бажане та макс значення</div>
+                </div>
+            </div>
+
+            <div class="code-block">/* Адаптивні одиниці в дії */
+
+/* Viewport units */
+.hero {
+    height: 100vh; /* Висота екрана */
+    width: 100vw; /* Ширина екрана */
+}
+
+/* Відсотки для контейнерів */
+.container {
+    width: 90%; /* 90% від батьківського елемента */
+    max-width: 1200px;
+}
+
+/* rem для типографіки */
+h1 {
+    font-size: 2rem; /* 32px якщо base 16px */
+}
+
+/* clamp() для адаптивного тексту */
+h1 {
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    /* Мін 1.5rem, бажане 4vw, макс 3rem */
+}
+
+/* Адаптивні відступи */
+.section {
+    padding: clamp(1rem, 5vw, 4rem);
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Популярні responsive паттерни</h2>
+
+            <div class="pattern-example">
+                <h4>🧭 Адаптивна навігація</h4>
+                <div class="code-block">/* Гамбургер меню для мобільних */
+.nav-menu {
+    display: flex;
+    gap: 1rem;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none; /* Ховаємо меню */
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 1rem;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .nav-menu.active {
+        display: flex; /* Показуємо при кліку */
+    }
+
+    .hamburger {
+        display: flex; /* Показуємо гамбургер */
+    }
+}</div>
+                
+                <div style="margin-top: 1rem;">
+                    <h5 style="color: #667eea; margin-bottom: 0.5rem;">Візуальний приклад:</h5>
+                    <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                        <!-- Desktop версія -->
+                        <div style="background: #4a5568; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center;">
+                            <div style="font-weight: bold;">Logo</div>
+                            <div style="display: flex; gap: 1rem;">
+                                <span>Головна</span>
+                                <span>Про нас</span>
+                                <span>Послуги</span>
+                                <span>Контакти</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #edf2f7; font-size: 0.9rem; color: #4a5568;">
+                            💻 Desktop: Повна навігація
+                        </div>
+                        
+                        <!-- Mobile версія -->
+                        <div style="background: #4a5568; color: white; padding: 1rem; display: flex; justify-content: space-between; align-items: center; max-width: 300px; margin: 1rem auto 0;">
+                            <div style="font-weight: bold;">Logo</div>
+                            <div style="display: flex; flex-direction: column; cursor: pointer;" onclick="toggleMobileMenu(this)">
+                                <div style="width: 25px; height: 3px; background: white; margin: 3px 0; transition: 0.3s;"></div>
+                                <div style="width: 25px; height: 3px; background: white; margin: 3px 0; transition: 0.3s;"></div>
+                                <div style="width: 25px; height: 3px; background: white; margin: 3px 0; transition: 0.3s;"></div>
+                            </div>
+                        </div>
+                        <div id="mobileMenu" style="display: none; background: white; border-top: 1px solid #e2e8f0; max-width: 300px; margin: 0 auto;">
+                            <div style="padding: 1rem; border-bottom: 1px solid #e2e8f0;">Головна</div>
+                            <div style="padding: 1rem; border-bottom: 1px solid #e2e8f0;">Про нас</div>
+                            <div style="padding: 1rem; border-bottom: 1px solid #e2e8f0;">Послуги</div>
+                            <div style="padding: 1rem;">Контакти</div>
+                        </div>
+                        <div style="text-align: center; padding: 0.5rem; background: #edf2f7; font-size: 0.9rem; color: #4a5568;">
+                            📱 Mobile: Гамбургер меню (клікніть для розгортання)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pattern-example">
+                <h4>🖼️ Адаптивні зображення</h4>
+                <div class="code-block">/* Responsive images */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Різні зображення для різних екранів */
+.hero-image {
+    background-image: url('mobile.jpg');
+}
+
+@media (min-width: 768px) {
+    .hero-image {
+        background-image: url('tablet.jpg');
+    }
+}
+
+@media (min-width: 1200px) {
+    .hero-image {
+        background-image: url('desktop.jpg');
+    }
+}
+
+/* HTML picture element */
+/*
+&lt;picture&gt;
+    &lt;source media="(min-width: 1200px)" srcset="large.jpg"&gt;
+    &lt;source media="(min-width: 768px)" srcset="medium.jpg"&gt;
+    &lt;img src="small.jpg" alt="Опис зображення"&gt;
+&lt;/picture&gt;
+*/</div>
+                
+                <div style="margin-top: 1rem;">
+                    <h5 style="color: #667eea; margin-bottom: 0.5rem;">Візуальний приклад:</h5>
+                    <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem;">
+                            <!-- Mobile image -->
+                            <div style="text-align: center;">
+                                <div style="background: linear-gradient(45deg, #667eea, #764ba2); height: 120px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 0.5rem;">
+                                    Mobile Image<br>400x200px
+                                </div>
+                                <div style="font-size: 0.9rem; color: #4a5568;">📱 &lt; 768px</div>
+                            </div>
+                            
+                            <!-- Tablet image -->
+                            <div style="text-align: center;">
+                                <div style="background: linear-gradient(45deg, #38a169, #4299e1); height: 120px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 0.5rem;">
+                                    Tablet Image<br>800x400px
+                                </div>
+                                <div style="font-size: 0.9rem; color: #4a5568;">📱 768px - 1199px</div>
+                            </div>
+                            
+                            <!-- Desktop image -->
+                            <div style="text-align: center;">
+                                <div style="background: linear-gradient(45deg, #e53e3e, #ed8936); height: 120px; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; margin-bottom: 0.5rem;">
+                                    Desktop Image<br>1200x600px
+                                </div>
+                                <div style="font-size: 0.9rem; color: #4a5568;">💻 ≥ 1200px</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1rem; background: #edf2f7;">
+                            <div style="font-size: 0.9rem; color: #4a5568; margin-bottom: 0.5rem;">
+                                🎯 Кожен пристрій завантажує зображення оптимального розміру
+                            </div>
+                            <div style="background: white; border-radius: 4px; padding: 0.5rem; font-family: monospace; font-size: 0.8rem; color: #2d3748;">
+                                max-width: 100%; height: auto;
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pattern-example">
+                <h4>🃏 Адаптивна сітка карток</h4>
+                <div class="code-block">/* Сітка карток з автоматичним перенесенням */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+}
+
+/* Або з media queries */
+.cards-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Мобільний */
+    gap: 1rem;
+}
+
+@media (min-width: 576px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr); /* Планшет */
+    }
+}
+
+@media (min-width: 992px) {
+    .cards-grid {
+        grid-template-columns: repeat(3, 1fr); /* Десктоп */
+    }
+}
+
+@media (min-width: 1200px) {
+    .cards-grid {
+        grid-template-columns: repeat(4, 1fr); /* Великі екрани */
+    }
+}</div>
+                
+                <div style="margin-top: 1rem;">
+                    <h5 style="color: #667eea; margin-bottom: 0.5rem;">Візуальний приклад:</h5>
+                    <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                        <!-- Mobile (1 колонка) -->
+                        <div style="padding: 1rem; background: #f8fafc;">
+                            <div style="text-align: center; margin-bottom: 1rem; color: #4a5568; font-weight: bold;">📱 Mobile (≤575px): 1 колонка</div>
+                            <div style="display: grid; grid-template-columns: 1fr; gap: 0.5rem; max-width: 300px; margin: 0 auto;">
+                                <div style="background: #667eea; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 1</div>
+                                <div style="background: #e53e3e; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 2</div>
+                                <div style="background: #38a169; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 3</div>
+                                <div style="background: #d69e2e; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 4</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Tablet (2 колонки) -->
+                        <div style="padding: 1rem; background: #edf2f7;">
+                            <div style="text-align: center; margin-bottom: 1rem; color: #4a5568; font-weight: bold;">📱 Tablet (576px-991px): 2 колонки</div>
+                            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; max-width: 500px; margin: 0 auto;">
+                                <div style="background: #667eea; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 1</div>
+                                <div style="background: #e53e3e; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 2</div>
+                                <div style="background: #38a169; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 3</div>
+                                <div style="background: #d69e2e; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 4</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Desktop (3-4 колонки) -->
+                        <div style="padding: 1rem; background: #f0fff4;">
+                            <div style="text-align: center; margin-bottom: 1rem; color: #4a5568; font-weight: bold;">💻 Desktop (≥992px): 3-4 колонки</div>
+                            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem;">
+                                <div style="background: #667eea; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 1</div>
+                                <div style="background: #e53e3e; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 2</div>
+                                <div style="background: #38a169; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 3</div>
+                                <div style="background: #d69e2e; color: white; padding: 1rem; border-radius: 4px; text-align: center;">Картка 4</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1rem; background: #edf2f7;">
+                            <div style="background: white; border-radius: 4px; padding: 0.5rem; font-family: monospace; font-size: 0.8rem; color: #2d3748;">
+                                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pattern-example">
+                <h4>📄 Адаптивна типографіка</h4>
+                <div class="code-block">/* Базовий розмір шрифту */
+html {
+    font-size: 16px; /* Мобільний */
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 18px; /* Планшет */
+    }
+}
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 20px; /* Десктоп */
+    }
+}
+
+/* Адаптивні заголовки з clamp() */
+h1 {
+    font-size: clamp(1.5rem, 5vw, 4rem);
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* Адаптивні відступи */
+.section {
+    padding: clamp(2rem, 8vw, 6rem) clamp(1rem, 4vw, 2rem);
+}</div>
+                
+                <div style="margin-top: 1rem;">
+                    <h5 style="color: #667eea; margin-bottom: 0.5rem;">Візуальний приклад:</h5>
+                    <div style="border: 1px solid #e2e8f0; border-radius: 6px; overflow: hidden;">
+                        <!-- Mobile typography -->
+                        <div style="padding: 1rem; background: #f8fafc; text-align: center;">
+                            <div style="color: #4a5568; font-weight: bold; margin-bottom: 1rem;">📱 Mobile Typography</div>
+                            <div style="font-size: 1.5rem; font-weight: bold; color: #2d3748; margin-bottom: 0.5rem;">Головний заголовок</div>
+                            <div style="font-size: 1.25rem; color: #4a5568; margin-bottom: 0.5rem;">Підзаголовок</div>
+                            <div style="font-size: 1rem; color: #4a5568; line-height: 1.6;">Звичайний текст для читання. Оптимізований для невеликих екранів.</div>
+                            <div style="margin-top: 0.5rem; font-size: 0.8rem; color: #718096;">base: 16px, h1: 24px, h2: 20px, p: 16px</div>
+                        </div>
+                        
+                        <!-- Tablet typography -->
+                        <div style="padding: 1.5rem; background: #edf2f7; text-align: center;">
+                            <div style="color: #4a5568; font-weight: bold; margin-bottom: 1rem;">📱 Tablet Typography</div>
+                            <div style="font-size: 2rem; font-weight: bold; color: #2d3748; margin-bottom: 0.5rem;">Головний заголовок</div>
+                            <div style="font-size: 1.5rem; color: #4a5568; margin-bottom: 0.5rem;">Підзаголовок</div>
+                            <div style="font-size: 1.125rem; color: #4a5568; line-height: 1.6; max-width: 600px; margin: 0 auto;">Звичайний текст для читання. Збільшений розмір для кращого читання на планшетах з більшою відстанню від очей.</div>
+                            <div style="margin-top: 0.5rem; font-size: 0.9rem; color: #718096;">base: 18px, h1: 32px, h2: 24px, p: 18px</div>
+                        </div>
+                        
+                        <!-- Desktop typography -->
+                        <div style="padding: 2rem; background: #f0fff4; text-align: center;">
+                            <div style="color: #4a5568; font-weight: bold; margin-bottom: 1rem;">💻 Desktop Typography</div>
+                            <div style="font-size: 2.5rem; font-weight: bold; color: #2d3748; margin-bottom: 0.5rem;">Головний заголовок</div>
+                            <div style="font-size: 1.75rem; color: #4a5568; margin-bottom: 0.5rem;">Підзаголовок</div>
+                            <div style="font-size: 1.25rem; color: #4a5568; line-height: 1.6; max-width: 800px; margin: 0 auto;">Звичайний текст для читання. Великий розмір шрифту для комфортного читання на великих екранах з більшою відстанню від монітора.</div>
+                            <div style="margin-top: 0.5rem; font-size: 1rem; color: #718096;">base: 20px, h1: 40px, h2: 28px, p: 20px</div>
+                        </div>
+                        
+                        <div style="text-align: center; padding: 1rem; background: #edf2f7;">
+                            <div style="margin-bottom: 0.5rem; color: #4a5568; font-weight: bold;">🎯 Функція clamp() в дії:</div>
+                            <div style="background: white; border-radius: 4px; padding: 0.5rem; font-family: monospace; font-size: 0.8rem; color: #2d3748;">
+                                font-size: clamp(1.5rem, 5vw, 4rem);<br>
+                                /* мін: 1.5rem, бажане: 5vw, макс: 4rem */
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🛠️ Інструменти для тестування</h2>
+            <p>Корисні інструменти для розробки та тестування responsive дизайну:</p>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-name">Browser DevTools</div>
+                    <div class="tool-description">F12 → Device Toolbar для емуляції різних пристроїв</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">Responsive Design Mode</div>
+                    <div class="tool-description">Firefox: Ctrl+Shift+M для швидкого тестування</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">BrowserStack</div>
+                    <div class="tool-description">Онлайн тестування на реальних пристроях</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">Responsively App</div>
+                    <div class="tool-description">Безкоштовний додаток для тестування на кількох екранах</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">Chrome Lighthouse</div>
+                    <div class="tool-description">Аудит продуктивності та мобільної оптимізації</div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-name">Am I Responsive?</div>
+                    <div class="tool-description">Швидкий перегляд сайту на 4 різних екранах</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Кращі практики</h2>
+            
+            <div class="tip-box">
+                <strong>💡 Рекомендації:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Mobile-First:</strong> Почніть з мобільної версії, потім розширюйте</li>
+                    <li><strong>Тестуйте на реальних пристроях:</strong> Емулятори не завжди точні</li>
+                    <li><strong>Optimized Images:</strong> Використовуйте WebP, правильні розміри</li>
+                    <li><strong>Touch-Friendly:</strong> Кнопки мінімум 44px для пальців</li>
+                    <li><strong>Fast Loading:</strong> Мобільний інтернет може бути повільним</li>
+                    <li><strong>Content Priority:</strong> Найважливіший контент першим</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Забувати про viewport meta tag</li>
+                    <li>Використовувати фіксовані одиниці (px) замість адаптивних</li>
+                    <li>Ігнорувати альбомну орієнтацію на мобільних</li>
+                    <li>Занадто маленькі кнопки для сенсорних екранів</li>
+                    <li>Надто багато контенту на мобільних</li>
+                    <li>Не тестувати на реальних пристроях</li>
+                </ul>
+            </div>
+
+            <h3>🎯 Чек-лист responsive дизайну</h3>
+            <div class="code-block">/* Обов'язкові елементи */
+
+1. ✅ Viewport meta tag
+   &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+
+2. ✅ Box-sizing для всіх елементів
+   *, *::before, *::after { box-sizing: border-box; }
+
+3. ✅ Responsive images
+   img { max-width: 100%; height: auto; }
+
+4. ✅ Mobile-first media queries
+   @media (min-width: 768px) { /* Планшет+ */ }
+
+5. ✅ Flexible units (%, rem, vw, vh)
+   .container { width: 90%; max-width: 1200px; }
+
+6. ✅ Touch targets 44px+
+   button { min-height: 44px; min-width: 44px; }
+
+7. ✅ Fast loading (&lt;3 секунди)
+   Оптимізовані зображення, мінімум HTTP запитів
+
+8. ✅ Content hierarchy
+   Найважливіший контент першим на мобільних</div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('grid')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 26 з 41</strong><br>
+                <small>Responsive Design</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('forms')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Responsive демо функції
+        function setDeviceSize(device, buttonElement) {
+            const demo = document.getElementById('responsiveDemo');
+            const nav = document.getElementById('demoNav');
+            const content = document.getElementById('demoContent');
+            const info = document.getElementById('deviceInfo');
+            const container = demo.parentNode;
+            const buttons = container.querySelectorAll('.demo-button');
+            
+            // Оновлюємо активну кнопку
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+            
+            // Видаляємо всі класи
+            demo.className = 'responsive-demo';
+            nav.className = 'demo-nav';
+            content.className = 'demo-content';
+            
+            let infoText = '';
+            let deviceIcon = '';
+            
+            // Додаємо новий клас
+            switch(device) {
+                case 'mobile':
+                    demo.classList.add('mobile');
+                    nav.classList.add('mobile');
+                    content.classList.add('mobile');
+                    infoText = '📱 Mobile: 360px - Одна колонка, гамбургер меню';
+                    deviceIcon = '📱';
+                    break;
+                    
+                case 'tablet':
+                    demo.classList.add('tablet');
+                    nav.classList.add('tablet');
+                    content.classList.add('tablet');
+                    infoText = '📱 Tablet: 768px - Дві колонки, повна навігація';
+                    deviceIcon = '📱';
+                    break;
+                    
+                case 'desktop':
+                    demo.classList.add('desktop');
+                    nav.classList.add('desktop');
+                    content.classList.add('desktop');
+                    infoText = '💻 Desktop: 1200px+ - Три колонки, повна навігація';
+                    deviceIcon = '💻';
+                    break;
+            }
+            
+            info.innerHTML = infoText;
+        }
+
+        // Функція для гамбургер меню в візуальному прикладі
+        function toggleMobileMenu(hamburger) {
+            const menu = document.getElementById('mobileMenu');
+            const lines = hamburger.querySelectorAll('div');
+            
+            if (menu.style.display === 'none' || menu.style.display === '') {
+                menu.style.display = 'block';
+                // Анімація гамбургера в X
+                lines[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+                lines[1].style.opacity = '0';
+                lines[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+            } else {
+                menu.style.display = 'none';
+                // Повертаємо гамбургер
+                lines[0].style.transform = 'none';
+                lines[1].style.opacity = '1';
+                lines[2].style.transform = 'none';
+            }
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            // Встановлюємо початковий стан
+            const firstButton = document.querySelector('#responsiveDemo').parentNode.querySelector('.demo-button');
+            setDeviceSize('mobile', firstButton);
+        });
+    </script>
+</body>
+</html> 

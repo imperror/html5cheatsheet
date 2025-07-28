@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEO Оптимізація</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            margin: 2rem 0;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .seo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .seo-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .seo-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .seo-card p {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        .seo-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .seo-card li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .seo-card li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #a3ffb3;
+            font-weight: bold;
+        }
+
+        .meta-preview {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .meta-preview h3 {
+            color: #1a0dab;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .meta-preview .url {
+            color: #006621;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-preview .description {
+            color: #545454;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .input-group {
+            margin: 1rem 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .input-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .char-counter {
+            font-size: 0.8rem;
+            color: #718096;
+            text-align: right;
+            margin-top: 0.25rem;
+        }
+
+        .char-counter.warning {
+            color: #ed8936;
+        }
+
+        .char-counter.error {
+            color: #e53e3e;
+        }
+
+        .schema-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .schema-type {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .schema-type h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .schema-type p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .seo-checklist {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .seo-checklist h4 {
+            color: #22543d;
+            margin-bottom: 1rem;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 4px;
+        }
+
+        .checklist-item input[type="checkbox"] {
+            margin-right: 0.75rem;
+            transform: scale(1.2);
+        }
+
+        .checklist-item label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tool-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .tool-card h4 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+        }
+
+        .tool-card p {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .tool-link {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.2s;
+        }
+
+        .tool-link:hover {
+            opacity: 0.9;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .tip-box {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fed7d7;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .seo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔍 SEO Оптимізація</h1>
+            <p>Покращення видимості сайту в пошукових системах</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи SEO</h2>
+            <p>Search Engine Optimization (SEO) — це комплекс заходів для покращення позицій сайту в результатах пошуку. Хороший SEO включає:</p>
+            
+            <div class="seo-grid">
+                <div class="seo-card">
+                    <h3>📝 Контентний SEO</h3>
+                    <p>Якість і релевантність контенту</p>
+                    <ul>
+                        <li>Ключові слова в контенті</li>
+                        <li>Унікальний та корисний контент</li>
+                        <li>Структурована інформація</li>
+                        <li>Регулярне оновлення</li>
+                    </ul>
+                </div>
+
+                <div class="seo-card">
+                    <h3>⚙️ Технічний SEO</h3>
+                    <p>Технічні аспекти сайту</p>
+                    <ul>
+                        <li>Швидкість завантаження</li>
+                        <li>Мобільна оптимізація</li>
+                        <li>HTTPS протокол</li>
+                        <li>Правильна структура URL</li>
+                    </ul>
+                </div>
+
+                <div class="seo-card">
+                    <h3>🏗️ Структурний SEO</h3>
+                    <p>HTML структура та розмітка</p>
+                    <ul>
+                        <li>Семантичні HTML теги</li>
+                        <li>Правильні заголовки (H1-H6)</li>
+                        <li>Метатеги та атрибути</li>
+                        <li>Структуровані дані</li>
+                    </ul>
+                </div>
+
+                <div class="seo-card">
+                    <h3>🔗 Зовнішній SEO</h3>
+                    <p>Зовнішні фактори впливу</p>
+                    <ul>
+                        <li>Якісні зворотні посилання</li>
+                        <li>Соціальні сигнали</li>
+                        <li>Локальний SEO</li>
+                        <li>Авторитет домену</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🏷️ HTML Метатеги для SEO</h2>
+            <p>Метатеги надають пошуковим системам інформацію про вашу сторінку:</p>
+
+            <div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    
+    &lt;!-- Основні SEO метатеги --&gt;
+    &lt;title&gt;Ваш заголовок сторінки | Назва бренду&lt;/title&gt;
+    &lt;meta name="description" content="Опис сторінки до 160 символів, який буде показаний в результатах пошуку"&gt;
+    &lt;meta name="keywords" content="ключові, слова, для, сторінки"&gt;
+    
+    &lt;!-- Open Graph для соціальних мереж --&gt;
+    &lt;meta property="og:title" content="Заголовок для соцмереж"&gt;
+    &lt;meta property="og:description" content="Опис для соцмереж"&gt;
+    &lt;meta property="og:image" content="https://yoursite.com/image.jpg"&gt;
+    &lt;meta property="og:url" content="https://yoursite.com/page"&gt;
+    &lt;meta property="og:type" content="website"&gt;
+    &lt;meta property="og:site_name" content="Назва сайту"&gt;
+    
+    &lt;!-- Twitter Cards --&gt;
+    &lt;meta name="twitter:card" content="summary_large_image"&gt;
+    &lt;meta name="twitter:title" content="Заголовок для Twitter"&gt;
+    &lt;meta name="twitter:description" content="Опис для Twitter"&gt;
+    &lt;meta name="twitter:image" content="https://yoursite.com/twitter-image.jpg"&gt;
+    &lt;meta name="twitter:site" content="@yourusername"&gt;
+    
+    &lt;!-- Технічні метатеги --&gt;
+    &lt;meta name="robots" content="index, follow"&gt;
+    &lt;meta name="author" content="Ім'я автора"&gt;
+    &lt;meta name="publisher" content="Назва видавця"&gt;
+    &lt;link rel="canonical" href="https://yoursite.com/canonical-url"&gt;
+    
+    &lt;!-- Favicon --&gt;
+    &lt;link rel="icon" type="image/x-icon" href="/favicon.ico"&gt;
+    &lt;link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"&gt;
+&lt;/head&gt;</div>
+
+            <div class="demo-container">
+                <div class="demo-title">Генератор метатегів</div>
+                
+                <div class="input-group">
+                    <label for="pageTitle">Заголовок сторінки (Title):</label>
+                    <input type="text" id="pageTitle" placeholder="Введіть заголовок сторінки..." oninput="updateMetaPreview()">
+                    <div class="char-counter" id="titleCounter">0/60 символів</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="pageDescription">Опис сторінки (Description):</label>
+                    <textarea id="pageDescription" placeholder="Введіть опис сторінки..." oninput="updateMetaPreview()"></textarea>
+                    <div class="char-counter" id="descCounter">0/160 символів</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="pageUrl">URL сторінки:</label>
+                    <input type="url" id="pageUrl" placeholder="https://yoursite.com/page" oninput="updateMetaPreview()">
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem 0; color: #2d3748;">Превью в Google:</h4>
+                <div class="meta-preview">
+                    <h3 id="previewTitle">Заголовок вашої сторінки</h3>
+                    <div class="url" id="previewUrl">https://yoursite.com/page</div>
+                    <div class="description" id="previewDescription">Опис вашої сторінки, який буде показаний в результатах пошуку Google.</div>
+                </div>
+
+                <h4 style="margin: 1.5rem 0 1rem 0; color: #2d3748;">Згенерований код:</h4>
+                <div class="code-block" id="generatedCode">&lt;title&gt;Заголовок вашої сторінки&lt;/title&gt;
+&lt;meta name="description" content="Опис вашої сторінки"&gt;</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📊 Структуровані дані (Schema.org)</h2>
+            <p>Структуровані дані допомагають пошуковим системам краще розуміти контент вашого сайту:</p>
+
+            <div class="schema-types">
+                <div class="schema-type">
+                    <h4>🏢 Organization</h4>
+                    <p>Інформація про компанію або організацію</p>
+                </div>
+                <div class="schema-type">
+                    <h4>👤 Person</h4>
+                    <p>Дані про конкретну особу</p>
+                </div>
+                <div class="schema-type">
+                    <h4>📝 Article</h4>
+                    <p>Статті, новини, блог-пости</p>
+                </div>
+                <div class="schema-type">
+                    <h4>🛍️ Product</h4>
+                    <p>Товари в інтернет-магазині</p>
+                </div>
+                <div class="schema-type">
+                    <h4>⭐ Review</h4>
+                    <p>Відгуки та рейтинги</p>
+                </div>
+                <div class="schema-type">
+                    <h4>📅 Event</h4>
+                    <p>Події та заходи</p>
+                </div>
+            </div>
+
+            <div class="code-block">/* JSON-LD структуровані дані */
+
+/* Організація */
+&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Назва компанії",
+  "url": "https://yoursite.com",
+  "logo": "https://yoursite.com/logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "+380123456789",
+    "contactType": "customer service",
+    "availableLanguage": ["Ukrainian", "English"]
+  },
+  "sameAs": [
+    "https://facebook.com/yourpage",
+    "https://twitter.com/youraccount",
+    "https://linkedin.com/company/yourcompany"
+  ]
+}
+&lt;/script&gt;
+
+/* Стаття */
+&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Заголовок статті",
+  "image": "https://yoursite.com/article-image.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "Ім'я автора"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Назва видавця",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://yoursite.com/logo.png"
+    }
+  },
+  "datePublished": "2024-01-01",
+  "dateModified": "2024-01-15",
+  "description": "Короткий опис статті",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://yoursite.com/article"
+  }
+}
+&lt;/script&gt;
+
+/* Товар з відгуками */
+&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Назва товару",
+  "image": "https://yoursite.com/product-image.jpg",
+  "description": "Опис товару",
+  "brand": {
+    "@type": "Brand",
+    "name": "Назва бренду"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://yoursite.com/product",
+    "priceCurrency": "UAH",
+    "price": "1000",
+    "availability": "https://schema.org/InStock"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.5",
+    "reviewCount": "89"
+  }
+}
+&lt;/script&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🏗️ Семантичний HTML для SEO</h2>
+            <p>Правильна HTML структура допомагає пошуковим системам краще індексувати контент:</p>
+
+            <div class="code-block">/* SEO-оптимізована HTML структура */
+
+&lt;!DOCTYPE html&gt;
+&lt;html lang="uk"&gt;
+&lt;head&gt;
+    &lt;!-- метатеги --&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Логічна структура заголовків --&gt;
+    &lt;header&gt;
+        &lt;h1&gt;Головний заголовок сайту&lt;/h1&gt;
+        &lt;nav aria-label="Головна навігація"&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/"&gt;Головна&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/about"&gt;Про нас&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/contact"&gt;Контакти&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/header&gt;
+
+    &lt;!-- Хлібні крихти для навігації --&gt;
+    &lt;nav aria-label="Хлібні крихти"&gt;
+        &lt;ol&gt;
+            &lt;li&gt;&lt;a href="/"&gt;Головна&lt;/a&gt;&lt;/li&gt;
+            &lt;li&gt;&lt;a href="/category"&gt;Категорія&lt;/a&gt;&lt;/li&gt;
+            &lt;li aria-current="page"&gt;Поточна сторінка&lt;/li&gt;
+        &lt;/ol&gt;
+    &lt;/nav&gt;
+
+    &lt;main&gt;
+        &lt;article&gt;
+            &lt;header&gt;
+                &lt;h1&gt;Заголовок статті (H1)&lt;/h1&gt;
+                &lt;p&gt;Підзаголовок або короткий опис&lt;/p&gt;
+                &lt;time datetime="2024-01-01"&gt;1 січня 2024&lt;/time&gt;
+            &lt;/header&gt;
+
+            &lt;section&gt;
+                &lt;h2&gt;Перший розділ (H2)&lt;/h2&gt;
+                &lt;p&gt;Контент розділу з &lt;strong&gt;важливими словами&lt;/strong&gt;&lt;/p&gt;
+                
+                &lt;h3&gt;Підрозділ (H3)&lt;/h3&gt;
+                &lt;p&gt;Детальна інформація&lt;/p&gt;
+                
+                &lt;!-- Оптимізовані зображення --&gt;
+                &lt;figure&gt;
+                    &lt;img src="image.webp" 
+                         alt="Детальний опис зображення для SEO"
+                         width="800" height="600"
+                         loading="lazy"&gt;
+                    &lt;figcaption&gt;Підпис до зображення&lt;/figcaption&gt;
+                &lt;/figure&gt;
+            &lt;/section&gt;
+
+            &lt;section&gt;
+                &lt;h2&gt;Другий розділ (H2)&lt;/h2&gt;
+                &lt;p&gt;Ще один розділ з корисною інформацією&lt;/p&gt;
+                
+                &lt;!-- Списки для структурування інформації --&gt;
+                &lt;h3&gt;Переваги нашого продукту:&lt;/h3&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;Висока якість&lt;/li&gt;
+                    &lt;li&gt;Доступна ціна&lt;/li&gt;
+                    &lt;li&gt;Швидка доставка&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/section&gt;
+        &lt;/article&gt;
+
+        &lt;aside&gt;
+            &lt;h2&gt;Схожі статті&lt;/h2&gt;
+            &lt;nav aria-label="Схожі статті"&gt;
+                &lt;ul&gt;
+                    &lt;li&gt;&lt;a href="/related-1"&gt;Пов'язана стаття 1&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="/related-2"&gt;Пов'язана стаття 2&lt;/a&gt;&lt;/li&gt;
+                &lt;/ul&gt;
+            &lt;/nav&gt;
+        &lt;/aside&gt;
+    &lt;/main&gt;
+
+    &lt;footer&gt;
+        &lt;p&gt;&copy; 2024 Назва компанії. Всі права захищені.&lt;/p&gt;
+        &lt;nav aria-label="Додаткова навігація"&gt;
+            &lt;ul&gt;
+                &lt;li&gt;&lt;a href="/privacy"&gt;Політика конфіденційності&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/terms"&gt;Умови використання&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/nav&gt;
+    &lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ Технічний SEO</h2>
+            <p>Технічні аспекти, які впливають на SEO рейтинг вашого сайту:</p>
+
+            <div class="seo-checklist">
+                <h4>📋 SEO Чеклист</h4>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check1">
+                    <label for="check1">Сайт працює по HTTPS протоколу</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check2">
+                    <label for="check2">Швидкість завантаження < 3 секунд</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check3">
+                    <label for="check3">Мобільна версія оптимізована</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check4">
+                    <label for="check4">XML sitemap створена та підключена</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check5">
+                    <label for="check5">Robots.txt налаштований правильно</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check6">
+                    <label for="check6">Всі зображення мають alt-атрибути</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check7">
+                    <label for="check7">URL структура є SEO-дружньою</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check8">
+                    <label for="check8">Внутрішні посилання оптимізовані</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check9">
+                    <label for="check9">Структуровані дані впроваджені</label>
+                </div>
+                
+                <div class="checklist-item">
+                    <input type="checkbox" id="check10">
+                    <label for="check10">404 сторінки налаштовані</label>
+                </div>
+            </div>
+
+            <div class="code-block">/* Технічні SEO файли */
+
+/* robots.txt */
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+Sitemap: https://yoursite.com/sitemap.xml
+
+/* .htaccess для Apache */
+# HTTPS редірект
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Стиснення файлів
+&lt;IfModule mod_deflate.c&gt;
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+&lt;/IfModule&gt;
+
+# Кешування браузера
+&lt;IfModule mod_expires.c&gt;
+    ExpiresActive on
+    ExpiresByType image/jpg "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/pdf "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+&lt;/IfModule&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🛠️ SEO Інструменти</h2>
+            <p>Корисні інструменти для аналізу та покращення SEO:</p>
+
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>📊 Google Analytics</h4>
+                    <p>Аналіз відвідувачів та поведінки на сайті</p>
+                    <a href="https://analytics.google.com" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>🔍 Google Search Console</h4>
+                    <p>Моніторинг індексації та позицій в Google</p>
+                    <a href="https://search.google.com/search-console" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>💡 PageSpeed Insights</h4>
+                    <p>Аналіз швидкості завантаження сторінок</p>
+                    <a href="https://pagespeed.web.dev" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>📱 Mobile-Friendly Test</h4>
+                    <p>Перевірка мобільної оптимізації</p>
+                    <a href="https://search.google.com/test/mobile-friendly" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>🏗️ Schema Markup Validator</h4>
+                    <p>Перевірка структурованих даних</p>
+                    <a href="https://validator.schema.org" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>🔗 Ahrefs</h4>
+                    <p>Аналіз зворотних посилань та ключових слів</p>
+                    <a href="https://ahrefs.com" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>📈 SEMrush</h4>
+                    <p>Комплексний SEO аналіз та дослідження</p>
+                    <a href="https://semrush.com" class="tool-link" target="_blank">Перейти</a>
+                </div>
+
+                <div class="tool-card">
+                    <h4>🌐 GTmetrix</h4>
+                    <p>Детальний аналіз продуктивності сайту</p>
+                    <a href="https://gtmetrix.com" class="tool-link" target="_blank">Перейти</a>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <strong>💡 Поради для SEO успіху:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Якість контенту</strong> — найважливіший фактор для SEO</li>
+                    <li><strong>Регулярність</strong> — оновлюйте контент постійно</li>
+                    <li><strong>Користувацький досвід</strong> — зручність використання впливає на рейтинг</li>
+                    <li><strong>Терпіння</strong> — SEO результати приходять не одразу (3-6 місяців)</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Чого уникати в SEO:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Переспам ключових слів (keyword stuffing)</li>
+                    <li>Купівля низькоякісних зворотних посилань</li>
+                    <li>Дублювання контенту</li>
+                    <li>Приховування тексту або посилань</li>
+                    <li>Ігнорування мобільної оптимізації</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('accessibility')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 38 з 41</strong><br>
+                <small>SEO Оптимізація</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('performance')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Генератор метатегів
+        function updateMetaPreview() {
+            const title = document.getElementById('pageTitle').value || 'Заголовок вашої сторінки';
+            const description = document.getElementById('pageDescription').value || 'Опис вашої сторінки, який буде показаний в результатах пошуку Google.';
+            const url = document.getElementById('pageUrl').value || 'https://yoursite.com/page';
+
+            // Оновлення превью
+            document.getElementById('previewTitle').textContent = title;
+            document.getElementById('previewDescription').textContent = description;
+            document.getElementById('previewUrl').textContent = url;
+
+            // Оновлення згенерованого коду
+            const code = `<title>${title}</title>
+<meta name="description" content="${description}">
+<meta property="og:title" content="${title}">
+<meta property="og:description" content="${description}">
+<meta property="og:url" content="${url}">`;
+            
+            document.getElementById('generatedCode').textContent = code;
+
+            // Підрахунок символів
+            updateCharCounter('pageTitle', 'titleCounter', 60);
+            updateCharCounter('pageDescription', 'descCounter', 160);
+        }
+
+        function updateCharCounter(inputId, counterId, maxLength) {
+            const input = document.getElementById(inputId);
+            const counter = document.getElementById(counterId);
+            const currentLength = input.value.length;
+            
+            counter.textContent = `${currentLength}/${maxLength} символів`;
+            
+            // Зміна кольору в залежності від кількості символів
+            if (currentLength > maxLength) {
+                counter.className = 'char-counter error';
+            } else if (currentLength > maxLength * 0.9) {
+                counter.className = 'char-counter warning';
+            } else {
+                counter.className = 'char-counter';
+            }
+        }
+
+        // Чеклист прогрес
+        function updateChecklistProgress() {
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            const total = checkboxes.length;
+            const checked = document.querySelectorAll('.checklist-item input[type="checkbox"]:checked').length;
+            const progress = Math.round((checked / total) * 100);
+            
+            console.log(`SEO прогрес: ${progress}% (${checked}/${total})`);
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMetaPreview();
+            
+            // Додавання обробників для чекбоксів
+            const checkboxes = document.querySelectorAll('.checklist-item input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', updateChecklistProgress);
+            });
+            
+            console.log('SEO tools loaded');
+        });
+    </script>
+</body>
+</html> 

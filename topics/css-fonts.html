@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Шрифти та Текст</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Poppins:wght@300;400;600&family=Nunito:wght@300;400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Merriweather:wght@300;400;700&family=Lora:wght@400;500;600&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Dancing+Script:wght@400;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Righteous&family=Bangers&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Bungee&family=Cabin+Sketch:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .content-section h4 {
+            color: #4a5568;
+            margin-bottom: 0.8rem;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .font-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .font-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .font-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .font-family-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .font-example {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #f7fafc;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .font-description {
+            color: #718096;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .font-comparator {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparator-controls {
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #f7fafc;
+        }
+
+        .control-row {
+            display: grid;
+            grid-template-columns: 200px 1fr auto;
+            gap: 1rem;
+            align-items: end;
+            margin-bottom: 1rem;
+        }
+
+        .language-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            padding: 0.7rem 1rem;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .language-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .quick-texts {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .quick-text-btn {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #4a5568;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .quick-text-btn:hover {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .font-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .font-preview-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .font-preview-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-color: #667eea;
+        }
+
+        .font-name {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .font-sample {
+            font-size: 24px;
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            color: #2d3748;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            font-display: swap;
+        }
+
+        /* Ensure font loading */
+        .font-sample[style*="Inter"] { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif !important; 
+        }
+        .font-sample[style*="Playfair"] { 
+            font-family: 'Playfair Display', Georgia, serif !important; 
+        }
+        .font-sample[style*="Fira Code"] { 
+            font-family: 'Fira Code', 'Courier New', monospace !important; 
+        }
+        .font-sample[style*="Lobster"] { 
+            font-family: 'Lobster', cursive !important; 
+        }
+        .font-sample[style*="Poppins"] { 
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif !important; 
+        }
+        .font-sample[style*="Righteous"] { 
+            font-family: 'Righteous', Impact, sans-serif !important; 
+        }
+        .font-sample[style*="Merriweather"] { 
+            font-family: 'Merriweather', Georgia, serif !important; 
+        }
+        .font-sample[style*="Bangers"] { 
+            font-family: 'Bangers', Impact, sans-serif !important; 
+        }
+        .font-sample[style*="Dancing Script"] { 
+            font-family: 'Dancing Script', cursive !important; 
+        }
+        .font-sample[style*="Bungee"] { 
+            font-family: 'Bungee', Impact, sans-serif !important; 
+        }
+        .font-sample[style*="Creepster"] { 
+            font-family: 'Creepster', fantasy !important; 
+        }
+        .font-sample[style*="Cabin Sketch"] { 
+            font-family: 'Cabin Sketch', fantasy !important; 
+        }
+
+        .font-info {
+            color: #718096;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .control-row {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .font-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .font-sample {
+                font-size: 20px;
+                min-height: 60px;
+            }
+            
+            .quick-texts {
+                justify-content: center;
+            }
+        }
+
+
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .control-input {
+            padding: 0.8rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .control-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .range-input {
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .range-input::-webkit-slider-thumb:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .range-input::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+
+
+
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .property-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.1);
+        }
+
+        .property-header {
+            background: #f7fafc;
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .property-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .property-body {
+            padding: 1rem;
+        }
+
+        .property-demo {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            border-left: 4px solid #667eea;
+        }
+
+        .syntax-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .syntax-table th {
+            background: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .syntax-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            vertical-align: top;
+        }
+
+        .syntax-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .property-syntax {
+            font-family: 'Courier New', Consolas, monospace;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .important-box {
+            background: #ebf8ff;
+            border: 1px solid #90cdf4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #38a169;
+        }
+
+        .warning-box {
+            background: #fffbeb;
+            border: 1px solid #fbd38d;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #ed8936;
+        }
+
+        .value-row {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+        }
+
+        .value-label {
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 120px;
+        }
+
+        .value-code {
+            font-family: 'Courier New', Consolas, monospace;
+            background: #f7fafc;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .navigation {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .web-fonts-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .web-font-example {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 6px;
+            background: #f8fafc;
+        }
+
+
+
+        .font-inter { font-family: 'Inter', sans-serif; }
+        .font-playfair { font-family: 'Playfair Display', serif; }
+        .font-fira { font-family: 'Fira Code', monospace; }
+        .font-poppins { font-family: 'Poppins', sans-serif; }
+        .font-nunito { font-family: 'Nunito', sans-serif; }
+        .font-opensans { font-family: 'Open Sans', sans-serif; }
+        .font-merriweather { font-family: 'Merriweather', serif; }
+        .font-lora { font-family: 'Lora', serif; }
+        .font-crimson { font-family: 'Crimson Text', serif; }
+        .font-jetbrains { font-family: 'JetBrains Mono', monospace; }
+        .font-source { font-family: 'Source Code Pro', monospace; }
+        .font-lobster { font-family: 'Lobster', cursive; }
+        .font-dancing { font-family: 'Dancing Script', cursive; }
+        .font-pacifico { font-family: 'Pacifico', cursive; }
+        .font-fredoka { font-family: 'Fredoka One', cursive; }
+        .font-creepster { font-family: 'Creepster', cursive; }
+        .font-bungee { font-family: 'Bungee', cursive; }
+        .font-righteous { font-family: 'Righteous', cursive; }
+        .font-bangers { font-family: 'Bangers', cursive; }
+        .font-cabin { font-family: 'Cabin Sketch', cursive; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔤 CSS Шрифти та Текст</h1>
+            <p>Повний посібник з типографіки, веб-шрифтів та стилізації тексту</p>
+        </div>
+
+                    <div class="content-section">
+                <h2>🎨 Порівняння шрифтів</h2>
+                <p>Інтерактивний інструмент для порівняння та тестування різних шрифтів з вашим текстом:</p>
+                
+                <div class="font-comparator">
+                    <div class="comparator-controls">
+                        <div class="control-row">
+                            <div class="control-group">
+                                <label class="control-label">Розмір шрифту: <span id="globalSizeValue">24px</span></label>
+                                <input type="range" class="range-input" id="globalSize" min="14" max="48" value="24" onchange="updateAllPreviews()">
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">Ваш текст:</label>
+                                <input type="text" class="control-input" id="globalText" 
+                                       value="Швидка коричнева лисиця стрибає" 
+                                       onchange="updateAllPreviews()" placeholder="Введіть текст для тестування...">
+                            </div>
+                            <button class="language-btn" onclick="toggleGlobalLanguage()" id="globalLangBtn">🌐 EN</button>
+                        </div>
+                        
+                        <div class="quick-texts">
+                            <button class="quick-text-btn" onclick="setGlobalText('pangram')">🦊 Панграма</button>
+                            <button class="quick-text-btn" onclick="setGlobalText('alphabet')">🔤 Алфавіт</button>
+                            <button class="quick-text-btn" onclick="setGlobalText('mixed')">🌍 Змішано</button>
+                        </div>
+                    </div>
+                    
+                    <div class="font-grid">
+                        <div class="font-preview-card">
+                            <div class="font-name">Inter</div>
+                            <div class="font-sample" style="font-family: 'Inter', sans-serif;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Sans-serif • Сучасний UI</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Playfair Display</div>
+                            <div class="font-sample" style="font-family: 'Playfair Display', serif;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Serif • Елегантний</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Fira Code</div>
+                            <div class="font-sample" style="font-family: 'Fira Code', monospace;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Monospace • Для коду</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Lobster</div>
+                            <div class="font-sample" style="font-family: 'Lobster', cursive;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Cursive • Ретро скрипт</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Poppins</div>
+                            <div class="font-sample" style="font-family: 'Poppins', sans-serif;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Sans-serif • Дружній</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Righteous</div>
+                            <div class="font-sample" style="font-family: 'Righteous', cursive;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Display • Сучасний</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Merriweather</div>
+                            <div class="font-sample" style="font-family: 'Merriweather', serif;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Serif • Для читання</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Bangers</div>
+                            <div class="font-sample" style="font-family: 'Bangers', cursive;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Display • Комікс</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Dancing Script</div>
+                            <div class="font-sample" style="font-family: 'Dancing Script', cursive;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Script • Рукописний</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Bungee</div>
+                            <div class="font-sample" style="font-family: 'Bungee', cursive;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Display • Грайливий</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Creepster</div>
+                            <div class="font-sample" style="font-family: 'Creepster', cursive;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Display • Жахливий</div>
+                        </div>
+                        
+                        <div class="font-preview-card">
+                            <div class="font-name">Cabin Sketch</div>
+                            <div class="font-sample" style="font-family: 'Cabin Sketch', cursive;">
+                                Швидка коричнева лисиця стрибає
+                            </div>
+                            <div class="font-info">Display • Скетчевий</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-box" style="margin-top: 2rem;">
+                        <strong>💡 Як користуватися:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                            <li>Змініть текст вище, щоб протестувати свою фразу</li>
+                            <li>Регулюйте розмір шрифту для кращого порівняння</li>
+                            <li>Переключайте між мовами кнопкою 🌐</li>
+                            <li>Використовуйте швидкі кнопки для тестових текстів</li>
+                            <li>Звертайте увагу на читабельність кириличних символів</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>📚 Сімейства шрифтів (font-family)</h2>
+                <p>Основа типографіки - правильний вибір шрифту для різних цілей:</p>
+
+                <h3>Основні категорії шрифтів</h3>
+                
+                <div class="font-showcase">
+                    <div class="font-card">
+                        <div class="font-family-name">Sans-serif</div>
+                        <div class="font-example" style="font-family: Arial, sans-serif;">
+                            Без засічок - для веба
+                        </div>
+                        <div class="font-description">
+                            <strong>Приклади:</strong> Arial, Helvetica, Inter, Roboto<br>
+                            <strong>Використання:</strong> Основний текст, інтерфейси
+                        </div>
+                    </div>
+                    
+                    <div class="font-card">
+                        <div class="font-family-name">Serif</div>
+                        <div class="font-example" style="font-family: Georgia, serif;">
+                            З засічками - для читання
+                        </div>
+                        <div class="font-description">
+                            <strong>Приклади:</strong> Times, Georgia, Playfair Display<br>
+                            <strong>Використання:</strong> Статті, книги, преміум контент
+                        </div>
+                    </div>
+                    
+                    <div class="font-card">
+                        <div class="font-family-name">Monospace</div>
+                        <div class="font-example" style="font-family: 'Courier New', monospace;">
+                            Фіксована ширина - для коду
+                        </div>
+                        <div class="font-description">
+                            <strong>Приклади:</strong> Courier, Monaco, Fira Code<br>
+                            <strong>Використання:</strong> Код, технічна документація
+                        </div>
+                    </div>
+                    
+                    <div class="font-card">
+                        <div class="font-family-name">Cursive</div>
+                        <div class="font-example" style="font-family: cursive;">
+                            Рукописний стиль
+                        </div>
+                        <div class="font-description">
+                            <strong>Приклади:</strong> Brush Script, Lobster<br>
+                            <strong>Використання:</strong> Логотипи, акценти
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🌐 Веб-шрифти та Google Fonts</h3>
+                
+                <div class="web-fonts-demo">
+                    <h4>📚 Sans-serif шрифти - для інтерфейсів і основного тексту:</h4>
+                    
+                    <div class="web-font-example">
+                        <div class="font-inter" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Inter</strong> - сучасний геометричний шрифт для UI та інтерфейсів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-poppins" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Poppins</strong> - дружній округлий шрифт з чудовою читабельністю
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-nunito" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Nunito</strong> - м'який та збалансований шрифт для веб-застосунків
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-opensans" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Open Sans</strong> - універсальний шрифт, розроблений Google для веба
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap');</div>
+                    </div>
+                </div>
+
+                <div class="web-fonts-demo">
+                    <h4>📖 Serif шрифти - для статей і преміум контенту:</h4>
+                    
+                    <div class="web-font-example">
+                        <div class="font-playfair" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Playfair Display</strong> - елегантний serif для заголовків та акцентів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-merriweather" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Merriweather</strong> - ідеальний для довгих текстів та читання
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-lora" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Lora</strong> - сучасний serif з каліграфічними коренями
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-crimson" style="font-size: 1.3rem; margin-bottom: 0.5rem;">
+                            <strong>Crimson Text</strong> - академічний стиль, натхненний історичними шрифтами
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&display=swap');</div>
+                    </div>
+                </div>
+
+                <div class="web-fonts-demo">
+                    <h4>💻 Monospace шрифти - для коду та технічних текстів:</h4>
+                    
+                    <div class="web-font-example">
+                        <div class="font-fira" style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+                            <strong>Fira Code</strong> - з лігатурами для коду: == != => >=
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-jetbrains" style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+                            <strong>JetBrains Mono</strong> - спеціально для розробників, від JetBrains
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-source" style="font-size: 1.2rem; margin-bottom: 0.5rem;">
+                            <strong>Source Code Pro</strong> - від Adobe, оптимізований для код-едиторів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@400;500&display=swap');</div>
+                    </div>
+                </div>
+
+                <div class="web-fonts-demo">
+                    <h4>🎨 Декоративні та художні шрифти - для акцентів і заголовків:</h4>
+                    
+                    <div class="web-font-example">
+                        <div class="font-lobster" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Lobster</strong> - ретро скрипт для винтажного дизайну
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-dancing" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Dancing Script</strong> - рукописний стиль для особистих проектів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-pacifico" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Pacifico</strong> - пляжний стиль, ідеальний для туристичних сайтів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-fredoka" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Fredoka One</strong> - веселий дитячий стиль для ігрових проектів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-righteous" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Righteous</strong> - сучасний display шрифт з характером
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Righteous&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-bangers" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Bangers</strong> - комікс стиль для енергійних проектів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-bungee" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Bungee</strong> - грайливий шрифт для творчих проектів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Bungee&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-creepster" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Creepster</strong> - жахливий стиль для тематичних сайтів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');</div>
+                    </div>
+                    
+                    <div class="web-font-example">
+                        <div class="font-cabin" style="font-size: 1.4rem; margin-bottom: 0.5rem;">
+                            <strong>Cabin Sketch</strong> - ескізний стиль для креативних проектів
+                        </div>
+                        <div class="code-block">@import url('https://fonts.googleapis.com/css2?family=Cabin+Sketch:wght@400;700&display=swap');</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>⚖️ Вага та стиль шрифту</h2>
+                
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">font-weight</div>
+                        </div>
+                        <div class="property-body">
+                            <div class="property-demo" style="font-weight: 100;">100 - Thin</div>
+                            <div class="property-demo" style="font-weight: 300;">300 - Light</div>
+                            <div class="property-demo" style="font-weight: 400;">400 - Normal (default)</div>
+                            <div class="property-demo" style="font-weight: 600;">600 - Semi Bold</div>
+                            <div class="property-demo" style="font-weight: 700;">700 - Bold</div>
+                            <div class="property-demo" style="font-weight: 900;">900 - Black</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">font-style</div>
+                        </div>
+                        <div class="property-body">
+                            <div class="property-demo" style="font-style: normal;">normal - звичайний</div>
+                            <div class="property-demo" style="font-style: italic;">italic - курсив</div>
+                            <div class="property-demo" style="font-style: oblique;">oblique - нахилений</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>📐 Розміри та відстані</h2>
+                
+                <div class="interactive-demo">
+                    <div class="demo-header">📏 Інтерактивна демонстрація типографічних відстаней</div>
+                    
+                    <div class="demo-controls">
+                        <div class="control-group">
+                            <label class="control-label">Font Size: <span id="typeSizeValue">18px</span></label>
+                            <input type="range" class="range-input" id="typeSize" min="12" max="48" value="18" onchange="updateTypographyDemo()">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label">Line Height: <span id="typeLineHeightValue">1.6</span></label>
+                            <input type="range" class="range-input" id="typeLineHeight" min="1" max="2.5" step="0.1" value="1.6" onchange="updateTypographyDemo()">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label">Letter Spacing: <span id="typeLetterSpacingValue">0px</span></label>
+                            <input type="range" class="range-input" id="typeLetterSpacing" min="-1" max="3" step="0.1" value="0" onchange="updateTypographyDemo()">
+                        </div>
+                        
+                        <div class="control-group">
+                            <label class="control-label">Word Spacing: <span id="wordSpacingValue">0px</span></label>
+                            <input type="range" class="range-input" id="wordSpacing" min="-5" max="10" step="0.5" value="0" onchange="updateTypographyDemo()">
+                        </div>
+                    </div>
+                    
+                    <div class="demo-preview">
+                        <div id="typographyPreview" style="text-align: left; max-width: 600px;">
+                            <p>Типографіка - це мистецтво та техніка організації тексту таким чином, щоб зробити письмову мову читабельною та привабливою при відображенні.</p>
+                            <p>Правильне налаштування відстаней між літерами, словами та рядками значно покращує сприйняття тексту користувачем.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>📊 Рекомендовані співвідношення</h3>
+                <div class="important-box">
+                    <strong>🎯 Золоті правила типографіки:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><span class="highlight">Line-height:</span> 1.4-1.6 для основного тексту, 1.2-1.3 для заголовків</li>
+                        <li><span class="highlight">Довжина рядка:</span> 45-75 символів (оптимально 65)</li>
+                        <li><span class="highlight">Розмір шрифту:</span> мінімум 16px для основного тексту</li>
+                        <li><span class="highlight">Контраст:</span> мінімум 4.5:1 для звичайного тексту</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎨 Стилізація та оформлення тексту</h2>
+                
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">text-decoration</div>
+                        </div>
+                        <div class="property-body">
+                            <div class="property-demo" style="text-decoration: none;">none - без оформлення</div>
+                            <div class="property-demo" style="text-decoration: underline;">underline - підкреслення</div>
+                            <div class="property-demo" style="text-decoration: overline;">overline - надкреслення</div>
+                            <div class="property-demo" style="text-decoration: line-through;">line-through - закреслення</div>
+                            <div class="property-demo" style="text-decoration: underline wavy red;">wavy underline - хвилясте</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">text-transform</div>
+                        </div>
+                        <div class="property-body">
+                            <div class="property-demo" style="text-transform: none;">none - без змін</div>
+                            <div class="property-demo" style="text-transform: uppercase;">UPPERCASE - ВЕЛИКІ ЛІТЕРИ</div>
+                            <div class="property-demo" style="text-transform: lowercase;">lowercase - малі літери</div>
+                            <div class="property-demo" style="text-transform: capitalize;">Capitalize - Перша Велика</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">text-align</div>
+                        </div>
+                        <div class="property-body">
+                            <div class="property-demo" style="text-align: left;">left - по лівому краю</div>
+                            <div class="property-demo" style="text-align: center;">center - по центру</div>
+                            <div class="property-demo" style="text-align: right;">right - по правому краю</div>
+                            <div class="property-demo" style="text-align: justify;">justify - по ширині</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">text-shadow</div>
+                        </div>
+                        <div class="property-body">
+                            <div class="property-demo" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3);">Проста тінь</div>
+                            <div class="property-demo" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">Глибока тінь</div>
+                            <div class="property-demo" style="text-shadow: 0 0 10px #667eea;">Світіння</div>
+                            <div class="property-demo" style="text-shadow: 3px 3px 0 #667eea, 6px 6px 0 #764ba2;">3D ефект</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎭 Поєднання шрифтів та художні композиції</h2>
+                
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Класичне поєднання</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 0.5rem;">Елегантний заголовок</div>
+                            <div style="font-family: 'Open Sans', sans-serif; font-size: 1rem; color: #4a5568;">
+                                Основний текст виконаний у Sans-serif шрифті для кращої читабельності на екранах.
+                            </div>
+                            <div class="code-block" style="font-size: 0.8rem; margin-top: 1rem;">
+Заголовки: Playfair Display (serif)
+Текст: Open Sans (sans-serif)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Сучасне поєднання</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Righteous', cursive; font-size: 2rem; margin-bottom: 0.5rem; color: #667eea;">МОДЕРНИЙ СТИЛЬ</div>
+                            <div style="font-family: 'Inter', sans-serif; font-size: 1rem; color: #4a5568;">
+                                Поєднання сучасного display шрифту з геометричним sans-serif створює актуальний вигляд.
+                            </div>
+                            <div class="code-block" style="font-size: 0.8rem; margin-top: 1rem;">
+Заголовки: Righteous (display)
+Текст: Inter (sans-serif)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Творче поєднання</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Lobster', cursive; font-size: 2rem; margin-bottom: 0.5rem; color: #f56500;">Креативний проект</div>
+                            <div style="font-family: 'Nunito', sans-serif; font-size: 1rem; color: #4a5568;">
+                                Декоративний шрифт для акцентів у поєднанні з дружнім і читабельним основним шрифтом.
+                            </div>
+                            <div class="code-block" style="font-size: 0.8rem; margin-top: 1rem;">
+Акценти: Lobster (decorative)
+Текст: Nunito (sans-serif)</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Технічне поєднання</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Bungee', cursive; font-size: 1.5rem; margin-bottom: 0.5rem; color: #667eea;">TECH BLOG</div>
+                            <div style="font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; background: #2d3748; color: #e2e8f0; padding: 0.5rem; border-radius: 4px; margin: 0.5rem 0;">
+const code = "JetBrains Mono";</div>
+                            <div style="font-family: 'Inter', sans-serif; font-size: 0.9rem; color: #4a5568;">
+                                Для технічних блогів та документації
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <strong>🎯 Правила поєднання шрифтів:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>Максимум 2-3 шрифти</strong> на одній сторінці</li>
+                        <li><strong>Контраст стилів:</strong> serif + sans-serif або display + text</li>
+                        <li><strong>Спільні пропорції:</strong> схожа висота x-height</li>
+                        <li><strong>Ієрархія:</strong> декоративні тільки для заголовків</li>
+                        <li><strong>Мета дизайну:</strong> шрифти повинні підтримувати загальний стиль</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <strong>🎨 Коли використовувати декоративні шрифти:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>Logotype та брендинг</strong> - створення унікальної ідентичності</li>
+                        <li><strong>Заголовки і акценти</strong> - не більше 1-2 рядків</li>
+                        <li><strong>Тематичні проекти</strong> - відповідність стилю контенту</li>
+                        <li><strong>Call-to-action</strong> - привернення уваги до ключових елементів</li>
+                        <li><strong>Великі розміри</strong> - мінімум 24px для збереження читабельності</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Коли НЕ використовувати декоративні шрифти:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>Довгі тексти</strong> - швидко втомлюють очі</li>
+                        <li><strong>Малі розміри</strong> - втрачають читабельність</li>
+                        <li><strong>Форми введення</strong> - користувач повинен легко читати свої дані</li>
+                        <li><strong>Мобільні пристрої</strong> - можуть погано масштабуватися</li>
+                        <li><strong>Серйозний контент</strong> - фінанси, медицина, юриспруденція</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>📋 Довідник властивостей тексту</h2>
+                
+                <table class="syntax-table">
+                    <thead>
+                        <tr>
+                            <th>Властивість</th>
+                            <th>Можливі значення</th>
+                            <th>Приклад</th>
+                            <th>Опис</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="property-syntax">font-family</td>
+                            <td>"Назва", serif, sans-serif, monospace, cursive</td>
+                            <td class="property-syntax">font-family: "Arial", sans-serif;</td>
+                            <td>Сімейство шрифтів</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">font-size</td>
+                            <td>px, em, rem, %, vw, keywords</td>
+                            <td class="property-syntax">font-size: 1.2rem;</td>
+                            <td>Розмір шрифту</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">font-weight</td>
+                            <td>100-900, normal, bold, lighter, bolder</td>
+                            <td class="property-syntax">font-weight: 600;</td>
+                            <td>Товщина шрифту</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">line-height</td>
+                            <td>normal, number, px, em, %</td>
+                            <td class="property-syntax">line-height: 1.6;</td>
+                            <td>Висота рядка</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">letter-spacing</td>
+                            <td>normal, px, em</td>
+                            <td class="property-syntax">letter-spacing: 0.1em;</td>
+                            <td>Відстань між літерами</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">word-spacing</td>
+                            <td>normal, px, em</td>
+                            <td class="property-syntax">word-spacing: 2px;</td>
+                            <td>Відстань між словами</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">text-indent</td>
+                            <td>px, em, %</td>
+                            <td class="property-syntax">text-indent: 2em;</td>
+                            <td>Відступ першого рядка</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">white-space</td>
+                            <td>normal, nowrap, pre, pre-wrap, pre-line</td>
+                            <td class="property-syntax">white-space: nowrap;</td>
+                            <td>Обробка пробілів</td>
+                        </tr>
+                        <tr>
+                            <td class="property-syntax">text-overflow</td>
+                            <td>clip, ellipsis</td>
+                            <td class="property-syntax">text-overflow: ellipsis;</td>
+                            <td>Поведінка при переповненні</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="content-section">
+                <h2>🔤 Практичні приклади використання</h2>
+                
+                <h3>📰 Стилі для різних типів контенту</h3>
+                
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Заголовки</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem;">
+                                Головний заголовок
+                            </div>
+                            <div class="code-block">font-family: 'Playfair Display', serif;
+font-size: 2rem;
+font-weight: 700;
+line-height: 1.2;</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Основний текст</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Inter', sans-serif; font-size: 1rem; line-height: 1.6; color: #4a5568;">
+                                Це приклад основного тексту статті. Він повинен бути легко читабельним і приємним для очей.
+                            </div>
+                            <div class="code-block">font-family: 'Inter', sans-serif;
+font-size: 1rem;
+line-height: 1.6;
+color: #4a5568;</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Код</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Fira Code', monospace; font-size: 0.9rem; background: #2d3748; color: #e2e8f0; padding: 0.5rem; border-radius: 4px;">
+                                const message = "Hello, World!";
+                            </div>
+                            <div class="code-block">font-family: 'Fira Code', monospace;
+font-size: 0.9rem;
+background: #2d3748;
+color: #e2e8f0;</div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Цитата</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Playfair Display', serif; font-size: 1.2rem; font-style: italic; color: #667eea; border-left: 4px solid #667eea; padding-left: 1rem;">
+                                "Типографіка - це одяг для думок"
+                            </div>
+                            <div class="code-block">font-family: 'Playfair Display', serif;
+font-size: 1.2rem;
+font-style: italic;
+color: #6b46c1;</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>⚡ Оптимізація продуктивності</h2>
+                
+                <div class="tip-box">
+                    <strong>🚀 Поради з оптимізації веб-шрифтів:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>font-display: swap;</strong> - показувати fallback шрифт під час завантаження</li>
+                        <li><strong>Preload критичних шрифтів:</strong> &lt;link rel="preload" as="font"&gt;</li>
+                        <li><strong>Завантажуйте тільки потрібні ваги</strong> - не завантажуйте всі 9 вагів</li>
+                        <li><strong>Використовуйте локальні шрифти:</strong> local() в @font-face</li>
+                        <li><strong>WOFF2 формат</strong> - найкраще стиснення</li>
+                        <li><strong>Підтримка змінних шрифтів</strong> - один файл замість багатьох</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">/* Приклад оптимізованого підключення через @font-face */
+@font-face {
+  font-family: 'Inter';
+  src: local('Inter'), 
+       url('inter.woff2') format('woff2'),
+       url('inter.woff') format('woff');
+  font-display: swap;
+}</div>
+
+                <div class="code-block">&lt;!-- Або через Google Fonts з font-display --&gt;
+&lt;link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"&gt;</div>
+            </div>
+
+            <div class="content-section">
+                <h2>🏢 Вибір шрифтів для різних типів проектів</h2>
+                
+                <div class="property-grid">
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Корпоративні сайти</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Inter', sans-serif; font-weight: 600; margin-bottom: 0.5rem;">Рекомендовані шрифти:</div>
+                            <ul style="font-family: 'Inter', sans-serif; margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Inter</strong> - сучасний, професійний</li>
+                                <li><strong>Open Sans</strong> - надійний, читабельний</li>
+                                <li><strong>Merriweather</strong> - для довгих текстів</li>
+                            </ul>
+                            <div style="color: #4a5568; font-size: 0.9rem;">
+                                ✓ Серйозність ✓ Читабельність ✓ Професіоналізм
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Творчі проекти</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Righteous', cursive; font-weight: 400; margin-bottom: 0.5rem;">Рекомендовані шрифти:</div>
+                            <ul style="font-family: 'Nunito', sans-serif; margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Lobster</strong> - ретро стиль</li>
+                                <li><strong>Righteous</strong> - модерний display</li>
+                                <li><strong>Poppins</strong> - дружній, округлий</li>
+                            </ul>
+                            <div style="color: #4a5568; font-size: 0.9rem;">
+                                ✓ Креативність ✓ Індивідуальність ✓ Настрій
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Технічні блоги</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'JetBrains Mono', monospace; font-weight: 500; margin-bottom: 0.5rem;">Рекомендовані шрифти:</div>
+                            <ul style="font-family: 'Inter', sans-serif; margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Fira Code</strong> - для коду з лігатурами</li>
+                                <li><strong>Inter</strong> - для основного тексту</li>
+                                <li><strong>JetBrains Mono</strong> - альтернатива для коду</li>
+                            </ul>
+                            <div style="color: #4a5568; font-size: 0.9rem;">
+                                ✓ Технічність ✓ Точність ✓ Функціональність
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Дитячі проекти</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Fredoka One', cursive; margin-bottom: 0.5rem; color: #f56500;">Рекомендовані шрифти:</div>
+                            <ul style="font-family: 'Nunito', sans-serif; margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Fredoka One</strong> - веселий, дитячий</li>
+                                <li><strong>Bangers</strong> - комікс стиль</li>
+                                <li><strong>Nunito</strong> - м'який для тексту</li>
+                            </ul>
+                            <div style="color: #4a5568; font-size: 0.9rem;">
+                                ✓ Веселість ✓ Дружність ✓ Грайливість
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Новинні сайти</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Lora', serif; font-weight: 600; margin-bottom: 0.5rem;">Рекомендовані шрифти:</div>
+                            <ul style="font-family: 'Lora', serif; margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Lora</strong> - для статей</li>
+                                <li><strong>Inter</strong> - для заголовків</li>
+                                <li><strong>Crimson Text</strong> - для довгих читань</li>
+                            </ul>
+                            <div style="color: #4a5568; font-size: 0.9rem;">
+                                ✓ Читабельність ✓ Авторитетність ✓ Комфорт
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="property-card">
+                        <div class="property-header">
+                            <div class="property-name">Туристичні сайти</div>
+                        </div>
+                        <div class="property-body">
+                            <div style="font-family: 'Pacifico', cursive; margin-bottom: 0.5rem; color: #667eea;">Рекомендовані шрифти:</div>
+                            <ul style="font-family: 'Poppins', sans-serif; margin: 0.5rem 0; padding-left: 1.5rem;">
+                                <li><strong>Pacifico</strong> - пляжний настрій</li>
+                                <li><strong>Dancing Script</strong> - романтичний</li>
+                                <li><strong>Poppins</strong> - для інформації</li>
+                            </ul>
+                            <div style="color: #4a5568; font-size: 0.9rem;">
+                                ✓ Настрій ✓ Пригоди ✓ Емоції
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <strong>🎯 Золоті правила вибору шрифтів:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>Аудиторія:</strong> враховуйте вік та очікування користувачів</li>
+                        <li><strong>Контекст:</strong> шрифт повинен відповідати змісту</li>
+                        <li><strong>Пристрої:</strong> перевіряйте на мобільних та планшетах</li>
+                        <li><strong>Завантаження:</strong> не завантажуйте занадто багато шрифтів</li>
+                        <li><strong>Fallback:</strong> завжди вказуйте запасні шрифти</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <h2>🎯 Кращі практики</h2>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Часті помилки в типографіці:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>Занадто маленький шрифт</strong> - менше 16px на мобільних</li>
+                        <li><strong>Занадто маленький line-height</strong> - менше 1.2</li>
+                        <li><strong>Занадто довгі рядки</strong> - понад 80 символів</li>
+                        <li><strong>Низький контраст</strong> - менше 4.5:1</li>
+                        <li><strong>Багато різних шрифтів</strong> - більше 2-3 на сторінці</li>
+                        <li><strong>Ігнорування мобільних пристроїв</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="important-box">
+                    <strong>✅ Чек-лист хорошої типографіки:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>✓ Розмір основного тексту мінімум 16px</li>
+                        <li>✓ Line-height між 1.4-1.6 для тексту</li>
+                        <li>✓ Довжина рядка 45-75 символів</li>
+                        <li>✓ Контраст мінімум 4.5:1</li>
+                        <li>✓ Логічна ієрархія заголовків</li>
+                        <li>✓ Адаптивність на всіх пристроях</li>
+                        <li>✓ Швидке завантаження шрифтів</li>
+                    </ul>
+                </div>
+            </div>
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('css-colors')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 19 з 41</strong><br>
+                <small>CSS Шрифти та Текст</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('box-model')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Font comparator functionality
+        let currentLanguage = 'ua';
+        const textVariants = {
+            ua: {
+                pangram: "Швидка коричнева лисиця стрибає",
+                alphabet: "АБВГҐДЕЄЖЗИІЇЙКЛМНОПРСТУФХЦЧШЩЬЮЯ",
+                mixed: "Web Typography 2024 • Веб-типографіка"
+            },
+            en: {
+                pangram: "The quick brown fox jumps",
+                alphabet: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+                mixed: "Web Typography 2024 • Design"
+            }
+        };
+
+        function updateAllPreviews() {
+            const globalText = document.getElementById('globalText').value;
+            const globalSize = document.getElementById('globalSize').value;
+            
+            // Update size display
+            document.getElementById('globalSizeValue').textContent = globalSize + 'px';
+            
+            // Update all font samples
+            const fontSamples = document.querySelectorAll('.font-sample');
+            fontSamples.forEach(sample => {
+                sample.textContent = globalText;
+                sample.style.fontSize = globalSize + 'px';
+            });
+        }
+
+        function toggleGlobalLanguage() {
+            currentLanguage = currentLanguage === 'ua' ? 'en' : 'ua';
+            const globalTextInput = document.getElementById('globalText');
+            const toggleButton = document.getElementById('globalLangBtn');
+            
+            // Update text based on current selection or use pangram as default
+            const currentText = globalTextInput.value;
+            let newText = textVariants[currentLanguage].pangram; // default
+            
+            // Check if current text matches any predefined text
+            if (Object.values(textVariants.ua).includes(currentText)) {
+                const key = Object.keys(textVariants.ua).find(k => textVariants.ua[k] === currentText);
+                newText = textVariants[currentLanguage][key];
+            } else if (Object.values(textVariants.en).includes(currentText)) {
+                const key = Object.keys(textVariants.en).find(k => textVariants.en[k] === currentText);
+                newText = textVariants[currentLanguage][key];
+            }
+            
+            globalTextInput.value = newText;
+            
+            // Update button text
+            toggleButton.innerHTML = currentLanguage === 'ua' ? '🌐 EN' : '🌐 UA';
+            toggleButton.title = currentLanguage === 'ua' ? 'Switch to English' : 'Переключити на українську';
+            
+            updateAllPreviews();
+        }
+
+        function setGlobalText(type) {
+            const globalTextInput = document.getElementById('globalText');
+            globalTextInput.value = textVariants[currentLanguage][type];
+            updateAllPreviews();
+        }
+
+        function initializeComparator() {
+            const toggleButton = document.getElementById('globalLangBtn');
+            toggleButton.innerHTML = currentLanguage === 'ua' ? '🌐 EN' : '🌐 UA';
+            toggleButton.title = currentLanguage === 'ua' ? 'Switch to English' : 'Переключити на українську';
+            updateAllPreviews();
+        }
+
+        function updateTypographyDemo() {
+            const preview = document.getElementById('typographyPreview');
+            
+            const fontSize = document.getElementById('typeSize').value;
+            const lineHeight = document.getElementById('typeLineHeight').value;
+            const letterSpacing = document.getElementById('typeLetterSpacing').value;
+            const wordSpacing = document.getElementById('wordSpacing').value;
+            
+            // Update value displays
+            document.getElementById('typeSizeValue').textContent = fontSize + 'px';
+            document.getElementById('typeLineHeightValue').textContent = lineHeight;
+            document.getElementById('typeLetterSpacingValue').textContent = letterSpacing + 'px';
+            document.getElementById('wordSpacingValue').textContent = wordSpacing + 'px';
+            
+            // Apply styles
+            preview.style.fontSize = fontSize + 'px';
+            preview.style.lineHeight = lineHeight;
+            preview.style.letterSpacing = letterSpacing + 'px';
+            preview.style.wordSpacing = wordSpacing + 'px';
+        }
+
+        // Initialize
+        updateTypographyDemo();
+        initializeComparator();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Float та Clear</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .property-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .property-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-syntax {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .property-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .demo-button.active {
+            background: #764ba2;
+        }
+
+        .float-demo-area {
+            background: white;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 200px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+
+        .demo-content {
+            overflow: auto;
+        }
+
+        .float-element {
+            background: #e53e3e;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            width: 120px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .demo-text {
+            color: #4a5568;
+            line-height: 1.6;
+            text-align: justify;
+        }
+
+        .clearfix::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffbf0;
+            border: 1px solid #f6e05e;
+            border-left: 4px solid #d69e2e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #b7791f;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .clearfix-demo {
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .clearfix-demo .container-box {
+            background: #edf2f7;
+            padding: 1rem;
+            margin: 1rem 0;
+            border: 2px dashed #cbd5e0;
+            border-radius: 4px;
+        }
+
+        .clearfix-demo .float-box {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            float: left;
+            margin: 0.5rem;
+            border-radius: 4px;
+            width: 100px;
+            text-align: center;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .float-demo-area {
+                min-height: 250px;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌊 CSS Float та Clear</h1>
+            <p>Обтікання елементів та керування потоком контенту</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи Float та Clear</h2>
+            <p>Float та Clear - це класичні CSS властивості для створення макетів та обтікання елементів:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>float</strong> - робить елемент "плаваючим", дозволяючи іншому контенту обтікати його</li>
+                <li><strong>clear</strong> - забороняє елементу обтікати плаваючі елементи з певного боку</li>
+                <li><strong>clearfix</strong> - техніка для вирішення проблеми "схлопнутих" контейнерів</li>
+            </ul>
+
+            <div class="warning-box">
+                <strong>📌 Важливо:</strong> Float в сучасному веб-розробці здебільшого замінений на Flexbox та Grid. 
+                Однак розуміння float залишається корисним для підтримки старого коду та специфічних задач.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🌊 Властивість Float</h2>
+            
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-name">float: none</div>
+                    <div class="property-syntax">element { float: none; }</div>
+                    <div class="property-description">
+                        Значення за замовчуванням. Елемент не плаває та залишається в нормальному потоці документа.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">float: left</div>
+                    <div class="property-syntax">element { float: left; }</div>
+                    <div class="property-description">
+                        Елемент прилипає до лівого краю контейнера. Інший контент обтікає його справа.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">float: right</div>
+                    <div class="property-syntax">element { float: right; }</div>
+                    <div class="property-description">
+                        Елемент прилипає до правого краю контейнера. Інший контент обтікає його зліва.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Інтерактивне демо Float</h2>
+            <p>Експериментуйте з різними значеннями float та спостерігайте за поведінкою елементів:</p>
+
+            <div class="demo-container">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="setFloat('none', this)">none</button>
+                    <button class="demo-button" onclick="setFloat('left', this)">left</button>
+                    <button class="demo-button" onclick="setFloat('right', this)">right</button>
+                </div>
+
+                <div class="float-demo-area" id="floatDemo">
+                    <div class="demo-content">
+                        <div class="float-element" id="floatElement">Float Box</div>
+                        <p class="demo-text">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                            Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+                            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="floatInfo" style="margin-top: 1rem; padding: 1rem; background: #edf2f7; border-radius: 6px; font-family: monospace;">
+                    float: none - Нормальний потік документа
+                </div>
+
+                <div id="floatCode" style="margin-top: 1rem;">
+                    <div class="code-block">/* За замовчуванням */
+.element {
+    float: none;
+    /* Елемент в нормальному потоці */
+}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚫 Властивість Clear</h2>
+            <p>Clear забороняє елементу обтікати плаваючі елементи з вказаного боку:</p>
+            
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-name">clear: none</div>
+                    <div class="property-syntax">element { clear: none; }</div>
+                    <div class="property-description">
+                        Значення за замовчуванням. Дозволяє обтікання з усіх боків.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">clear: left</div>
+                    <div class="property-syntax">element { clear: left; }</div>
+                    <div class="property-description">
+                        Забороняє обтікання лівих плаваючих елементів. Елемент спуститься нижче за них.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">clear: right</div>
+                    <div class="property-syntax">element { clear: right; }</div>
+                    <div class="property-description">
+                        Забороняє обтікання правих плаваючих елементів.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">clear: both</div>
+                    <div class="property-syntax">element { clear: both; }</div>
+                    <div class="property-description">
+                        Забороняє обтікання плаваючих елементів з обох боків. Найчастіше використовується.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Інтерактивне демо Clear</h2>
+            <p>Експериментуйте з властивістю clear та спостерігайте як вона впливає на розташування:</p>
+
+            <div class="demo-container">
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="setClear('none', this)">none</button>
+                    <button class="demo-button" onclick="setClear('left', this)">left</button>
+                    <button class="demo-button" onclick="setClear('right', this)">right</button>
+                    <button class="demo-button" onclick="setClear('both', this)">both</button>
+                </div>
+
+                <div class="float-demo-area" id="clearDemo">
+                    <div style="float: left; background: #38a169; color: white; padding: 1rem; margin: 0.5rem; border-radius: 4px; width: 100px; text-align: center;">
+                        Float Left
+                    </div>
+                    <div style="float: right; background: #e53e3e; color: white; padding: 1rem; margin: 0.5rem; border-radius: 4px; width: 100px; text-align: center;">
+                        Float Right
+                    </div>
+                    <div id="clearElement" style="background: #667eea; color: white; padding: 1rem; margin: 0.5rem; border-radius: 4px; text-align: center;">
+                        Clear Element
+                    </div>
+                </div>
+
+                <div id="clearInfo" style="margin-top: 1rem; padding: 1rem; background: #edf2f7; border-radius: 6px; font-family: monospace;">
+                    clear: none - Дозволяє обтікання з усіх боків
+                </div>
+
+                <div id="clearCode" style="margin-top: 1rem;">
+                    <div class="code-block">/* За замовчуванням */
+.element {
+    clear: none;
+    /* Дозволяє обтікання */
+}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Проблема Clearfix</h2>
+            <p>Коли всі дочірні елементи мають float, батьківський контейнер "схлопується" (має нульову висоту):</p>
+
+            <h3>❌ Проблема:</h3>
+            <div class="clearfix-demo">
+                <div class="container-box" style="background: #fed7d7;">
+                    <div class="float-box">Box 1</div>
+                    <div class="float-box">Box 2</div>
+                    <div class="float-box">Box 3</div>
+                    <!-- Контейнер схлопнувся! -->
+                </div>
+            </div>
+
+            <h3>✅ Рішення - Clearfix:</h3>
+            <div class="clearfix-demo">
+                <div class="container-box clearfix" style="background: #c6f6d5;">
+                    <div class="float-box">Box 1</div>
+                    <div class="float-box">Box 2</div>
+                    <div class="float-box">Box 3</div>
+                    <!-- Контейнер розтягується! -->
+                </div>
+            </div>
+
+            <div class="code-block">/* Класичний Clearfix */
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Сучасний Clearfix */
+.clearfix {
+    overflow: auto;
+}
+
+/* Або просто */
+.clearfix {
+    display: flow-root;
+}</div>
+
+            <div class="tip-box">
+                <strong>💡 Порада:</strong> У сучасному веб-розробці замість clearfix використовуйте Flexbox або Grid - 
+                вони автоматично розв'язують проблеми з висотою контейнерів.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚖️ Порівняння методів макетування</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Метод</th>
+                        <th>Складність</th>
+                        <th>Підтримка браузерів</th>
+                        <th>Гнучкість</th>
+                        <th>Рекомендація</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Float</strong></td>
+                        <td>Висока</td>
+                        <td>Відмінна (IE6+)</td>
+                        <td>Обмежена</td>
+                        <td>Застаріло</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Flexbox</strong></td>
+                        <td>Низька</td>
+                        <td>Хороша (IE10+)</td>
+                        <td>Висока</td>
+                        <td>Рекомендовано</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Grid</strong></td>
+                        <td>Середня</td>
+                        <td>Хороша (IE11+)</td>
+                        <td>Максимальна</td>
+                        <td>Рекомендовано</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section">
+            <h2>💡 Практичні приклади</h2>
+
+            <h3>📰 Обтікання зображення текстом</h3>
+            <div class="code-block">/* Класичне обтікання зображення */
+.article-image {
+    float: left;
+    margin: 0 1rem 1rem 0;
+    border-radius: 8px;
+}
+
+.article-text {
+    text-align: justify;
+    line-height: 1.6;
+}</div>
+
+            <h3>📋 Простий макет з колонками</h3>
+            <div class="code-block">/* Двоколонний макет */
+.sidebar {
+    float: left;
+    width: 25%;
+    padding: 1rem;
+}
+
+.main-content {
+    float: right;
+    width: 70%;
+    padding: 1rem;
+}
+
+.container {
+    width: 100%;
+    overflow: auto; /* Clearfix */
+}</div>
+
+            <h3>🎛️ Навігаційне меню</h3>
+            <div class="code-block">/* Горизонтальне меню */
+.nav-item {
+    float: left;
+    margin-right: 1rem;
+}
+
+.nav-item:last-child {
+    float: right; /* Останній пункт вправо */
+}
+
+.nav-container::after {
+    content: "";
+    clear: both;
+    display: table;
+}</div>
+
+            <h3>🔄 Альтернативи з Flexbox</h3>
+            <div class="code-block">/* Сучасна альтернativa Float */
+
+/* Замість float: left + float: right */
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Замість складного clearfix */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+/* Замість обтікання зображення */
+.article {
+    display: flex;
+    gap: 1rem;
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Найкращі практики</h2>
+            
+            <div class="tip-box">
+                <strong>✅ Коли використовувати Float:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Обтікання зображень текстом</li>
+                    <li>Створення "обтічних" елементів в контенті</li>
+                    <li>Підтримка дуже старих браузерів</li>
+                    <li>Робота зі старим кодом</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Проблеми Float:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Складність у створенні макетів</li>
+                    <li>Проблема схлопнутих контейнерів</li>
+                    <li>Складність вертикального вирівнювання</li>
+                    <li>Проблеми з відзивчивим дизайном</li>
+                    <li>Потреба в clearfix хаках</li>
+                </ul>
+            </div>
+
+            <div class="tip-box" style="background: #e6fffa; border-color: #4fd1c7; border-left-color: #319795;">
+                <strong style="color: #2c7a7b;">🚀 Сучасні рекомендації:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використовуйте <strong>Flexbox</strong> для одновимірних макетів</li>
+                    <li>Використовуйте <strong>Grid</strong> для двовимірних макетів</li>
+                    <li>Float залишайте тільки для обтікання контенту</li>
+                    <li>Вивчайте сучасні техніки CSS</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('position')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 23 з 41</strong><br>
+                <small>Float та Clear</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('flexbox')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Float демо функції
+        function setFloat(value, buttonElement) {
+            const floatElement = document.getElementById('floatElement');
+            const info = document.getElementById('floatInfo');
+            const codeBlock = document.getElementById('floatCode');
+            const floatContainer = document.getElementById('floatDemo').parentNode;
+            const buttons = floatContainer.querySelectorAll('.demo-button');
+            
+            // Оновлюємо активну кнопку
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+            
+            // Застосовуємо float
+            floatElement.style.float = value;
+            
+            let explanation = '';
+            let codeExample = '';
+            
+            switch(value) {
+                case 'none':
+                    explanation = 'float: none - Нормальний потік документа';
+                    codeExample = `/* За замовчуванням */
+.element {
+    float: none;
+    /* Елемент в нормальному потоці */
+}`;
+                    break;
+                    
+                case 'left':
+                    explanation = 'float: left - Елемент прилипає зліва, текст обтікає справа';
+                    codeExample = `/* Обтікання справа */
+.element {
+    float: left;
+    margin: 0.5rem;
+    /* Текст обтікає з правого боку */
+}`;
+                    break;
+                    
+                case 'right':
+                    explanation = 'float: right - Елемент прилипає справа, текст обтікає зліва';
+                    codeExample = `/* Обтікання зліва */
+.element {
+    float: right;
+    margin: 0.5rem;
+    /* Текст обтікає з лівого боку */
+}`;
+                    break;
+            }
+            
+            info.textContent = explanation;
+            codeBlock.innerHTML = `<div class="code-block">${codeExample}</div>`;
+        }
+
+        // Clear демо функції
+        function setClear(value, buttonElement) {
+            const clearElement = document.getElementById('clearElement');
+            const info = document.getElementById('clearInfo');
+            const codeBlock = document.getElementById('clearCode');
+            const clearContainer = document.getElementById('clearDemo').parentNode;
+            const buttons = clearContainer.querySelectorAll('.demo-button');
+            
+            // Оновлюємо активну кнопку
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+            
+            // Застосовуємо clear
+            clearElement.style.clear = value;
+            
+            let explanation = '';
+            let codeExample = '';
+            
+            switch(value) {
+                case 'none':
+                    explanation = 'clear: none - Дозволяє обтікання з усіх боків';
+                    codeExample = `/* За замовчуванням */
+.element {
+    clear: none;
+    /* Дозволяє обтікання */
+}`;
+                    break;
+                    
+                case 'left':
+                    explanation = 'clear: left - Забороняє обтікання лівих float елементів';
+                    codeExample = `/* Очищення лівих float */
+.element {
+    clear: left;
+    /* Спуститься нижче за ліві float */
+}`;
+                    break;
+                    
+                case 'right':
+                    explanation = 'clear: right - Забороняє обтікання правих float елементів';
+                    codeExample = `/* Очищення правих float */
+.element {
+    clear: right;
+    /* Спуститься нижче за праві float */
+}`;
+                    break;
+                    
+                case 'both':
+                    explanation = 'clear: both - Забороняє обтікання float елементів з обох боків';
+                    codeExample = `/* Очищення всіх float */
+.element {
+    clear: both;
+    /* Спуститься нижче за всі float */
+}`;
+                    break;
+            }
+            
+            info.textContent = explanation;
+            codeBlock.innerHTML = `<div class="code-block">${codeExample}</div>`;
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            // Встановлюємо початкові стани
+            const firstFloatButton = document.querySelector('#floatDemo').parentNode.querySelector('.demo-button');
+            setFloat('none', firstFloatButton);
+            
+            const firstClearButton = document.querySelector('#clearDemo').parentNode.querySelector('.demo-button');
+            setClear('none', firstClearButton);
+        });
+    </script>
+</body>
+</html> 

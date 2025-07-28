@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Flexbox Layout</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .property-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .property-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-syntax {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .property-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .demo-button.active {
+            background: #764ba2;
+        }
+
+        .flex-demo-area {
+            background: white;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 150px;
+            margin-top: 1rem;
+            display: flex;
+        }
+
+        .flex-item {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            margin: 0.25rem;
+            min-width: 80px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .flex-item:nth-child(2) { background: #e53e3e; }
+        .flex-item:nth-child(3) { background: #38a169; }
+
+        .mini-example {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .mini-example h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .example-demo {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            margin: 1rem 0;
+            min-height: 100px;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Стилі для міні-прикладів */
+        .center-demo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 6px;
+        }
+
+        .nav-demo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2d3748;
+            color: white;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .nav-demo .logo { font-weight: bold; }
+        .nav-demo .nav-items { display: flex; gap: 1rem; }
+
+        .cards-demo {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 150px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .sidebar-demo {
+            display: flex;
+            gap: 1rem;
+            min-height: 100px;
+        }
+
+        .sidebar {
+            background: #edf2f7;
+            padding: 1rem;
+            width: 200px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .main-content {
+            flex: 1;
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .sticky-footer-demo {
+            display: flex;
+            flex-direction: column;
+            min-height: 200px;
+            background: #f7fafc;
+            border-radius: 6px;
+        }
+
+        .content {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .footer {
+            background: #4a5568;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            border-radius: 0 0 6px 6px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .sidebar-demo {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔧 CSS Flexbox Layout</h1>
+            <p>Сучасний спосіб створення гнучких та адаптивних макетів</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи Flexbox</h2>
+            <p>Flexbox (Flexible Box Layout) - це потужна система макетування, яка дозволяє легко створювати гнучкі макети:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>Flex Container</strong> - батьківський елемент з <code>display: flex</code></li>
+                <li><strong>Flex Items</strong> - дочірні елементи, що автоматично стають гнучкими</li>
+                <li><strong>Main Axis</strong> - головна вісь (за замовчуванням горизонтальна)</li>
+                <li><strong>Cross Axis</strong> - поперечна вісь (за замовчуванням вертикальна)</li>
+            </ul>
+
+            <div class="code-block">/* Основний синтаксис */
+.container {
+    display: flex; /* Створює flex-контейнер */
+}
+
+.item {
+    /* Дочірні елементи автоматично стають flex-items */
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>📦 Властивості Flex Container</h2>
+            
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-name">flex-direction</div>
+                    <div class="property-syntax">row | column | row-reverse | column-reverse</div>
+                    <div class="property-description">
+                        Визначає напрямок головної осі та порядок розташування елементів.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">justify-content</div>
+                    <div class="property-syntax">flex-start | center | space-between | space-around | space-evenly</div>
+                    <div class="property-description">
+                        Вирівнювання елементів по головній осі (горизонтально за замовчуванням).
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">align-items</div>
+                    <div class="property-syntax">stretch | flex-start | center | flex-end | baseline</div>
+                    <div class="property-description">
+                        Вирівнювання елементів по поперечній осі (вертикально за замовчуванням).
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">flex-wrap</div>
+                    <div class="property-syntax">nowrap | wrap | wrap-reverse</div>
+                    <div class="property-description">
+                        Дозволяє елементам переноситися на новий рядок при нестачі місця.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">gap</div>
+                    <div class="property-syntax">10px | 1rem | 10px 20px</div>
+                    <div class="property-description">
+                        Задає відстань між flex-елементами (сучасна властивість).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Інтерактивне демо Flexbox</h2>
+            <p>Експериментуйте з властивостями та спостерігайте за змінами:</p>
+
+            <div class="demo-container">
+                <h4>justify-content (головна вісь):</h4>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="setJustifyContent('flex-start', this)">flex-start</button>
+                    <button class="demo-button" onclick="setJustifyContent('center', this)">center</button>
+                    <button class="demo-button" onclick="setJustifyContent('flex-end', this)">flex-end</button>
+                    <button class="demo-button" onclick="setJustifyContent('space-between', this)">space-between</button>
+                    <button class="demo-button" onclick="setJustifyContent('space-around', this)">space-around</button>
+                    <button class="demo-button" onclick="setJustifyContent('space-evenly', this)">space-evenly</button>
+                </div>
+
+                <div class="flex-demo-area" id="flexDemo">
+                    <div class="flex-item">1</div>
+                    <div class="flex-item">2</div>
+                    <div class="flex-item">3</div>
+                </div>
+
+                <div id="flexInfo" style="margin-top: 1rem; padding: 1rem; background: #edf2f7; border-radius: 6px; font-family: monospace;">
+                    justify-content: flex-start - Елементи притиснуті до початку
+                </div>
+
+                <div id="flexCode" style="margin-top: 1rem;">
+                    <div class="code-block">.container {
+    display: flex;
+    justify-content: flex-start;
+}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>💫 Практичні міні-приклади</h2>
+            <p>Готові рішення для типових задач веб-розробки:</p>
+
+            <div class="mini-example">
+                <h4>🎯 Ідеальне центрування</h4>
+                <div class="example-demo">
+                    <div class="center-demo">
+                        Точно по центру!
+                    </div>
+                </div>
+                <div class="code-block">/* Центрування по всім осям */
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* або будь-яка висота */
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>🧭 Навігаційне меню</h4>
+                <div class="example-demo">
+                    <div class="nav-demo">
+                        <div class="logo">Logo</div>
+                        <div class="nav-items">
+                            <span>Головна</span>
+                            <span>Про нас</span>
+                            <span>Контакти</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">/* Навігація з логотипом і меню */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.nav-items {
+    display: flex;
+    gap: 1rem;
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>🃏 Картки в ряд</h4>
+                <div class="example-demo">
+                    <div class="cards-demo">
+                        <div class="card">Картка 1</div>
+                        <div class="card">Картка 2</div>
+                        <div class="card">Картка 3</div>
+                    </div>
+                </div>
+                <div class="code-block">/* Рівні картки з автоматичним розтягуванням */
+.cards-container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.card {
+    flex: 1; /* Рівномірно розтягує */
+    min-width: 200px; /* Мінімальна ширина */
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>📄 Sidebar + контент</h4>
+                <div class="example-demo">
+                    <div class="sidebar-demo">
+                        <div class="sidebar">Sidebar</div>
+                        <div class="main-content">Основний контент</div>
+                    </div>
+                </div>
+                <div class="code-block">/* Класичний макет з sidebar */
+.layout {
+    display: flex;
+    gap: 1rem;
+}
+
+.sidebar {
+    width: 250px; /* Фіксована ширина */
+}
+
+.main-content {
+    flex: 1; /* Займає решту простору */
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>🦶 Footer що прилипає</h4>
+                <div class="example-demo">
+                    <div class="sticky-footer-demo">
+                        <div class="content">Контент сторінки</div>
+                        <div class="footer">Footer завжди внизу</div>
+                    </div>
+                </div>
+                <div class="code-block">/* Footer завжди внизу */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1; /* Займає весь доступний простір */
+}
+
+.footer {
+    /* Автоматично притискається до низу */
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>📱 Responsive галерея</h4>
+                <div class="example-demo">
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                        <div style="flex: 1 1 calc(50% - 0.25rem); min-width: 120px; height: 60px; background: #667eea; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">Фото 1</div>
+                        <div style="flex: 1 1 calc(50% - 0.25rem); min-width: 120px; height: 60px; background: #e53e3e; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">Фото 2</div>
+                        <div style="flex: 1 1 calc(33% - 0.33rem); min-width: 120px; height: 60px; background: #38a169; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">Фото 3</div>
+                        <div style="flex: 1 1 calc(33% - 0.33rem); min-width: 120px; height: 60px; background: #d69e2e; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white;">Фото 4</div>
+                    </div>
+                </div>
+                <div class="code-block">/* Адаптивна галерея */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.photo {
+    flex: 1 1 calc(33.333% - 0.67rem);
+    min-width: 200px;
+    aspect-ratio: 1; /* Квадратні фото */
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>📋 Форма з мітками</h4>
+                <div class="example-demo">
+                    <div style="display: flex; flex-direction: column; gap: 1rem; max-width: 400px;">
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label style="width: 100px; font-weight: bold;">Ім'я:</label>
+                            <input style="flex: 1; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 4px;" placeholder="Введіть ім'я">
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <label style="width: 100px; font-weight: bold;">Email:</label>
+                            <input style="flex: 1; padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 4px;" placeholder="Введіть email">
+                        </div>
+                    </div>
+                </div>
+                <div class="code-block">/* Рівні поля форми */
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-label {
+    width: 120px; /* Фіксована ширина міток */
+}
+
+.form-input {
+    flex: 1; /* Поле займає решту простору */
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>🔘 Група кнопок</h4>
+                <div class="example-demo">
+                    <div style="display: flex; gap: 0.5rem; justify-content: center;">
+                        <button style="padding: 0.5rem 1rem; background: #667eea; color: white; border: none; border-radius: 4px; cursor: pointer;">Зберегти</button>
+                        <button style="padding: 0.5rem 1rem; background: #e2e8f0; color: #4a5568; border: none; border-radius: 4px; cursor: pointer;">Скасувати</button>
+                        <button style="padding: 0.5rem 1rem; background: #e53e3e; color: white; border: none; border-radius: 4px; cursor: pointer;">Видалити</button>
+                    </div>
+                </div>
+                <div class="code-block">/* Вирівняні кнопки */
+.button-group {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center; /* або flex-end, flex-start */
+}
+
+/* Кнопки на краях */
+.button-group-spread {
+    display: flex;
+    justify-content: space-between;
+}</div>
+            </div>
+
+            <div class="mini-example">
+                <h4>📊 Прогрес-бар</h4>
+                <div class="example-demo">
+                    <div style="background: #e2e8f0; border-radius: 10px; height: 20px; overflow: hidden;">
+                        <div style="background: linear-gradient(90deg, #667eea, #764ba2); height: 100%; width: 70%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.8rem; font-weight: bold;">70%</div>
+                    </div>
+                </div>
+                <div class="code-block">/* Прогрес-бар з Flexbox */
+.progress-bar {
+    background: #e2e8f0;
+    border-radius: 10px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    background: linear-gradient(90deg, #667eea, #764ba2);
+    height: 100%;
+    width: 70%; /* Динамічно змінюється */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: width 0.3s ease;
+}</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Властивості Flex Items</h2>
+            
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-name">flex-grow</div>
+                    <div class="property-syntax">flex-grow: 0 | 1 | 2 | ...</div>
+                    <div class="property-description">
+                        Визначає, наскільки елемент може розтягуватися відносно інших.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">flex-shrink</div>
+                    <div class="property-syntax">flex-shrink: 1 | 0 | 2 | ...</div>
+                    <div class="property-description">
+                        Визначає, наскільки елемент може зменшуватися при нестачі місця.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">flex-basis</div>
+                    <div class="property-syntax">flex-basis: auto | 200px | 30%</div>
+                    <div class="property-description">
+                        Початкова ширина елемента до розподілу вільного простору.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">flex (скорочення)</div>
+                    <div class="property-syntax">flex: 1 | 0 0 auto | 1 1 200px</div>
+                    <div class="property-description">
+                        Скорочення для flex-grow, flex-shrink та flex-basis.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">align-self</div>
+                    <div class="property-syntax">auto | flex-start | center | flex-end</div>
+                    <div class="property-description">
+                        Перевизначає align-items для конкретного елемента.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">order</div>
+                    <div class="property-syntax">order: 0 | 1 | -1 | ...</div>
+                    <div class="property-description">
+                        Змінює порядок відображення елемента без зміни HTML.
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">/* Типові комбінації flex */
+
+/* Елемент займає весь доступний простір */
+.grow {
+    flex: 1;
+}
+
+/* Елемент не розтягується і не зменшується */
+.fixed {
+    flex: 0 0 auto;
+}
+
+/* Елемент з мінімальною шириною, але може рости */
+.min-width-grow {
+    flex: 1 0 200px;
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚀 Реальні кейси та готові рішення</h2>
+
+            <h3>🏗️ Повноцінний макет сайту</h3>
+            <div class="code-block">/* Базовий макет сайту */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.header {
+    background: #333;
+    color: white;
+    padding: 1rem;
+}
+
+.main {
+    display: flex;
+    flex: 1;
+}
+
+.sidebar {
+    background: #f5f5f5;
+    width: 250px;
+    padding: 1rem;
+}
+
+.content {
+    flex: 1;
+    padding: 1rem;
+}
+
+.footer {
+    background: #333;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}</div>
+
+            <h3>🛒 Картка товару</h3>
+            <div class="code-block">/* Картка товару з гнучким макетом */
+.product-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.product-image {
+    flex: 0 0 200px; /* Фіксована ширина зображення */
+}
+
+.product-info {
+    flex: 1;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: auto; /* Автоматичний відступ */
+}
+
+.product-price {
+    font-size: 1.5rem;
+    color: #e74c3c;
+    font-weight: bold;
+}
+
+.product-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}</div>
+
+            <h3>📱 Мобільна навігація</h3>
+            <div class="code-block">/* Адаптивна навігація */
+.mobile-nav {
+    display: flex;
+    justify-content: space-around;
+    background: #333;
+    padding: 1rem 0;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    flex: 1;
+}
+
+.nav-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.nav-label {
+    font-size: 0.8rem;
+}</div>
+
+            <div class="tip-box">
+                <strong>💡 Поради по Flexbox:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використовуйте <code>gap</code> замість margin для відступів між елементами</li>
+                    <li><code>flex: 1</code> - найпопулярніша властивість для рівномірного розподілу</li>
+                    <li>Комбінуйте <code>flex-wrap: wrap</code> з <code>flex-basis</code> для responsive макетів</li>
+                    <li>Flexbox ідеальний для одновимірних макетів, для двовимірних використовуйте Grid</li>
+                    <li>Завжди тестуйте на різних розмірах екрана</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('float')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 24 з 41</strong><br>
+                <small>Flexbox Layout</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('grid')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Flexbox демо функції
+        function setJustifyContent(value, buttonElement) {
+            const flexDemo = document.getElementById('flexDemo');
+            const info = document.getElementById('flexInfo');
+            const codeBlock = document.getElementById('flexCode');
+            const container = flexDemo.parentNode;
+            const buttons = container.querySelectorAll('.demo-button');
+            
+            // Оновлюємо активну кнопку
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+            
+            // Застосовуємо justify-content
+            flexDemo.style.justifyContent = value;
+            
+            let explanation = '';
+            let codeExample = '';
+            
+            switch(value) {
+                case 'flex-start':
+                    explanation = 'justify-content: flex-start - Елементи притиснуті до початку';
+                    codeExample = `.container {
+    display: flex;
+    justify-content: flex-start;
+}`;
+                    break;
+                    
+                case 'center':
+                    explanation = 'justify-content: center - Елементи центруються';
+                    codeExample = `.container {
+    display: flex;
+    justify-content: center;
+}`;
+                    break;
+                    
+                case 'flex-end':
+                    explanation = 'justify-content: flex-end - Елементи притиснуті до кінця';
+                    codeExample = `.container {
+    display: flex;
+    justify-content: flex-end;
+}`;
+                    break;
+                    
+                case 'space-between':
+                    explanation = 'justify-content: space-between - Рівна відстань між елементами';
+                    codeExample = `.container {
+    display: flex;
+    justify-content: space-between;
+}`;
+                    break;
+                    
+                case 'space-around':
+                    explanation = 'justify-content: space-around - Рівна відстань навколо елементів';
+                    codeExample = `.container {
+    display: flex;
+    justify-content: space-around;
+}`;
+                    break;
+                    
+                case 'space-evenly':
+                    explanation = 'justify-content: space-evenly - Абсолютно рівна відстань';
+                    codeExample = `.container {
+    display: flex;
+    justify-content: space-evenly;
+}`;
+                    break;
+            }
+            
+            info.textContent = explanation;
+            codeBlock.innerHTML = `<div class="code-block">${codeExample}</div>`;
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            // Встановлюємо початковий стан
+            const firstButton = document.querySelector('#flexDemo').parentNode.querySelector('.demo-button');
+            setJustifyContent('flex-start', firstButton);
+        });
+    </script>
+</body>
+</html> 

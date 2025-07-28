@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Демо-шаблони сайтів - HTML5 Шпаргалка</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .template-preview {
+            width: 100%;
+            height: 300px;
+            border: none;
+            display: block;
+        }
+
+        .template-info {
+            padding: 1.5rem;
+        }
+
+        .template-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .template-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .template-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .template-tag {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .template-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a67d8 0%, #6b46c1 100%);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f7fafc;
+            color: #4a5568;
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-secondary:hover {
+            background: #edf2f7;
+            border-color: #cbd5e0;
+            transform: translateY(-2px);
+        }
+
+        .category-section {
+            margin: 3rem 0;
+        }
+
+        .category-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .category-title {
+            font-size: 1.8rem;
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+
+        .category-description {
+            color: #4a5568;
+            font-size: 1.1rem;
+        }
+
+        .fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 1000;
+            padding: 2rem;
+        }
+
+        .fullscreen-modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            width: 100%;
+            height: 100%;
+            max-width: 1200px;
+            max-height: 800px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .modal-frame {
+            width: 100%;
+            height: calc(100% - 60px);
+            border: none;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .info-box {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fef5e7;
+            border-left: 4px solid #ed8936;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .templates-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .template-actions {
+                flex-direction: column;
+            }
+            
+            .fullscreen-modal {
+                padding: 1rem;
+            }
+            
+            .modal-header {
+                padding: 1rem;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 Демо-шаблони сайтів</h1>
+            <p>Готові приклади верстки з різними стилями та функціональністю</p>
+        </div>
+
+        <div class="info-box">
+            <strong>💡 Як використовувати:</strong>
+            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                <li><strong>Переглянути</strong> — натисніть "👁️ Переглянути" для перегляду в повному екрані</li>
+                <li><strong>Завантажити</strong> — натисніть "💾 Завантажити" для скачування HTML/CSS коду</li>
+                <li><strong>Адаптувати</strong> — використовуйте як основу для власних проектів</li>
+                <li><strong>Вивчати</strong> — аналізуйте код для навчання нових технік</li>
+            </ul>
+        </div>
+
+        <!-- Business & Corporate Templates -->
+        <div class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">🏢 Бізнес та корпоративні</h2>
+                <p class="category-description">Професійні шаблони для компаній, стартапів та бізнес-сайтів</p>
+            </div>
+
+            <div class="templates-grid">
+                <div class="template-card">
+                    <iframe class="template-preview" src="data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cmeta charset='utf-8'%3E%3Cmeta name='viewport' content='width=device-width, initial-scale=1'%3E%3Cstyle%3Ebody{font-family:'Segoe UI',sans-serif;margin:0;background:%23f8fafc}header{background:linear-gradient(135deg,%23667eea 0%25,%23764ba2 100%25);color:white;padding:2rem 0;text-align:center}nav{background:white;padding:1rem 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)}nav ul{list-style:none;display:flex;justify-content:center;gap:2rem;margin:0;padding:0}nav a{text-decoration:none;color:%23333;font-weight:500}main{max-width:1200px;margin:2rem auto;padding:0 2rem}.hero{text-align:center;padding:4rem 0}.hero h2{font-size:2.5rem;margin-bottom:1rem;color:%232d3748}.hero p{font-size:1.2rem;color:%234a5568;margin-bottom:2rem}.btn{background:%23667eea;color:white;padding:1rem 2rem;border:none;border-radius:8px;font-size:1rem;cursor:pointer}.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin:3rem 0}.service{background:white;padding:2rem;border-radius:12px;box-shadow:0 4px 6px rgba(0,0,0,0.1);text-align:center}.service h3{color:%23667eea;margin-bottom:1rem}footer{background:%232d3748;color:white;text-align:center;padding:2rem 0;margin-top:3rem}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cheader%3E%3Ch1%3ETechCorp%3C/h1%3E%3Cp%3EІнноваційні IT рішення для вашого бізнесу%3C/p%3E%3C/header%3E%3Cnav%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EГоловна%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПослуги%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПро нас%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКонтакти%3C/a%3E%3C/li%3E%3C/ul%3E%3C/nav%3E%3Cmain%3E%3Csection class='hero'%3E%3Ch2%3EВаш надійний IT партнер%3C/h2%3E%3Cp%3EРозробляємо сучасні веб-додатки та цифрові рішення%3C/p%3E%3Cbutton class='btn'%3EДізнатися більше%3C/button%3E%3C/section%3E%3Csection class='services'%3E%3Cdiv class='service'%3E%3Ch3%3EВеб-розробка%3C/h3%3E%3Cp%3EСтворення сучасних веб-сайтів та додатків%3C/p%3E%3C/div%3E%3Cdiv class='service'%3E%3Ch3%3EMобільні додатки%3C/h3%3E%3Cp%3EРозробка iOS та Android додатків%3C/p%3E%3C/div%3E%3Cdiv class='service'%3E%3Ch3%3EЦифровий маркетинг%3C/h3%3E%3Cp%3EПросування бренду в цифровому просторі%3C/p%3E%3C/div%3E%3C/section%3E%3C/main%3E%3Cfooter%3E%3Cp%3E%26copy; 2024 TechCorp. Всі права захищені.%3C/p%3E%3C/footer%3E%3C/body%3E%3C/html%3E"></iframe>
+                    <div class="template-info">
+                        <h3 class="template-title">TechCorp</h3>
+                        <p class="template-description">Мінімалістичний корпоративний сайт з градієнтами та картками послуг. Ідеально підходить для IT компаній.</p>
+                        <div class="template-tags">
+                            <span class="template-tag">Corporate</span>
+                            <span class="template-tag">Градієнти</span>
+                            <span class="template-tag">Grid Layout</span>
+                            <span class="template-tag">Responsive</span>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-primary" onclick="openFullscreen('techcorp')">
+                                👁️ Переглянути
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadTemplate('techcorp')">
+                                💾 Завантажити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <iframe class="template-preview" src="data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cmeta charset='utf-8'%3E%3Cmeta name='viewport' content='width=device-width, initial-scale=1'%3E%3Cstyle%3Ebody{font-family:'Inter',sans-serif;margin:0;background:%23f9fafb}header{background:%23fff;border-bottom:1px solid %23e5e7eb;padding:1rem 0}.header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem}.logo{font-size:1.5rem;font-weight:bold;color:%231f2937}nav ul{list-style:none;display:flex;gap:2rem;margin:0;padding:0}nav a{text-decoration:none;color:%23374151;font-weight:500}.cta-btn{background:%231f2937;color:white;padding:0.75rem 1.5rem;border:none;border-radius:6px;text-decoration:none}.hero{background:linear-gradient(135deg,%23f3f4f6 0%25,%23e5e7eb 100%25);padding:5rem 0;text-align:center}.hero-content{max-width:800px;margin:0 auto;padding:0 2rem}.hero h1{font-size:3rem;color:%231f2937;margin-bottom:1rem}.hero p{font-size:1.25rem;color:%23374151;margin-bottom:2rem}.features{max-width:1200px;margin:4rem auto;padding:0 2rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(350px,1fr));gap:3rem}.feature{background:white;padding:2rem;border-radius:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1);border:1px solid %23e5e7eb}.feature-icon{width:48px;height:48px;background:%23ddd6fe;border-radius:12px;margin-bottom:1rem}.feature h3{color:%231f2937;margin-bottom:1rem}.stats{background:%231f2937;color:white;padding:4rem 0;text-align:center}.stats-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;padding:0 2rem}.stat h3{font-size:2.5rem;margin-bottom:0.5rem}.stat p{opacity:0.8}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cheader%3E%3Cdiv class='header-content'%3E%3Cdiv class='logo'%3EStartupPro%3C/div%3E%3Cnav%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EПродукт%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EРішення%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКоманда%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EБлог%3C/a%3E%3C/li%3E%3C/ul%3E%3C/nav%3E%3Ca href='%23' class='cta-btn'%3EПочати%3C/a%3E%3C/div%3E%3C/header%3E%3Csection class='hero'%3E%3Cdiv class='hero-content'%3E%3Ch1%3EІнновації для майбутнього%3C/h1%3E%3Cp%3EСтворюємо цифрові продукти, які змінюють світ та допомагають бізнесу рости швидше%3C/p%3E%3Ca href='%23' class='cta-btn'%3EДізнатися більше%3C/a%3E%3C/div%3E%3C/section%3E%3Csection class='features'%3E%3Cdiv class='feature'%3E%3Cdiv class='feature-icon'%3E%3C/div%3E%3Ch3%3EШвидка розробка%3C/h3%3E%3Cp%3EВиводимо MVP на ринок у рекордно короткі терміни з мінімальними витратами%3C/p%3E%3C/div%3E%3Cdiv class='feature'%3E%3Cdiv class='feature-icon'%3E%3C/div%3E%3Ch3%3EМасштабування%3C/h3%3E%3Cp%3EНаші рішення готові до швидкого росту користувацької бази%3C/p%3E%3C/div%3E%3Cdiv class='feature'%3E%3Cdiv class='feature-icon'%3E%3C/div%3E%3Ch3%3EПідтримка%3C/h3%3E%3Cp%3EЦілодобова технічна підтримка та постійні оновлення продукту%3C/p%3E%3C/div%3E%3C/section%3E%3Csection class='stats'%3E%3Cdiv class='stats-grid'%3E%3Cdiv class='stat'%3E%3Ch3%3E500%2B%3C/h3%3E%3Cp%3EЗадоволених клієнтів%3C/p%3E%3C/div%3E%3Cdiv class='stat'%3E%3Ch3%3E50%2B%3C/h3%3E%3Cp%3EРеалізованих проектів%3C/p%3E%3C/div%3E%3Cdiv class='stat'%3E%3Ch3%3E99%25%3C/h3%3E%3Cp%3EЧас безвідмовної роботи%3C/p%3E%3C/div%3E%3Cdiv class='stat'%3E%3Ch3%3E24/7%3C/h3%3E%3Cp%3EПідтримка клієнтів%3C/p%3E%3C/div%3E%3C/div%3E%3C/section%3E%3C/body%3E%3C/html%3E"></iframe>
+                    <div class="template-info">
+                        <h3 class="template-title">StartupPro</h3>
+                        <p class="template-description">Сучасний лендінг для стартапів з чистим дизайном, секцією статистики та CTA кнопками.</p>
+                        <div class="template-tags">
+                            <span class="template-tag">Startup</span>
+                            <span class="template-tag">Landing Page</span>
+                            <span class="template-tag">Clean Design</span>
+                            <span class="template-tag">CTA</span>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-primary" onclick="openFullscreen('startuppro')">
+                                👁️ Переглянути
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadTemplate('startuppro')">
+                                💾 Завантажити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <iframe class="template-preview" src="data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cmeta charset='utf-8'%3E%3Cmeta name='viewport' content='width=device-width, initial-scale=1'%3E%3Cstyle%3Ebody{font-family:Roboto,sans-serif;margin:0;background:%23f8f9fa}header{background:%232c3e50;color:white;padding:1rem 0}.header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem}.logo{font-size:1.8rem;font-weight:bold}nav ul{list-style:none;display:flex;gap:2rem;margin:0;padding:0}nav a{text-decoration:none;color:white;font-weight:500;transition:color 0.3s}nav a:hover{color:%2318bc9c}.hero{background:linear-gradient(135deg,%233498db,%2318bc9c);color:white;padding:6rem 0;text-align:center}.hero h1{font-size:3.5rem;margin-bottom:1rem}.hero p{font-size:1.3rem;margin-bottom:2rem;max-width:600px;margin-left:auto;margin-right:auto}.btn{background:%23fff;color:%233498db;padding:1rem 2rem;border:none;border-radius:4px;font-size:1.1rem;cursor:pointer;font-weight:bold;transition:all 0.3s}.btn:hover{background:%23f8f9fa;transform:translateY(-2px)}.services{max-width:1200px;margin:4rem auto;padding:0 2rem}.section-title{text-align:center;font-size:2.5rem;color:%232c3e50;margin-bottom:3rem}.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.service{background:white;padding:2rem;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,0.1);text-align:center;transition:transform 0.3s}.service:hover{transform:translateY(-5px)}.service-icon{width:80px;height:80px;background:%233498db;border-radius:50%25;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white}.service h3{color:%232c3e50;margin-bottom:1rem}footer{background:%232c3e50;color:white;text-align:center;padding:3rem 0;margin-top:4rem}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cheader%3E%3Cdiv class='header-content'%3E%3Cdiv class='logo'%3EConsultPro%3C/div%3E%3Cnav%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EГоловна%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПослуги%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EЕкспертиза%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКлієнти%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКонтакти%3C/a%3E%3C/li%3E%3C/ul%3E%3C/nav%3E%3C/div%3E%3C/header%3E%3Csection class='hero'%3E%3Ch1%3EПрофесійне консультування%3C/h1%3E%3Cp%3EДопомагаємо бізнесу приймати правильні рішення та досягати стратегічних цілей%3C/p%3E%3Cbutton class='btn'%3EКонсультація%3C/button%3E%3C/section%3E%3Csection class='services'%3E%3Ch2 class='section-title'%3EНаші послуги%3C/h2%3E%3Cdiv class='services-grid'%3E%3Cdiv class='service'%3E%3Cdiv class='service-icon'%3E📊%3C/div%3E%3Ch3%3EСтратегічне планування%3C/h3%3E%3Cp%3EРозробка довгострокових стратегій розвитку компанії%3C/p%3E%3C/div%3E%3Cdiv class='service'%3E%3Cdiv class='service-icon'%3E💼%3C/div%3E%3Ch3%3EОперційне покращення%3C/h3%3E%3Cp%3EОптимізація бізнес-процесів та підвищення ефективності%3C/p%3E%3C/div%3E%3Cdiv class='service'%3E%3Cdiv class='service-icon'%3E📈%3C/div%3E%3Ch3%3EФінансовий аналіз%3C/h3%3E%3Cp%3EДетальний аналіз фінансових показників та прогнозування%3C/p%3E%3C/div%3E%3Cdiv class='service'%3E%3Cdiv class='service-icon'%3E🎯%3C/div%3E%3Ch3%3EМаркетингова стратегія%3C/h3%3E%3Cp%3EРозвиток маркетингових стратегій та просування бренду%3C/p%3E%3C/div%3E%3C/div%3E%3C/section%3E%3Cfooter%3E%3Cp%3E%26copy; 2024 ConsultPro. Експертиза, якій довіряють.%3C/p%3E%3C/footer%3E%3C/body%3E%3C/html%3E"></iframe>
+                    <div class="template-info">
+                        <h3 class="template-title">ConsultPro</h3>
+                        <p class="template-description">Професійний шаблон для консалтингових компаній з hero-секцією та іконками послуг.</p>
+                        <div class="template-tags">
+                            <span class="template-tag">Consulting</span>
+                            <span class="template-tag">Professional</span>
+                            <span class="template-tag">Hero Section</span>
+                            <span class="template-tag">Icons</span>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-primary" onclick="openFullscreen('consultpro')">
+                                👁️ Переглянути
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadTemplate('consultpro')">
+                                💾 Завантажити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Creative & Portfolio Templates -->
+        <div class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">🎨 Креативні та портфоліо</h2>
+                <p class="category-description">Стильні шаблони для дизайнерів, фотографів та творчих професіоналів</p>
+            </div>
+
+            <div class="templates-grid">
+                <div class="template-card">
+                    <iframe class="template-preview" src="data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cmeta charset='utf-8'%3E%3Cmeta name='viewport' content='width=device-width, initial-scale=1'%3E%3Cstyle%3Ebody{font-family:'Poppins',sans-serif;margin:0;background:%23000;color:white;overflow-x:hidden}header{position:fixed;top:0;width:100%25;background:rgba(0,0,0,0.9);padding:1rem 2rem;z-index:1000;backdrop-filter:blur(10px)}.header-content{display:flex;justify-content:space-between;align-items:center}.logo{font-size:1.5rem;font-weight:bold}nav ul{list-style:none;display:flex;gap:2rem;margin:0;padding:0}nav a{text-decoration:none;color:white;transition:color 0.3s}nav a:hover{color:%23ff6b6b}.hero{height:100vh;background:linear-gradient(45deg,%23ff6b6b,%23ffa500,%23ff69b4,%2300bcd4);background-size:400%25 400%25;animation:gradient 15s ease infinite;display:flex;align-items:center;justify-content:center;text-align:center}@keyframes gradient{0%25{background-position:0%25 50%25}50%25{background-position:100%25 50%25}100%25{background-position:0%25 50%25}}.hero-content h1{font-size:4rem;margin-bottom:1rem;text-shadow:2px 2px 4px rgba(0,0,0,0.3)}.hero-content p{font-size:1.5rem;margin-bottom:2rem}.btn{background:transparent;border:2px solid white;color:white;padding:1rem 2rem;border-radius:50px;font-size:1rem;cursor:pointer;transition:all 0.3s}.btn:hover{background:white;color:%23000}.portfolio{padding:5rem 2rem;max-width:1200px;margin:0 auto}.section-title{text-align:center;font-size:3rem;margin-bottom:3rem;background:linear-gradient(45deg,%23ff6b6b,%23ffa500);-webkit-background-clip:text;-webkit-text-fill-color:transparent}.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.portfolio-item{background:rgba(255,255,255,0.05);border-radius:20px;overflow:hidden;transition:transform 0.3s}.portfolio-item:hover{transform:scale(1.05)}.portfolio-image{height:200px;background:linear-gradient(45deg,%23667eea,%23764ba2);display:flex;align-items:center;justify-content:center;font-size:3rem}.portfolio-content{padding:1.5rem}.portfolio-content h3{margin-bottom:0.5rem;color:%23ff6b6b}.skills{background:linear-gradient(135deg,%23667eea,%23764ba2);padding:5rem 2rem;text-align:center}.skills-grid{max-width:800px;margin:2rem auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:2rem}.skill{background:rgba(255,255,255,0.1);padding:1.5rem;border-radius:15px;backdrop-filter:blur(10px)}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cheader%3E%3Cdiv class='header-content'%3E%3Cdiv class='logo'%3EArtistPro%3C/div%3E%3Cnav%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EГоловна%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПортфоліо%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПро мене%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКонтакти%3C/a%3E%3C/li%3E%3C/ul%3E%3C/nav%3E%3C/div%3E%3C/header%3E%3Csection class='hero'%3E%3Cdiv class='hero-content'%3E%3Ch1%3EКреативний дизайнер%3C/h1%3E%3Cp%3EСтворюю неймовірні візуальні рішення%3C/p%3E%3Cbutton class='btn'%3EПереглянути роботи%3C/button%3E%3C/div%3E%3C/section%3E%3Csection class='portfolio'%3E%3Ch2 class='section-title'%3EМоє портфоліо%3C/h2%3E%3Cdiv class='portfolio-grid'%3E%3Cdiv class='portfolio-item'%3E%3Cdiv class='portfolio-image'%3E🎨%3C/div%3E%3Cdiv class='portfolio-content'%3E%3Ch3%3EБрендинг студія%3C/h3%3E%3Cp%3EРозробка фірмового стилю для креативної студії%3C/p%3E%3C/div%3E%3C/div%3E%3Cdiv class='portfolio-item'%3E%3Cdiv class='portfolio-image'%3E📱%3C/div%3E%3Cdiv class='portfolio-content'%3E%3Ch3%3EMobile App UI%3C/h3%3E%3Cp%3EДизайн інтерфейсу мобільного додатку%3C/p%3E%3C/div%3E%3C/div%3E%3Cdiv class='portfolio-item'%3E%3Cdiv class='portfolio-image'%3E🌐%3C/div%3E%3Cdiv class='portfolio-content'%3E%3Ch3%3EВеб-дизайн%3C/h3%3E%3Cp%3EСучасний дизайн корпоративного сайту%3C/p%3E%3C/div%3E%3C/div%3E%3Cdiv class='portfolio-item'%3E%3Cdiv class='portfolio-image'%3E📸%3C/div%3E%3Cdiv class='portfolio-content'%3E%3Ch3%3EФотопроект%3C/h3%3E%3Cp%3EКонцептуальна фотографія для модного бренду%3C/p%3E%3C/div%3E%3C/div%3E%3C/div%3E%3C/section%3E%3Csection class='skills'%3E%3Ch2 class='section-title'%3EНавички%3C/h2%3E%3Cdiv class='skills-grid'%3E%3Cdiv class='skill'%3E%3Ch3%3EPhotoshop%3C/h3%3E%3Cp%3E95%25%3C/p%3E%3C/div%3E%3Cdiv class='skill'%3E%3Ch3%3EIllustrator%3C/h3%3E%3Cp%3E90%25%3C/p%3E%3C/div%3E%3Cdiv class='skill'%3E%3Ch3%3EFigma%3C/h3%3E%3Cp%3E85%25%3C/p%3E%3C/div%3E%3Cdiv class='skill'%3E%3Ch3%3EAfter Effects%3C/h3%3E%3Cp%3E80%25%3C/p%3E%3C/div%3E%3C/div%3E%3C/section%3E%3C/body%3E%3C/html%3E"></iframe>
+                    <div class="template-info">
+                        <h3 class="template-title">ArtistPro</h3>
+                        <p class="template-description">Яскравий креативний шаблон з анімованими градієнтами та ефектами для портфоліо дизайнера.</p>
+                        <div class="template-tags">
+                            <span class="template-tag">Portfolio</span>
+                            <span class="template-tag">Gradients</span>
+                            <span class="template-tag">Animations</span>
+                            <span class="template-tag">Creative</span>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-primary" onclick="openFullscreen('artistpro')">
+                                👁️ Переглянути
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadTemplate('artistpro')">
+                                💾 Завантажити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="template-card">
+                    <iframe class="template-preview" src="data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cmeta charset='utf-8'%3E%3Cmeta name='viewport' content='width=device-width, initial-scale=1'%3E%3Cstyle%3Ebody{font-family:'Georgia',serif;margin:0;background:%23f5f5f5;color:%23333;line-height:1.6}header{background:white;padding:2rem 0;border-bottom:1px solid %23eee}.header-content{max-width:1000px;margin:0 auto;text-align:center;padding:0 2rem}.logo{font-size:2.5rem;font-weight:normal;color:%23333;margin-bottom:0.5rem}.tagline{color:%23666;font-style:italic;font-size:1.1rem}nav{background:%23333;padding:1rem 0}nav ul{list-style:none;display:flex;justify-content:center;gap:3rem;margin:0;padding:0;max-width:1000px;margin:0 auto}nav a{text-decoration:none;color:white;font-weight:400;letter-spacing:1px;transition:color 0.3s}nav a:hover{color:%23ccc}.hero{max-width:1000px;margin:3rem auto;padding:0 2rem;text-align:center}.hero h1{font-size:2.8rem;margin-bottom:1rem;font-weight:normal;color:%23333}.hero p{font-size:1.2rem;color:%23666;max-width:600px;margin:0 auto 2rem}.gallery{max-width:1000px;margin:4rem auto;padding:0 2rem}.gallery-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}.gallery-item{background:white;border-radius:8px;overflow:hidden;box-shadow:0 2px 15px rgba(0,0,0,0.1);transition:transform 0.3s}.gallery-item:hover{transform:translateY(-5px)}.gallery-image{height:250px;background:linear-gradient(45deg,%23e0e0e0,%23f5f5f5);display:flex;align-items:center;justify-content:center;font-size:4rem;color:%23999}.gallery-content{padding:1.5rem}.gallery-content h3{font-size:1.3rem;margin-bottom:0.5rem;color:%23333}.gallery-content p{color:%23666;font-size:0.95rem}.about{background:white;padding:4rem 0;margin-top:4rem}.about-content{max-width:800px;margin:0 auto;padding:0 2rem;text-align:center}.about h2{font-size:2.2rem;margin-bottom:2rem;color:%23333}.about p{font-size:1.1rem;color:%23666;margin-bottom:1.5rem}footer{background:%23333;color:white;text-align:center;padding:2rem 0}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cheader%3E%3Cdiv class='header-content'%3E%3Ch1 class='logo'%3EОлена Мельник%3C/h1%3E%3Cp class='tagline'%3EФотограф та візуальний художник%3C/p%3E%3C/div%3E%3C/header%3E%3Cnav%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EГоловна%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПортфоліо%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПро мене%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПослуги%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКонтакти%3C/a%3E%3C/li%3E%3C/ul%3E%3C/nav%3E%3Csection class='hero'%3E%3Ch1%3EЗахоплюю моменти життя%3C/h1%3E%3Cp%3EСтворюю незабутні спогади через об'єктив камери. Спеціалізуюся на портретній, весільній та подієвій фотографії.%3C/p%3E%3C/section%3E%3Csection class='gallery'%3E%3Cdiv class='gallery-grid'%3E%3Cdiv class='gallery-item'%3E%3Cdiv class='gallery-image'%3E📷%3C/div%3E%3Cdiv class='gallery-content'%3E%3Ch3%3EВесільна фотографія%3C/h3%3E%3Cp%3EНайщасливіші моменти вашого особливого дня%3C/p%3E%3C/div%3E%3C/div%3E%3Cdiv class='gallery-item'%3E%3Cdiv class='gallery-image'%3E👨‍👩‍👧‍👦%3C/div%3E%3Cdiv class='gallery-content'%3E%3Ch3%3EСімейні портрети%3C/h3%3E%3Cp%3EЩирі емоції та теплі родинні моменти%3C/p%3E%3C/div%3E%3C/div%3E%3Cdiv class='gallery-item'%3E%3Cdiv class='gallery-image'%3E🎭%3C/div%3E%3Cdiv class='gallery-content'%3E%3Ch3%3EПодієва фотографія%3C/h3%3E%3Cp%3EФіксую атмосферу важливих заходів%3C/p%3E%3C/div%3E%3C/div%3E%3Cdiv class='gallery-item'%3E%3Cdiv class='gallery-image'%3E🌸%3C/div%3E%3Cdiv class='gallery-content'%3E%3Ch3%3EХудожня фотографія%3C/h3%3E%3Cp%3EТворчі роботи та концептуальні проекти%3C/p%3E%3C/div%3E%3C/div%3E%3C/div%3E%3C/section%3E%3Csection class='about'%3E%3Cdiv class='about-content'%3E%3Ch2%3EПро мене%3C/h2%3E%3Cp%3EВже більше 8 років займаюся фотографією та допомагаю людям зберігати найдорожчі спогади. %3C/p%3E%3Cp%3EВірю, що кожен кадр має розповідати історію та передавати справжні емоції.%3C/p%3E%3C/div%3E%3C/section%3E%3Cfooter%3E%3Cp%3E%26copy; 2024 Олена Мельник. Фотографія з душею.%3C/p%3E%3C/footer%3E%3C/body%3E%3C/html%3E"></iframe>
+                    <div class="template-info">
+                        <h3 class="template-title">PhotoPro</h3>
+                        <p class="template-description">Елегантний шаблон для фотографа з мінімалістичним дизайном та акцентом на портфоліо.</p>
+                        <div class="template-tags">
+                            <span class="template-tag">Photography</span>
+                            <span class="template-tag">Minimal</span>
+                            <span class="template-tag">Gallery</span>
+                            <span class="template-tag">Elegant</span>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-primary" onclick="openFullscreen('photopro')">
+                                👁️ Переглянути
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadTemplate('photopro')">
+                                💾 Завантажити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- E-commerce Templates -->
+        <div class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">🛒 E-commerce</h2>
+                <p class="category-description">Сучасні шаблони для інтернет-магазинів та комерційних проектів</p>
+            </div>
+
+            <div class="templates-grid">
+                <div class="template-card">
+                    <iframe class="template-preview" src="data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cmeta charset='utf-8'%3E%3Cmeta name='viewport' content='width=device-width, initial-scale=1'%3E%3Cstyle%3Ebody{font-family:Arial,sans-serif;margin:0;background:%23f8f9fa}header{background:white;padding:1rem 0;box-shadow:0 2px 4px rgba(0,0,0,0.1)}.header-content{max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;padding:0 2rem}.logo{font-size:1.8rem;font-weight:bold;color:%23007bff}.cart{background:%23007bff;color:white;padding:0.5rem 1rem;border-radius:20px;text-decoration:none}.promo{background:linear-gradient(135deg,%23007bff,%2300d4aa);color:white;text-align:center;padding:1rem;font-weight:bold}nav{background:%23343a40;padding:1rem 0}nav ul{list-style:none;display:flex;justify-content:center;gap:3rem;margin:0;padding:0;max-width:1200px;margin:0 auto}nav a{text-decoration:none;color:white;font-weight:500;transition:color 0.3s}nav a:hover{color:%2300d4aa}.hero{background:linear-gradient(135deg,%23007bff,%2300d4aa);color:white;padding:4rem 0;text-align:center}.hero h1{font-size:3rem;margin-bottom:1rem}.hero p{font-size:1.3rem;margin-bottom:2rem}.btn{background:%23fff;color:%23007bff;padding:1rem 2rem;border:none;border-radius:6px;font-size:1.1rem;cursor:pointer;text-decoration:none;display:inline-block;font-weight:bold}.btn:hover{background:%23f8f9fa}.products{max-width:1200px;margin:3rem auto;padding:0 2rem}.section-title{text-align:center;font-size:2.5rem;color:%23343a40;margin-bottom:2rem}.products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem}.product{background:white;border-radius:12px;overflow:hidden;box-shadow:0 2px 15px rgba(0,0,0,0.1);transition:transform 0.3s}.product:hover{transform:translateY(-5px)}.product-image{height:200px;background:%23e9ecef;display:flex;align-items:center;justify-content:center;font-size:3rem;color:%236c757d}.product-content{padding:1.5rem}.product-title{font-size:1.2rem;margin-bottom:0.5rem;color:%23343a40}.product-price{font-size:1.3rem;font-weight:bold;color:%23007bff;margin-bottom:1rem}.product-btn{width:100%25;background:%23007bff;color:white;border:none;padding:0.75rem;border-radius:6px;cursor:pointer;transition:background 0.3s}.product-btn:hover{background:%230056b3}.features{background:white;padding:4rem 0;margin:3rem 0}.features-content{max-width:1200px;margin:0 auto;padding:0 2rem}.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:2rem;margin-top:2rem}.feature{text-align:center;padding:2rem}.feature-icon{width:80px;height:80px;background:%23007bff;border-radius:50%25;margin:0 auto 1rem;display:flex;align-items:center;justify-content:center;font-size:2rem;color:white}.feature h3{color:%23343a40;margin-bottom:1rem}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cheader%3E%3Cdiv class='header-content'%3E%3Cdiv class='logo'%3EShopPro%3C/div%3E%3Ca href='%23' class='cart'%3E🛒 Кошик (0)%3C/a%3E%3C/div%3E%3C/header%3E%3Cdiv class='promo'%3EБезкоштовна доставка при замовленні від 500 грн!%3C/div%3E%3Cnav%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EГоловна%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКаталог%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EЗнижки%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EДоставка%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EКонтакти%3C/a%3E%3C/li%3E%3C/ul%3E%3C/nav%3E%3Csection class='hero'%3E%3Ch1%3EВеликий розпродаж!%3C/h1%3E%3Cp%3EЗнижки до 50%25 на всі товари%3C/p%3E%3Ca href='%23' class='btn'%3EДивитися товари%3C/a%3E%3C/section%3E%3Csection class='products'%3E%3Ch2 class='section-title'%3EПопулярні товари%3C/h2%3E%3Cdiv class='products-grid'%3E%3Cdiv class='product'%3E%3Cdiv class='product-image'%3E👕%3C/div%3E%3Cdiv class='product-content'%3E%3Ch3 class='product-title'%3EСтильна футболка%3C/h3%3E%3Cdiv class='product-price'%3E799 грн%3C/div%3E%3Cbutton class='product-btn'%3EДодати в кошик%3C/button%3E%3C/div%3E%3C/div%3E%3Cdiv class='product'%3E%3Cdiv class='product-image'%3E👟%3C/div%3E%3Cdiv class='product-content'%3E%3Ch3 class='product-title'%3EСпортивні кросівки%3C/h3%3E%3Cdiv class='product-price'%3E1999 грн%3C/div%3E%3Cbutton class='product-btn'%3EДодати в кошик%3C/button%3E%3C/div%3E%3C/div%3E%3Cdiv class='product'%3E%3Cdiv class='product-image'%3E🎧%3C/div%3E%3Cdiv class='product-content'%3E%3Ch3 class='product-title'%3EБездротові навушники%3C/h3%3E%3Cdiv class='product-price'%3E2499 грн%3C/div%3E%3Cbutton class='product-btn'%3EДодати в кошик%3C/button%3E%3C/div%3E%3C/div%3E%3Cdiv class='product'%3E%3Cdiv class='product-image'%3E📱%3C/div%3E%3Cdiv class='product-content'%3E%3Ch3 class='product-title'%3EЧохол для телефону%3C/h3%3E%3Cdiv class='product-price'%3E299 грн%3C/div%3E%3Cbutton class='product-btn'%3EДодати в кошик%3C/button%3E%3C/div%3E%3C/div%3E%3C/div%3E%3C/section%3E%3Csection class='features'%3E%3Cdiv class='features-content'%3E%3Ch2 class='section-title'%3EЧому обирають нас%3C/h2%3E%3Cdiv class='features-grid'%3E%3Cdiv class='feature'%3E%3Cdiv class='feature-icon'%3E🚚%3C/div%3E%3Ch3%3EШвидка доставка%3C/h3%3E%3Cp%3EДоставляємо по всій Україні за 1-2 дні%3C/p%3E%3C/div%3E%3Cdiv class='feature'%3E%3Cdiv class='feature-icon'%3E💳%3C/div%3E%3Ch3%3EБезпечна оплата%3C/h3%3E%3Cp%3EПриймаємо всі види платежів%3C/p%3E%3C/div%3E%3Cdiv class='feature'%3E%3Cdiv class='feature-icon'%3E🔄%3C/div%3E%3Ch3%3EГарантія якості%3C/h3%3E%3Cp%3E14 днів на повернення товару%3C/p%3E%3C/div%3E%3Cdiv class='feature'%3E%3Cdiv class='feature-icon'%3E📞%3C/div%3E%3Ch3%3EПідтримка 24/7%3C/h3%3E%3Cp%3EГотові допомогти в будь-який час%3C/p%3E%3C/div%3E%3C/div%3E%3C/div%3E%3C/section%3E%3C/body%3E%3C/html%3E"></iframe>
+                    <div class="template-info">
+                        <h3 class="template-title">ShopPro</h3>
+                        <p class="template-description">Повнофункціональний шаблон інтернет-магазину з карточками товарів та промо-банерами.</p>
+                        <div class="template-tags">
+                            <span class="template-tag">E-commerce</span>
+                            <span class="template-tag">Shopping Cart</span>
+                            <span class="template-tag">Product Grid</span>
+                            <span class="template-tag">Promo</span>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-primary" onclick="openFullscreen('shoppro')">
+                                👁️ Переглянути
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadTemplate('shoppro')">
+                                💾 Завантажити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog & Content Templates -->
+        <div class="category-section">
+            <div class="category-header">
+                <h2 class="category-title">📝 Блоги та контент</h2>
+                <p class="category-description">Шаблони для блогів, новинних сайтів та контент-платформ</p>
+            </div>
+
+            <div class="templates-grid">
+                <div class="template-card">
+                    <iframe class="template-preview" src="data:text/html;charset=utf-8,%3C!DOCTYPE html%3E%3Chtml%3E%3Chead%3E%3Cmeta charset='utf-8'%3E%3Cmeta name='viewport' content='width=device-width, initial-scale=1'%3E%3Cstyle%3Ebody{font-family:'Georgia',serif;margin:0;background:%23f8f9fa;line-height:1.7}header{background:white;padding:2rem 0;border-bottom:1px solid %23dee2e6}.header-content{max-width:1000px;margin:0 auto;text-align:center;padding:0 2rem}.blog-title{font-size:3rem;color:%23212529;margin-bottom:0.5rem;font-weight:normal}.blog-subtitle{color:%236c757d;font-size:1.2rem;font-style:italic}nav{background:%23212529;padding:1rem 0}nav ul{list-style:none;display:flex;justify-content:center;gap:3rem;margin:0;padding:0}nav a{text-decoration:none;color:white;font-weight:400;letter-spacing:1px;transition:color 0.3s}nav a:hover{color:%23adb5bd}.main-content{max-width:1000px;margin:3rem auto;padding:0 2rem;display:grid;grid-template-columns:2fr 1fr;gap:3rem}.featured-post{background:white;border-radius:12px;overflow:hidden;box-shadow:0 4px 6px rgba(0,0,0,0.1);margin-bottom:2rem}.featured-image{height:300px;background:linear-gradient(45deg,%236c757d,%23adb5bd);display:flex;align-items:center;justify-content:center;font-size:4rem;color:white}.featured-content{padding:2rem}.featured-title{font-size:2rem;color:%23212529;margin-bottom:1rem}.featured-meta{color:%236c757d;margin-bottom:1rem;font-size:0.9rem}.featured-excerpt{color:%23495057;font-size:1.1rem;margin-bottom:1.5rem}.read-more{color:%23007bff;text-decoration:none;font-weight:500}.read-more:hover{text-decoration:underline}.recent-posts{list-style:none;padding:0}.recent-post{background:white;padding:1.5rem;margin-bottom:1rem;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}.recent-post h3{font-size:1.2rem;margin-bottom:0.5rem;color:%23212529}.recent-post-meta{color:%236c757d;font-size:0.85rem;margin-bottom:0.5rem}.recent-post p{color:%23495057;font-size:0.95rem}.sidebar{}.sidebar-section{background:white;padding:1.5rem;margin-bottom:2rem;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,0.1)}.sidebar-title{font-size:1.3rem;color:%23212529;margin-bottom:1rem;border-bottom:2px solid %23007bff;padding-bottom:0.5rem}.sidebar ul{list-style:none;padding:0}.sidebar li{padding:0.5rem 0;border-bottom:1px solid %23f8f9fa}.sidebar a{text-decoration:none;color:%23495057}.sidebar a:hover{color:%23007bff}footer{background:%23212529;color:white;text-align:center;padding:2rem 0;margin-top:3rem}%3C/style%3E%3C/head%3E%3Cbody%3E%3Cheader%3E%3Cdiv class='header-content'%3E%3Ch1 class='blog-title'%3EТехноБлог%3C/h1%3E%3Cp class='blog-subtitle'%3EОстанні новини світу технологій%3C/p%3E%3C/div%3E%3C/header%3E%3Cnav%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EГоловна%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EТехнології%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EРевю%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EГайди%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EПро нас%3C/a%3E%3C/li%3E%3C/ul%3E%3C/nav%3E%3Cdiv class='main-content'%3E%3Cmain%3E%3Carticle class='featured-post'%3E%3Cdiv class='featured-image'%3E💻%3C/div%3E%3Cdiv class='featured-content'%3E%3Ch2 class='featured-title'%3EМайбутнє веб-розробки у 2024%3C/h2%3E%3Cdiv class='featured-meta'%3E15 березня 2024 • Автор: Андрій Коваленко%3C/div%3E%3Cp class='featured-excerpt'%3EРозглядаємо найперспективніші тенденції у веб-розробці, які будуть визначати індустрію в наступному році. Від нових фреймворків до революційних підходів...%3C/p%3E%3Ca href='%23' class='read-more'%3EЧитати повністю →%3C/a%3E%3C/div%3E%3C/article%3E%3Csection%3E%3Ch3%3EОстанні публікації%3C/h3%3E%3Cul class='recent-posts'%3E%3Cli class='recent-post'%3E%3Ch3%3EТоп 10 JavaScript бібліотек у 2024%3C/h3%3E%3Cdiv class='recent-post-meta'%3E12 березня 2024%3C/div%3E%3Cp%3EОгляд найкорисніших JavaScript бібліотек для сучасної розробки...%3C/p%3E%3C/li%3E%3Cli class='recent-post'%3E%3Ch3%3EЯк оптимізувати React додаток%3C/h3%3E%3Cdiv class='recent-post-meta'%3E10 березня 2024%3C/div%3E%3Cp%3EПрактичні поради для покращення продуктивності React додатків...%3C/p%3E%3C/li%3E%3Cli class='recent-post'%3E%3Ch3%3ECSS Grid vs Flexbox: що обрати%3C/h3%3E%3Cdiv class='recent-post-meta'%3E8 березня 2024%3C/div%3E%3Cp%3EДетальне порівняння двох потужних CSS технологій...%3C/p%3E%3C/li%3E%3C/ul%3E%3C/section%3E%3C/main%3E%3Caside class='sidebar'%3E%3Cdiv class='sidebar-section'%3E%3Ch3 class='sidebar-title'%3EПопулярні теми%3C/h3%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EJavaScript (45)%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EReact (32)%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3ENode.js (28)%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3ECSS (25)%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EPython (20)%3C/a%3E%3C/li%3E%3C/ul%3E%3C/div%3E%3Cdiv class='sidebar-section'%3E%3Ch3 class='sidebar-title'%3EАрхів%3C/h3%3E%3Cul%3E%3Cli%3E%3Ca href='%23'%3EБерезень 2024 (12)%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EЛютий 2024 (18)%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EСічень 2024 (15)%3C/a%3E%3C/li%3E%3Cli%3E%3Ca href='%23'%3EГрудень 2023 (22)%3C/a%3E%3C/li%3E%3C/ul%3E%3C/div%3E%3C/aside%3E%3C/div%3E%3Cfooter%3E%3Cp%3E%26copy; 2024 ТехноБлог. Залишайтеся на хвилі технологій.%3C/p%3E%3C/footer%3E%3C/body%3E%3C/html%3E"></iframe>
+                    <div class="template-info">
+                        <h3 class="template-title">TechBlog</h3>
+                        <p class="template-description">Класичний блог-шаблон з сайдбаром, архівом та акцентом на типографіку та читабельність.</p>
+                        <div class="template-tags">
+                            <span class="template-tag">Blog</span>
+                            <span class="template-tag">Typography</span>
+                            <span class="template-tag">Sidebar</span>
+                            <span class="template-tag">Archive</span>
+                        </div>
+                        <div class="template-actions">
+                            <button class="btn btn-primary" onclick="openFullscreen('techblog')">
+                                👁️ Переглянути
+                            </button>
+                            <button class="btn btn-secondary" onclick="downloadTemplate('techblog')">
+                                💾 Завантажити
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            <strong>⚠️ Зверніть увагу:</strong>
+            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                <li>Всі шаблони є демонстраційними та створені для навчальних цілей</li>
+                <li>Зображення замінені на емодзі для спрощення</li>
+                <li>Код оптимізований для розуміння та навчання</li>
+              </ul>
+        </div>
+
+        <!-- Fullscreen Modal -->
+        <div class="fullscreen-modal" id="fullscreenModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="modalTitle">Перегляд шаблону</h3>
+                    <button class="close-btn" onclick="closeFullscreen()">✕</button>
+                </div>
+                <iframe class="modal-frame" id="modalFrame"></iframe>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('best-practices')">
+                ⬅️ Назад до шпаргалки
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Додаткові матеріали</strong><br>
+                <small>Демо-шаблони сайтів</small>
+            </div>
+            <button class="nav-button" onclick="window.open('https://github.com', '_blank')">
+                GitHub репозиторій ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Fullscreen functionality
+        function openFullscreen(templateId) {
+            const modal = document.getElementById('fullscreenModal');
+            const frame = document.getElementById('modalFrame');
+            const title = document.getElementById('modalTitle');
+            
+            // Template URLs mapping (в реальному проекті це було б з окремих файлів)
+            const templates = {
+                'techcorp': getTemplateContent('TechCorp'),
+                'startuppro': getTemplateContent('StartupPro'),
+                'consultpro': getTemplateContent('ConsultPro'),
+                'artistpro': getTemplateContent('ArtistPro'),
+                'photopro': getTemplateContent('PhotoPro'),
+                'shoppro': getTemplateContent('ShopPro'),
+                'techblog': getTemplateContent('TechBlog')
+            };
+            
+            const templateNames = {
+                'techcorp': 'TechCorp - Корпоративний сайт',
+                'startuppro': 'StartupPro - Стартап лендінг',
+                'consultpro': 'ConsultPro - Консалтинг',
+                'artistpro': 'ArtistPro - Креативне портфоліо',
+                'photopro': 'PhotoPro - Фотограф',
+                'shoppro': 'ShopPro - Інтернет-магазин',
+                'techblog': 'TechBlog - Технологічний блог'
+            };
+            
+            if (templates[templateId]) {
+                frame.src = templates[templateId];
+                title.textContent = templateNames[templateId];
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        function closeFullscreen() {
+            const modal = document.getElementById('fullscreenModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function getTemplateContent(templateName) {
+            // Тут би було завантаження реального шаблону
+            // Поки що використовуємо iframe src з preview
+            const previews = document.querySelectorAll('.template-preview');
+            for (let preview of previews) {
+                const card = preview.closest('.template-card');
+                const title = card.querySelector('.template-title').textContent;
+                if (title === templateName) {
+                    return preview.src;
+                }
+            }
+            return 'about:blank';
+        }
+        
+        function downloadTemplate(templateId) {
+            const templateNames = {
+                'techcorp': 'TechCorp',
+                'startuppro': 'StartupPro',
+                'consultpro': 'ConsultPro',
+                'artistpro': 'ArtistPro',
+                'photopro': 'PhotoPro',
+                'shoppro': 'ShopPro',
+                'techblog': 'TechBlog'
+            };
+            
+            // Отримуємо HTML код шаблону
+            const previews = document.querySelectorAll('.template-preview');
+            let templateHTML = '';
+            
+            for (let preview of previews) {
+                const card = preview.closest('.template-card');
+                const title = card.querySelector('.template-title').textContent;
+                if (title === templateNames[templateId]) {
+                    // Декодуємо data URI
+                    const dataUri = preview.src;
+                    const encodedHTML = dataUri.split(',')[1];
+                    templateHTML = decodeURIComponent(encodedHTML);
+                    break;
+                }
+            }
+            
+            if (!templateHTML) {
+                alert('Помилка: не вдалося знайти шаблон для завантаження');
+                return;
+            }
+            
+            // Створюємо README файл
+            const readmeContent = `# ${templateNames[templateId]} - HTML Template
+
+## Опис
+Готовий до використання HTML шаблон з адаптивним дизайном.
+
+## Структура файлів
+\`\`\`
+${templateId}/
+├── index.html          # Головний файл шаблону
+├── README.md           # Цей файл з інструкцією
+└── screenshots/        # Скріншоти шаблону
+\`\`\`
+
+## Як використовувати
+1. Відкрийте index.html у браузері
+2. Налаштуйте контент під ваші потреби
+3. Замініть зображення на власні
+4. Додайте необхідну функціональність
+
+## Особливості
+- ✅ Адаптивний дизайн (responsive)
+- ✅ Кросс-браузерна сумісність
+- ✅ Семантичний HTML5
+- ✅ Сучасний CSS
+- ✅ Готовий до SEO
+
+## Підтримка браузерів
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+
+## Ліцензія
+Вільне використання для особистих та комерційних проектів.
+
+---
+Створено HTML5 Шпаргалкою | ${new Date().getFullYear()}
+`;
+
+            // Функція для завантаження файлу
+            function downloadFile(content, fileName, mimeType) {
+                const blob = new Blob([content], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = fileName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                URL.revokeObjectURL(url);
+            }
+            
+            // Показуємо повідомлення про початок завантаження
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-family: 'Segoe UI', sans-serif;
+                max-width: 300px;
+                transition: all 0.3s ease;
+            `;
+            notification.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                    <span style="font-size: 1.2rem;">📦</span>
+                    <strong>Завантаження шаблону</strong>
+                </div>
+                <div style="font-size: 0.9rem; opacity: 0.9;">
+                    ${templateNames[templateId]} буде завантажено через кілька секунд...
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            // Завантажуємо файли з затримкою
+            setTimeout(() => {
+                downloadFile(templateHTML, `${templateId}-template.html`, 'text/html');
+            }, 1000);
+            
+            setTimeout(() => {
+                downloadFile(readmeContent, `${templateId}-README.md`, 'text/markdown');
+                
+                // Оновлюємо повідомлення
+                notification.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <span style="font-size: 1.2rem;">✅</span>
+                        <strong>Завантаження завершено!</strong>
+                    </div>
+                    <div style="font-size: 0.9rem; opacity: 0.9;">
+                        Файли збережено у папку "Завантаження"
+                    </div>
+                `;
+                
+                // Видаляємо повідомлення через 3 секунди
+                setTimeout(() => {
+                    notification.style.transform = 'translateX(100%)';
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }, 2000);
+            
+            console.log(`Downloaded template: ${templateId}`);
+        }
+        
+        // Закриття модального вікна при натисканні Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeFullscreen();
+            }
+        });
+        
+        // Закриття при кліку поза модальним вікном
+        document.getElementById('fullscreenModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeFullscreen();
+            }
+        });
+        
+        console.log('Demo templates page loaded');
+    </script>
+</body>
+</html> 

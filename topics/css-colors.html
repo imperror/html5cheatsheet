@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кольори в CSS - HTML5 Шпаргалка</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .content-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.2rem;
+        }
+
+        .color-formats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .format-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .format-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .format-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .format-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+            color: white;
+        }
+
+        .format-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .format-content {
+            padding: 1.5rem;
+        }
+
+        .format-examples {
+            list-style: none;
+            padding: 0;
+        }
+
+        .format-example {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            margin: 0.5rem 0;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: all 0.2s;
+        }
+
+        .format-example:hover {
+            background: #edf2f7;
+            border-left-color: #4c51bf;
+            transform: translateX(5px);
+        }
+
+        .color-code {
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            color: #2d3748;
+        }
+
+        .color-swatch {
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            border: 2px solid #e2e8f0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .interactive-demo {
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-2px);
+        }
+
+        .demo-button.active {
+            background: #4c51bf;
+            box-shadow: 0 4px 8px rgba(76, 81, 191, 0.3);
+        }
+
+        .color-picker-tool {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .picker-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+        }
+
+        .color-input {
+            width: 100%;
+            height: 50px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .range-input {
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .range-input::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .color-output {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .color-preview {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .color-values {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .value-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .value-label {
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .value-code {
+            font-family: 'Courier New', monospace;
+            background: #e2e8f0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .value-code:hover {
+            background: #cbd5e0;
+        }
+
+        .gradient-playground {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .gradient-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .gradient-preview {
+            height: 200px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .color-palette {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .palette-color {
+            aspect-ratio: 1;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: end;
+            padding: 0.5rem;
+            color: white;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+        }
+
+        .palette-color:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        .accessibility-checker {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .contrast-tool {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .contrast-result {
+            margin-top: 1rem;
+        }
+
+        .contrast-test {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .contrast-example {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+        }
+
+        .contrast-ratio {
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        .ratio-good { color: #38a169; }
+        .ratio-warning { color: #f56500; }
+        .ratio-bad { color: #e53e3e; }
+
+        .code-example {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            white-space: pre-wrap;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .code-label {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #4a5568;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+
+        .comparison-table tr:hover {
+            background: #edf2f7;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #e0f2fe 0%, #b3e5fc 100%);
+            border-left: 4px solid #0288d1;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border-left: 4px solid #f57c00;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-left: 4px solid #7b1fa2;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: #fed7d7;
+            border: 1px solid #fc8181;
+            border-radius: 4px;
+            padding: 0.25rem 0.5rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .color-formats {
+                grid-template-columns: 1fr;
+            }
+            
+            .picker-controls {
+                grid-template-columns: 1fr;
+            }
+            
+            .color-output {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .comparison-table {
+                font-size: 0.8rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+
+            .contrast-test {
+                grid-template-columns: 1fr;
+            }
+
+            .color-palette {
+                grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌈 Кольори в CSS</h1>
+            <p>Повний посібник з колірних форматів, градієнтів та інтерактивних інструментів</p>
+        </div>
+
+        <div class="content-section">
+            <h2>Формати кольорів CSS</h2>
+            <p>CSS підтримує кілька способів задання кольорів. Кожен має свої переваги та застосування:</p>
+
+            <div class="color-formats">
+                <div class="format-card">
+                    <div class="format-header">
+                        <div class="format-icon">#️⃣</div>
+                        <h3>HEX кольори</h3>
+                        <p>Шістнадцятковий формат</p>
+                    </div>
+                    <div class="format-content">
+                        <ul class="format-examples">
+                            <li class="format-example">
+                                <span class="color-code">#ff0000</span>
+                                <div class="color-swatch" style="background: #ff0000;"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">#00ff00</span>
+                                <div class="color-swatch" style="background: #00ff00;"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">#0000ff</span>
+                                <div class="color-swatch" style="background: #0000ff;"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">#333</span>
+                                <div class="color-swatch" style="background: #333;"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <div class="format-icon">🔴</div>
+                        <h3>RGB кольори</h3>
+                        <p>Red, Green, Blue</p>
+                    </div>
+                    <div class="format-content">
+                        <ul class="format-examples">
+                            <li class="format-example">
+                                <span class="color-code">rgb(255, 0, 0)</span>
+                                <div class="color-swatch" style="background: rgb(255, 0, 0);"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">rgb(0, 255, 0)</span>
+                                <div class="color-swatch" style="background: rgb(0, 255, 0);"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">rgb(0, 0, 255)</span>
+                                <div class="color-swatch" style="background: rgb(0, 0, 255);"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">rgba(255, 0, 0, 0.5)</span>
+                                <div class="color-swatch" style="background: rgba(255, 0, 0, 0.5);"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <div class="format-icon">🎨</div>
+                        <h3>HSL кольори</h3>
+                        <p>Hue, Saturation, Lightness</p>
+                    </div>
+                    <div class="format-content">
+                        <ul class="format-examples">
+                            <li class="format-example">
+                                <span class="color-code">hsl(0, 100%, 50%)</span>
+                                <div class="color-swatch" style="background: hsl(0, 100%, 50%);"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">hsl(120, 100%, 50%)</span>
+                                <div class="color-swatch" style="background: hsl(120, 100%, 50%);"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">hsl(240, 100%, 50%)</span>
+                                <div class="color-swatch" style="background: hsl(240, 100%, 50%);"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">hsla(0, 100%, 50%, 0.5)</span>
+                                <div class="color-swatch" style="background: hsla(0, 100%, 50%, 0.5);"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="format-card">
+                    <div class="format-header">
+                        <div class="format-icon">📝</div>
+                        <h3>Іменовані кольори</h3>
+                        <p>Предвизначені назви</p>
+                    </div>
+                    <div class="format-content">
+                        <ul class="format-examples">
+                            <li class="format-example">
+                                <span class="color-code">red</span>
+                                <div class="color-swatch" style="background: red;"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">blue</span>
+                                <div class="color-swatch" style="background: blue;"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">green</span>
+                                <div class="color-swatch" style="background: green;"></div>
+                            </li>
+                            <li class="format-example">
+                                <span class="color-code">transparent</span>
+                                <div class="color-swatch" style="background: transparent; border: 2px dashed #999;"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Порівняння колірних моделей</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Формат</th>
+                        <th>Синтаксис</th>
+                        <th>Переваги</th>
+                        <th>Недоліки</th>
+                        <th>Використання</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>HEX</strong></td>
+                        <td>#RRGGBB або #RGB</td>
+                        <td>Компактний, популярний</td>
+                        <td>Важко читати людині</td>
+                        <td>Дизайн-системи, константи</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RGB</strong></td>
+                        <td>rgb(r, g, b)</td>
+                        <td>Зрозумілий, точний</td>
+                        <td>Довший запис</td>
+                        <td>Програмна генерація</td>
+                    </tr>
+                    <tr>
+                        <td><strong>RGBA</strong></td>
+                        <td>rgba(r, g, b, a)</td>
+                        <td>Підтримка прозорості</td>
+                        <td>Довший запис</td>
+                        <td>Оверлеї, модальні вікна</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HSL</strong></td>
+                        <td>hsl(h, s%, l%)</td>
+                        <td>Інтуїтивний для дизайнерів</td>
+                        <td>Менш популярний</td>
+                        <td>Створення палітр</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Named</strong></td>
+                        <td>red, blue, etc.</td>
+                        <td>Читабельний</td>
+                        <td>Обмежений вибір</td>
+                        <td>Прототипування, базові кольори</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>💡 Коли використовувати кожен формат:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>HEX</strong> - для брендингових кольорів та дизайн-системи</li>
+                    <li><strong>RGB/RGBA</strong> - для програмної генерації кольорів</li>
+                    <li><strong>HSL/HSLA</strong> - для створення палітр та варіацій</li>
+                    <li><strong>Named</strong> - для швидкого прототипування</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Інтерактивний Color Picker</h2>
+            
+            <div class="color-picker-tool">
+                <div class="picker-controls">
+                    <div class="control-group">
+                        <label class="control-label">Виберіть колір</label>
+                        <input type="color" class="color-input" id="colorPicker" value="#667eea" onchange="updateColor()">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Червоний (0-255)</label>
+                        <input type="range" class="range-input" id="redSlider" min="0" max="255" value="102" oninput="updateFromSliders()">
+                        <span id="redValue">102</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Зелений (0-255)</label>
+                        <input type="range" class="range-input" id="greenSlider" min="0" max="255" value="126" oninput="updateFromSliders()">
+                        <span id="greenValue">126</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Синій (0-255)</label>
+                        <input type="range" class="range-input" id="blueSlider" min="0" max="255" value="234" oninput="updateFromSliders()">
+                        <span id="blueValue">234</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Прозорість (0-1)</label>
+                        <input type="range" class="range-input" id="alphaSlider" min="0" max="1" step="0.01" value="1" oninput="updateFromSliders()">
+                        <span id="alphaValue">1.00</span>
+                    </div>
+                </div>
+
+                <div class="color-output">
+                    <div class="color-preview" id="colorPreview">
+                        Попередній перегляд
+                    </div>
+                    <div class="color-values">
+                        <div class="value-row">
+                            <span class="value-label">HEX:</span>
+                            <span class="value-code" id="hexValue" onclick="copyToClipboard(this)">#667eea</span>
+                        </div>
+                        <div class="value-row">
+                            <span class="value-label">RGB:</span>
+                            <span class="value-code" id="rgbValue" onclick="copyToClipboard(this)">rgb(102, 126, 234)</span>
+                        </div>
+                        <div class="value-row">
+                            <span class="value-label">RGBA:</span>
+                            <span class="value-code" id="rgbaValue" onclick="copyToClipboard(this)">rgba(102, 126, 234, 1)</span>
+                        </div>
+                        <div class="value-row">
+                            <span class="value-label">HSL:</span>
+                            <span class="value-code" id="hslValue" onclick="copyToClipboard(this)">hsl(230, 77%, 66%)</span>
+                        </div>
+                        <div class="value-row">
+                            <span class="value-label">HSLA:</span>
+                            <span class="value-code" id="hslaValue" onclick="copyToClipboard(this)">hsla(230, 77%, 66%, 1)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🌈 Конструктор градієнтів</h2>
+            
+            <div class="gradient-playground">
+                <div class="gradient-controls">
+                    <div class="control-group">
+                        <label class="control-label">Тип градієнта</label>
+                        <select id="gradientType" onchange="updateGradient()" style="padding: 0.5rem; border: 1px solid #e2e8f0; border-radius: 4px;">
+                            <option value="linear">Linear</option>
+                            <option value="radial">Radial</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Напрямок (градуси)</label>
+                        <input type="range" class="range-input" id="gradientAngle" min="0" max="360" value="45" oninput="updateGradient()">
+                        <span id="angleValue">45°</span>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Перший колір</label>
+                        <input type="color" class="color-input" id="gradientColor1" value="#667eea" onchange="updateGradient()" style="height: 40px;">
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">Другий колір</label>
+                        <input type="color" class="color-input" id="gradientColor2" value="#764ba2" onchange="updateGradient()" style="height: 40px;">
+                    </div>
+                </div>
+
+                <div class="gradient-preview" id="gradientPreview">
+                    Градієнт
+                </div>
+
+                <div class="value-row">
+                    <span class="value-label">CSS Code:</span>
+                    <span class="value-code" id="gradientCode" onclick="copyToClipboard(this)">linear-gradient(45deg, #667eea, #764ba2)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Колірна палітра Material Design</h2>
+            
+            <div class="color-palette">
+                <div class="palette-color" style="background: #f44336;" onclick="selectPaletteColor('#f44336', 'Red 500')">Red 500</div>
+                <div class="palette-color" style="background: #e91e63;" onclick="selectPaletteColor('#e91e63', 'Pink 500')">Pink 500</div>
+                <div class="palette-color" style="background: #9c27b0;" onclick="selectPaletteColor('#9c27b0', 'Purple 500')">Purple 500</div>
+                <div class="palette-color" style="background: #673ab7;" onclick="selectPaletteColor('#673ab7', 'Deep Purple')">Deep Purple</div>
+                <div class="palette-color" style="background: #3f51b5;" onclick="selectPaletteColor('#3f51b5', 'Indigo 500')">Indigo 500</div>
+                <div class="palette-color" style="background: #2196f3;" onclick="selectPaletteColor('#2196f3', 'Blue 500')">Blue 500</div>
+                <div class="palette-color" style="background: #03a9f4;" onclick="selectPaletteColor('#03a9f4', 'Light Blue')">Light Blue</div>
+                <div class="palette-color" style="background: #00bcd4;" onclick="selectPaletteColor('#00bcd4', 'Cyan 500')">Cyan 500</div>
+                <div class="palette-color" style="background: #009688;" onclick="selectPaletteColor('#009688', 'Teal 500')">Teal 500</div>
+                <div class="palette-color" style="background: #4caf50;" onclick="selectPaletteColor('#4caf50', 'Green 500')">Green 500</div>
+                <div class="palette-color" style="background: #8bc34a;" onclick="selectPaletteColor('#8bc34a', 'Light Green')">Light Green</div>
+                <div class="palette-color" style="background: #cddc39;" onclick="selectPaletteColor('#cddc39', 'Lime 500')">Lime 500</div>
+                <div class="palette-color" style="background: #ffeb3b;" onclick="selectPaletteColor('#ffeb3b', 'Yellow 500')">Yellow 500</div>
+                <div class="palette-color" style="background: #ffc107;" onclick="selectPaletteColor('#ffc107', 'Amber 500')">Amber 500</div>
+                <div class="palette-color" style="background: #ff9800;" onclick="selectPaletteColor('#ff9800', 'Orange 500')">Orange 500</div>
+                <div class="palette-color" style="background: #ff5722;" onclick="selectPaletteColor('#ff5722', 'Deep Orange')">Deep Orange</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Перевірка доступності</h2>
+            
+            <div class="accessibility-checker">
+                <h4>Інтерактивна перевірка контрастності</h4>
+                <p>Тестуйте свої кольори на відповідність стандартам WCAG:</p>
+                
+                <div class="contrast-tool">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0;">
+                        <div class="control-group">
+                            <label class="control-label">Колір тексту (foreground)</label>
+                            <input type="color" class="color-input" id="contrastForeground" value="#000000" onchange="checkContrast()" style="height: 50px;">
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Колір фону (background)</label>
+                            <input type="color" class="color-input" id="contrastBackground" value="#ffffff" onchange="checkContrast()" style="height: 50px;">
+                        </div>
+                    </div>
+                    
+                    <div class="contrast-result">
+                        <div id="contrastPreview" style="background: #ffffff; color: #000000; padding: 2rem; border-radius: 8px; border: 1px solid #e2e8f0; text-align: center; margin: 1rem 0;">
+                            <h3>Приклад тексту</h3>
+                            <p>Цей текст демонструє контраст між вибраними кольорами. Великий текст (18pt+ або 14pt+ жирний) має менші вимоги до контрастності.</p>
+                            <small>Малий текст повинен мати вищий контраст</small>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                            <div class="value-row">
+                                <span class="value-label">Контрастність:</span>
+                                <span class="value-code" id="contrastRatio">21:1</span>
+                            </div>
+                            <div class="value-row">
+                                <span class="value-label">AA Normal:</span>
+                                <span class="value-code" id="aaResult">✅ Pass</span>
+                            </div>
+                            <div class="value-row">
+                                <span class="value-label">AA Large:</span>
+                                <span class="value-code" id="aaLargeResult">✅ Pass</span>
+                            </div>
+                            <div class="value-row">
+                                <span class="value-label">AAA Normal:</span>
+                                <span class="value-code" id="aaaResult">✅ Pass</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <h4>Приклади контрастності</h4>
+                <div class="contrast-test">
+                    <div class="contrast-example" style="background: #ffffff; color: #000000;">
+                        <strong>Чорний на білому</strong>
+                        <div class="contrast-ratio ratio-good">21:1 ✅ AAA</div>
+                    </div>
+                    <div class="contrast-example" style="background: #667eea; color: #ffffff;">
+                        <strong>Білий на синьому</strong>
+                        <div class="contrast-ratio ratio-good">4.6:1 ✅ AA</div>
+                    </div>
+                    <div class="contrast-example" style="background: #ffeb3b; color: #333333;">
+                        <strong>Темний на жовтому</strong>
+                        <div class="contrast-ratio ratio-good">12.8:1 ✅ AAA</div>
+                    </div>
+                </div>
+
+                <div class="contrast-test">
+                    <div class="contrast-example" style="background: #f44336; color: #ffffff;">
+                        <strong>Білий на червоному</strong>
+                        <div class="contrast-ratio ratio-warning">3.9:1 ⚠️ AA Large</div>
+                    </div>
+                    <div class="contrast-example" style="background: #03a9f4; color: #ffeb3b;">
+                        <strong>Жовтий на блакитному</strong>
+                        <div class="contrast-ratio ratio-warning">3.2:1 ⚠️ AA Large</div>
+                    </div>
+                    <div class="contrast-example" style="background: #9c27b0; color: #e91e63;">
+                        <strong>Рожевий на фіолетовому</strong>
+                        <div class="contrast-ratio ratio-bad">2.1:1 ❌ Fail</div>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <strong>📏 Стандарти контрастності WCAG:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>AA Normal:</strong> мінімум 4.5:1 для звичайного тексту</li>
+                        <li><strong>AA Large:</strong> мінімум 3:1 для великого тексту (18pt+ або 14pt+ жирний)</li>
+                        <li><strong>AAA Normal:</strong> мінімум 7:1 для найвищого рівня доступності</li>
+                        <li><strong>AAA Large:</strong> мінімум 4.5:1 для великого тексту</li>
+                    </ul>
+                </div>
+
+                <h4>🛠️ Інструменти для перевірки доступності</h4>
+                <div style="background: #f8fafc; padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+                    <h5>Онлайн інструменти:</h5>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li><strong>WebAIM Contrast Checker</strong> - найпопулярніший інструмент</li>
+                        <li><strong>Colour Contrast Analyser (CCA)</strong> - десктопна програма</li>
+                        <li><strong>Stark</strong> - плагін для Figma/Sketch</li>
+                        <li><strong>Accessible Colors</strong> - підбір доступних кольорів</li>
+                    </ul>
+                    
+                    <h5>Браузерні інструменти:</h5>
+                    <ul style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li><strong>Chrome DevTools</strong> - Elements → Styles → Color picker → Contrast ratio</li>
+                        <li><strong>Firefox DevTools</strong> - Inspector → Accessibility panel</li>
+                        <li><strong>Lighthouse</strong> - автоматичний аудит доступності</li>
+                    </ul>
+
+                    <h5>Як перевіряти:</h5>
+                    <ol style="margin: 0.5rem 0; padding-left: 1.5rem;">
+                        <li>Відкрийте DevTools (F12)</li>
+                        <li>Виберіть елемент з текстом</li>
+                        <li>У панелі Styles клацніть на квадратик кольору</li>
+                        <li>Браузер покаже контрастність автоматично</li>
+                        <li>Зелена галочка = відповідає стандартам</li>
+                    </ol>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Поради для кращої доступності:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li>Тестуйте кольори на різних пристроях і при різному освітленні</li>
+                        <li>Не покладайтеся тільки на колір для передачі інформації</li>
+                        <li>Додавайте іконки або підкреслення до кольорового кодування</li>
+                        <li>Тестуйте з симуляторами колірної сліпоти</li>
+                        <li>Враховуйте, що контраст може змінюватися на різних екранах</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>Практичні приклади використання</h2>
+            
+            <div class="code-example">
+                <div class="code-label">CSS</div>
+/* CSS змінні для колірної схеми */
+:root {
+    --primary-color: #667eea;
+    --secondary-color: #764ba2;
+    --success-color: #4caf50;
+    --warning-color: #ff9800;
+    --error-color: #f44336;
+    --text-color: #2d3748;
+    --bg-color: #ffffff;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Використання в компонентах */
+.button {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+}
+
+.success-message {
+    background: hsla(122, 39%, 49%, 0.1);
+    border-left: 4px solid var(--success-color);
+    color: var(--success-color);
+    padding: 1rem;
+}
+
+/* Dark mode підтримка */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #e2e8f0;
+        --bg-color: #1a202c;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+    }
+}
+            </div>
+
+            <div class="tip-box">
+                <strong>🎯 Кращі практики роботи з кольорами:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використовуйте CSS змінні для колірної схеми</li>
+                    <li>Тестуйте контрастність для доступності</li>
+                    <li>HSL зручний для створення варіацій одного кольору</li>
+                    <li>RGBA/HSLA для напівпрозорих елементів</li>
+                    <li>Підтримуйте dark mode через CSS змінні</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('css-units')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 18 з 41</strong><br>
+                <small>Кольори в CSS</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('css-fonts')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Color picker functionality
+        function updateColor() {
+            const colorPicker = document.getElementById('colorPicker');
+            const hex = colorPicker.value;
+            
+            // Convert hex to RGB
+            const r = parseInt(hex.substr(1, 2), 16);
+            const g = parseInt(hex.substr(3, 2), 16);
+            const b = parseInt(hex.substr(5, 2), 16);
+            
+            // Update sliders
+            document.getElementById('redSlider').value = r;
+            document.getElementById('greenSlider').value = g;
+            document.getElementById('blueSlider').value = b;
+            
+            updateColorValues(r, g, b);
+        }
+
+        function updateFromSliders() {
+            const r = parseInt(document.getElementById('redSlider').value);
+            const g = parseInt(document.getElementById('greenSlider').value);
+            const b = parseInt(document.getElementById('blueSlider').value);
+            const a = parseFloat(document.getElementById('alphaSlider').value);
+            
+            // Update color picker
+            const hex = '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+            
+            document.getElementById('colorPicker').value = hex;
+            
+            // Update value displays
+            document.getElementById('redValue').textContent = r;
+            document.getElementById('greenValue').textContent = g;
+            document.getElementById('blueValue').textContent = b;
+            document.getElementById('alphaValue').textContent = a.toFixed(2);
+            
+            updateColorValues(r, g, b, a);
+        }
+
+        function updateColorValues(r, g, b, a = 1) {
+            // Convert to different formats
+            const hex = '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+            
+            const rgb = `rgb(${r}, ${g}, ${b})`;
+            const rgba = `rgba(${r}, ${g}, ${b}, ${a})`;
+            
+            // Convert to HSL
+            const [h, s, l] = rgbToHsl(r, g, b);
+            const hsl = `hsl(${h}, ${s}%, ${l}%)`;
+            const hsla = `hsla(${h}, ${s}%, ${l}%, ${a})`;
+            
+            // Update displays
+            document.getElementById('hexValue').textContent = hex;
+            document.getElementById('rgbValue').textContent = rgb;
+            document.getElementById('rgbaValue').textContent = rgba;
+            document.getElementById('hslValue').textContent = hsl;
+            document.getElementById('hslaValue').textContent = hsla;
+            
+            // Update preview
+            const preview = document.getElementById('colorPreview');
+            preview.style.background = rgba;
+            
+            // Update text color based on brightness
+            const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+            preview.style.color = brightness > 128 ? '#000' : '#fff';
+        }
+
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    case b: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            
+            return [Math.round(h * 360), Math.round(s * 100), Math.round(l * 100)];
+        }
+
+        function updateGradient() {
+            const type = document.getElementById('gradientType').value;
+            const angle = document.getElementById('gradientAngle').value;
+            const color1 = document.getElementById('gradientColor1').value;
+            const color2 = document.getElementById('gradientColor2').value;
+            
+            document.getElementById('angleValue').textContent = angle + '°';
+            
+            let gradient;
+            if (type === 'linear') {
+                gradient = `linear-gradient(${angle}deg, ${color1}, ${color2})`;
+            } else {
+                gradient = `radial-gradient(circle, ${color1}, ${color2})`;
+            }
+            
+            document.getElementById('gradientPreview').style.background = gradient;
+            document.getElementById('gradientCode').textContent = gradient;
+        }
+
+        function selectPaletteColor(color, name) {
+            document.getElementById('colorPicker').value = color;
+            updateColor();
+            
+            // Show notification
+            const notification = document.createElement('div');
+            notification.textContent = `Вибрано: ${name} (${color})`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${color};
+                color: white;
+                padding: 1rem;
+                border-radius: 8px;
+                z-index: 1000;
+                font-weight: bold;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            `;
+            
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 2000);
+        }
+
+        function copyToClipboard(element) {
+            const text = element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                // Show copy feedback
+                const original = element.textContent;
+                element.textContent = 'Скопійовано!';
+                element.style.background = '#4caf50';
+                element.style.color = 'white';
+                
+                setTimeout(() => {
+                    element.textContent = original;
+                    element.style.background = '#e2e8f0';
+                    element.style.color = '';
+                }, 1000);
+            });
+        }
+
+        // Contrast checker functionality
+        function checkContrast() {
+            const fgColor = document.getElementById('contrastForeground').value;
+            const bgColor = document.getElementById('contrastBackground').value;
+            
+            // Update preview
+            const preview = document.getElementById('contrastPreview');
+            preview.style.color = fgColor;
+            preview.style.background = bgColor;
+            
+            // Calculate contrast ratio
+            const contrast = getContrastRatio(fgColor, bgColor);
+            
+            // Update results
+            document.getElementById('contrastRatio').textContent = contrast.toFixed(2) + ':1';
+            
+            // Check WCAG compliance
+            updateComplianceResults(contrast);
+        }
+
+        function getContrastRatio(color1, color2) {
+            const l1 = getLuminance(color1);
+            const l2 = getLuminance(color2);
+            
+            const lighter = Math.max(l1, l2);
+            const darker = Math.min(l1, l2);
+            
+            return (lighter + 0.05) / (darker + 0.05);
+        }
+
+        function getLuminance(hex) {
+            // Convert hex to RGB
+            const r = parseInt(hex.substr(1, 2), 16) / 255;
+            const g = parseInt(hex.substr(3, 2), 16) / 255;
+            const b = parseInt(hex.substr(5, 2), 16) / 255;
+            
+            // Apply gamma correction
+            const rs = r <= 0.03928 ? r / 12.92 : Math.pow((r + 0.055) / 1.055, 2.4);
+            const gs = g <= 0.03928 ? g / 12.92 : Math.pow((g + 0.055) / 1.055, 2.4);
+            const bs = b <= 0.03928 ? b / 12.92 : Math.pow((b + 0.055) / 1.055, 2.4);
+            
+            // Calculate luminance
+            return 0.2126 * rs + 0.7152 * gs + 0.0722 * bs;
+        }
+
+        function updateComplianceResults(contrast) {
+            const aaResult = document.getElementById('aaResult');
+            const aaLargeResult = document.getElementById('aaLargeResult');
+            const aaaResult = document.getElementById('aaaResult');
+            
+            // AA Normal text (4.5:1)
+            if (contrast >= 4.5) {
+                aaResult.textContent = '✅ Pass';
+                aaResult.style.color = '#38a169';
+            } else {
+                aaResult.textContent = '❌ Fail';
+                aaResult.style.color = '#e53e3e';
+            }
+            
+            // AA Large text (3:1)
+            if (contrast >= 3) {
+                aaLargeResult.textContent = '✅ Pass';
+                aaLargeResult.style.color = '#38a169';
+            } else {
+                aaLargeResult.textContent = '❌ Fail';
+                aaLargeResult.style.color = '#e53e3e';
+            }
+            
+            // AAA Normal text (7:1)
+            if (contrast >= 7) {
+                aaaResult.textContent = '✅ Pass';
+                aaaResult.style.color = '#38a169';
+            } else if (contrast >= 4.5) {
+                aaaResult.textContent = '⚠️ AA Only';
+                aaaResult.style.color = '#f56500';
+            } else {
+                aaaResult.textContent = '❌ Fail';
+                aaaResult.style.color = '#e53e3e';
+            }
+        }
+
+        // Initialize
+        updateFromSliders();
+        updateGradient();
+        checkContrast();
+    </script>
+</body>
+</html> 

@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Форми</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .input-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .input-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .input-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .input-demo {
+            margin: 1rem 0;
+        }
+
+        .input-demo input,
+        .input-demo select,
+        .input-demo textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .input-demo input:focus,
+        .input-demo select:focus,
+        .input-demo textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .input-description {
+            color: #4a5568;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .demo-form {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-input:valid {
+            border-color: #38a169;
+        }
+
+        .form-input:invalid:not(:focus):not(:placeholder-shown) {
+            border-color: #e53e3e;
+        }
+
+        .form-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 2rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .form-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        .form-button:disabled {
+            background: #a0aec0;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .validation-message {
+            margin-top: 0.5rem;
+            font-size: 0.875rem;
+            color: #e53e3e;
+            display: none;
+        }
+
+        .success-message {
+            color: #38a169;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .form-layout-demo {
+            display: grid;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .layout-example {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .layout-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        /* Стилі для різних типів форм */
+        .login-form {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .registration-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .warning-box {
+            background: #fffaf0;
+            border: 1px solid #fbb6ce;
+            border-left: 4px solid #e53e3e;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .warning-box strong {
+            color: #c53030;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Responsive стилі */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .input-types-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Кастомні стилі для чекбоксів та радіо кнопок */
+        .custom-checkbox {
+            position: relative;
+            display: inline-block;
+            padding-left: 2rem;
+            cursor: pointer;
+        }
+
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 1.2rem;
+            width: 1.2rem;
+            background-color: #e2e8f0;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+
+        .custom-checkbox:hover input ~ .checkmark {
+            background-color: #cbd5e0;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #667eea;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+
+        .custom-checkbox .checkmark:after {
+            left: 4px;
+            top: 1px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📝 HTML Форми</h1>
+            <p>Створення інтерактивних та доступних веб-форм</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи HTML форм</h2>
+            <p>HTML форми - це основний спосіб збору інформації від користувачів на веб-сайтах:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>&lt;form&gt;</strong> - контейнер для всіх елементів форми</li>
+                <li><strong>&lt;input&gt;</strong> - основний елемент для введення даних</li>
+                <li><strong>&lt;label&gt;</strong> - підпис для поля вводу (важливо для доступності)</li>
+                <li><strong>&lt;fieldset&gt;</strong> - групування пов'язаних полів</li>
+                <li><strong>&lt;legend&gt;</strong> - заголовок для fieldset</li>
+                <li><strong>&lt;button&gt;</strong> - кнопка для відправки або скидання форми</li>
+            </ul>
+
+            <div class="code-block">/* Базова структура HTML форми */
+&lt;form action="/submit" method="POST"&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Особиста інформація&lt;/legend&gt;
+        
+        &lt;label for="name"&gt;Ім'я:&lt;/label&gt;
+        &lt;input type="text" id="name" name="name" required&gt;
+        
+        &lt;label for="email"&gt;Email:&lt;/label&gt;
+        &lt;input type="email" id="email" name="email" required&gt;
+        
+        &lt;button type="submit"&gt;Відправити&lt;/button&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔤 Типи Input полів</h2>
+            <p>HTML5 надає багато різних типів полів для різних видів даних. Кожен тип має свої особливості та можливості.</p>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="nav-button" onclick="parent.loadTopic('input-types')" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    📝 Детально про всі типи Input полів ➡️
+                </button>
+            </div>
+
+            <p style="color: #4a5568; text-align: center; margin: 1rem 0;">
+                В окремій статті розглянуті всі 20+ типів полів: text, email, password, number, date, color, file та інші, 
+                з інтерактивними демо та прикладами використання.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>✅ Валідація форм</h2>
+            <p>HTML5 та JavaScript надають потужні можливості для перевірки коректності введених даних.</p>
+            
+            <div style="text-align: center; margin: 2rem 0;">
+                <button class="nav-button" onclick="parent.loadTopic('form-validation')" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                    🔍 Детально про валідацію форм ➡️
+                </button>
+            </div>
+
+            <p style="color: #4a5568; text-align: center; margin: 1rem 0;">
+                В окремій статті розглянуті HTML5 атрибути валідації, JavaScript Constraint Validation API, 
+                real-time валідація, UX кращі практики та готові рішення.
+            </p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Практичні приклади форм</h2>
+
+            <div class="form-layout-demo">
+                <!-- Форма входу -->
+                <div class="layout-example">
+                    <div class="layout-title">🔐 Форма входу</div>
+                    <div class="login-form">
+                        <form>
+                            <div class="form-group">
+                                <label class="form-label" for="login-email">Email:</label>
+                                <input type="email" id="login-email" class="form-input" placeholder="your@email.com" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="login-password">Пароль:</label>
+                                <input type="password" id="login-password" class="form-input" placeholder="Ваш пароль" required>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox">
+                                    <span class="checkmark"></span>
+                                    Запам'ятати мене
+                                </label>
+                            </div>
+                            <button type="submit" class="form-button" style="width: 100%; margin-top: 1rem;">Увійти</button>
+                        </form>
+                    </div>
+                    
+                    <div class="code-block" style="margin-top: 1rem;">/* HTML код форми входу */
+&lt;div class="login-form"&gt;
+    &lt;form action="/login" method="POST"&gt;
+        &lt;div class="form-group"&gt;
+            &lt;label class="form-label" for="email"&gt;Email:&lt;/label&gt;
+            &lt;input type="email" id="email" name="email" 
+                   class="form-input" 
+                   placeholder="your@email.com" 
+                   required autocomplete="email"&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label class="form-label" for="password"&gt;Пароль:&lt;/label&gt;
+            &lt;input type="password" id="password" name="password" 
+                   class="form-input" 
+                   placeholder="Ваш пароль" 
+                   required autocomplete="current-password"&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="checkbox-group"&gt;
+            &lt;label class="custom-checkbox"&gt;
+                &lt;input type="checkbox" name="remember"&gt;
+                &lt;span class="checkmark"&gt;&lt;/span&gt;
+                Запам'ятати мене
+            &lt;/label&gt;
+        &lt;/div&gt;
+        
+        &lt;button type="submit" class="form-button"&gt;Увійти&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+/* CSS стилі */
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: #2d3748;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}</div>
+                </div>
+
+                <!-- Форма реєстрації -->
+                <div class="layout-example">
+                    <div class="layout-title">📝 Форма реєстрації</div>
+                    <div class="registration-form">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-firstname">Ім'я:</label>
+                                    <input type="text" id="reg-firstname" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-lastname">Прізвище:</label>
+                                    <input type="text" id="reg-lastname" class="form-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="reg-email">Email:</label>
+                                <input type="email" id="reg-email" class="form-input" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-password">Пароль:</label>
+                                    <input type="password" id="reg-password" class="form-input" minlength="8" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="reg-confirm">Підтвердіть пароль:</label>
+                                    <input type="password" id="reg-confirm" class="form-input" minlength="8" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Стать:</label>
+                                <div class="radio-group">
+                                    <label><input type="radio" name="gender" value="male"> Чоловік</label>
+                                    <label><input type="radio" name="gender" value="female"> Жінка</label>
+                                    <label><input type="radio" name="gender" value="other"> Інше</label>
+                                </div>
+                            </div>
+                            <div class="checkbox-group">
+                                <label class="custom-checkbox">
+                                    <input type="checkbox" required>
+                                    <span class="checkmark"></span>
+                                    Я погоджуюся з умовами використання
+                                </label>
+                            </div>
+                            <button type="submit" class="form-button" style="width: 100%; margin-top: 1rem;">Зареєструватися</button>
+                        </form>
+                    </div>
+                    
+                    <div class="code-block" style="margin-top: 1rem;">/* HTML код форми реєстрації */
+&lt;div class="registration-form"&gt;
+    &lt;form action="/register" method="POST"&gt;
+        &lt;!-- Ім'я та прізвище в одному рядку --&gt;
+        &lt;div class="form-row"&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label class="form-label" for="firstname"&gt;Ім'я:&lt;/label&gt;
+                &lt;input type="text" id="firstname" name="firstname" 
+                       class="form-input" required 
+                       autocomplete="given-name"&gt;
+            &lt;/div&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label class="form-label" for="lastname"&gt;Прізвище:&lt;/label&gt;
+                &lt;input type="text" id="lastname" name="lastname" 
+                       class="form-input" required 
+                       autocomplete="family-name"&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label class="form-label" for="email"&gt;Email:&lt;/label&gt;
+            &lt;input type="email" id="email" name="email" 
+                   class="form-input" required 
+                   autocomplete="email"&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Паролі в одному рядку --&gt;
+        &lt;div class="form-row"&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label class="form-label" for="password"&gt;Пароль:&lt;/label&gt;
+                &lt;input type="password" id="password" name="password" 
+                       class="form-input" minlength="8" required 
+                       autocomplete="new-password"&gt;
+            &lt;/div&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label class="form-label" for="confirm"&gt;Підтвердіть пароль:&lt;/label&gt;
+                &lt;input type="password" id="confirm" name="confirm" 
+                       class="form-input" minlength="8" required 
+                       autocomplete="new-password"&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;!-- Радіо кнопки для статі --&gt;
+        &lt;fieldset class="form-group"&gt;
+            &lt;legend class="form-label"&gt;Стать:&lt;/legend&gt;
+            &lt;div class="radio-group"&gt;
+                &lt;label&gt;&lt;input type="radio" name="gender" value="male"&gt; Чоловік&lt;/label&gt;
+                &lt;label&gt;&lt;input type="radio" name="gender" value="female"&gt; Жінка&lt;/label&gt;
+                &lt;label&gt;&lt;input type="radio" name="gender" value="other"&gt; Інше&lt;/label&gt;
+            &lt;/div&gt;
+        &lt;/fieldset&gt;
+        
+        &lt;div class="checkbox-group"&gt;
+            &lt;label class="custom-checkbox"&gt;
+                &lt;input type="checkbox" name="terms" required&gt;
+                &lt;span class="checkmark"&gt;&lt;/span&gt;
+                Я погоджуюся з &lt;a href="/terms"&gt;умовами використання&lt;/a&gt;
+            &lt;/label&gt;
+        &lt;/div&gt;
+        
+        &lt;button type="submit" class="form-button"&gt;Зареєструватися&lt;/button&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+/* CSS стилі */
+.registration-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+.radio-group {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    .radio-group {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}</div>
+                </div>
+
+                <!-- Контактна форма -->
+                <div class="layout-example">
+                    <div class="layout-title">📧 Контактна форма</div>
+                    <div class="contact-form">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label" for="contact-name">Ім'я:</label>
+                                    <input type="text" id="contact-name" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="contact-email">Email:</label>
+                                    <input type="email" id="contact-email" class="form-input" required>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="contact-subject">Тема:</label>
+                                <select id="contact-subject" class="form-input" required>
+                                    <option value="">Оберіть тему</option>
+                                    <option value="general">Загальні питання</option>
+                                    <option value="support">Технічна підтримка</option>
+                                    <option value="sales">Відділ продажів</option>
+                                    <option value="partnership">Партнерство</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="contact-message">Повідомлення:</label>
+                                <textarea 
+                                    id="contact-message" 
+                                    class="form-input" 
+                                    rows="5" 
+                                    placeholder="Опишіть ваше питання або пропозицію..."
+                                    required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="contact-file">Додати файл (опціонально):</label>
+                                <input type="file" id="contact-file" class="form-input" accept=".pdf,.doc,.docx,.jpg,.png">
+                            </div>
+                            <button type="submit" class="form-button">Відправити повідомлення</button>
+                        </form>
+                    </div>
+                    
+                    <div class="code-block" style="margin-top: 1rem;">/* HTML код контактної форми */
+&lt;div class="contact-form"&gt;
+    &lt;form action="/contact" method="POST" enctype="multipart/form-data"&gt;
+        &lt;!-- Ім'я та email в одному рядку --&gt;
+        &lt;div class="form-row"&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label class="form-label" for="name"&gt;Ім'я:&lt;/label&gt;
+                &lt;input type="text" id="name" name="name" 
+                       class="form-input" required 
+                       autocomplete="name"&gt;
+            &lt;/div&gt;
+            &lt;div class="form-group"&gt;
+                &lt;label class="form-label" for="email"&gt;Email:&lt;/label&gt;
+                &lt;input type="email" id="email" name="email" 
+                       class="form-input" required 
+                       autocomplete="email"&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label class="form-label" for="subject"&gt;Тема:&lt;/label&gt;
+            &lt;select id="subject" name="subject" class="form-input" required&gt;
+                &lt;option value=""&gt;Оберіть тему&lt;/option&gt;
+                &lt;option value="general"&gt;Загальні питання&lt;/option&gt;
+                &lt;option value="support"&gt;Технічна підтримка&lt;/option&gt;
+                &lt;option value="sales"&gt;Відділ продажів&lt;/option&gt;
+                &lt;option value="partnership"&gt;Партнерство&lt;/option&gt;
+            &lt;/select&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label class="form-label" for="message"&gt;Повідомлення:&lt;/label&gt;
+            &lt;textarea id="message" name="message" 
+                      class="form-input" rows="5" required
+                      placeholder="Опишіть ваше питання або пропозицію..."
+                      minlength="10" maxlength="1000"&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="form-group"&gt;
+            &lt;label class="form-label" for="attachment"&gt;
+                Додати файл (опціонально):
+            &lt;/label&gt;
+            &lt;input type="file" id="attachment" name="attachment" 
+                   class="form-input" 
+                   accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt"
+                   aria-describedby="file-help"&gt;
+            &lt;small id="file-help" style="color: #718096; font-size: 0.875rem;"&gt;
+                Максимальний розмір: 5MB. Формати: PDF, DOC, DOCX, JPG, PNG
+            &lt;/small&gt;
+        &lt;/div&gt;
+        
+        &lt;div class="checkbox-group"&gt;
+            &lt;label class="custom-checkbox"&gt;
+                &lt;input type="checkbox" name="copy" value="1"&gt;
+                &lt;span class="checkmark"&gt;&lt;/span&gt;
+                Відправити копію на мій email
+            &lt;/label&gt;
+        &lt;/div&gt;
+        
+        &lt;button type="submit" class="form-button"&gt;
+            Відправити повідомлення
+        &lt;/button&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+/* CSS стилі */
+.contact-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+textarea.form-input {
+    resize: vertical; /* Дозволяємо змінювати тільки висоту */
+    min-height: 120px;
+}
+
+select.form-input {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+}
+
+input[type="file"].form-input {
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+/* Покращення для мобільних */
+@media (max-width: 768px) {
+    .contact-form {
+        padding: 1.5rem;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+    
+    textarea.form-input {
+        min-height: 100px;
+    }
+ }</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📱 Адаптивні форми</h2>
+            <p>Оптимізація форм для мобільних пристроїв:</p>
+
+            <div class="code-block">/* Адаптивні стилі для форм */
+
+/* Базові responsive стилі */
+.form-input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 16px; /* Запобігає zoom на iOS */
+    border-radius: 6px;
+    border: 2px solid #e2e8f0;
+}
+
+/* Мобільні пристрої */
+@media (max-width: 768px) {
+    .form-row {
+        grid-template-columns: 1fr; /* Одна колонка */
+    }
+    
+    .form-input {
+        padding: 1rem; /* Більші кнопки для пальців */
+        font-size: 16px; /* Мінімум 16px для iOS */
+    }
+    
+    .form-button {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+    }
+}
+
+/* Оптимізація для сенсорних екранів */
+.form-input:focus {
+    transform: scale(1.02); /* Легке збільшення */
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Кращі кнопки для мобільних */
+.form-button {
+    min-height: 44px; /* Мінімум для комфортного торкання */
+    touch-action: manipulation; /* Відключає double-tap zoom */
+}</div>
+
+            <div class="tip-box">
+                <strong>📱 Мобільні поради:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>inputmode:</strong> Вказує тип клавіатури (numeric, tel, email)</li>
+                    <li><strong>autocomplete:</strong> Допомагає браузерам автозаповнювати поля</li>
+                    <li><strong>Розмір 16px+:</strong> Запобігає zoom на iPhone</li>
+                    <li><strong>Великі кнопки:</strong> Мінімум 44x44px для пальців</li>
+                    <li><strong>Fieldset:</strong> Групує пов'язані поля візуально</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>♿ Доступність та UX</h2>
+            
+            <div class="tip-box">
+                <strong>✅ Кращі практики доступності:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Label для кожного input:</strong> Зв'язуйте через for/id</li>
+                    <li><strong>Placeholder ≠ Label:</strong> Placeholder зникає при вводі</li>
+                    <li><strong>Зрозумілі помилки:</strong> Чіткі інструкції як виправити</li>
+                    <li><strong>Keyboard navigation:</strong> Tab порядок має бути логічним</li>
+                    <li><strong>Focus видимість:</strong> Чіткий індикатор фокуса</li>
+                    <li><strong>Aria-labels:</strong> Додаткові описи для screen readers</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Поширені помилки:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Відсутність labels для input полів</li>
+                    <li>Placeholder як єдиний опис поля</li>
+                    <li>Надто маленькі кнопки (&lt;44px)</li>
+                    <li>Незрозумілі повідомлення про помилки</li>
+                    <li>Відсутність індикаторів обов'язкових полів</li>
+                    <li>Погана контрастність кольорів</li>
+                </ul>
+            </div>
+
+            <h3>Приклад доступної форми</h3>
+            <div class="code-block">/* Повністю доступна форма */
+&lt;form&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Контактна інформація&lt;/legend&gt;
+        
+        &lt;label for="name"&gt;
+            Ім'я &lt;span aria-label="обов'язкове поле"&gt;*&lt;/span&gt;
+        &lt;/label&gt;
+        &lt;input 
+            type="text" 
+            id="name" 
+            name="name" 
+            required 
+            aria-describedby="name-error"
+            autocomplete="given-name"&gt;
+        &lt;div id="name-error" class="error" aria-live="polite"&gt;&lt;/div&gt;
+        
+        &lt;label for="email"&gt;
+            Email адреса &lt;span aria-label="обов'язкове поле"&gt;*&lt;/span&gt;
+        &lt;/label&gt;
+        &lt;input 
+            type="email" 
+            id="email" 
+            name="email" 
+            required 
+            aria-describedby="email-help email-error"
+            autocomplete="email"&gt;
+        &lt;div id="email-help"&gt;Ми не передаємо email третім особам&lt;/div&gt;
+        &lt;div id="email-error" class="error" aria-live="polite"&gt;&lt;/div&gt;
+    &lt;/fieldset&gt;
+    
+    &lt;button type="submit"&gt;Відправити форму&lt;/button&gt;
+&lt;/form&gt;</div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('responsive')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 27 з 41</strong><br>
+                <small>HTML Форми</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('input-types')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Ініціалізація стилів для демо форм
+        document.addEventListener('DOMContentLoaded', function() {
+            // Базові стилі фокуса для форм
+            const inputs = document.querySelectorAll('input, select, textarea');
+            
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.style.borderColor = '#667eea';
+                    this.style.boxShadow = '0 0 0 3px rgba(102, 126, 234, 0.1)';
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.style.borderColor = '#e2e8f0';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

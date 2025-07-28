@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid Layout</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #2d3748;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #4a5568;
+            font-size: 1.2rem;
+        }
+
+        .content-section {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: #2d3748;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: #4a5568;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .property-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .property-name {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .property-syntax {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+
+        .property-description {
+            color: #4a5568;
+            margin-bottom: 1rem;
+        }
+
+        .demo-container {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .demo-button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+
+        .demo-button.active {
+            background: #764ba2;
+        }
+
+        .grid-demo-area {
+            background: white;
+            border: 2px dashed #cbd5e0;
+            border-radius: 8px;
+            padding: 1rem;
+            min-height: 200px;
+            margin-top: 1rem;
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .grid-item {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 60px;
+        }
+
+        .grid-item:nth-child(2) { background: #e53e3e; }
+        .grid-item:nth-child(3) { background: #38a169; }
+        .grid-item:nth-child(4) { background: #d69e2e; }
+        .grid-item:nth-child(5) { background: #9f7aea; }
+        .grid-item:nth-child(6) { background: #ed8936; }
+
+        .layout-example {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .layout-example h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', Consolas, monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            line-height: 1.5;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .comparison-table th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .comparison-table tr:hover {
+            background: #f7fafc;
+        }
+
+        .tip-box {
+            background: #f0fff4;
+            border: 1px solid #9ae6b4;
+            border-left: 4px solid #38a169;
+            padding: 1rem;
+            border-radius: 6px;
+            margin: 1rem 0;
+        }
+
+        .tip-box strong {
+            color: #2f855a;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+        }
+
+        /* Стилі для практичних прикладів */
+        .gallery-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .gallery-item {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            height: 80px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .magazine-layout {
+            display: grid;
+            grid-template-areas: 
+                "header header header"
+                "sidebar main ads"
+                "footer footer footer";
+            grid-template-columns: 200px 1fr 150px;
+            grid-template-rows: auto 1fr auto;
+            gap: 1rem;
+            height: 250px;
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .magazine-header { grid-area: header; background: #4a5568; color: white; padding: 1rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .magazine-sidebar { grid-area: sidebar; background: #edf2f7; padding: 1rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .magazine-main { grid-area: main; background: white; padding: 1rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .magazine-ads { grid-area: ads; background: #fed7d7; padding: 1rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+        .magazine-footer { grid-area: footer; background: #4a5568; color: white; padding: 1rem; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
+
+        .dashboard-demo {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 100px);
+            gap: 1rem;
+            background: #f7fafc;
+            padding: 1rem;
+            border-radius: 6px;
+        }
+
+        .dashboard-item {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #4a5568;
+        }
+
+        .dashboard-item.large {
+            grid-column: span 2;
+            grid-row: span 2;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .dashboard-item.wide {
+            grid-column: span 2;
+        }
+
+        .dashboard-item.tall {
+            grid-row: span 2;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .magazine-layout {
+                grid-template-areas: 
+                    "header"
+                    "main"
+                    "sidebar"
+                    "ads"
+                    "footer";
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto auto auto;
+                height: auto;
+            }
+
+            .dashboard-demo {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-item.large {
+                grid-column: span 2;
+                grid-row: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔲 CSS Grid Layout</h1>
+            <p>Потужна двовимірна система макетування для складних дизайнів</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Основи CSS Grid</h2>
+            <p>CSS Grid - це найпотужніша система макетування, яка дозволяє створювати складні двовимірні макети:</p>
+            
+            <ul style="margin: 1rem 0; padding-left: 2rem; color: #4a5568;">
+                <li><strong>Grid Container</strong> - батьківський елемент з <code>display: grid</code></li>
+                <li><strong>Grid Items</strong> - дочірні елементи, що автоматично розміщуються в сітці</li>
+                <li><strong>Grid Lines</strong> - лінії що розділяють сітку (вертикальні та горизонтальні)</li>
+                <li><strong>Grid Tracks</strong> - простір між двома лініями (рядки та колонки)</li>
+                <li><strong>Grid Areas</strong> - прямокутні області, що складаються з кількох клітинок</li>
+                <li><strong>Grid Gap</strong> - відстань між клітинками сітки</li>
+            </ul>
+
+            <div class="code-block">/* Основний синтаксис */
+.container {
+    display: grid; /* Створює grid-контейнер */
+    grid-template-columns: 1fr 2fr 1fr; /* 3 колонки */
+    grid-template-rows: auto 1fr auto; /* 3 рядки */
+    gap: 1rem; /* Відступи між елементами */
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>📐 Властивості Grid Container</h2>
+            
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-name">grid-template-columns</div>
+                    <div class="property-syntax">1fr 2fr | 200px auto | repeat(3, 1fr)</div>
+                    <div class="property-description">
+                        Визначає ширину та кількість колонок в сітці.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">grid-template-rows</div>
+                    <div class="property-syntax">auto 1fr auto | 100px 200px | minmax(100px, auto)</div>
+                    <div class="property-description">
+                        Визначає висоту та кількість рядків в сітці.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">grid-template-areas</div>
+                    <div class="property-syntax">"header header" "sidebar main" "footer footer"</div>
+                    <div class="property-description">
+                        Визначає іменовані області сітки для легкого позиціонування.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">gap (grid-gap)</div>
+                    <div class="property-syntax">1rem | 10px 20px | 2rem 1rem</div>
+                    <div class="property-description">
+                        Задає відстань між рядками та колонками.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">justify-items</div>
+                    <div class="property-syntax">start | center | end | stretch</div>
+                    <div class="property-description">
+                        Вирівнювання елементів всередині клітинок по горизонталі.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">align-items</div>
+                    <div class="property-syntax">start | center | end | stretch</div>
+                    <div class="property-description">
+                        Вирівнювання елементів всередині клітинок по вертикалі.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔍 Інтерактивне демо Grid</h2>
+            <p>Експериментуйте з різними типами сіток:</p>
+
+            <div class="demo-container">
+                <h4>Типи grid-template-columns:</h4>
+                <div class="demo-controls">
+                    <button class="demo-button active" onclick="setGridColumns('repeat(3, 1fr)', this)">3 рівні колонки</button>
+                    <button class="demo-button" onclick="setGridColumns('1fr 2fr 1fr', this)">1:2:1 пропорції</button>
+                    <button class="demo-button" onclick="setGridColumns('200px 1fr 100px', this)">Фіксовані + гнучкі</button>
+                    <button class="demo-button" onclick="setGridColumns('repeat(auto-fit, minmax(150px, 1fr))', this)">Адаптивні колонки</button>
+                </div>
+
+                <div class="grid-demo-area" id="gridDemo">
+                    <div class="grid-item">1</div>
+                    <div class="grid-item">2</div>
+                    <div class="grid-item">3</div>
+                    <div class="grid-item">4</div>
+                    <div class="grid-item">5</div>
+                    <div class="grid-item">6</div>
+                </div>
+
+                <div id="gridInfo" style="margin-top: 1rem; padding: 1rem; background: #edf2f7; border-radius: 6px; font-family: monospace;">
+                    grid-template-columns: repeat(3, 1fr) - Три рівні колонки
+                </div>
+
+                <div id="gridCode" style="margin-top: 1rem;">
+                    <div class="code-block">.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📦 Властивості Grid Items</h2>
+            
+            <div class="properties-grid">
+                <div class="property-card">
+                    <div class="property-name">grid-column</div>
+                    <div class="property-syntax">1 / 3 | span 2 | 1 / -1</div>
+                    <div class="property-description">
+                        Позиціонування елемента по колонках (початок / кінець).
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">grid-row</div>
+                    <div class="property-syntax">2 / 4 | span 3 | 1 / -1</div>
+                    <div class="property-description">
+                        Позиціонування елемента по рядках (початок / кінець).
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">grid-area</div>
+                    <div class="property-syntax">header | 1 / 1 / 3 / 3 | span 2 / span 3</div>
+                    <div class="property-description">
+                        Скорочення для позиціонування або іменована область.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">justify-self</div>
+                    <div class="property-syntax">start | center | end | stretch</div>
+                    <div class="property-description">
+                        Вирівнювання конкретного елемента по горизонталі.
+                    </div>
+                </div>
+
+                <div class="property-card">
+                    <div class="property-name">align-self</div>
+                    <div class="property-syntax">start | center | end | stretch</div>
+                    <div class="property-description">
+                        Вирівнювання конкретного елемента по вертикалі.
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block">/* Типові комбінації grid */
+
+/* Елемент займає 2 колонки */
+.wide {
+    grid-column: span 2;
+}
+
+/* Елемент займає всю ширину */
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Позиціонування за лініями */
+.positioned {
+    grid-column: 2 / 4;
+    grid-row: 1 / 3;
+}
+
+/* Використання іменованих областей */
+.header {
+    grid-area: header;
+}</div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎨 Практичні приклади макетів</h2>
+
+            <div class="layout-example">
+                <h4>📷 Адаптивна галерея</h4>
+                <div class="gallery-demo">
+                    <div class="gallery-item">1</div>
+                    <div class="gallery-item">2</div>
+                    <div class="gallery-item">3</div>
+                    <div class="gallery-item">4</div>
+                    <div class="gallery-item">5</div>
+                    <div class="gallery-item">6</div>
+                    <div class="gallery-item">7</div>
+                    <div class="gallery-item">8</div>
+                </div>
+                <div class="code-block">/* Адаптивна галерея фотографій */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.gallery-item {
+    aspect-ratio: 1; /* Квадратні елементи */
+    background-size: cover;
+    background-position: center;
+}</div>
+            </div>
+
+            <div class="layout-example">
+                <h4>📰 Макет журналу</h4>
+                <div class="magazine-layout">
+                    <div class="magazine-header">Header</div>
+                    <div class="magazine-sidebar">Sidebar</div>
+                    <div class="magazine-main">Main Content</div>
+                    <div class="magazine-ads">Ads</div>
+                    <div class="magazine-footer">Footer</div>
+                </div>
+                <div class="code-block">/* Класичний макет журналу */
+.magazine {
+    display: grid;
+    grid-template-areas: 
+        "header header header"
+        "sidebar main ads"
+        "footer footer footer";
+    grid-template-columns: 200px 1fr 150px;
+    grid-template-rows: auto 1fr auto;
+    gap: 1rem;
+    min-height: 100vh;
+}
+
+.header { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main { grid-area: main; }
+.ads { grid-area: ads; }
+.footer { grid-area: footer; }</div>
+            </div>
+
+            <div class="layout-example">
+                <h4>📊 Dashboard з віджетами</h4>
+                <div class="dashboard-demo">
+                    <div class="dashboard-item">Widget 1</div>
+                    <div class="dashboard-item wide">Wide Widget</div>
+                    <div class="dashboard-item">Widget 3</div>
+                    <div class="dashboard-item large">Main Chart</div>
+                    <div class="dashboard-item">Stats</div>
+                    <div class="dashboard-item tall">Sidebar</div>
+                    <div class="dashboard-item">Widget 7</div>
+                    <div class="dashboard-item">Widget 8</div>
+                </div>
+                <div class="code-block">/* Dashboard з різними розмірами віджетів */
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 150px;
+    gap: 1rem;
+}
+
+.widget {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.widget.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.widget.wide {
+    grid-column: span 2;
+}
+
+.widget.tall {
+    grid-row: span 2;
+}</div>
+            </div>
+
+            <div class="layout-example">
+                <h4>🃏 Картки різних розмірів</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); grid-auto-rows: 120px; gap: 1rem; background: #f7fafc; padding: 1rem; border-radius: 6px;">
+                    <div style="background: #667eea; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">Card 1</div>
+                    <div style="background: #e53e3e; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; grid-column: span 2;">Wide Card</div>
+                    <div style="background: #38a169; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">Card 3</div>
+                    <div style="background: #d69e2e; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; grid-row: span 2;">Tall Card</div>
+                    <div style="background: #9f7aea; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">Card 5</div>
+                    <div style="background: #ed8936; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">Card 6</div>
+                </div>
+                <div class="code-block">/* Картки з автоматичним розміщенням */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: 150px;
+    gap: 1rem;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Особливі розміри */
+.card.featured {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.card.wide {
+    grid-column: span 2;
+}</div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚖️ Grid vs Flexbox: Коли що використовувати</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Критерій</th>
+                        <th>CSS Grid</th>
+                        <th>Flexbox</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Вимірність</strong></td>
+                        <td>Двовимірний (рядки + колонки)</td>
+                        <td>Одновимірний (тільки рядок або колонка)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Кращий для</strong></td>
+                        <td>Складні макети, сітки, dashboard</td>
+                        <td>Навігація, вирівнювання, прості макети</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Підхід</strong></td>
+                        <td>Layout-first (спочатку макет, потім контент)</td>
+                        <td>Content-first (контент визначає макет)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Розмір елементів</strong></td>
+                        <td>Можна задавати точні позиції та розміри</td>
+                        <td>Елементи розподіляються автоматично</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Підтримка браузерів</strong></td>
+                        <td>IE11+ (з префіксами)</td>
+                        <td>IE10+ (з префіксами)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Вивчення</strong></td>
+                        <td>Складніше, більше властивостей</td>
+                        <td>Простіше, менше властивостей</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="tip-box">
+                <strong>🎯 Рекомендації:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li><strong>Використовуйте Grid для:</strong> макетів сторінок, галерей, dashboard, форм</li>
+                    <li><strong>Використовуйте Flexbox для:</strong> навігації, кнопок, центрування, карток в ряд</li>
+                    <li><strong>Комбінуйте:</strong> Grid для загального макету, Flexbox всередині Grid-елементів</li>
+                    <li><strong>Правило:</strong> якщо потрібні і рядки і колонки - Grid, тільки одне - Flexbox</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔧 Корисні функції та одиниці Grid</h2>
+            
+            <h3>🔢 Функції Grid</h3>
+            <div class="code-block">/* repeat() - повторення значень */
+grid-template-columns: repeat(3, 1fr); /* Замість 1fr 1fr 1fr */
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Адаптивні колонки */
+
+/* minmax() - мінімальне та максимальне значення */
+grid-template-columns: minmax(200px, 1fr) 300px; /* Мін 200px, макс весь простір */
+grid-template-rows: minmax(100px, auto); /* Мін 100px, висота по контенту */
+
+/* auto-fit vs auto-fill */
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Розтягує колонки */
+grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Зберігає розмір */
+
+/* fit-content() - розмір по контенту з максимумом */
+grid-template-columns: fit-content(200px) 1fr; /* Макс 200px або по контенту */</div>
+
+            <h3>📏 Одиниці Grid</h3>
+            <div class="code-block">/* fr (fraction) - частки доступного простору */
+grid-template-columns: 1fr 2fr 1fr; /* 1:2:1 пропорції */
+grid-template-columns: 200px 1fr; /* 200px + решта простору */
+
+/* auto - розмір по контенту */
+grid-template-columns: auto 1fr auto; /* Контент - гнучкий - контент */
+
+/* min-content, max-content */
+grid-template-columns: min-content 1fr; /* Мінімальна ширина контенту */
+grid-template-columns: max-content 1fr; /* Максимальна ширина контенту */</div>
+
+            <h3>🎯 Практичні поради</h3>
+            <div class="tip-box">
+                <strong>💡 Поради по Grid:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                    <li>Використовуйте <code>gap</code> замість margin для відступів</li>
+                    <li><code>repeat(auto-fit, minmax(200px, 1fr))</code> - найкращий спосіб для адаптивності</li>
+                    <li>Іменовані лінії та області роблять код більш читабельним</li>
+                    <li><code>grid-auto-rows: minmax(150px, auto)</code> для рівної висоти рядків</li>
+                    <li>Завжди тестуйте на різних розмірах контенту</li>
+                    <li>Grid DevTools в браузері - ваш найкращий друг для налагодження</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <button class="nav-button" onclick="parent.loadTopic('flexbox')">
+                ⬅️ Попередня тема
+            </button>
+            <div style="text-align: center; color: #4a5568;">
+                <strong>Тема 25 з 41</strong><br>
+                <small>CSS Grid Layout</small>
+            </div>
+            <button class="nav-button" onclick="parent.loadTopic('responsive')">
+                Наступна тема ➡️
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Grid демо функції
+        function setGridColumns(value, buttonElement) {
+            const gridDemo = document.getElementById('gridDemo');
+            const info = document.getElementById('gridInfo');
+            const codeBlock = document.getElementById('gridCode');
+            const container = gridDemo.parentNode;
+            const buttons = container.querySelectorAll('.demo-button');
+            
+            // Оновлюємо активну кнопку
+            buttons.forEach(btn => btn.classList.remove('active'));
+            if (buttonElement) {
+                buttonElement.classList.add('active');
+            }
+            
+            // Застосовуємо grid-template-columns
+            gridDemo.style.gridTemplateColumns = value;
+            
+            let explanation = '';
+            let codeExample = '';
+            
+            switch(value) {
+                case 'repeat(3, 1fr)':
+                    explanation = 'repeat(3, 1fr) - Три рівні колонки';
+                    codeExample = `.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+}`;
+                    break;
+                    
+                case '1fr 2fr 1fr':
+                    explanation = '1fr 2fr 1fr - Пропорції 1:2:1';
+                    codeExample = `.container {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    gap: 0.5rem;
+}`;
+                    break;
+                    
+                case '200px 1fr 100px':
+                    explanation = '200px 1fr 100px - Фіксовані + гнучка колонка';
+                    codeExample = `.container {
+    display: grid;
+    grid-template-columns: 200px 1fr 100px;
+    gap: 0.5rem;
+}`;
+                    break;
+                    
+                case 'repeat(auto-fit, minmax(150px, 1fr))':
+                    explanation = 'repeat(auto-fit, minmax(150px, 1fr)) - Адаптивні колонки';
+                    codeExample = `.container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.5rem;
+}`;
+                    break;
+            }
+            
+            info.textContent = `grid-template-columns: ${value} - ${explanation.split(' - ')[1]}`;
+            codeBlock.innerHTML = `<div class="code-block">${codeExample}</div>`;
+        }
+
+        // Ініціалізація
+        document.addEventListener('DOMContentLoaded', function() {
+            // Встановлюємо початковий стан
+            const firstButton = document.querySelector('#gridDemo').parentNode.querySelector('.demo-button');
+            setGridColumns('repeat(3, 1fr)', firstButton);
+        });
+    </script>
+</body>
+</html> 
