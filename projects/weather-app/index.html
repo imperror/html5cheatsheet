@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Прогноз погоди</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌤️ Прогноз погоди</h1>
+            <div class="search-container">
+                <input type="text" id="cityInput" placeholder="Введіть назву міста...">
+                <button id="searchBtn">🔍 Пошук</button>
+                <button id="locationBtn" onclick="getCurrentLocationWeather()">📍 Моє місце</button>
+            </div>
+        </header>
+
+        <main class="weather-content">
+            <div class="current-weather">
+                <div class="weather-icon">
+                    <span id="currentIcon">☀️</span>
+                </div>
+                <div class="weather-info">
+                    <h2 id="cityName">Київ</h2>
+                    <div class="temperature">
+                        <span id="currentTemp">22</span><span class="unit">°C</span>
+                    </div>
+                    <div class="weather-description" id="weatherDesc">Сонячно</div>
+                </div>
+            </div>
+
+            <div class="weather-details">
+                <div class="detail-item">
+                    <span class="label">Відчувається як:</span>
+                    <span id="feelsLike">25°C</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Вологість:</span>
+                    <span id="humidity">60%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Вітер:</span>
+                    <span id="windSpeed">5 м/с</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Тиск:</span>
+                    <span id="pressure">1013 гПа</span>
+                </div>
+            </div>
+
+            <div class="forecast">
+                <h3>📅 Прогноз на 7 днів</h3>
+                <div class="forecast-container" id="forecastContainer">
+                    <!-- Дані будуть додані JavaScript -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+
+
+    <script src="script.js"></script>
+</body>
+</html>
