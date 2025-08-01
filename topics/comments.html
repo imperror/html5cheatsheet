@@ -43,6 +43,8 @@
             color: #333;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
+            padding-top: 70px; /* Відступ під хедер головної сторінки */
+            padding-bottom: 2rem; /* Відступ знизу для навігації */
         }
 
         .container {
@@ -360,6 +362,11 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding-top: 65px; /* Відступ під хедер планшетів */
+                padding-bottom: 1.5rem; /* Компактніший відступ знизу */
+            }
+            
             .two-column {
                 grid-template-columns: 1fr;
             }
@@ -379,6 +386,132 @@
 
             .demo-controls {
                 justify-content: center;
+            }
+            
+            /* Мобільні стилі для блоків коду */
+            .comment-example {
+                padding: 1rem;
+                margin: 0.5rem 0;
+                font-size: 0.85rem;
+            }
+            
+            .comment-example pre {
+                font-size: 0.8rem;
+                line-height: 1.3;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+            }
+            
+            .comment-syntax {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+            
+            .comment-type {
+                padding: 1rem;
+                margin: 0.5rem 0;
+            }
+            
+            .container {
+                padding: 0.5rem;
+            }
+            
+            /* Адаптивна таблиця для мобільних */
+            .comparison-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .comparison-table thead,
+            .comparison-table tbody,
+            .comparison-table th,
+            .comparison-table td,
+            .comparison-table tr {
+                display: block;
+            }
+            
+            .comparison-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+            
+            .comparison-table tr {
+                border: 1px solid #e2e8f0;
+                margin-bottom: 1rem;
+                padding: 1rem;
+                border-radius: 8px;
+                background: white;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            
+            .comparison-table td {
+                border: none;
+                padding: 0.5rem 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-start;
+                min-height: auto;
+            }
+            
+            .comparison-table td::before {
+                content: attr(data-label) ": ";
+                font-weight: bold;
+                color: #667eea;
+                flex-shrink: 0;
+                margin-right: 1rem;
+                width: 30%;
+            }
+            
+            .comparison-table td:nth-child(1)::before { content: "Мітка: "; }
+            .comparison-table td:nth-child(2)::before { content: "Призначення: "; }
+            .comparison-table td:nth-child(3)::before { content: "Приклад: "; }
+            
+            .comparison-table td:nth-child(3) {
+                word-break: break-all;
+                font-size: 0.8rem;
+            }
+            
+            .comparison-table td:nth-child(3) code {
+                font-size: 0.75rem;
+                word-wrap: break-word;
+            }
+        }
+        
+        /* Додатковий медіа запит для дуже малих екранів */
+        @media (max-width: 480px) {
+            body {
+                padding-top: 60px; /* Відступ під хедер мобільних */
+                padding-bottom: 1rem; /* Мінімальний відступ знизу */
+            }
+            
+            .comment-example pre {
+                font-size: 0.75rem;
+                overflow-x: auto;
+                word-break: break-all;
+            }
+            
+            .comment-example {
+                padding: 0.75rem;
+            }
+            
+            .comment-syntax {
+                font-size: 0.9rem;
+                padding: 0.75rem;
+            }
+            
+            /* Ще компактніша таблиця */
+            .comparison-table td {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .comparison-table td::before {
+                width: 100%;
+                margin-bottom: 0.25rem;
+                margin-right: 0;
             }
         }
 

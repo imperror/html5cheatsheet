@@ -372,23 +372,189 @@
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
             .two-column {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            /* Мобільні стилі для блоків коду */
+            .code-example {
+                padding: 1rem;
+                font-size: 0.8rem;
+                overflow-x: auto;
+            }
+
+            .code-example pre {
+                font-size: 0.8rem;
+                line-height: 1.3;
+                word-wrap: break-word;
+                white-space: pre-wrap;
+            }
+
+            /* Адаптивні мета-тег карточки */
+            .meta-tag-card {
+                padding: 1rem;
+                margin: 0.75rem 0;
+            }
+
+            .meta-tag-card h3 {
+                font-size: 1.1rem;
+                margin-bottom: 0.75rem;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.3rem;
+            }
+
+            .meta-tag {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.4rem;
+                word-wrap: break-word;
+                display: inline-block;
+                max-width: 100%;
+            }
+
+            /* Адаптивна інтерактивна демонстрація */
+            .interactive-demo {
+                padding: 0.75rem;
+                margin: 0.75rem 0;
+            }
+
+            .demo-controls {
+                flex-direction: column;
+                gap: 0.5rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .demo-button {
+                width: 100%;
+                text-align: center;
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+
+            .demo-output {
+                padding: 0.75rem;
+                font-size: 0.8rem;
+                min-height: 80px;
+                overflow-x: auto;
+                word-wrap: break-word;
+            }
+
+            .code-syntax {
+                padding: 0.5rem;
+                font-size: 0.8rem;
+                overflow-x: auto;
+            }
+
+
+            /* Адаптивні таблиці */
+            .comparison-table,
+            .formats-table,
+            .properties-table,
+            .support-table,
+            .syntax-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table,
+            .comparison-table thead,
+            .comparison-table tbody,
+            .comparison-table th,
+            .comparison-table td,
+            .comparison-table tr,
+            .formats-table,
+            .formats-table thead,
+            .formats-table tbody,
+            .formats-table th,
+            .formats-table td,
+            .formats-table tr,
+            .properties-table,
+            .properties-table thead,
+            .properties-table tbody,
+            .properties-table th,
+            .properties-table td,
+            .properties-table tr,
+            .support-table,
+            .support-table thead,
+            .support-table tbody,
+            .support-table th,
+            .support-table td,
+            .support-table tr,
+            .syntax-table,
+            .syntax-table thead,
+            .syntax-table tbody,
+            .syntax-table th,
+            .syntax-table td,
+            .syntax-table tr {
+                display: block;
+            }
+
+            .comparison-table thead tr,
+            .formats-table thead tr,
+            .properties-table thead tr,
+            .support-table thead tr,
+            .syntax-table thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            .comparison-table tr,
+            .formats-table tr,
+            .properties-table tr,
+            .support-table tr,
+            .syntax-table tr {
+                border: 1px solid #e2e8f0;
+                margin-bottom: 1rem;
+                border-radius: 8px;
+                padding: 1rem;
+                background: white;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+
+            .comparison-table td,
+            .formats-table td,
+            .properties-table td,
+            .support-table td,
+            .syntax-table td {
+                border: none;
+                position: relative;
+                padding: 0.5rem 0 0.5rem 50%;
+                text-align: left;
+            }
+
+            .comparison-table td:before,
+            .formats-table td:before,
+            .properties-table td:before,
+            .support-table td:before,
+            .syntax-table td:before {
+                content: attr(data-label) ": ";
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                color: #667eea;
             }
             
             .seo-grid {
                 grid-template-columns: 1fr;
             }
             
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .navigation {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
             .demo-controls {
                 justify-content: center;
             }
@@ -400,6 +566,87 @@
         .string { color: #98c379; }
         .comment { color: #5c6370; font-style: italic; }
         .doctype { color: #c678dd; }
+
+
+        /* Додатковий медіа запит для дуже малих екранів */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0.75rem;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .code-example {
+                padding: 0.75rem;
+                font-size: 0.75rem;
+            }
+
+            .code-example pre {
+                font-size: 0.7rem;
+                line-height: 1.2;
+            }
+
+            /* Компактні мета-тег карточки */
+            .meta-tag-card {
+                padding: 0.75rem;
+                margin: 0.5rem 0;
+            }
+
+            .meta-tag-card h3 {
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .meta-tag {
+                font-size: 0.7rem;
+                padding: 0.15rem 0.3rem;
+                margin-bottom: 0.25rem;
+            }
+
+            /* Компактна інтерактивна демонстрація */
+            .interactive-demo {
+                padding: 0.5rem;
+                margin: 0.5rem 0;
+            }
+
+            .demo-controls {
+                gap: 0.4rem;
+            }
+
+            .demo-button {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            .demo-output {
+                padding: 0.5rem;
+                font-size: 0.75rem;
+                min-height: 60px;
+            }
+
+            .two-column {
+                gap: 0.75rem;
+            }
+
+            .comparison-table td,
+            .formats-table td,
+            .properties-table td,
+            .support-table td,
+            .syntax-table td {
+                padding: 0.4rem 0 0.4rem 45%;
+            }
+
+            .comparison-table td:before,
+            .formats-table td:before,
+            .properties-table td:before,
+            .support-table td:before,
+            .syntax-table td:before {
+                width: 40%;
+                font-size: 0.8rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -444,19 +691,19 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><strong>HTML5</strong></td>
-                        <td><code>&lt;!DOCTYPE html&gt;</code></td>
-                        <td style="color: #48bb78;">✅ Актуально</td>
+                        <td data-label="Версія HTML"><strong>HTML5</strong></td>
+                        <td data-label="DOCTYPE декларація"><code>&lt;!DOCTYPE html&gt;</code></td>
+                        <td data-label="Статус" style="color: #48bb78;">✅ Актуально</td>
                     </tr>
                     <tr>
-                        <td><strong>XHTML 1.0</strong></td>
-                        <td><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"...</code></td>
-                        <td style="color: #ed8936;">⚠️ Застаріло</td>
+                        <td data-label="Версія HTML"><strong>XHTML 1.0</strong></td>
+                        <td data-label="DOCTYPE декларація"><code>&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"...</code></td>
+                        <td data-label="Статус" style="color: #ed8936;">⚠️ Застаріло</td>
                     </tr>
                     <tr>
-                        <td><strong>HTML 4.01</strong></td>
-                        <td><code>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"...</code></td>
-                        <td style="color: #f56565;">❌ Застаріло</td>
+                        <td data-label="Версія HTML"><strong>HTML 4.01</strong></td>
+                        <td data-label="DOCTYPE декларація"><code>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"...</code></td>
+                        <td data-label="Статус" style="color: #f56565;">❌ Застаріло</td>
                     </tr>
                 </tbody>
             </table>

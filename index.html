@@ -44,11 +44,11 @@
     <!-- Critical CSS will be inlined below -->
     <style id="critical-css">
         /* Critical above-the-fold styles */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: #f8f9fa; }
-        .header { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
-        .container { display: flex; height: 100vh; }
-        .main-content { flex: 1; margin-top: 70px; }
-        .content-frame { width: 100%; height: calc(100vh - 70px); border: none; background: white; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f8f9fa; }
+        .header { position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 1rem 2rem; z-index: 1000; display: flex; justify-content: space-between; align-items: center; height: 70px; }
+        .container { display: flex; height: 100vh; margin: 0; padding: 0; }
+        .main-content { flex: 1; margin: 0; padding: 0; }
+        .content-frame { width: 100%; height: 100vh; border: none; background: white; margin: 0; padding: 0; display: block; }
     </style>
     
     <!-- Google Analytics 4 (GA4) -->
@@ -148,7 +148,14 @@
             padding: 0;
             box-sizing: border-box;
         }
-
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
@@ -160,6 +167,9 @@
         .container {
             display: flex;
             height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
         }
 
         /* Header */
@@ -190,6 +200,11 @@
             justify-content: center;
             align-items: center;
             max-width: 300px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
         }
 
         .menu-toggle {
@@ -270,10 +285,12 @@
             background: white;
             border-right: 1px solid #e2e8f0;
             overflow-y: auto;
-            margin-top: 70px;
+            margin: 0;
+            padding: 0;
             transition: margin-left 0.3s ease;
             position: relative;
             z-index: 100;
+            height: 100vh;
         }
 
         .sidebar.collapsed {
@@ -387,8 +404,9 @@
         .main-content {
             flex: 1;
             background: #f7fafc;
-            margin-top: 70px;
+            margin: 0;
             transition: margin-left 0.3s ease;
+            padding: 0;
         }
 
         .main-content.expanded {
@@ -397,9 +415,12 @@
 
         .content-frame {
             width: 100%;
-            height: calc(100vh - 70px);
+            height: 100vh;
             border: none;
             background: white;
+            margin: 0;
+            padding: 0;
+            display: block;
         }
 
 
@@ -408,7 +429,8 @@
         @media (max-width: 1024px) {
             .sidebar {
                 position: fixed;
-                height: calc(100vh - 70px);
+                height: 100vh;
+                padding: 0;
                 z-index: 200;
                 box-shadow: 2px 0 10px rgba(0,0,0,0.1);
             }
@@ -430,39 +452,210 @@
         @media (max-width: 768px) {
             .header {
                 padding: 0.75rem 1rem;
-                flex-direction: column;
-                gap: 0.75rem;
+                flex-direction: row;
+                gap: 0.5rem;
+                height: 65px;
+                position: relative;
+                z-index: 999;
             }
             
             .header-left {
-                width: 100%;
-                justify-content: space-between;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                flex-shrink: 0;
+                order: 1;
             }
             
             .header-center {
-                max-width: 100%;
+                flex: 1;
+                max-width: none;
+                margin: 0 0.5rem;
+                order: 2;
+                justify-content: flex-start;
+            }
+            
+            .header-right {
                 order: 3;
+                flex-shrink: 0;
             }
             
             .header-nav {
-                order: 2;
+                display: none; /* Приховуємо кнопки на мобільних */
             }
             
             .header h1 {
-                font-size: 1.2rem;
+                font-size: 1rem;
+                white-space: nowrap;
             }
             
             .progress-indicator {
-                min-width: 100%;
-                font-size: 0.8rem;
+                min-width: auto;
+                font-size: 0.75rem;
+                padding: 0.3rem 0.6rem;
+                background: rgba(255,255,255,0.15);
+                border-radius: 15px;
+            }
+            
+            .progress-text {
+                margin-bottom: 0.1rem;
+                font-size: 0.7rem;
+            }
+            
+            .progress-bar {
+                height: 2px;
+            }
+            
+            .menu-toggle {
+                padding: 0.4rem;
+                font-size: 1.1rem;
             }
             
             .sidebar {
-                width: 300px;
+                width: 280px;
+                height: 100vh;
+                padding: 0;
             }
             
             .sidebar.collapsed {
-                margin-left: -300px;
+                margin-left: -280px;
+            }
+            
+            .main-content {
+                margin: 0;
+            }
+            
+            .content-frame {
+                height: calc(100vh - 65px); /* Зменшуємо на висоту хедера планшетів */
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+            
+            /* Адаптивна навігація по темах */
+            .sidebar-header {
+                padding: 1rem;
+            }
+            
+            .sidebar-header h3 {
+                font-size: 1.1rem;
+            }
+            
+            .search-input {
+                font-size: 0.85rem;
+                padding: 0.6rem 0.8rem 0.6rem 2.2rem;
+            }
+            
+            .search-icon {
+                left: 0.6rem;
+            }
+            
+            .topic-categories {
+                padding: 0.75rem;
+            }
+            
+            .category {
+                margin-bottom: 1rem;
+            }
+            
+            .category-header {
+                font-size: 0.8rem;
+                padding: 0.4rem 0;
+                margin-bottom: 0.5rem;
+            }
+            
+            .topic-link {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+                word-wrap: break-word;
+                white-space: normal;
+                line-height: 1.3;
+            }
+            
+            .topic-link .emoji {
+                margin-right: 0.4rem;
+                font-size: 1rem;
+                flex-shrink: 0;
+            }
+            
+            .topic-link:hover {
+                transform: translateX(3px);
+            }
+        }
+        
+        /* Додатковий медіа запит для дуже малих екранів */
+        @media (max-width: 480px) {
+            .header {
+                padding: 0.6rem 0.75rem;
+                height: 60px;
+            }
+            
+            .header h1 {
+                font-size: 0.9rem;
+            }
+            
+            .progress-indicator {
+                font-size: 0.7rem;
+                padding: 0.25rem 0.5rem;
+            }
+            
+            .progress-text {
+                font-size: 0.65rem;
+            }
+            
+            .menu-toggle {
+                padding: 0.35rem;
+                font-size: 1rem;
+            }
+            
+            .sidebar {
+                width: 260px;
+                height: 100vh;
+                padding: 0;
+            }
+            
+            .sidebar.collapsed {
+                margin-left: -260px;
+            }
+            
+            .main-content {
+                margin: 0;
+            }
+            
+            .content-frame {
+                height: calc(100vh - 60px); /* Зменшуємо на висоту хедера мобільних */
+                margin: 0;
+                padding: 0;
+                display: block;
+            }
+            
+            .topic-link {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.8rem;
+                display: flex;
+                align-items: center;
+            }
+            
+            .topic-link .emoji {
+                margin-right: 0.3rem;
+                font-size: 0.9rem;
+            }
+            
+            .category-header {
+                font-size: 0.75rem;
+            }
+            
+            .search-input {
+                font-size: 0.8rem;
+                padding: 0.5rem 0.6rem 0.5rem 2rem;
+            }
+            
+            .sidebar-header {
+                padding: 0.75rem;
+            }
+            
+            .topic-categories {
+                padding: 0.5rem;
             }
         }
 
@@ -509,15 +702,17 @@
             <button class="menu-toggle" onclick="toggleSidebar()" title="Приховати/показати меню">
                 <span id="menuIcon">☰</span>
             </button>
-            <h1>📚 HTML5 Шпаргалка</h1>
         </div>
         <div class="header-center">
             <div class="progress-indicator">
-                                    <div class="progress-text">Прогрес: <span id="progressText">1 з 41</span></div>
+                <div class="progress-text">Прогрес: <span id="progressText">1 з 41</span></div>
                 <div class="progress-bar">
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
             </div>
+        </div>
+        <div class="header-right">
+            <h1>📚 HTML5 Шпаргалка</h1>
         </div>
         <div class="header-nav">
             <button onclick="toggleFullscreen()" title="Повний екран">🔲</button>
