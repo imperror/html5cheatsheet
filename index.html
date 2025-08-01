@@ -61,7 +61,11 @@
             page_title: 'HTML5 Шпаргалка - Головна',
             page_location: window.location.href,
             content_group1: 'Navigation',
-            custom_map: {'custom_parameter_1': 'value'}
+            custom_map: {
+                'topic_name': 'custom_topic',
+                'topic_category': 'custom_category',
+                'user_progress': 'custom_progress'
+            }
         });
     </script>
     
@@ -878,6 +882,9 @@
             
             // Save current topic
             localStorage.setItem('currentTopic', topicId);
+            
+            // Track analytics
+            trackPageView(topicId);
         }
 
         function updateProgress() {
@@ -991,20 +998,49 @@
         // Enhanced Analytics tracking for SEO insights
         function trackPageView(topicId) {
             if (typeof gtag !== 'undefined') {
-                gtag('config', 'G-XXXXXXXXXX', {
+                const topicCategory = getTopicCategory(topicId);
+                const topicProgress = getCurrentProgress();
+                
+                gtag('config', 'G-683YCEB0LG', {
                     page_title: topicId ? `HTML5 Шпаргалка - ${topicId}` : 'HTML5 Шпаргалка - Головна',
                     page_location: window.location.href,
-                    content_group1: topicId ? 'Topic' : 'Navigation',
-                    custom_map: {'topic_name': topicId || 'main'}
+                    content_group1: topicId ? 'Topic' : 'Navigation'
                 });
                 
-                // Track custom events for SEO insights
+                // Track custom events for SEO insights with enhanced parameters
                 gtag('event', 'page_view', {
                     'event_category': 'Learning',
                     'event_label': topicId || 'main',
+                    'topic_name': topicId || 'main',
+                    'topic_category': topicCategory,
+                    'user_progress': topicProgress,
                     'value': 1
                 });
             }
+        }
+        
+        // Helper function to determine topic category
+        function getTopicCategory(topicId) {
+            if (!topicId) return 'Navigation';
+            
+            const cssTopics = ['css-intro', 'css-syntax', 'css-colors', 'css-fonts', 'css-properties', 'css-units', 'css-integration', 'flexbox', 'grid', 'position', 'display', 'box-model', 'float', 'responsive'];
+            const htmlTopics = ['intro', 'structure', 'doctype', 'headings', 'paragraphs', 'links', 'images', 'lists', 'tables', 'forms', 'input-types', 'form-validation', 'semantic', 'article-section'];
+            const multimediaTopics = ['audio', 'video', 'canvas', 'svg'];
+            const advancedTopics = ['accessibility', 'performance', 'seo', 'best-practices', 'publishing'];
+            
+            if (cssTopics.includes(topicId)) return 'CSS';
+            if (htmlTopics.includes(topicId)) return 'HTML';
+            if (multimediaTopics.includes(topicId)) return 'Multimedia';
+            if (advancedTopics.includes(topicId)) return 'Advanced';
+            
+            return 'Other';
+        }
+        
+        // Helper function to get current progress
+        function getCurrentProgress() {
+            const current = currentTopicIndex + 1;
+            const percentage = Math.round((current / totalTopics) * 100);
+            return `${percentage}%`;
         }
         
         // Performance monitoring for Core Web Vitals
