@@ -1,0 +1,34 @@
+User-agent: *
+Allow: /
+
+# Allow all pages to be indexed
+Allow: /topics/
+Allow: /projects/
+Allow: /media/
+
+# Disallow any future admin or private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /.git/
+
+# Sitemap location
+Sitemap: https://imperror.github.io/html5cheatsheet/sitemap.xml
+
+# Crawl-delay (optional, to be respectful to servers)
+Crawl-delay: 1
+
+# Additional crawl directives for better SEO
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# For social media crawlers
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /

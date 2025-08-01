@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Main page -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- Topic pages -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/intro.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/structure.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/doctype.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/comments.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/headings.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/paragraphs.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/formatting.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/entities.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/lists.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/links.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/images.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/tables.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- CSS Topics -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/css-intro.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/css-syntax.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/css-integration.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/css-properties.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/css-units.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/css-colors.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/css-fonts.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Layout Topics -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/box-model.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/display.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/position.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/float.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/flexbox.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/grid.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/responsive.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Forms -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/forms.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/input-types.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/form-validation.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Semantic HTML -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/semantic.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/article-section.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/navigation.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Multimedia -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/audio.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/video.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/canvas.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/svg.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Advanced Topics -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/accessibility.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/seo.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/performance.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/best-practices.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/publishing.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Additional Materials -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/demo-templates.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/ui-components.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/topics/weather-app.html</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Projects -->
+    <url>
+        <loc>https://imperror.github.io/html5cheatsheet/projects/weather-app/</loc>
+        <lastmod>2025-08-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+</urlset>
